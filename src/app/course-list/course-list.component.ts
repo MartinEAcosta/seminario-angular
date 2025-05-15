@@ -8,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class CourseListComponent {
 
+  private course = {
+    "title" : "Aprendiendo Angular: Seminario - TUDAI",
+    "duration" : "20:00:00",
+    "price" : 3000,
+    "offer" : false,
+  }
 }

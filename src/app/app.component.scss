@@ -15,7 +15,7 @@ header{
 
 header .logo{
     font-size: 2rem;
-    color: rgb(0, 120, 140);
+    color: v.$brand-color;
     font-family: v.$font-brand;
 }
 
@@ -23,6 +23,7 @@ nav{
     display: flex;
     align-items: center;
     justify-content: end;
+    text-align: end;
     width: 100%;
 }
 
@@ -35,6 +36,10 @@ nav a{
     font-family: v.$font-primary;
     cursor: pointer;
     transition: all 0.3s ease;
+}
+
+nav .about{
+    margin-right: 0px;
 }
 
 nav a:hover{

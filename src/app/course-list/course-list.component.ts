@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Course } from './Course';
 
 @Component({
   selector: 'app-course-list',
@@ -8,13 +9,28 @@ import { Component } from '@angular/core';
 })
 export class CourseListComponent {
 
-  course = {
-    "title" : "Aprendiendo Angular: Seminario - TUDAI",
-    "description" :  "A little description...",
-    "owner" : "Charles Darwin",
-    "duration" : "20:00:00",
-    "reviews" : 3,
-    "price" : 3000,
-    "offer" : false,
-  }
+  courses : Course[] = [
+    {
+      "id" : 1,
+      "title" : "Aprendiendo Angular: Seminario - TUDAI",
+      "description" :  "A little description...",
+      "img": "https://www.shutterstock.com/image-photo/elearning-education-internet-lessons-online-600nw-2158034833.jpg",
+      "owner" : "Charles Darwin",
+      "duration" : new Date().getTime(),
+      "reviews" : 3,
+      "price" : 3000,
+      "offer" : false,
+    },
+    {
+      "id" : 2,
+      "title" : "Aprendiendo Angular: Seminario - TUDAI",
+      "description" :  "A little description...",
+      "img": "../../assets/example.png",
+      "owner" : "Charles Darwin",
+      "duration" : new Date().getTime(),
+      "reviews" : 3,
+      "price" : 3000,
+      "offer" : false,
+    },
+  ]
 }

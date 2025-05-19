@@ -6,19 +6,21 @@
                 <p class="title">{{course.title}}</p>
                 <p class="desc">{{course.description}}</p>
                 <p class="price">${{course.price}}</p>
-                <p class="owner">Creador del curso: <span class="name-owner"> {{course.owner}} </span></p>
-                <button
-                    class="btn-buy">
-                    Comprar
-                </button>
-                
-                <button
-                    class="btn-add-to-cart">
-                    Agregar al carrito
-                </button>
-
+                <div class="extra-details">
+                    <p class="owner">Creador del curso: <span class="name-owner"> {{course.owner}} </span></p>
+                    <div class="actions">
+                        <button
+                            class="btn-buy">
+                            Comprar
+                        </button>
+                        
+                        <button
+                            class="btn-add-to-cart">
+                            Agregar al carrito
+                        </button>
+                    </div>
+                </div>
             </div>
-            
         </div>
     </div>
 }

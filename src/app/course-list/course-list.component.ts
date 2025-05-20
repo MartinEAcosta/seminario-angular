@@ -20,6 +20,7 @@ export class CourseListComponent {
       "reviews" : 3,
       "price" : 3000,
       "offer" : false,
+      "capacity" : 0 
     },
     {
       "id" : 2,
@@ -31,6 +32,14 @@ export class CourseListComponent {
       "reviews" : 3,
       "price" : 3000,
       "offer" : false,
+      "capacity" : 1,
     },
   ]
+  
+  onAddToCart = ( course : Course ) : void  => {
+    console.log(course.capacity);
+    if( course.capacity > 0 )
+      course.capacity -= 1;    
+    console.log(course.capacity);
+  }
 }

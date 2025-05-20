@@ -10,4 +10,5 @@ export interface Course {
     reviews : number;
     price : number;
     offer : boolean;
+    capacity : number;
 }

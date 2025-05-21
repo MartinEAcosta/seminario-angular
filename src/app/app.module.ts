@@ -6,13 +6,19 @@ import { AppComponent } from './app.component';
 import { CourseListComponent } from './course-list/course-list.component';
 import { UdemixAboutComponent } from './udemix-about/udemix-about.component';
 import { UdemixCartComponent } from './udemix-cart/udemix-cart.component';
+import { HeaderComponent } from './shared/header/header.component';
+import { HomeComponent } from './pages/home/home.component';
+import { FooterComponent } from './shared/footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CourseListComponent,
     UdemixAboutComponent,
-    UdemixCartComponent
+    UdemixCartComponent,
+    HeaderComponent,
+    HomeComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

@@ -9,16 +9,10 @@
                 <div class="extra-details">
                     <p class="owner">Creador del curso: <span class="name-owner"> {{course.owner}} </span></p>
                     <div class="actions">
-                        <button
-                            class="btn-buy">
-                            Comprar
-                        </button>
+
+                        <app-btn-buy/>
                         
-                        <button
-                            (click)="onAddToCart(course)"
-                            class="btn-add-to-cart">
-                            Agregar al carrito
-                        </button>
+                        <app-btn-add-to-cart [course]="course" />
                     </div>
                 </div>
             </div>

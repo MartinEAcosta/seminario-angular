@@ -9,6 +9,8 @@ import { UdemixCartComponent } from './udemix-cart/udemix-cart.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { HomeComponent } from './pages/home/home.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { BtnBuyComponent } from './shared/buttons/btn-buy/btn-buy.component';
+import { BtnAddToCartComponent } from './shared/buttons/btn-add-to-cart/btn-add-to-cart.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { FooterComponent } from './shared/footer/footer.component';
     UdemixCartComponent,
     HeaderComponent,
     HomeComponent,
-    FooterComponent
+    FooterComponent,
+    BtnBuyComponent,
+    BtnAddToCartComponent
   ],
   imports: [
     BrowserModule,

@@ -36,10 +36,4 @@ export class CourseListComponent {
     },
   ]
   
-  onAddToCart = ( course : Course ) : void  => {
-    console.log(course.capacity);
-    if( course.capacity > 0 )
-      course.capacity -= 1;    
-    console.log(course.capacity);
-  }
 }

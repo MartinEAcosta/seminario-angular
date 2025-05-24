@@ -17,6 +17,7 @@ header .logo{
     font-size: 2rem;
     color: v.$brand-color;
     font-family: v.$font-brand;
+    text-decoration: none;
 }
 
 nav{
@@ -57,6 +58,7 @@ nav a:hover{
     border-bottom: 2px solid v.$brand-color;
     font-family: v.$font-primary;
     transition: all 0.3s ease;
+    color: v.$black-custom;
 }
 
 .search-input:focus{

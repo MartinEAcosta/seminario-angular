@@ -1,5 +1,7 @@
 <header >
-    <a class="logo">{{brandName}}</a>
+    <a
+      [routerLink]="['/']" 
+      class="logo">{{brandName}}</a>
 
   <nav>
     <search>
@@ -13,9 +15,13 @@
       >
 
     </search>
-    <a>INICIO</a>
+    <a [routerLink]="['/']">
+      INICIO
+    </a>
     <a>EXPLORAR</a>
-    <a class="about">SOBRE NOSOTROS</a>
+    <a 
+      [routerLink]="['/about']"
+      class="about">SOBRE NOSOTROS</a>
   </nav>
 
 </header>

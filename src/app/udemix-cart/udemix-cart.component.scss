@@ -39,12 +39,14 @@
 .content-open{
     display: flex;
     position: fixed;
+    overflow: hidden;
     right: 2%;
     bottom: 5%;
     z-index: 100;
-    background-color: v.$brand-color;
+    background-color: v.$white-custom;
     width: 300px;
-    height: 200px;
+    height: 500px;
+    box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.6);
     border-radius: 20px;
 }
 
@@ -57,6 +59,40 @@
 .content-open .container-icon img{
     width: 100%;
     margin: auto;
+}
+
+.content-open .cart-content{
+    display: flex;
+    justify-content: center;
+    margin-left: 5px;
+    margin-right: auto;
+    z-index: 1;
+    max-width: 200px;
+}
+
+.content-open .container-icon{
+    display: flex;
+    width: 10%;
+    height: 70%;
+    margin: 0 0 0 auto;
+}
+
+.content-open .container-icon img{
+    width: 100%;
+    height: auto;
+}
+
+.header-cart{
+    display: flex;
+    align-items: center;
+    height: 10%;
+    border-radius: 12px;
+    background-color: v.$brand-color;
+    box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.4);
+}
+
+.header-cart p{
+    font-weight: bold;
 }
 
 .cart-content{

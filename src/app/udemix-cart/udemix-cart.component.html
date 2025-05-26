@@ -1,20 +1,22 @@
 <!-- container-cart  - content-open-->
-<div
-  (click)="onToggleCart()"
-  class="container-cart"
-  [ngClass]="{'open': isCartOpen}">
+ <div 
+  class="bg-cart"
+  (click)="onToggleCart()" >
+<div class="container-cart" >
   <div class="container-icon">
     <img src="assets/cart-icon.svg" alt="Carrito de compras">
   </div>
-<div class="content-open">
+  <div class="content-open hidden">
     <div class="header-cart">
-        <p>Mi Carrito</p>
+      <p>Mi Carrito</p>
     </div>
     <div class="list-courses">
       <div class="card-course">
         <div class="details">
           <div class="container-imgCourse">
-            <img src="https://www.shutterstock.com/image-photo/elearning-education-internet-lessons-online-600nw-2158034833.jpg" alt="">
+            <img
+              src="https://www.shutterstock.com/image-photo/elearning-education-internet-lessons-online-600nw-2158034833.jpg"
+              alt="">
           </div>
           <section class="rightSection">
             <p class="title-course">
@@ -40,6 +42,6 @@
         <button class="btn-pay">Finalizar Compra</button>
       </div>
     </div>
+  </div>
 </div>
 </div>
-

@@ -11,10 +11,13 @@ export class UdemixCartComponent {
   isCartOpen : boolean = false;
 
   onToggleCart = ( ) : void => {
-    console.log(event);
-    const cart = document.querySelector('.content-closed');
-    cart?.classList.remove("content-closed");
-    cart?.classList.add("content-open");
+    // console.log(event);
+    // const cart = document.querySelector('.bg-cart');
+    // cart?.classList.add("open");
+
+    // const contentOpened = document.querySelector('.content-open');
+    // contentOpened?.classList.remove("hidden");
+
   }
 
 }

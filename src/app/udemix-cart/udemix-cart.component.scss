@@ -25,8 +25,10 @@
         width: 375px;
         height: 500px;
         box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.6);
-        transition: width 0.6s ease;
+        transition: width 0.4s ease;
         border-radius: 20px;
+        transition: translateX(100%);
+        transition: all 0.2s ease-in;
     }
 }
 
@@ -55,17 +57,19 @@
     overflow: hidden;
     right: 2%;
     bottom: 5%;
-    z-index: 100;
-    background-color: v.$white-custom;
     width: 375px;
     height: 500px;
+    z-index: 100;
+    background-color: v.$white-custom;
     box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.6);
     border-radius: 20px;
+    transition: all 0.2s ease-in;
 }
 
 .hidden{
-    display: none;
+    opacity: 0;
 }
+
 
 .header-cart{
     display: flex;

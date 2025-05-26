@@ -10,7 +10,17 @@ export class UdemixCartComponent {
 
   isCartOpen : boolean = false;
 
+  delayText : boolean = false;
+
+
   onToggleCart = ( ) : void => {
+    this.isCartOpen = !this.isCartOpen
+    setTimeout(
+      () => this.delayText = !this.delayText , 
+      200
+    );
+    
+  
     // console.log(event);
     // const cart = document.querySelector('.bg-cart');
     // cart?.classList.add("open");

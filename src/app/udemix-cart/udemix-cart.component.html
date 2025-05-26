@@ -1,12 +1,13 @@
 <!-- container-cart  - content-open-->
  <div 
   class="bg-cart"
-  (click)="onToggleCart()" >
+  (click)="onToggleCart()" 
+  [ngClass]="{'open' :  isCartOpen}">
 <div class="container-cart" >
   <div class="container-icon">
     <img src="assets/cart-icon.svg" alt="Carrito de compras">
   </div>
-  <div class="content-open hidden">
+  <div class="content-open" [ngClass]="{'hidden' : !delayText}">
     <div class="header-cart">
       <p>Mi Carrito</p>
     </div>

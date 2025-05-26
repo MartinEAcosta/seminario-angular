@@ -10,24 +10,22 @@ export class UdemixCartComponent {
 
   isCartOpen : boolean = false;
 
-  delayText : boolean = false;
-
-
   onToggleCart = ( ) : void => {
-    this.isCartOpen = !this.isCartOpen
-    setTimeout(
-      () => this.delayText = !this.delayText , 
-      200
-    );
-    
-  
-    // console.log(event);
-    // const cart = document.querySelector('.bg-cart');
-    // cart?.classList.add("open");
 
-    // const contentOpened = document.querySelector('.content-open');
-    // contentOpened?.classList.remove("hidden");
+    this.isCartOpen = !this.isCartOpen;
+
+    // this.isCartOpen = !this.isCartOpen;
+  }
+
+  onCloseCart = ( ) : void => {
+    
+    const clickedContainer = event?.target as HTMLElement;
+
+    if( clickedContainer.classList.contains('overlay') ){
+      this.isCartOpen = false;
+    }
 
   }
+
 
 }

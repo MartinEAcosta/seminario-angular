@@ -1,48 +1,45 @@
 <!-- container-cart  - content-open-->
- <div 
-  class="bg-cart"
-  (click)="onToggleCart()" 
-  [ngClass]="{'open' :  isCartOpen}">
-<div class="container-cart" >
-  <div class="container-icon">
-    <img src="assets/cart-icon.svg" alt="Carrito de compras">
-  </div>
-  <div class="content-open" [ngClass]="{'hidden' : !delayText}">
-    <div class="header-cart">
-      <p>Mi Carrito</p>
+<div class="overlay" (click)="onCloseCart()">
+  <div class="bg-cart" (click)="onToggleCart()" [ngClass]="{'open' :  isCartOpen}">
+    <div class="container-icon"[ngClass]="{'hidden' : isCartOpen} ">
+      <img src="assets/cart-icon.svg" alt="Carrito de compras">
     </div>
-    <div class="list-courses">
-      <div class="card-course">
-        <div class="details">
-          <div class="container-imgCourse">
-            <img
-              src="https://www.shutterstock.com/image-photo/elearning-education-internet-lessons-online-600nw-2158034833.jpg"
-              alt="">
-          </div>
-          <section class="rightSection">
-            <p class="title-course">
-              Aprendiendo Angular: Seminario - TUDAI
-            </p>
-            <div class="quantity-selector">
-              <p class="text-quota">Cupos a reservar:</p>
-              <input class="leftBtn" type="button" value="-">
-              <input class="inputNumber" type="number" name="" id="" value="1">
-              <input class="rightBtn" type="button" value="+">
+    <div class="content-open" [ngClass]="{'hidden' : !isCartOpen}">
+      <div class="header-cart">
+        <p>Mi Carrito</p>
+      </div>
+      <div class="list-courses">
+        <div class="card-course">
+          <div class="details">
+            <div class="container-imgCourse">
+              <img
+                src="https://www.shutterstock.com/image-photo/elearning-education-internet-lessons-online-600nw-2158034833.jpg"
+                alt="">
             </div>
-          </section>
+            <section class="rightSection">
+              <p class="title-course">
+                Aprendiendo Angular: Seminario - TUDAI
+              </p>
+              <div class="quantity-selector">
+                <p class="text-quota">Cupos a reservar:</p>
+                <input class="leftBtn" type="button" value="-">
+                <input class="inputNumber" type="number" name="" id="" value="1">
+                <input class="rightBtn" type="button" value="+">
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <div class="container-referral">
+          <p class="text-referral">¿Tiene un cupón de descuento? Ingresalo Aquí.</p>
+          <input type="text" placeholder="CURSOS-2025">
+        </div>
+        <div class="container-btns">
+          <button class="btn-continue">Continuar Explorando</button>
+          <button class="btn-pay">Finalizar Compra</button>
         </div>
       </div>
     </div>
-    <div class="actions">
-      <div class="container-referral">
-        <p class="text-referral">¿Tiene un cupón de descuento? Ingresalo Aquí.</p>
-        <input type="text" placeholder="CURSOS-2025">
-      </div>
-      <div class="container-btns">
-        <button class="btn-continue">Continuar Explorando</button>
-        <button class="btn-pay">Finalizar Compra</button>
-      </div>
-    </div>
   </div>
-</div>
 </div>

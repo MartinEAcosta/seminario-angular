@@ -1,5 +1,13 @@
 @use '../../variables.scss' as v;
 
+.overlay{
+    position: fixed;
+    top: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+}
+
 .bg-cart{
     display: flex;
     position: fixed;
@@ -13,6 +21,8 @@
     box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.4);
     align-items: center;
     transition: width 0.6s ease;
+    cursor: pointer;
+    pointer-events: all;
 
     &.open{
         display: flex;
@@ -22,8 +32,8 @@
         bottom: 5%;
         z-index: 100;
         background-color: v.$white-custom;
-        width: 375px;
-        height: 500px;
+        width: 25%;
+        height: 70%;
         box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.6);
         transition: width 0.4s ease;
         border-radius: 20px;
@@ -32,21 +42,23 @@
     }
 }
 
-.container-cart .container-icon{
+.container-icon{
     display: flex;
     color: v.$white-custom;
     font-size: 1.5rem;
     font-family: v.$font-primary;
     margin: auto;
-    width: 20px;
+    width: 100%;
+    height: auto;
     border: none;
     padding: 10px 20px;
     border-radius: 100%;
     cursor: pointer;
-    transition: all 0.3s ease;
+    pointer-events: none;
+    transition: all 0.1s ease;
 }
 
-.container-cart img{
+img{
     width: 100%;
 }
 
@@ -57,16 +69,17 @@
     overflow: hidden;
     right: 2%;
     bottom: 5%;
-    width: 375px;
-    height: 500px;
+    width: 25%;
+    height: 70%;
     z-index: 100;
     background-color: v.$white-custom;
     box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.6);
     border-radius: 20px;
-    transition: all 0.2s ease-in;
+    transition: all 0.2s ease-in 0.2s;
 }
 
 .hidden{
+    visibility: hidden;
     opacity: 0;
 }
 
@@ -150,6 +163,10 @@
     border: none;
 }
 
+.quantity-selector input:focus{
+    outline: none;
+}
+
 .leftBtn , .rightBtn{
     background-color: v.$brand-color;
     color: v.$white-custom;
@@ -180,7 +197,7 @@
 
 .container-referral{
     display: flex;
-    margin: 1% 4% 0% 4%;
+    margin: 1% 4% 3% 4%;
     font-family: v.$font-primary;
     height: 40%;
     align-items: center;
@@ -203,7 +220,6 @@
 
 .container-referral input::placeholder{
     color: v.$white-custom;
-
 }
 
 .text-referral{

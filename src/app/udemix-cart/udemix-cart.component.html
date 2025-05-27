@@ -1,8 +1,8 @@
 <!-- container-cart  - content-open-->
-<div class="overlay" (click)="onCloseCart()">
-  <div class="bg-cart" (click)="onToggleCart()" [ngClass]="{'open' :  isCartOpen}">
-    <div class="container-icon"[ngClass]="{'hidden' : isCartOpen} ">
-      <img src="assets/cart-icon.svg" alt="Carrito de compras">
+<div class="" [ngClass]="{'overlay' : isCartOpen}" (click)="onCloseCart()">
+  <div class="bg-cart" (click)="onOpenCart()" [ngClass]="{'open' :  isCartOpen}">
+    <div class="container-icon">
+      <img class="imgIconCart" [ngClass]="{'imgVisibility' : isCartOpen}" src="assets/cart-icon.svg" alt="Carrito de compras">
     </div>
     <div class="content-open" [ngClass]="{'hidden' : !isCartOpen}">
       <div class="header-cart">

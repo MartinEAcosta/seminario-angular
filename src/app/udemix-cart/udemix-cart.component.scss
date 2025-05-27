@@ -22,7 +22,6 @@
     align-items: center;
     transition: width 0.6s ease;
     cursor: pointer;
-    pointer-events: all;
 
     &.open{
         display: flex;
@@ -31,13 +30,11 @@
         right: 2%;
         bottom: 5%;
         z-index: 100;
-        background-color: v.$white-custom;
         width: 25%;
         height: 70%;
         box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.6);
         transition: width 0.4s ease;
         border-radius: 20px;
-        transition: translateX(100%);
         transition: all 0.2s ease-in;
     }
 }
@@ -54,8 +51,20 @@
     padding: 10px 20px;
     border-radius: 100%;
     cursor: pointer;
-    pointer-events: none;
-    transition: all 0.1s ease;
+}
+
+.imgIconCart{
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 2.5s ease, transform 1s ease, visibility 2.5s ease;
+}
+
+.imgVisibility{
+visibility: hidden;
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s ease 0.5s; // delay opcional
 }
 
 img{
@@ -76,6 +85,7 @@ img{
     box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.6);
     border-radius: 20px;
     transition: all 0.2s ease-in 0.2s;
+    pointer-events: none;
 }
 
 .hidden{

@@ -10,11 +10,14 @@ export class UdemixCartComponent {
 
   isCartOpen : boolean = false;
 
-  onToggleCart = ( ) : void => {
+  onOpenCart = ( ) : void => {
+
+    if( this.isCartOpen ) {
+      return;
+    }
 
     this.isCartOpen = !this.isCartOpen;
 
-    // this.isCartOpen = !this.isCartOpen;
   }
 
   onCloseCart = ( ) : void => {
@@ -25,6 +28,10 @@ export class UdemixCartComponent {
       this.isCartOpen = false;
     }
 
+  }
+
+  onUpQuantity = ( ) : void => {
+    
   }
 
 

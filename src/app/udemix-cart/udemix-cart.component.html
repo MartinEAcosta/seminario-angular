@@ -9,26 +9,28 @@
         <p>Mi Carrito</p>
       </div>
       <div class="list-courses">
+        @for ( course of cartItems.keys(); track course ) {
         <div class="card-course">
           <div class="details">
             <div class="container-imgCourse">
               <img
-                src="https://www.shutterstock.com/image-photo/elearning-education-internet-lessons-online-600nw-2158034833.jpg"
+                src={{course.img}}
                 alt="">
             </div>
-            <section class="rightSection">
-              <p class="title-course">
-                Aprendiendo Angular: Seminario - TUDAI
-              </p>
-              <div class="quantity-selector">
-                <p class="text-quota">Cupos a reservar:</p>
-                <input class="leftBtn" type="button" value="-">
-                <input class="inputNumber" type="number" name="" id="" value="1">
-                <input class="rightBtn" type="button" value="+">
-              </div>
-            </section>
+              <section class="rightSection">
+                <p class="title-course">
+                  {{course.title}}
+                </p>
+                <div class="quantity-selector">
+                  <p class="text-quota">Cupos a reservar:</p>
+                  <input class="leftBtn" type="button" value="-">
+                  <input class="inputNumber" type="number" name="" id="" value={{cartItems.get(course)}}>
+                  <input class="rightBtn" type="button" value="+">
+                </div>
+              </section>
           </div>
         </div>
+        }
       </div>
       <div class="actions">
         <div class="container-referral">

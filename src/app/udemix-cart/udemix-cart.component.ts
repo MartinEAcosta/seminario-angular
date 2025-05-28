@@ -13,7 +13,6 @@ export class UdemixCartComponent implements OnInit {
   isCartOpen : boolean = false;
   cartItems !: Map<Course, number>;
 
-  
   constructor(private cartService : CartService ) {}
 
   ngOnInit(): void {
@@ -32,7 +31,7 @@ export class UdemixCartComponent implements OnInit {
 
   onCloseCart = ( ) : void => {
     const clickedContainer = event?.target as HTMLElement;
-    if( clickedContainer.classList.contains('overlay') ){
+    if( clickedContainer.classList.contains('overlay') || clickedContainer.classList.contains('btn-continue') ){
       this.isCartOpen = false;
     }
 

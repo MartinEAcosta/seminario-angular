@@ -23,9 +23,9 @@
                 </p>
                 <div class="quantity-selector">
                   <p class="text-quota">Cupos a reservar:</p>
-                  <input class="leftBtn" type="button" value="-">
+                  <input class="leftBtn" (click)="onDownQuantity( course )" type="button" value="-">
                   <input class="inputNumber" type="number" name="" id="" value={{cartItems.get(course)}}>
-                  <input class="rightBtn" type="button" value="+">
+                  <input class="rightBtn" (click)="onUpQuantity( course )" type="button" value="+">
                 </div>
               </section>
           </div>

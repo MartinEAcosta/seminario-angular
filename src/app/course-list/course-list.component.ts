@@ -32,7 +32,7 @@ export class CourseListComponent {
       "reviews" : 3,
       "price" : 3000,
       "offer" : false,
-      "capacity" : 1,
+      "capacity" : 3,
     },
   ]
   

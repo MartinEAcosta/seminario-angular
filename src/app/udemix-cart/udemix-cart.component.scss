@@ -171,15 +171,34 @@ img{
 .quantity-selector input{
     width: 15%;
     border: none;
+    text-align: center;
+    pointer-events: none;
 }
 
 .quantity-selector input:focus{
     outline: none;
 }
 
+
+.inputNumber{
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    margin: 0px;
+    pointer-events: none;
+}
+
+// No dejeba que se centre el texto del input 
+.quantity-selector input::-webkit-inner-spin-button,
+.quantity-selector input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .leftBtn , .rightBtn{
     background-color: v.$brand-color;
     color: v.$white-custom;
+    pointer-events: all;
 }
 
 .leftBtn {

@@ -13,13 +13,16 @@ export class CartService {
   
   onAddToCart = ( course : Course ) : Map<Course,number>  => {
     const hasItem : boolean = this._courses.has( course )
+    console.log(hasItem)
     if( hasItem ){
       let quantity : number = this._courses.get( course ) ?? 0;
-      this._courses.set( course, quantity++ )
+      if( quantity < course.capacity ){
+        this._courses.set( course, quantity+1 )
+        return this._courses;
+      }
       return this._courses;
     }
     this._courses.set( course, 1 );
-    console.log(this._courses)
 
     this._itemsSubject.next(this._courses);
     

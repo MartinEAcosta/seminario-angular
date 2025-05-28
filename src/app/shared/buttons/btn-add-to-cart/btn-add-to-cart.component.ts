@@ -17,7 +17,6 @@ export class BtnAddToCartComponent {
 
   onAddToCart = ( course : Course ) : void  => {
     if( course.capacity > 0 ){
-      course.capacity -= 1;   
       this.cartService.onAddToCart(course);
     } 
   }

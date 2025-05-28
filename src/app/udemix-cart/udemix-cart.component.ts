@@ -37,8 +37,19 @@ export class UdemixCartComponent implements OnInit {
 
   }
 
-  onUpQuantity = ( ) : void => {
-    
+  onUpQuantity = ( course : Course ) : void => {
+    const reservedQuantity = this.cartItems.get(course)
+    if( reservedQuantity != undefined && reservedQuantity < course.capacity ){
+      
+      this.cartItems.set( course , reservedQuantity + 1 )
+    }
+  }
+
+  onDownQuantity = ( course : Course ) : void => {
+    const reservedQuantity = this.cartItems.get(course);
+    if( reservedQuantity != undefined && reservedQuantity > 0 && course.capacity > 0 ){
+      this.cartItems.set( course , reservedQuantity - 1 );
+    }
   }
 
 }

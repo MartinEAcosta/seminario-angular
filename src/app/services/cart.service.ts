@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Course } from './course-list/Course';
+import { Course } from '../course-list/Course';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({

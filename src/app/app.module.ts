@@ -11,6 +11,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { BtnBuyComponent } from './shared/buttons/btn-buy/btn-buy.component';
 import { BtnAddToCartComponent } from './shared/buttons/btn-add-to-cart/btn-add-to-cart.component';
+import { AboutComponent } from './pages/about/about.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { BtnAddToCartComponent } from './shared/buttons/btn-add-to-cart/btn-add-
     HomeComponent,
     FooterComponent,
     BtnBuyComponent,
-    BtnAddToCartComponent
+    BtnAddToCartComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

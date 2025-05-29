@@ -1,0 +1,59 @@
+@use '../../../variables.scss' as v;
+
+.container-about{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.container-about .title , .text-about , ul{
+    font-family: v.$font-primary;
+}
+
+.container-about .title{
+    font-size: x-larger;
+    color: v.$black-custom;
+    margin: 3%;
+}
+
+.container-about .text-about{
+    font-size: large;
+}
+
+.section-about{
+    display: flex;
+    flex-direction: column;
+    margin: 0% 3% 3% 3%;
+    width: 60%;
+}
+
+.section-about ul{
+    list-style: none;
+    margin: 1%;
+}
+
+.container-split {
+    display: flex;
+    flex-direction: row;
+}
+
+.container-animated{
+    display: flex;
+    justify-content: center;
+    margin: 0 auto auto auto;
+    text-align: center;
+    align-items: center;
+}
+
+.text-animated{
+    display: flex;
+    color: v.$brand-color;
+    font-size: 8vw;
+    font-family: v.$font-brand;
+    transition: transform 0.1s ease;
+    perspective: 1000px;
+    text-shadow: 10px 10px 15px rgba( 0 , 0 , 0 , 0.6);
+    margin-right: 10%;
+    transform: rotate(5deg);
+}

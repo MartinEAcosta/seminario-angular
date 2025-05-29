@@ -44,4 +44,11 @@
       </div>
     </div>
   </div>
+
+  <div class="container-notification" [ngClass]="{ 'hidden': isCartOpen || (cartItems.size === 0), 'onNotification': !isCartOpen && cartItems.size !== 0 }"> 
+    <small>
+      {{ cartItems.size }} 
+    </small> 
+  </div>
+
 </div>

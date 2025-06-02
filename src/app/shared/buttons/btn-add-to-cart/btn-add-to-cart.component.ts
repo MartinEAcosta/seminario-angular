@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Course } from '../../../course-list/Course';
+import { Course } from '../../../components/course-list/Course';
 import { CartService } from '../../../services/cart.service';
 @Component({
   selector: 'app-btn-add-to-cart',

@@ -11,6 +11,7 @@ import { BtnBuyComponent } from './shared/buttons/btn-buy/btn-buy.component';
 import { BtnAddToCartComponent } from './shared/buttons/btn-add-to-cart/btn-add-to-cart.component';
 import { AboutComponent } from './pages/about/about.component';
 import { CourseListComponent } from './components/course-list/course-list.component';
+import { AuthComponent } from './pages/auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CourseListComponent } from './components/course-list/course-list.compon
     FooterComponent,
     BtnBuyComponent,
     BtnAddToCartComponent,
-    AboutComponent
+    AboutComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,

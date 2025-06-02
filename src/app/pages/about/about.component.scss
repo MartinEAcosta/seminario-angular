@@ -1,10 +1,14 @@
 @use '../../../variables.scss' as v;
 
-.container-about{
+.bg-about{
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100%;
+    height: 70vh;
+    align-items: center;    
+    justify-content: center;
+    margin: auto;
+    background-color: v.$black-custom;
 }
 
 .container-about .title , .text-about , ul{
@@ -13,12 +17,14 @@
 
 .container-about .title{
     font-size: x-larger;
-    color: v.$black-custom;
+    color: v.$white-custom;
     margin: 3%;
 }
 
 .container-about .text-about{
     font-size: large;
+    color: v.$white-custom;
+
 }
 
 .section-about{
@@ -29,6 +35,7 @@
 }
 
 .section-about ul{
+    color: v.$white-custom;
     list-style: none;
     margin: 1%;
 }

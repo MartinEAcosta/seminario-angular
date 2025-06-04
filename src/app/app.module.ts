@@ -12,7 +12,7 @@ import { BtnAddToCartComponent } from './shared/buttons/btn-add-to-cart/btn-add-
 import { AboutComponent } from './pages/about/about.component';
 import { CourseListComponent } from './components/course-list/course-list.component';
 import { AuthComponent } from './pages/auth/auth.component';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,8 @@ import { provideHttpClient } from '@angular/common/http';
     AppRoutingModule
   ],
   providers: [
-    provideHttpClient()
+    // Habilito las peticiones fetch
+    provideHttpClient( withFetch() )
   ],
   bootstrap: [AppComponent]
 })

@@ -9,12 +9,12 @@
         <p>Mi Carrito</p>
       </div>
       <div class="list-courses">
-        @for ( course of cartItems.keys(); track course ) {
+        @for ( course of cartItems().keys(); track course ) {
         <div class="card-course">
           <div class="details">
             <div class="container-imgCourse">
               <img
-                src={{course.img}}
+                src={{course.imgURL}}
                 alt="">
             </div>
               <section class="rightSection">
@@ -24,7 +24,7 @@
                 <div class="quantity-selector">
                   <p class="text-quota">Cupos a reservar:</p>
                   <input class="leftBtn" (click)="onDownQuantity( course )" type="button" value="-">
-                  <input class="inputNumber" type="number" name="" id="" value={{cartItems.get(course)}}>
+                  <input class="inputNumber" type="number" name="" id="" value={{cartItems().get(course)}}>
                   <input class="rightBtn" (click)="onUpQuantity( course )" type="button" value="+">
                 </div>
               </section>
@@ -45,10 +45,9 @@
     </div>
   </div>
 
-  <div class="container-notification" [ngClass]="{ 'hidden': isCartOpen || (cartItems.size === 0), 'onNotification': !isCartOpen && cartItems.size !== 0 }"> 
+  <div class="container-notification" [ngClass]="{ 'hidden': isCartOpen || (cartItems().size === 0), 'onNotification': !isCartOpen && cartItems().size !== 0 }"> 
     <small>
-      {{ cartItems.size }} 
+      {{ cartItems().size }} 
     </small> 
   </div>
-
 </div>

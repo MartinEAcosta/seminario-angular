@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Course } from './Course';
-import { CourseService } from '../../services/course.service';
+import { Component, inject, OnInit } from '@angular/core';
+import { Course } from '../../interfaces/course.interfaces';
+import { CourseService } from '../../services/course/course.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -13,8 +13,11 @@ export class CourseListComponent implements OnInit {
 
   courses : Course[] = [];
   errorMessage : String = '';
+  
+  // Forma recomendada por angularde instaciar elservicio. 
+  public courseService = inject(CourseService);
 
-  constructor ( private courseService : CourseService) { }
+  constructor ( ) { }
 
   ngOnInit() : void { 
     this.loadCourses();

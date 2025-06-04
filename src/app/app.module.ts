@@ -12,6 +12,7 @@ import { BtnAddToCartComponent } from './shared/buttons/btn-add-to-cart/btn-add-
 import { AboutComponent } from './pages/about/about.component';
 import { CourseListComponent } from './components/course-list/course-list.component';
 import { AuthComponent } from './pages/auth/auth.component';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,9 @@ import { AuthComponent } from './pages/auth/auth.component';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    provideHttpClient()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

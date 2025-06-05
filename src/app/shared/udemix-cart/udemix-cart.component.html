@@ -45,7 +45,9 @@
     </div>
   </div>
 
-  <div class="container-notification" [ngClass]="{ 'hidden': isCartOpen || (cartItems().size === 0), 'onNotification': !isCartOpen && cartItems().size !== 0 }"> 
+  <!-- Si el carrito esta abierto se esconde el icono de notificación o en caso de que el tamaño sea distinto de 0 y este cerrado -->
+  <div class="container-notification" [ngClass]="{ 'hidden': isCartOpen || (cartItems().size === 0),
+                                                   'onNotification': !isCartOpen && cartItems().size !== 0 }"> 
     <small>
       {{ cartItems().size }} 
     </small> 

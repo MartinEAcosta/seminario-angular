@@ -207,7 +207,8 @@ input:not(:placeholder-shown) + label{
     color: v.$white-custom;
 }
 
-.text-forgot-pass{
+.underline{
+    cursor: pointer;
     text-decoration: underline;
     text-underline-offset: 3px;
 }

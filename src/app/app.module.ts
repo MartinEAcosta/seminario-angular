@@ -13,6 +13,8 @@ import { AboutComponent } from './pages/about/about.component';
 import { CourseListComponent } from './components/course-list/course-list.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { FormRegisterComponent } from './form-register/form-register.component';
+import { FormLoginComponent } from './form-login/form-login.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
     BtnBuyComponent,
     BtnAddToCartComponent,
     AboutComponent,
-    AuthComponent
+    AuthComponent,
+    FormRegisterComponent,
+    FormLoginComponent
   ],
   imports: [
     BrowserModule,

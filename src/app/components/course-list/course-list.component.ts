@@ -19,11 +19,11 @@ export class CourseListComponent implements OnInit {
 
   constructor ( ) { }
 
-  ngOnInit() : void { 
+  ngOnInit = () : void => { 
     this.loadCourses();
    }
 
-  loadCourses() : void  {
+  loadCourses = () : void =>  {
     this.courseService.getAll().subscribe({
       next: ( data ) => {
         console.log(data);

@@ -1,4 +1,4 @@
-import { Component, Signal, signal, WritableSignal } from '@angular/core';
+import { Component, Output, Signal, signal, WritableSignal } from '@angular/core';
 
 @Component({
   selector: 'app-auth',
@@ -10,7 +10,7 @@ export class AuthComponent {
 
   isLoginMode : WritableSignal<boolean> = signal(true);
 
-  onChangeMode = ( event : MouseEvent ) : void  => {
+  onChangeMode = ( event : Event ) : void  => {
     event.preventDefault;
     this.isLoginMode.update(value => !value);
   }

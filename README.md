@@ -9,12 +9,16 @@ https://angular.dev/style-guide
 A la hora de realizar una petición se pueden utilizar diferentes tipos de "middlewares" para tomar acciones segun las 
 diferentes respuestas.
 
-En el caso de que la petición se halla realizado de forma correcta (2xx status), el metodo tap: 
-Permite "interceptar" y realizar acciones, esto es util para gestionar estado.
+En el caso de que la petición se halla realizado de forma correcta (2xx status), el metodo tap:  
+Permite "interceptar" y realizar acciones, esto es util para gestionar estado.  
 tap( resp => {
     this._user.set(resp.user);
-});
+});  
 
+En caso de que se detecte un error a través del metodo:  
+catchError(error : any) => {
+    // Logica de resolución de error.
+}
 
 
 

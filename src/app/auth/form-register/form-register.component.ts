@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
@@ -10,6 +10,9 @@ import { AuthService } from '../../services/auth/auth.service';
   styleUrls: [ '../form-global.scss' , './form-register.component.scss' ]
 })
 export class FormRegisterComponent {
+
+  @Output()
+  onChangeMode = new EventEmitter<void>();
 
   registerForm = new FormGroup({
     username : new FormControl(''),
@@ -23,4 +26,9 @@ export class FormRegisterComponent {
 
     
   }
+
+  onClick = () : void => {
+    this.onChangeMode.emit();
+  }
+
 }

@@ -1,0 +1,6 @@
+@use '../../../variables.scss' as v;
+
+.text-login{
+    font-family: v.$font-primary;
+    color: v.$white-custom
+}

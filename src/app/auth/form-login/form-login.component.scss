@@ -1,0 +1,15 @@
+@use '../../../variables.scss' as v;
+
+.text-forgot-pass , .text-register{
+    display: flex;
+    margin: 1% auto;
+    font-family: v.$font-primary;
+    color: v.$white-custom;
+}
+
+
+.text-register a {
+    color: v.$white-custom;
+    text-underline-offset: 3px;
+}
+

@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-form-register',
   standalone: false,
   templateUrl: './form-register.component.html',
-  styleUrl: './form-register.component.scss'
+  styleUrls: [ '../form-global.scss' , './form-register.component.scss' ]
 })
 export class FormRegisterComponent {
 

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 
@@ -15,18 +15,28 @@ export class FormRegisterComponent {
   onChangeMode = new EventEmitter<void>();
 
   registerForm = new FormGroup({
-    username : new FormControl(''),
-    email : new FormControl(''),
-    password : new FormControl(''),
+    username : new FormControl('', 
+                              [Validators.required, Validators.minLength(3)] 
+    ),
+    email : new FormControl('',
+                              [Validators.required, Validators.email]
+    ),
+    password : new FormControl('',
+                                [Validators.required, Validators.minLength(6)]
+    ),
   })
 
   private authService = inject(AuthService);
 
   onSumbit = () : void => {
-
-    
+    if( this.registerForm.valid ){
+      const { username , email  , password } = this.registerForm.value;
+      this.authService.registerUser(username!, email!, password!).subscribe( resp => 
+        console.log(resp)
+      );
+    };
   }
-
+    
   onClick = () : void => {
     this.onChangeMode.emit();
   }

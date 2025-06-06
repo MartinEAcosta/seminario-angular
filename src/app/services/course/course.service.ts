@@ -16,7 +16,7 @@ export class CourseService {
     
   }
 
-  getAll( ) : Observable<CourseResponse> {
+  getAll = ( ) : Observable<CourseResponse> => {
     return this.http.get<CourseResponse>(this.baseURL);
   }
 

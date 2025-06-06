@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-form-register',
@@ -8,4 +10,18 @@ import { Component } from '@angular/core';
 })
 export class FormRegisterComponent {
 
+  registerForm = new FormGroup({
+    username : new FormControl(''),
+    email : new FormControl(''),
+    password : new FormControl(''),
+  })
+
+  onSumbit = () : void => {
+    console.log(this.registerForm.value);
+    try{
+
+    }catch(error){
+      console.log(error);
+    }
+  }
 }

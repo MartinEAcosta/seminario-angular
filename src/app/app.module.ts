@@ -15,6 +15,7 @@ import { AuthComponent } from './pages/auth/auth.component';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { FormRegisterComponent } from './auth/form-register/form-register.component';
 import { FormLoginComponent } from './auth/form-login/form-login.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { FormLoginComponent } from './auth/form-login/form-login.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
   ],
   providers: [
     // Habilito las peticiones fetch

@@ -1,6 +1,6 @@
 <div class="container-form">
     <h1 class="title-form">Registrarse</h1>
-    <form class="form-auth">
+    <form [formGroup]="registerForm" (submit)="onSumbit()" class="form-auth">
             <input 
                 type="text" 
                 placeholder="Charles" 
@@ -8,6 +8,7 @@
                 required 
                 name="username"
                 autocomplete="off"
+                formControlName="username"
             >
             <label class="label-text label-email">Nombre de usuario</label>
 
@@ -18,6 +19,7 @@
                 required 
                 name="email"
                 autocomplete="off"
+                formControlName="email"
             >
             <label class="label-text label-email">Correo Electronico</label>
 
@@ -27,6 +29,7 @@
                 class="input-password" 
                 required 
                 name="password"
+                formControlName="password"
             >
             <label class="label-text">Contraseña</label>
             

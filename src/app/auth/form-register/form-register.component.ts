@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-form-register',
@@ -16,12 +17,10 @@ export class FormRegisterComponent {
     password : new FormControl(''),
   })
 
-  onSumbit = () : void => {
-    console.log(this.registerForm.value);
-    try{
+  private authService = inject(AuthService);
 
-    }catch(error){
-      console.log(error);
-    }
+  onSumbit = () : void => {
+
+    
   }
 }

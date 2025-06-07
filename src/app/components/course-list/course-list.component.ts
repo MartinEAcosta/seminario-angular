@@ -1,7 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Course } from '../../interfaces/course.interfaces';
-import { CourseService } from '../../services/course/course.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-course-list',
@@ -9,27 +7,13 @@ import { Subscription } from 'rxjs';
   templateUrl: './course-list.component.html',
   styleUrl: './course-list.component.scss'
 })
-export class CourseListComponent implements OnInit {
-
-  courses : Course[] = [];
-  errorMessage : String = '';
+export class CourseListComponent {
   
-  // Forma recomendada por angularde instaciar elservicio. 
-  public courseService = inject(CourseService);
+  courses = input.required<Course[] | undefined>();
 
-  constructor ( ) { }
-
-  ngOnInit = () : void => { 
-    this.loadCourses();
-   }
-
-  loadCourses = () : void =>  {
-    this.courseService.getAll()
-                      .subscribe(
-
-                      )
+  constructor ( ) {
   }
-  
+
 
   // courses : Course[] = [
   //   {

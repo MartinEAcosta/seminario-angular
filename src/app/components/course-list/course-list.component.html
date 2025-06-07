@@ -1,4 +1,4 @@
-@for ( course of courses; track course._id) {
+@for ( course of courses() ; track course._id) {
     <div class="card-course">
         <div class="content-card">
             <img src={{course.imgURL}} alt="Course Image">

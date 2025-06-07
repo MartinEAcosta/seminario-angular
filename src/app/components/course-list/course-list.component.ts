@@ -24,16 +24,10 @@ export class CourseListComponent implements OnInit {
    }
 
   loadCourses = () : void =>  {
-    this.courseService.getAll().subscribe({
-      next: ( data ) => {
-        console.log(data);
-        this.courses = data.courses;
-      },
-      error: ( error ) =>{
-        this.errorMessage = error.errorMessage;
-        console.log(this.errorMessage)
-      }
-    });
+    this.courseService.getAll()
+                      .subscribe(
+
+                      )
   }
   
 

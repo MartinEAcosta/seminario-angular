@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { AuthResponse, User } from '../../interfaces/auth.interfaces';
-import {  Observable, tap } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
+
 
 type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
 
@@ -33,18 +34,48 @@ export class AuthService {
 
   constructor() { }
 
-  registerUser = ( username : string , email : string , password : string ) : Observable<AuthResponse> => {
+  registerUser = ( username : string , email : string , password : string ) : Observable<boolean> => {
     return this.http.post<AuthResponse>(`${this.baseURL}/new` , { username , email ,password } )
-                .pipe( 
-                  tap( resp => {
-                    this._authStatus.set('authenticated');
-                    this._user.set(resp.userRef);
-                    this._token.set(resp.token);
+                      .pipe( 
+                        tap( resp => {
+                          this._authStatus.set('authenticated');
+                          this._user.set(resp.userRef);
+                          this._token.set(resp.token);
 
-                    localStorage.setItem('x-token' , resp.token);
-                  })
-                  
+                          localStorage.setItem('x-token' , resp.token);
+                        }),
+                        map( () => true ) ,
+                        // En caso de tener un error se captura y se toman las acciones de "limpieza"
+                        catchError( (error : any ) => {
+                          this._user.set( null );
+                          this._token.set( null );
+                          this._authStatus.set('not-authenticated')
+
+                          // Retorna un observable en false indicando un error.
+                          return of(false);
+                        })
+                        
                 );
   }
+
+  loginUser = ( email : string , password : string ) : Observable<boolean> => {
+    return this.http.post<AuthResponse>(`${this.baseURL}` , { email , password } )
+                      .pipe(
+                        tap( resp => {
+                          this._user.set(resp.userRef);
+                          this._token.set(resp.token);
+                          this._authStatus.set('authenticated');
+                        }),
+                        map( () => true ) ,
+                        catchError( ( error : any ) => {
+                          this._user.set(null);
+                          this._token.set(null);
+                          this._authStatus.set('not-authenticated');
+                          
+                          return of(false);
+                        })
+              );
+  }
+
 
 }

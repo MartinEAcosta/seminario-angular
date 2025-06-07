@@ -20,5 +20,6 @@ catchError(error : any) => {
     // Logica de resolución de error.
 }
 
+El uso de rxResource fue visto en un curso aparte de Fernando Herrera, y lo utilicé para una vez que se carguen los cursos obtenerlos.
 
 

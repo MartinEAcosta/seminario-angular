@@ -1,5 +1,5 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
@@ -14,14 +14,25 @@ export class FormLoginComponent {
   onChangeMode = new EventEmitter<void>()
 
   loginForm = new FormGroup({
-    email : new FormControl(''),
-    password : new FormControl(''),
+    email : new FormControl('',
+                              [Validators.required, Validators.email]
+    ),
+    password : new FormControl('',
+                                [Validators.required, Validators.minLength(6)]
+    ),
   });
 
-  private authService : AuthService = inject(AuthService);
+  private authService = inject(AuthService);
 
   onSumbit = () => {
-    this.authService
+    if( this.loginForm.valid ){
+      const { email , password } = this.loginForm.value;
+      this.authService.loginUser( email! , password! )
+                        .subscribe( (isAuthenticated) => {
+                          if(isAuthenticated)
+                            console.log("autenticado")
+                        });
+    }
   }
 
   onClick = ( ) : void => {

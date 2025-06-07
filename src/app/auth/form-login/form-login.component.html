@@ -1,7 +1,7 @@
 
 <div class="container-form">
         <h1 class="title-form">Iniciar sesión</h1>
-        <form [formGroup]="loginForm" class="form-auth">
+        <form [formGroup]="loginForm" (submit)="onSumbit()" class="form-auth">
             <input 
                 type="text" 
                 placeholder="example@gmail.com" 

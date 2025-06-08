@@ -14,7 +14,7 @@ export class AuthService {
 
   private _authStatus = signal<AuthStatus>('checking');
   private _user = signal<User | null>(null);
-  private _token = signal<string | null>(null);
+  private _token = signal<string | null>(localStorage.getItem('x-token'));
 
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}auth`;
@@ -37,45 +37,40 @@ export class AuthService {
   registerUser = ( username : string , email : string , password : string ) : Observable<boolean> => {
     return this.http.post<AuthResponse>(`${this.baseURL}/new` , { username , email ,password } )
                       .pipe( 
-                        tap( resp => {
-                          this._authStatus.set('authenticated');
-                          this._user.set(resp.userRef);
-                          this._token.set(resp.token);
-
-                          localStorage.setItem('x-token' , resp.token);
-                        }),
-                        map( () => true ) ,
+                        map( (resp) =>  this.handleAuthSuccess(resp) ),
                         // En caso de tener un error se captura y se toman las acciones de "limpieza"
-                        catchError( (error : any ) => {
-                          this._user.set( null );
-                          this._token.set( null );
-                          this._authStatus.set('not-authenticated')
-
-                          // Retorna un observable en false indicando un error.
-                          return of(false);
-                        })
-                        
+                        catchError( (error : any ) => this.handleAuthError(error) )
                 );
   }
 
   loginUser = ( email : string , password : string ) : Observable<boolean> => {
     return this.http.post<AuthResponse>(`${this.baseURL}` , { email , password } )
                       .pipe(
-                        tap( resp => {
-                          this._user.set(resp.userRef);
-                          this._token.set(resp.token);
-                          this._authStatus.set('authenticated');
-                        }),
-                        map( () => true ) ,
-                        catchError( ( error : any ) => {
-                          this._user.set(null);
-                          this._token.set(null);
-                          this._authStatus.set('not-authenticated');
-                          
-                          return of(false);
-                        })
+                        map( (resp) => this.handleAuthSuccess( resp ) ),
+                        catchError( ( error : any ) =>  this.handleAuthError( error ) )
               );
   }
 
+  logoutUser = ( ) => {
+    this._user.set(null);
+    this._token.set(null);
+    this._authStatus.set('not-authenticated');
 
+    localStorage.clear();
+  }
+
+  private handleAuthSuccess = ( { token , userRef } : AuthResponse )  => {
+    this._user.set(userRef);
+    this._token.set(token);
+    this._authStatus.set('authenticated');
+
+    localStorage.setItem('x-token' , token);
+    return true;
+  }
+
+  private handleAuthError = ( error: any ) => {
+    this.logoutUser();
+
+    return of(false);
+  }
 }

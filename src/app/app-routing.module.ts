@@ -7,11 +7,11 @@ import { AuthComponent } from './pages/auth/auth.component';
 const routes: Routes = [
   { path : '' , component: HomeComponent  },
   { path : 'about' , component: AboutComponent  },
-  { path : 'login' , component: AuthComponent },
+  { path : 'auth' , component: AuthComponent , },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule { }

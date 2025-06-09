@@ -2,6 +2,7 @@ import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-register',
@@ -10,6 +11,8 @@ import { AuthService } from '../../services/auth/auth.service';
   styleUrls: [ '../form-global.scss' , './form-register.component.scss' ]
 })
 export class FormRegisterComponent {
+
+  router = inject(Router);
 
   @Output()
   onChangeMode = new EventEmitter<void>();
@@ -33,7 +36,10 @@ export class FormRegisterComponent {
       const { username , email  , password } = this.registerForm.value;
       this.authService.registerUser(username!, email!, password!)
                         .subscribe( (isAuthenticated) => {
-
+                          if( isAuthenticated ){
+                            this.router.navigateByUrl('/');
+                            return;
+                          }
                         });
     };
   }

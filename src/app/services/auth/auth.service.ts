@@ -3,6 +3,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { AuthResponse, User } from '../../interfaces/auth.interfaces';
 import { catchError, map, Observable, of, tap } from 'rxjs';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 
 type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
@@ -14,7 +15,13 @@ export class AuthService {
 
   private _authStatus = signal<AuthStatus>('checking');
   private _user = signal<User | null>(null);
-  private _token = signal<string | null>(localStorage.getItem('x-token'));
+  // Esto ayuda a que si se tiene una sesión ya iniciada y refrescar mantener la sesión.
+  private _token = signal<string | null>( localStorage.getItem('x-token') );
+
+  // Se dispara ni bien el servicio es inyectado por primera vez.
+  checkStatusResource = rxResource({
+    loader: () => this.checkStatus()
+  });
 
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}auth`;
@@ -40,7 +47,7 @@ export class AuthService {
                         map( (resp) =>  this.handleAuthSuccess(resp) ),
                         // En caso de tener un error se captura y se toman las acciones de "limpieza"
                         catchError( (error : any ) => this.handleAuthError(error) )
-                );
+              );
   }
 
   loginUser = ( email : string , password : string ) : Observable<boolean> => {
@@ -73,4 +80,23 @@ export class AuthService {
 
     return of(false);
   }
+
+  checkStatus = ( ) : Observable<boolean> => {
+    
+    const token = localStorage.getItem('x-token');
+
+    console.log(token);
+
+    if( !token ){
+      this.logoutUser();
+      return of(false);
+    }
+
+    return this.http.get<AuthResponse>(`${this.baseURL}/renew`, { headers: { 'x-token': token } })
+                      .pipe( 
+                        map( ( resp ) => this.handleAuthSuccess( resp ) ),
+                        catchError( (error : any ) => this.handleAuthError( error ) )
+                      );
+  }
+  
 }

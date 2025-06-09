@@ -1,4 +1,5 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -7,6 +8,9 @@ import { Component, HostListener } from '@angular/core';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+
+  authService = inject(AuthService);
+
   brandName = 'Udemix';
 
   @HostListener('window:scroll')

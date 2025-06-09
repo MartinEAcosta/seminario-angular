@@ -91,7 +91,7 @@ export class AuthService {
       this.logoutUser();
       return of(false);
     }
-
+    
     return this.http.get<AuthResponse>(`${this.baseURL}/renew`, { headers: { 'x-token': token } })
                       .pipe( 
                         map( ( resp ) => this.handleAuthSuccess( resp ) ),

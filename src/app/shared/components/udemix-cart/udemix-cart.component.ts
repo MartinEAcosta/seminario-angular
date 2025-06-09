@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, Signal } from '@angular/core';
-import { CartService } from '../../services/cart/cart.service';
-import { Course } from '../../interfaces/course.interfaces';
+import { CartService } from '../../../services/cart/cart.service';
+import { Course } from '../../../interfaces/course.interfaces';
 @Component({
   selector: 'app-udemix-cart',
   standalone: false,

@@ -17,7 +17,6 @@ import { FormRegisterComponent } from './auth/form-register/form-register.compon
 import { FormLoginComponent } from './auth/form-login/form-login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { authInterceptor } from './auth/interceptors/auth.interceptor';
-import { loggingInterceptor } from './auth/interceptors/loggingInterceptor';
 
 @NgModule({
   declarations: [
@@ -45,7 +44,6 @@ import { loggingInterceptor } from './auth/interceptors/loggingInterceptor';
       withFetch(),
       withInterceptors([
         authInterceptor,
-        loggingInterceptor,
       ]) 
     ),
   ],

@@ -12,10 +12,12 @@ import { BtnAddToCartComponent } from './shared/components/btn-add-to-cart/btn-a
 import { AboutComponent } from './pages/about/about.component';
 import { CourseListComponent } from './course/course-list/course-list.component';
 import { AuthComponent } from './pages/auth/auth.component';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { FormRegisterComponent } from './auth/form-register/form-register.component';
 import { FormLoginComponent } from './auth/form-login/form-login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { authInterceptor } from './auth/interceptors/auth.interceptor';
+import { loggingInterceptor } from './auth/interceptors/loggingInterceptor';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,13 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   providers: [
     // Habilito las peticiones fetch
-    provideHttpClient( withFetch() )
+    provideHttpClient( 
+      withFetch(),
+      withInterceptors([
+        authInterceptor,
+        loggingInterceptor,
+      ]) 
+    ),
   ],
   bootstrap: [AppComponent]
 })

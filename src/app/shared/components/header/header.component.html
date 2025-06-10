@@ -22,19 +22,19 @@
       [routerLink]="['/about']">
       SOBRE NOSOTROS
     </a>
-    @if ( authService.authStatus() === "not-authenticated" || authService.authStatus() === "checking" ) {
-      <a
-        [routerLink]="['/auth']"
-        class="last-element">
-        INICIAR SESIÓN
-      </a>
-    } 
-    @else{
+    @if ( authService.authStatus() === "authenticated") {
       <a
         [routerLink]="['/']"
         (click)="authService.logoutUser()"
         class="last-element">
         CERRAR SESIÓN
+      </a>
+    }
+    @else{
+      <a
+        [routerLink]="['/auth']"
+        class="last-element">
+        INICIAR SESIÓN
       </a>
     }
   </nav>

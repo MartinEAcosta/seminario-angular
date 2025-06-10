@@ -51,7 +51,7 @@ export class AuthService {
   }
 
   loginUser = ( email : string , password : string ) : Observable<boolean> => {
-    return this.http.post<AuthResponse>(`${this.baseURL}` , { email , password } )
+    return this.http.post<AuthResponse>(`${this.baseURL}` , { email : email , password : password } )
                       .pipe(
                         map( (resp) => this.handleAuthSuccess( resp ) ),
                         catchError( ( error : any ) =>  this.handleAuthError( error ) )
@@ -84,17 +84,14 @@ export class AuthService {
   checkStatus = ( ) : Observable<boolean> => {
     
     const token = localStorage.getItem('x-token');
-
-    console.log(token);
-
     if( !token ){
       this.logoutUser();
       return of(false);
     }
-    
-    return this.http.get<AuthResponse>(`${this.baseURL}/renew`, { headers: { 'x-token': token } })
+
+    return this.http.get<AuthResponse>(`${this.baseURL}/renew`, { } )
                       .pipe( 
-                        map( ( resp ) => this.handleAuthSuccess( resp ) ),
+                        map( ( resp ) => {console.log(resp); return this.handleAuthSuccess( resp )} ),
                         catchError( (error : any ) => this.handleAuthError( error ) )
                       );
   }

@@ -4,11 +4,12 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 70vh;
-    align-items: center;    
-    justify-content: center;
-    margin: auto;
-    background-color: v.$black-custom;
+    height: 80vh;
+    background-color: v.$white-custom;
+}
+
+.container-about{
+    padding: 4%;
 }
 
 .container-about .title , .text-about , ul{
@@ -16,26 +17,25 @@
 }
 
 .container-about .title{
-    font-size: x-larger;
-    color: v.$white-custom;
-    margin: 3%;
+    font-size: 2rem;
+    margin-bottom: 2%;
+    color: v.$black-custom;
 }
 
 .container-about .text-about{
     font-size: large;
-    color: v.$white-custom;
-
+    color: v.$black-custom;
+    padding-right: 5%;
 }
 
 .section-about{
     display: flex;
     flex-direction: column;
-    margin: 0% 3% 3% 3%;
     width: 60%;
 }
 
 .section-about ul{
-    color: v.$white-custom;
+    color: v.$black-custom;
     list-style: none;
     margin: 1%;
 }

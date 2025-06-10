@@ -23,6 +23,12 @@
       SOBRE NOSOTROS
     </a>
     @if ( authService.authStatus() === "authenticated") {
+      
+      <a
+        [routerLink]="['/course/create']"
+      >
+        CREA TU CURSO
+      </a>
       <a
         [routerLink]="['/']"
         (click)="authService.logoutUser()"

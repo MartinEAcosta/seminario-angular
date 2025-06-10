@@ -6,9 +6,11 @@
                 <p class="title">{{course.title}}</p>
                 <p class="desc">{{course.description}}</p>
                 <p class="price">{{course.price | currency : 'USD' : 'symbol' : '1.2-2'}}</p>
-                <small>Cantidad de cupos disponibles: {{course.capacity}}</small>
+                <small></small>
                 <div class="extra-details">
-                    <p class="owner">Creador del curso: <span class="name-owner"> {{course.owner}} </span></p>
+                    @if( course.capacity != null && course.capacity > 0 ){  
+                        <p class="quantity">Cantidad de cupos disponibles: <span class="quantity-number"> {{course.capacity}} </span></p>
+                    }
                     <div class="actions">
 
                         <app-btn-buy/>

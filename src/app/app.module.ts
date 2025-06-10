@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UdemixCartComponent } from './shared/components/udemix-cart/udemix-cart.component';
+import { CartComponent } from './shared/components/cart/cart.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { HomeComponent } from './pages/home/home.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
@@ -17,12 +17,13 @@ import { FormRegisterComponent } from './auth/form-register/form-register.compon
 import { FormLoginComponent } from './auth/form-login/form-login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { authInterceptor } from './auth/interceptors/auth.interceptor';
+import { CourseCreateComponent } from './course-create/course-create.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CourseListComponent,
-    UdemixCartComponent,
+    CartComponent,
     HeaderComponent,
     HomeComponent,
     FooterComponent,
@@ -31,7 +32,8 @@ import { authInterceptor } from './auth/interceptors/auth.interceptor';
     AboutComponent,
     AuthComponent,
     FormRegisterComponent,
-    FormLoginComponent
+    FormLoginComponent,
+    CourseCreateComponent,
   ],
   imports: [
     BrowserModule,

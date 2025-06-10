@@ -21,7 +21,7 @@
 .details-course{
     display: flex;
     flex-direction: column;
-    margin: 10px 15px;
+    margin: 15px;
     width: 100%;
     height: 100%;
     font-family: v.$font-primary;
@@ -40,13 +40,20 @@
     place-self: end;
     height: 100%;
     align-items: end;
-
     font-size: 1.2rem;
     font-weight: bold;
     color: green;
 }
 
-.details-course .owner{
+.quantity{
+    font-weight: 400;
+}
+
+.quantity-number{
+    font-weight: bold;
+}
+
+.details-course{
     font-weight: bold;
     color: rgb(71, 71, 71);
 }
@@ -61,5 +68,6 @@
 .actions{
     display: flex;
     place-self: end;
+    margin: 15px;
 }
 

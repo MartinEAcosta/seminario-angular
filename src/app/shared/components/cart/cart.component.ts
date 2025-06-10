@@ -2,14 +2,13 @@ import { Component, inject, OnInit, Signal } from '@angular/core';
 import { CartService } from '../../../services/cart/cart.service';
 import { Course } from '../../../interfaces/course.interfaces';
 @Component({
-  selector: 'app-udemix-cart',
+  selector: 'app-cart',
   standalone: false,
-  templateUrl: './udemix-cart.component.html',
-  styleUrl: './udemix-cart.component.scss'
+  templateUrl: './cart.component.html',
+  styleUrl: './cart.component.scss'
 })
-export class UdemixCartComponent implements OnInit {
+export class CartComponent implements OnInit {
 
-  
   isCartOpen : boolean = false;
   cartItems !: Signal<Map<Course,number>>;
 

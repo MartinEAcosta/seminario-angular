@@ -8,10 +8,12 @@
                 <p class="price">{{course.price | currency : 'USD' : 'symbol' : '1.2-2'}}</p>
                 <small></small>
                 <div class="extra-details">
-                    @if( course.capacity != null && course.capacity > 0 ){  
-                        <p class="quantity">Cantidad de cupos disponibles: <span class="quantity-number"> {{course.capacity}} </span></p>
-                    }
                     <div class="actions">
+                        @if( course.capacity != null && course.capacity > 0 ){  
+                            <p class="quantity">Cantidad de cupos disponibles: <span class="quantity-number"> {{course.capacity}} </span></p>
+                        }
+                    </div>
+                    <div class="buttons">
 
                         <app-btn-buy/>
                         

@@ -65,11 +65,14 @@
     align-items: center;
     justify-content: space-between;
     margin-top: auto;
+    margin: 15px 0px 15px 0px;
+
 }
 
 .actions{
+    justify-content: end;
     display: flex;
     place-self: end;
-    margin: 15px;
+    margin-top: auto;
 }
 

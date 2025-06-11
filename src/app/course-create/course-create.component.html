@@ -1,11 +1,18 @@
 <app-header/>
     <section class="bg-create">
-        <div>
-            <figure>
-                <img src="" alt="">
+        <div class="container-create">
+            <figure class="img-course">
+                <!-- TODO : Condicional de si no agrego una portada, podria estar bien -->
+                <img src="assets/not-found-image.png" alt="">
             </figure>
-            <input type="text">
-            <input type="text">
+            <form clas="form-create" action="">
+                <input class="input input-title" type="text" placeholder="Título del curso">
+                <input class="input input-description" type="text" placeholder="Escribe una breve descripción del curso...">
+                <div class="checkbox-container">
+                    <input class="checkbox" type="checkbox" id="public" name="public" value="public">
+                    <label >Capacidad Limitada</label>
+                </div>    
+            </form>
         </div>
     </section>
 <app-footer/>

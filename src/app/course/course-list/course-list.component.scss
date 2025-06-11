@@ -30,7 +30,12 @@
 
 .details-course .title{
     font-weight: bold;
+    font-size: 1.2rem;
     margin-bottom: 2%;
+}
+
+.desc{
+    font-weight: 500;
 }
 
 .details-course .price{
@@ -47,10 +52,7 @@
 
 .quantity{
     font-weight: 400;
-}
-
-.quantity-number{
-    font-weight: bold;
+    align-items: center;
 }
 
 .details-course{

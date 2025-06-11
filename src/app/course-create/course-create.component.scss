@@ -2,7 +2,6 @@
 
 .bg-create {
     max-width: 100%;
-    height: 80vh;
     background-color: v.$white-custom;
     background-position: center;
     background-size: cover;
@@ -88,7 +87,7 @@
     border: 2px solid #ccc;
     border-radius: 3px;
     position: relative;
-    cursor: pointer; 
+    cursor: pointer;
 }
 
 .checkbox:checked {
@@ -102,4 +101,21 @@
     position: absolute;
     left: 3px;
     background-color: v.$brand-color;
+}
+
+.input-capacity{
+    display: flex;
+    width: 10%;
+    font-size: 1.2rem;
+    text-align: center;
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+// No dejeba que se centre el texto del input 
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

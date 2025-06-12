@@ -5,17 +5,17 @@
                 <!-- TODO : Condicional de si no agrego una portada, podria estar bien -->
                 <img src="assets/not-found-image.png" alt="">
             </figure>
-            <form clas="form-create" action="">
-                <input class="input input-title" type="text" placeholder="Título del curso">
-                <input class="input input-description" type="text" placeholder="Escribe una breve descripción del curso...">
+            <form [formGroup]="courseForm" (submit)="onSumbit()">
+                <input formControlName="title" class="input input-title" type="text" placeholder="Título del curso">
+                <input formControlName="description" class="input input-description" type="text" placeholder="Escribe una breve descripción del curso...">
                 <div class="checkbox-container">
                     <input class="checkbox" type="checkbox" id="public" name="public" value="public">
                     <label >Capacidad Limitada</label>
-                    <input type="number" class="input input-capacity" placeholder="5">
+                    <input formControlName="capacity" type="number" class="input input-capacity" placeholder="5">
                 </div>    
                 <div class="container-pricing">
                     <label class="label-pricing">Precio del curso</label>
-                    <input class="input-pricing" type="number" placeholder="$5" >
+                    <input formControlName="price" class="input-pricing" type="number" placeholder="$5" >
                 </div>
                 <div class="container-btn">
                     <button class="btn btn-create" type="submit">Crear curso</button>

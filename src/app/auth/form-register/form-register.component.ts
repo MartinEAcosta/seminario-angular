@@ -13,7 +13,9 @@ import { Router } from '@angular/router';
 export class FormRegisterComponent {
 
   router = inject(Router);
-
+  
+  private authService = inject(AuthService);
+  
   @Output()
   onChangeMode = new EventEmitter<void>();
 
@@ -29,7 +31,6 @@ export class FormRegisterComponent {
     ),
   })
 
-  private authService = inject(AuthService);
 
   onSumbit = () : void => {
     if( this.registerForm.valid ){

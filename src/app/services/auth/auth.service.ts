@@ -91,7 +91,10 @@ export class AuthService {
 
     return this.http.get<AuthResponse>(`${this.baseURL}/renew`, { } )
                       .pipe( 
-                        map( ( resp ) => {console.log(resp); return this.handleAuthSuccess( resp )} ),
+                        map( ( resp ) => {
+                          // console.log(resp); 
+                          return this.handleAuthSuccess( resp )
+                        } ),
                         catchError( (error : any ) => this.handleAuthError( error ) )
                       );
   }

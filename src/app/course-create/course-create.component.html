@@ -13,9 +13,17 @@
                     <label >Capacidad Limitada</label>
                     <input type="number" class="input input-capacity" placeholder="5">
                 </div>    
-                <div>
-                    <input type="number">
-                    <label>Precio del curso</label>
+                <div class="container-pricing">
+                    <label class="label-pricing">Precio del curso</label>
+                    <input class="input-pricing" type="number" placeholder="$5" >
+                </div>
+                <div class="container-btn">
+                    <button class="btn btn-create" type="submit">Crear curso</button>
+                    <button class="btn btn-cancel" type="reset">Cancelar</button>
+                </div>
+                <div class="container-file">
+                    <input type="file" id="file" name="file" class="input-file" />
+                    <label for="file" class="custom-file-label">Seleccionar archivo</label>
                 </div>
             </form>
         </div>

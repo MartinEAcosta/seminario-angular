@@ -7,7 +7,7 @@ import { CartComponent } from './shared/components/cart/cart.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { HomeComponent } from './pages/home/home.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
-import { BtnBuyComponent } from './shared/components/btn-buy/btn-buy.component';
+import { BtnPrimaryComponent } from './shared/components/btn-primary/btn-primary.component';
 import { BtnAddToCartComponent } from './shared/components/btn-add-to-cart/btn-add-to-cart.component';
 import { AboutComponent } from './pages/about/about.component';
 import { CourseListComponent } from './course/course-list/course-list.component';
@@ -27,7 +27,7 @@ import { CourseCreateComponent } from './course-create/course-create.component';
     HeaderComponent,
     HomeComponent,
     FooterComponent,
-    BtnBuyComponent,
+    BtnPrimaryComponent,
     BtnAddToCartComponent,
     AboutComponent,
     AuthComponent,

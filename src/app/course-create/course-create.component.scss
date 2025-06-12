@@ -119,3 +119,104 @@ input::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.container-pricing{
+    display: flex;
+    width: 10%;
+    flex-direction: column;
+    position: absolute;
+    right: 6%;
+    bottom: 35%;
+}
+
+.container-pricing .input-pricing{
+    height: 3rem;
+    font-size: 1.2rem;
+    text-align: center;
+    background-color: transparent;
+    color: v.$white-custom;
+    border: none;
+    border-bottom: solid 2px v.$brand-color;
+    outline: none;
+}
+
+.container-pricing .label-pricing{
+    color: v.$white-custom;
+    text-align: center;
+}
+
+.container-btn{
+    display: flex;
+    width: 25%;
+    height: 6%;
+    position: absolute;
+    right: 5%;
+    bottom: 26%;
+    gap: 5%;
+}
+
+.btn{
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 20rem;
+    cursor: pointer;
+    box-shadow: 0px 0px 15px rgba(0,0,0 , 0.5);
+
+}
+
+.btn-create{
+    background-color: v.$brand-color;
+    color: v.$white-custom;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-create:hover{
+    background-color: rgba(0, 120, 140, 0.70);
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.7);
+    transform: scale(1.05);
+}
+
+.btn-cancel{
+    background-color: transparent;
+    color: v.$white-custom;
+    border: solid 2px v.$red-warning;
+    transition: all 0.3s ease;
+}
+
+.btn-cancel:hover{
+    color: v.$red-warning;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.6);
+    transform: scale(1.05);
+}
+
+.container-file{
+    display: flex;
+    position: absolute;
+    bottom: 33%;
+}
+
+.input-file {
+  display: none;
+}
+
+.custom-file-label {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: rgb(10, 130, 40);
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5); 
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.custom-file-label:hover {
+    background-color: rgba(2, 15, 30, 0.8);
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8); 
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}

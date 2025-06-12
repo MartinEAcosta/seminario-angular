@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, input, viewChild } from '@angular/core';
 import { Course } from '../../interfaces/course.interfaces';
 
 @Component({

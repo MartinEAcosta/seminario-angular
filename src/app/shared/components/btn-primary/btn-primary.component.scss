@@ -1,6 +1,6 @@
 @use '../../../../variables.scss' as v;
 
-.btn-buy{
+.btn-primary{
     background-color: v.$brand-color;
     color: white;
     border: solid 1px v.$brand-color;
@@ -12,7 +12,7 @@
     transition: all 0.3s ease;
 }
 
-.btn-buy:hover{
+.btn-primary:hover{
     background-color: rgba(0, 120, 140, 0.80);
     border: none;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);

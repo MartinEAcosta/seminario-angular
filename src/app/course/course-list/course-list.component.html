@@ -1,11 +1,11 @@
 @for ( course of courses() ; track course._id) {
     <div class="card-course">
         <div class="content-card">
-            <img src={{course.imgURL}} alt="Course Image">
+            <img class="course-img" src={{course.imgURL}} alt="Course Image">
             <div class="details-course">
                 <p class="title">{{course.title}}</p>
                 <p class="desc">{{course.description}}</p>
-                <p class="price">{{course.price | currency : 'USD' : 'symbol' : '1.2-2'}}</p>
+                <p class="price">{{ course.price === 0 ? 'Gratis' : (course.price | currency:'USD':'symbol':'1.2-2') }}</p>
                 <small></small>
                 <div class="extra-details">
                     <div class="actions">
@@ -20,6 +20,12 @@
                         <app-btn-add-to-cart [course]="course" />
                     </div>
                 </div>
+                @if( course.owner === authService.id() ) {
+                    <div class="edit">
+                        <img class="edit-svg" src="/assets/edit.svg" alt="">
+                    </div>
+                }
+
             </div>
         </div>
     </div>

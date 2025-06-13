@@ -1,5 +1,6 @@
-import { Component, computed, input, viewChild } from '@angular/core';
+import { Component, computed, inject, input, viewChild } from '@angular/core';
 import { Course } from '../../interfaces/course.interfaces';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-course-list',
@@ -10,6 +11,10 @@ import { Course } from '../../interfaces/course.interfaces';
 export class CourseListComponent {
   
   courses = input.required<Course[] | undefined>();
+
+  authService = inject(AuthService);
+
+  
 
   constructor ( ) {
   }

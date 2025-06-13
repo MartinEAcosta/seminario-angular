@@ -27,7 +27,7 @@ export class CourseCreateComponent {
     imgURL : new FormControl( '' ),
     price : new FormControl( '' ),
     offer : new FormControl( '' ),
-    capacity : new FormControl( '' ),
+    capacity : new FormControl( '' , [ Validators.min(5) ] ),
   });
 
 

@@ -15,6 +15,7 @@ export class AuthService {
 
   private _authStatus = signal<AuthStatus>('checking');
   private _user = signal<User | null>(null);
+  private _id = signal<string | null>(null);
   // Esto ayuda a que si se tiene una sesión ya iniciada y refrescar mantener la sesión.
   private _token = signal<string | null>( localStorage.getItem('x-token') );
 
@@ -37,6 +38,7 @@ export class AuthService {
   });
 
   user = computed( () => this._user );
+  id = computed( this._id );
   token = computed(this._token);
 
   constructor() { }
@@ -68,6 +70,7 @@ export class AuthService {
 
   private handleAuthSuccess = ( { token , userRef } : AuthResponse )  => {
     this._user.set(userRef);
+    this._id.set(userRef._id);
     this._token.set(token);
     this._authStatus.set('authenticated');
 

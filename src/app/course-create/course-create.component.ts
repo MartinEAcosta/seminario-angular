@@ -15,6 +15,7 @@ export class CourseCreateComponent {
   router = inject(Router);
 
   private courseService = inject(CourseService);
+  private authService = inject(AuthService);
 
   courseForm =  new FormGroup({
     title : new FormControl( '' , 
@@ -23,9 +24,9 @@ export class CourseCreateComponent {
     description : new FormControl( '' , 
                                     [Validators.required , Validators.minLength(12)]
     ),
-    price : new FormControl( '' ,
-                              [Validators.required , Validators.min(0)] 
-    ),
+    imgURL : new FormControl( '' ),
+    price : new FormControl( '' ),
+    offer : new FormControl( '' ),
     capacity : new FormControl( '' ),
   });
 
@@ -34,7 +35,20 @@ export class CourseCreateComponent {
     console.log( this.courseForm.value );
     console.log(this.courseForm.valid)
     if( this.courseForm.valid ){
-      const { title , description , price , capacity } = this.courseForm.value;
+      const { title , description , imgURL , price = 0  , offer = false , capacity } = this.courseForm.value;
+      const user = this.authService?.user();
+      const userID = user()?._id;
+      if( userID ){
+        const numericPrice = price === null || price === undefined ? 0 : Number(price);
+        const numericCapacity = capacity == null ? undefined : Number(capacity);
+        this.courseService.createCourse( title! , description! , imgURL! , userID , numericPrice , !!offer , numericCapacity!)
+                                        .subscribe( (isCourseCreated) => {
+                                          if( isCourseCreated ) {
+                                            this.router.navigateByUrl('/');
+                                            return;
+                                          }
+                                        });
+      }
       
     
     }    

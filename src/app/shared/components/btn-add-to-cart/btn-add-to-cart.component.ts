@@ -17,6 +17,7 @@ export class BtnAddToCartComponent {
   constructor() { }
 
   onAddToCart = ( course : Course ) : void  => {
+    console.log(course)
     if( course.capacity === undefined || course.capacity > 0  ){
       this.cartService.onAddToCart(course);
     } 

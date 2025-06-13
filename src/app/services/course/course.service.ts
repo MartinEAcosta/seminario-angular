@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import {  catchError, Observable, of, tap } from 'rxjs';
+import {  catchError, map, Observable, of, tap } from 'rxjs';
 import { Course, CourseResponse } from '../../interfaces/course.interfaces';
 import { defaultCourses } from '../../course/defaultCourses';
 
@@ -39,19 +39,19 @@ export class CourseService {
                       );
   }
 
-  createCourse = ( title : string , description : string , owner : string , price : number , offer : boolean , capacity : number ) : Observable<CourseResponse> => {
-    return this.http.post<CourseResponse>(`${this.baseURL}/new` , { title , description , owner , price , offer , capacity } )
+  createCourse = ( title : string , description : string , imgURL : string , owner : string , price : number , offer : boolean , capacity : number ) : Observable<boolean> => {
+    console.log("llegue al bak")
+    console.log(owner)
+    return this.http.post<CourseResponse>(`${this.baseURL}/new` , { title : title , description : description , imgURL : imgURL , owner : owner , price : price , offer : offer, capacity : capacity} )
                       .pipe(
-                        tap( resp => {
+                        map( (resp) => {
                           console.log(resp);
+                          return true;
                         }),
                         catchError( (error : any)  => {
                           // Notificar error 
-                          const defaultResp: CourseResponse = {
-                            ok: false,
-                            courses: [],
-                          };
-                          return of(defaultResp);
+                          console.log(error);
+                          return of(false);
                         }),
                       )
   }

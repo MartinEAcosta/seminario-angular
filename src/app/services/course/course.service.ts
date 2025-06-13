@@ -40,8 +40,6 @@ export class CourseService {
   }
 
   createCourse = ( title : string , description : string , imgURL : string , owner : string , price : number , offer : boolean , capacity : number ) : Observable<boolean> => {
-    console.log("llegue al bak")
-    console.log(owner)
     return this.http.post<CourseResponse>(`${this.baseURL}/new` , { title : title , description : description , imgURL : imgURL , owner : owner , price : price , offer : offer, capacity : capacity} )
                       .pipe(
                         map( (resp) => {

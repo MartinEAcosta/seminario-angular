@@ -3,7 +3,12 @@
         <div class="container-create">
             <figure class="img-course">
                 <!-- TODO : Condicional de si no agrego una portada, podria estar bien -->
-                <img src="assets/not-found-image.png" alt="">
+                 @if( tempMedia().length > 0 ) {
+                    <img [src]="tempMedia()[0]" alt="Portada del curso" class="img-course">
+                 }
+                 @else{
+                    <img src="assets/not-found-image.png" alt="">
+                 }
             </figure>
             <form [formGroup]="courseForm" (submit)="onSumbit()">
                 <input formControlName="title" class="input input-title" type="text" placeholder="Título del curso">
@@ -21,7 +26,15 @@
                     <button class="btn btn-cancel" type="reset">Cancelar</button>
                 </div>
                 <div class="container-file">
-                    <input type="file" id="file" name="file" class="input-file" />
+                    <input 
+                        type="file" 
+                        id="file" 
+                        name="file" 
+                        class="input-file" 
+                        multiple
+                        accept="image/* video/*"
+                        (change)="onFileChanged( $event )"
+                        />
                     <label for="file" class="custom-file-label">Seleccionar archivo</label>
                 </div>
             </form>

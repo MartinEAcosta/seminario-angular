@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth/auth.service';
 import { Router } from '@angular/router';
@@ -14,8 +14,11 @@ export class CourseCreateComponent {
 
   router = inject(Router);
 
-  private courseService = inject(CourseService);
-  private authService = inject(AuthService);
+  courseService = inject(CourseService);
+  authService = inject(AuthService);
+
+  mediaFileList : FileList | undefined =  undefined;
+  tempMedia = signal<string[]>([]); 
 
   courseForm =  new FormGroup({
     title : new FormControl( '' , 
@@ -53,6 +56,18 @@ export class CourseCreateComponent {
     
     }    
   };
+
+  onFileChanged = ( event : Event ) => {
+    const fileList = ( event.target as HTMLInputElement ).files;
+    this.mediaFileList = fileList ?? undefined;
+
+    // En caso de que el el fileList no sea undefined o vacio, permite generar url para utilizar de forma local
+    const imageUrls = Array.from( fileList ?? [ ] ).map( 
+      (file) => URL.createObjectURL(file)
+    );
+    this.tempMedia.set(imageUrls);
+    console.log(this.tempMedia());
+  }
 
 
 

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth/auth.service';
 import { Router } from '@angular/router';
+import { CourseService } from '../services/course/course.service';
 
 @Component({
   selector: 'app-course-create',
@@ -13,7 +14,7 @@ export class CourseCreateComponent {
 
   router = inject(Router);
 
-  private authService = inject(AuthService);
+  private courseService = inject(CourseService);
 
   courseForm =  new FormGroup({
     title : new FormControl( '' , 
@@ -30,9 +31,12 @@ export class CourseCreateComponent {
 
 
   onSumbit = ( ) : void => {
+    console.log( this.courseForm.value );
     console.log(this.courseForm.valid)
     if( this.courseForm.valid ){
-
+      const { title , description , price , capacity } = this.courseForm.value;
+      
+    
     }    
   };
 

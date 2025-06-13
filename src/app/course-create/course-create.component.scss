@@ -106,12 +106,19 @@
 .input-capacity{
     display: flex;
     width: 5%;
+    border-bottom: solid 2px rgba(0, 0, 0, 0.2);
     font-size: 1.2rem;
     text-align: center;
     -webkit-appearance: none;
     -moz-appearance: textfield;
     appearance: textfield;
+    transition: all 0.3s ease;
 }
+
+.valid-border{
+    border-bottom: solid 2px v.$brand-color;
+}
+
 
 // No dejeba que se centre el texto del input 
 input::-webkit-inner-spin-button,
@@ -136,7 +143,7 @@ input::-webkit-outer-spin-button {
     background-color: transparent;
     color: v.$white-custom;
     border: none;
-    border-bottom: solid 2px v.$brand-color;
+    border-bottom: solid 2px rgba(0, 0, 0, 0.2);
     outline: none;
 }
 

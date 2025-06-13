@@ -25,7 +25,7 @@ export class CourseService {
   getAll = ( ) : Observable<CourseResponse> => {
     return this.http.get<CourseResponse>(`${this.baseURL}`)
                       .pipe(
-                        tap(resp => {
+                        tap( resp => {
                           this._courses.set(resp.courses);
                         }),
                         catchError((error: any) => {
@@ -37,5 +37,22 @@ export class CourseService {
                           return of(defaultResp);
                         }),
                       );
+  }
+
+  createCourse = ( title : string , description : string , owner : string , price : number , offer : boolean , capacity : number ) : Observable<CourseResponse> => {
+    return this.http.post<CourseResponse>(`${this.baseURL}/new` , { title , description , owner , price , offer , capacity } )
+                      .pipe(
+                        tap( resp => {
+                          console.log(resp);
+                        }),
+                        catchError( (error : any)  => {
+                          // Notificar error 
+                          const defaultResp: CourseResponse = {
+                            ok: false,
+                            courses: [],
+                          };
+                          return of(defaultResp);
+                        }),
+                      )
   }
 }

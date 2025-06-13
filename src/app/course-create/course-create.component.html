@@ -9,13 +9,12 @@
                 <input formControlName="title" class="input input-title" type="text" placeholder="Título del curso">
                 <input formControlName="description" class="input input-description" type="text" placeholder="Escribe una breve descripción del curso...">
                 <div class="checkbox-container">
-                    <input class="checkbox" type="checkbox" id="public" name="public" value="public">
-                    <label >Capacidad Limitada</label>
-                    <input formControlName="capacity" type="number" class="input input-capacity" placeholder="5">
+                    <label class="label-capacity">Capacidad Limitada</label>
+                    <input formControlName="capacity" type="number" class="input input-capacity" [ngClass]="{ 'valid-border' : courseForm.value.capacity}" placeholder="0" />
                 </div>    
                 <div class="container-pricing">
                     <label class="label-pricing">Precio del curso</label>
-                    <input formControlName="price" class="input-pricing" type="number" placeholder="$5" >
+                    <input formControlName="price" class="input-pricing" [ngClass]="{ 'valid-border' : courseForm.value.price}" type="number" placeholder="$5" >
                 </div>
                 <div class="container-btn">
                     <button class="btn btn-create" type="submit">Crear curso</button>

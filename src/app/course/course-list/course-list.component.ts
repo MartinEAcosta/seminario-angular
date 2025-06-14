@@ -1,4 +1,6 @@
-import { Component, computed, inject, input, viewChild } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { Course } from '../../interfaces/course.interfaces';
 import { AuthService } from '../../services/auth/auth.service';
 import { BtnPrimaryComponent } from '../../shared/components/btn-primary/btn-primary.component';
@@ -9,7 +11,8 @@ import { CurrencyPipe } from '@angular/common';
     selector: 'app-course-list',
     templateUrl: './course-list.component.html',
     styleUrl: './course-list.component.scss',
-    imports: [BtnPrimaryComponent, BtnAddToCartComponent, CurrencyPipe]
+    imports: [BtnPrimaryComponent, BtnAddToCartComponent, CurrencyPipe,
+    CommonModule, RouterModule,]
 })
 export class CourseListComponent {
   

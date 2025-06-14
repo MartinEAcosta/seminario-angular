@@ -21,6 +21,11 @@ const routes: Routes = [
     component: CourseCreateComponent ,
     canMatch : [ AuthenticatedGuard ]
   },
+  {
+    path : 'course/update/:id',
+    component: CourseCreateComponent ,
+    canMatch : [ AuthenticatedGuard ]
+  },
   { 
     path : 'auth' ,
      component: AuthComponent ,

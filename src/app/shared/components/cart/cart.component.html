@@ -1,9 +1,9 @@
-<div class="" [ngClass]="{'overlay' : isCartOpen}" (click)="onCloseCart()">
-  <div class="bg-cart" (click)="onOpenCart()" [ngClass]="{'open' :  isCartOpen}">
+<div class="" [ngClass]="{'overlay' : isCartOpen()}" (click)="onCloseCart()">
+  <div class="bg-cart" (click)="onOpenCart()" [ngClass]="{'open' :  isCartOpen()}">
     <div class="container-icon">
-      <img class="imgIconCart" [ngClass]="{'imgVisibility' : isCartOpen}" src="assets/cart-icon.svg" alt="Carrito de compras">
+      <img class="imgIconCart" [ngClass]="{'imgVisibility' : isCartOpen()}" src="assets/cart-icon.svg" alt="Carrito de compras">
     </div>
-    <div class="content-open" [ngClass]="{'hidden' : !isCartOpen}">
+    <div class="content-open" [ngClass]="{'hidden' : !isCartOpen()}">
       <div class="header-cart">
         <p>Mi Carrito</p>
       </div>

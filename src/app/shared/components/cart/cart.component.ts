@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, Signal } from '@angular/core';
+import { Component, inject, OnInit, signal, Signal } from '@angular/core';
 import { CartService } from '../../../services/cart/cart.service';
 import { Course } from '../../../interfaces/course.interfaces';
 import { NgClass } from '@angular/common';
@@ -10,7 +10,7 @@ import { NgClass } from '@angular/common';
 })
 export class CartComponent implements OnInit {
 
-  isCartOpen : boolean = false;
+  isCartOpen = signal<boolean>(false);
   cartItems !: Signal<Map<Course,number>>;
 
   private cartService = inject(CartService);
@@ -25,17 +25,17 @@ export class CartComponent implements OnInit {
   }
   
   onOpenCart = ( ) : void => {
-    if( this.isCartOpen ) {
+    if( this.isCartOpen() ) {
       return;
     }
-    this.isCartOpen = !this.isCartOpen;
+    this.isCartOpen.set(!this.isCartOpen());
 
   }
 
   onCloseCart = ( ) : void => {
     const clickedContainer = event?.target as HTMLElement;
     if( clickedContainer.classList.contains('overlay') || clickedContainer.classList.contains('btn-continue') ){
-      this.isCartOpen = false;
+      this.isCartOpen.set(false);
     }
 
   }

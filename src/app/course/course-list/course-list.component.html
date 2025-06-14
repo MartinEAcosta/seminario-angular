@@ -21,9 +21,12 @@
                     </div>
                 </div>
                 @if( course.owner === authService.id() ) {
+                    <a [routerLink]="['/course/update' , course._id ]" >
                     <div class="edit">
                         <img class="edit-svg" src="/assets/edit.svg" alt="">
                     </div>
+                    </a>
+
                 }
 
             </div>

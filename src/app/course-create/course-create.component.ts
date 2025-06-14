@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth/auth.service';
 import { Router } from '@angular/router';
@@ -6,6 +6,7 @@ import { CourseService } from '../services/course/course.service';
 import { HeaderComponent } from '../shared/components/header/header.component';
 import { NgClass } from '@angular/common';
 import { FooterComponent } from '../shared/components/footer/footer.component';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-course-create',
@@ -15,7 +16,20 @@ import { FooterComponent } from '../shared/components/footer/footer.component';
 })
 export class CourseCreateComponent {
 
+  
   router = inject(Router);
+  _isCreatingMode = signal<boolean | null>(null);
+
+
+  constructor () {
+
+    if(this.router.url.includes('create')){
+      this._isCreatingMode.set(true);
+      return;
+    }
+    this._isCreatingMode.set(false);
+    console.log(this._isCreatingMode())
+  }
 
   courseService = inject(CourseService);
   authService = inject(AuthService);

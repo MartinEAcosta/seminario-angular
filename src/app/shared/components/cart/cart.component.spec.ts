@@ -8,8 +8,8 @@ describe('UdemixCartComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CartComponent]
-    })
+    imports: [CartComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(CartComponent);

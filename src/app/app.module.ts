@@ -20,35 +20,30 @@ import { authInterceptor } from './auth/interceptors/auth.interceptor';
 import { CourseCreateComponent } from './course-create/course-create.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    CourseListComponent,
-    CartComponent,
-    HeaderComponent,
-    HomeComponent,
-    FooterComponent,
-    BtnPrimaryComponent,
-    BtnAddToCartComponent,
-    AboutComponent,
-    AuthComponent,
-    FormRegisterComponent,
-    FormLoginComponent,
-    CourseCreateComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-  ],
-  providers: [
-    // Habilito las peticiones fetch
-    provideHttpClient( 
-      withFetch(),
-      withInterceptors([
-        authInterceptor,
-      ]) 
-    ),
-  ],
-  bootstrap: [AppComponent]
+    declarations: [],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        CourseListComponent,
+        CartComponent,
+        HeaderComponent,
+        HomeComponent,
+        FooterComponent,
+        BtnPrimaryComponent,
+        BtnAddToCartComponent,
+        AboutComponent,
+        AuthComponent,
+        FormRegisterComponent,
+        FormLoginComponent,
+        CourseCreateComponent,
+    ],
+    providers: [
+        // Habilito las peticiones fetch
+        provideHttpClient(withFetch(), withInterceptors([
+            authInterceptor,
+        ])),
+    ],
+    bootstrap: []
 })
 export class AppModule { }

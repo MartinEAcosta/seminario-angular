@@ -1,11 +1,12 @@
 import { Component, HostListener, inject } from '@angular/core';
 import { AuthService } from '../../../services/auth/auth.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-header',
-  standalone: false,
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrl: './header.component.scss',
+    imports: [RouterLink]
 })
 export class HeaderComponent {
 

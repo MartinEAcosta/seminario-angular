@@ -1,14 +1,17 @@
 import { Component, inject, signal } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { CourseService } from '../services/course/course.service';
+import { HeaderComponent } from '../shared/components/header/header.component';
+import { NgClass } from '@angular/common';
+import { FooterComponent } from '../shared/components/footer/footer.component';
 
 @Component({
-  selector: 'app-course-create',
-  standalone: false,
-  templateUrl: './course-create.component.html',
-  styleUrl: './course-create.component.scss'
+    selector: 'app-course-create',
+    templateUrl: './course-create.component.html',
+    styleUrl: './course-create.component.scss',
+    imports: [HeaderComponent, ReactiveFormsModule, NgClass, FooterComponent]
 })
 export class CourseCreateComponent {
 

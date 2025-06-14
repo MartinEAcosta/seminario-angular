@@ -1,11 +1,12 @@
 import { Component, inject, OnInit, Signal } from '@angular/core';
 import { CartService } from '../../../services/cart/cart.service';
 import { Course } from '../../../interfaces/course.interfaces';
+import { NgClass } from '@angular/common';
 @Component({
-  selector: 'app-cart',
-  standalone: false,
-  templateUrl: './cart.component.html',
-  styleUrl: './cart.component.scss'
+    selector: 'app-cart',
+    templateUrl: './cart.component.html',
+    styleUrl: './cart.component.scss',
+    imports: [NgClass]
 })
 export class CartComponent implements OnInit {
 

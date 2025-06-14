@@ -1,14 +1,13 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-form-register',
-  standalone: false,
-  templateUrl: './form-register.component.html',
-  styleUrls: [ '../form-global.scss' , './form-register.component.scss' ]
+    selector: 'app-form-register',
+    templateUrl: './form-register.component.html',
+    styleUrls: ['../form-global.scss', './form-register.component.scss'],
+    imports: [ReactiveFormsModule]
 })
 export class FormRegisterComponent {
 

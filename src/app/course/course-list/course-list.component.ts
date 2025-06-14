@@ -1,12 +1,15 @@
 import { Component, computed, inject, input, viewChild } from '@angular/core';
 import { Course } from '../../interfaces/course.interfaces';
 import { AuthService } from '../../services/auth/auth.service';
+import { BtnPrimaryComponent } from '../../shared/components/btn-primary/btn-primary.component';
+import { BtnAddToCartComponent } from '../../shared/components/btn-add-to-cart/btn-add-to-cart.component';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-course-list',
-  standalone: false,
-  templateUrl: './course-list.component.html',
-  styleUrl: './course-list.component.scss'
+    selector: 'app-course-list',
+    templateUrl: './course-list.component.html',
+    styleUrl: './course-list.component.scss',
+    imports: [BtnPrimaryComponent, BtnAddToCartComponent, CurrencyPipe]
 })
 export class CourseListComponent {
   

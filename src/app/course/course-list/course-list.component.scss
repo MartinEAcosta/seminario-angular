@@ -76,12 +76,13 @@
     margin-top: auto;
 }
 
-.edit{
+.anchor-icon{
     display: flex;
-    width: 3%;
-    height: 3%;
-    margin: 0;
-    right: 2%;
     position: absolute;
+    right: 3%;
+}
+
+.edit-svg{
+    width: 25px;
     cursor: pointer;
 }

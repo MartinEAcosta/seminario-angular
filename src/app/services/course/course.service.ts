@@ -39,6 +39,13 @@ export class CourseService {
                       );
   }
 
+  getById = ( id : string ) : Observable<CourseResponse>  => {
+    
+    return this.http.post<CourseResponse>(`${this.baseURL}/:id` , { id : id } );
+  
+  }
+
+  // TODO : REVISAR METODO
   createCourse = ( title : string , description : string , imgURL : string , owner : string , price : number , offer : boolean , capacity : number ) : Observable<boolean> => {
     return this.http.post<CourseResponse>(`${this.baseURL}/new` , { title : title , description : description , imgURL : imgURL , owner : owner , price : price , offer : offer, capacity : capacity} )
                       .pipe(
@@ -53,4 +60,6 @@ export class CourseService {
                         }),
                       )
   }
+
+
 }

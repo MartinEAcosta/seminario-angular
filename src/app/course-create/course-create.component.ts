@@ -1,7 +1,7 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, Input, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../services/course/course.service';
 import { HeaderComponent } from '../shared/components/header/header.component';
 import { NgClass } from '@angular/common';
@@ -15,20 +15,27 @@ import { rxResource } from '@angular/core/rxjs-interop';
     imports: [HeaderComponent, ReactiveFormsModule, NgClass, FooterComponent]
 })
 export class CourseCreateComponent {
-
   
+  activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
   _isCreatingMode = signal<boolean | null>(null);
 
+  courseId : string = this.activatedRoute.snapshot.params['id'];
 
-  constructor () {
+  readonly isCreatingMode = computed( () => this._isCreatingMode());
+
+  ngOnInit () {
 
     if(this.router.url.includes('create')){
       this._isCreatingMode.set(true);
       return;
     }
     this._isCreatingMode.set(false);
-    console.log(this._isCreatingMode())
+
+    console.log(this.courseId);
+
+
+
   }
 
   courseService = inject(CourseService);
@@ -38,7 +45,7 @@ export class CourseCreateComponent {
   tempMedia = signal<string[]>([]); 
 
   courseForm =  new FormGroup({
-    title : new FormControl( '' , 
+    title : new FormControl( this.isCreatingMode() ? '' : "a" , 
                               [Validators.required , Validators.minLength(5)]
     ),
     description : new FormControl( '' , 

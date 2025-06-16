@@ -31,6 +31,11 @@ const routes: Routes = [
      component: AuthComponent ,
      canMatch: [ NotAuthenticatedGuard ]
   },
+  {
+    // En caso de no hacer match con ningun path regirige al home
+    path : '**',
+    component: HomeComponent,
+  }
 ];
 
 @NgModule({

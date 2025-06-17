@@ -11,8 +11,8 @@
             </figure>
             <form [formGroup]="courseForm" (submit)="onSumbit()">
                 <input formControlName="title" class="input input-title" type="text" placeholder="Título del curso">
-                <input formControlName="description" class="input input-description" type="text" placeholder="Escribe una breve descripción del curso...">
-                <div class="checkbox-container">
+                <textarea formControlName="description" class="input input-description" type="text" placeholder="Escribe una breve descripción del curso..."></textarea>
+                <div class="container-capacity">
                     <label class="label-capacity">Capacidad Limitada</label>
                     <input formControlName="capacity" type="number" class="input input-capacity" [ngClass]="{ 'valid-border' : courseForm.value.capacity}" placeholder="0" />
                 </div>    

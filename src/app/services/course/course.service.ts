@@ -65,5 +65,9 @@ export class CourseService {
     return this.http.put<UniqueCourseResponse>(`${this.baseURL}/update/${id}` , { title : title , description : description , imgURL : imgURL , owner : owner , price : price , offer : offer, capacity : capacity} ).pipe( tap( res => console.log(res)))
   }
 
+  deleteCourse = ( id : string ) : Observable<UniqueCourseResponse> => {
+    return this.http.delete<UniqueCourseResponse>(`${this.baseURL}/delete/${id}`);
+  }
+
 
 }

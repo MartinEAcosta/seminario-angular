@@ -36,6 +36,11 @@
                         <!-- (change)="onFileChanged( $event )" -->
                     <label for="file" class="custom-file-label">Seleccionar archivo</label>
                 </div>
+                @if( this._mode() === 'updating' ){
+                    <div class="container-remove" (click)="onDeleteCourse( this.course()._id )">
+                        <img class="svg-remove" src="assets/remove.svg" alt="">
+                    </div>
+                }
             </form>
         </div>
     </section>

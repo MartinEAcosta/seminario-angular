@@ -48,7 +48,6 @@ export class FormCourseComponent {
         capacity: this.course().capacity,
       });
       this._mode.set('updating');
-      return;
     }
     else{
       this.router.navigateByUrl('course/create');
@@ -91,5 +90,17 @@ export class FormCourseComponent {
       }
     }    
   };
+
+  onDeleteCourse = ( id : string ) => {
+    if( this.course().owner === this.authService.id() ){
+      this.courseService.deleteCourse( id )
+                            .subscribe( (isCourseDeleted) => {
+                                if( isCourseDeleted ) {
+                                  this.router.navigateByUrl('/');
+                                  return;
+                                }     
+                            } );
+    }
+  }
   
 }

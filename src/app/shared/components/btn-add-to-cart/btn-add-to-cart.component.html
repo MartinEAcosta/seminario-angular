@@ -1,5 +1,7 @@
 <button
     (click)="onAddToCart(course)"
-    class="btn-add-to-cart">
+    class="btn-add-to-cart"
+    [ngClass]="{ 'disabled' : ( this.course.capacity != undefined && this.course.capacity === 0 )}"
+    >
     Agregar al carrito
 </button>

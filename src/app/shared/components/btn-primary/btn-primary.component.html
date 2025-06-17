@@ -1,4 +1,6 @@
 <button
-    class="btn-primary">
+    class="btn-primary"
+    [ngClass]="{ 'disabled' : isNotAvailable() }"
+    >
     <ng-content></ng-content>
 </button>

@@ -12,10 +12,13 @@
                         @if( course.capacity != null && course.capacity > 0 ){  
                             <p class="quantity">Cantidad de cupos disponibles: <span class="quantity-number"> {{course.capacity}} </span></p>
                         }
+                        @else {
+                            <p class="quantity"> No se encuentra cupo disponible.</p>
+                        }
                     </div>
                     <div class="buttons">
 
-                        <app-btn-primary> Comprar </app-btn-primary>
+                        <app-btn-primary [isNotAvailable]="( course.capacity != undefined && course.capacity === 0 )"> Comprar </app-btn-primary>
                          
                         <app-btn-add-to-cart [course]="course" />
                     </div>

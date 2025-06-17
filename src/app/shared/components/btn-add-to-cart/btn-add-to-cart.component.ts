@@ -1,10 +1,12 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { Course } from '../../../interfaces/course.interfaces';
 import { CartService } from '../../../services/cart/cart.service';
+import { NgClass } from '@angular/common';
 @Component({
     selector: 'app-btn-add-to-cart',
     templateUrl: './btn-add-to-cart.component.html',
-    styleUrl: './btn-add-to-cart.component.scss'
+    styleUrl: './btn-add-to-cart.component.scss',
+    imports : [ NgClass ],
 })
 export class BtnAddToCartComponent {
 

@@ -20,7 +20,8 @@ export class CourseListComponent {
 
   authService = inject(AuthService);
 
-  constructor ( ) {
+  ngOnInit(){
+    setTimeout(() => console.log(this.courses()), 3000);
   }
 
 }

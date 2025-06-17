@@ -52,7 +52,7 @@ export class FormCourseComponent {
       [Validators.required , Validators.minLength(12)]
     ),
     imgURL : new FormControl( '' ),
-    price : new FormControl( 0 ),
+    price : new FormControl( 0 , [ Validators.min(0) ] ),
     offer : new FormControl( false ),
     capacity : new FormControl( 10 , [ Validators.min(5) ] ),
   });
@@ -69,8 +69,8 @@ export class FormCourseComponent {
         
         const numericPrice = price === null || price === undefined ? 0 : Number(price);
         const numericCapacity = capacity == null ? undefined : Number(capacity);
+        
         if( this._mode() === 'updating' ){
-          console.log("a")
           this.courseService.updateCourse( this.course()._id , title! , description! , imgURL! , userID , numericPrice , !!offer , numericCapacity! )
                               .subscribe( (isCourseCreated) => {
                                 if( isCourseCreated ) {

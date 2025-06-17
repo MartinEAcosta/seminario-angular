@@ -1,6 +1,9 @@
 <app-header/>
     @if( courseResource.isLoading()){
-        <h1>Cargando espera flaquito</h1>
+        <div class="container-loader">
+            <h1>Cargando...</h1>
+            <span class="loader"></span>
+        </div>
     }
     @else{
         <app-form-course [course]="courseResource.value()?.course!" />

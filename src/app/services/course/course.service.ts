@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import {  catchError, map, Observable, of, tap } from 'rxjs';
-import { Course, CourseResponse } from '../../interfaces/course.interfaces';
+import { Course, CourseResponse, UniqueCourseResponse } from '../../interfaces/course.interfaces';
 import { defaultCourses } from '../../course/defaultCourses';
 
 @Injectable({
@@ -39,9 +39,9 @@ export class CourseService {
                       );
   }
 
-  getById = ( id : string ) : Observable<CourseResponse>  => {
-    
-    return this.http.post<CourseResponse>(`${this.baseURL}/:id` , { id : id } );
+  getById = ( id : string ) : Observable<UniqueCourseResponse>  => {
+
+    return this.http.get<UniqueCourseResponse>(`${this.baseURL}/${id}` );
   
   }
 
@@ -59,6 +59,10 @@ export class CourseService {
                           return of(false);
                         }),
                       )
+  }
+
+  updateCourse = ( id : string , title : string , description : string , imgURL : string , owner : string , price : number , offer : boolean , capacity : number ) : Observable<UniqueCourseResponse> => {
+    return this.http.put<UniqueCourseResponse>(`${this.baseURL}/update/${id}` , { title : title , description : description , imgURL : imgURL , owner : owner , price : price , offer : offer, capacity : capacity} ).pipe( tap( res => console.log(res)))
   }
 
 

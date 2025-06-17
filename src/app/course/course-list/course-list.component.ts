@@ -20,37 +20,7 @@ export class CourseListComponent {
 
   authService = inject(AuthService);
 
-  
-
   constructor ( ) {
   }
 
-
-  // courses : Course[] = [
-  //   {
-  //     "id" : 1,
-  //     "title" : "Aprendiendo Angular: Seminario - TUDAI",
-  //     "description" :  "A little description...",
-  //     "img": "https://www.shutterstock.com/image-photo/elearning-education-internet-lessons-online-600nw-2158034833.jpg",
-  //     "owner" : "Charles Darwin",
-  //     "duration" : new Date().getTime(),
-  //     "reviews" : 3,
-  //     "price" : 3000,
-  //     "offer" : false,
-  //     "capacity" : 0 
-  //   },
-  //   {
-  //     "id" : 2,
-  //     "title" : "Aprendiendo Angular: Seminario - TUDAI",
-  //     "description" :  "A little description...",
-  //     "img": "../../assets/example.png",
-  //     "owner" : "Charles Darwin",
-  //     "duration" : new Date().getTime(),
-  //     "reviews" : 3,
-  //     "price" : 3000,
-  //     "offer" : false,
-  //     "capacity" : 3,
-  //   },
-  // ]
-  
 }

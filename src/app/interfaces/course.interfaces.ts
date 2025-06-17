@@ -6,6 +6,11 @@ export interface CourseResponse {
     courses: Course[];
 }
 
+export interface UniqueCourseResponse {
+    ok: boolean;
+    course: Course;
+}
+
 export interface Course {
     _id:         string;
     title:       string;

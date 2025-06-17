@@ -4,7 +4,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { NotAuthenticatedGuard } from './auth/guards/not-authenticated.guard';
-import { CourseCreateComponent } from './course-create/course-create.component';
+import { CourseCreateComponent } from './course/course-create/course-create.component';
 import { AuthenticatedGuard } from './auth/guards/authenticated.guard';
 
 const routes: Routes = [

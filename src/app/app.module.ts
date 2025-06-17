@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { CartComponent } from './shared/components/cart/cart.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -17,7 +16,7 @@ import { FormRegisterComponent } from './auth/form-register/form-register.compon
 import { FormLoginComponent } from './auth/form-login/form-login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { authInterceptor } from './auth/interceptors/auth.interceptor';
-import { CourseCreateComponent } from './course-create/course-create.component';
+import { CourseCreateComponent } from './course/course-create/course-create.component';
 
 @NgModule({
     declarations: [],

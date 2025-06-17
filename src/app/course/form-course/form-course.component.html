@@ -1,14 +1,13 @@
-<app-header/>
-    <section class="bg-section">
+<section class="bg-section">
         <div class="container">
             <figure class="img-course">
                 <!-- TODO : Condicional de si no agrego una portada, podria estar bien -->
-                 @if( tempMedia().length > 0 ) {
-                    <img [src]="tempMedia()[0]" alt="Portada del curso" class="img-course">
-                 }
-                 @else{
+                 <!-- @if( tempMedia().length > 0 ) { -->
+                    <!-- <img [src]="tempMedia()[0]" alt="Portada del curso" class="img-course"> -->
+                 <!-- } -->
+                 <!-- @else{ -->
                     <img src="assets/not-found-image.png" alt="">
-                 }
+                 <!-- } -->
             </figure>
             <form [formGroup]="courseForm" (submit)="onSumbit()">
                 <input formControlName="title" class="input input-title" type="text" placeholder="Título del curso">
@@ -33,11 +32,10 @@
                         class="input-file" 
                         multiple
                         accept="image/* video/*"
-                        (change)="onFileChanged( $event )"
                         />
+                        <!-- (change)="onFileChanged( $event )" -->
                     <label for="file" class="custom-file-label">Seleccionar archivo</label>
                 </div>
             </form>
         </div>
     </section>
-<app-footer/>

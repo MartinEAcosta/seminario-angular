@@ -1,5 +1,5 @@
 import { Component, inject, input, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder ,  ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { CourseService } from '../../services/course/course.service';
 import { NgClass } from '@angular/common';
@@ -26,6 +26,17 @@ export class FormCourseComponent {
   authService = inject(AuthService);
   courseService = inject(CourseService);
 
+  fb = inject(FormBuilder);
+
+  courseForm = this.fb.group({
+    title : [ '' ],
+    description : [ '' ],
+    imgURL : [ '' ],
+    price : [ 0 ],
+    offer : [ false ],
+    capacity : [ 10 ], 
+  });
+
   ngOnInit () {
     if( !!this.course() ){
       this.courseForm.patchValue({
@@ -36,26 +47,14 @@ export class FormCourseComponent {
         offer: this.course().offer,
         capacity: this.course().capacity,
       });
-
       this._mode.set('updating');
       return;
     }
-
-    this._mode.set('creating');
+    else{
+      this.router.navigateByUrl('course/create');
+      this._mode.set('creating');
+    }
   }
-
-  courseForm =  new FormGroup({
-    title : new FormControl( ''   , 
-      [Validators.required , Validators.minLength(5)]
-    ),
-    description : new FormControl( '' , 
-      [Validators.required , Validators.minLength(12)]
-    ),
-    imgURL : new FormControl( '' ),
-    price : new FormControl( 0 , [ Validators.min(0) ] ),
-    offer : new FormControl( false ),
-    capacity : new FormControl( 10 , [ Validators.min(5) ] ),
-  });
   
   onSumbit = ( ) : void => {
     

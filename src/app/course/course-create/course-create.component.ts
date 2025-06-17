@@ -24,15 +24,17 @@ export class CourseCreateComponent {
   authService = inject(AuthService);
 
   courseId = this.activatedRoute.snapshot.params['id'] || '';
-
+  
   courseResource = rxResource({
     request : ( ) => ({ id : this.courseId }),
     loader : ({ request }) => {
 
       if( request.id === '' ) return of();
+        
       return this.courseService.getById( request.id );
     },
   });
+
   
     // tempMedia = signal<string[]>([]); 
     // mediaFileList : FileList | undefined =  undefined;

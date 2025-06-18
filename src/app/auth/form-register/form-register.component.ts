@@ -1,5 +1,5 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 
@@ -11,12 +11,14 @@ import { Router } from '@angular/router';
 })
 export class FormRegisterComponent {
 
-  router = inject(Router);
-  
-  private authService = inject(AuthService);
-  
   @Output()
   onChangeMode = new EventEmitter<void>();
+  
+  router = inject(Router);
+  authService = inject(AuthService);
+  
+  fb = inject(FormBuilder);
+
 
   registerForm = new FormGroup({
     username : new FormControl('', 

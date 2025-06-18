@@ -17,9 +17,12 @@ import { FormLoginComponent } from './auth/form-login/form-login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { authInterceptor } from './auth/interceptors/auth.interceptor';
 import { CourseCreateComponent } from './course/course-create/course-create.component';
+import { FormLabelErrorComponent } from './shared/components/form-label-error/form-label-error.component';
 
 @NgModule({
-    declarations: [],
+    declarations: [
+    FormLabelErrorComponent
+  ],
     imports: [
         BrowserModule,
         AppRoutingModule,

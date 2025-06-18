@@ -62,7 +62,7 @@ input:not(:placeholder-shown) + label{
     transition: all 0.3s ease-in-out;
 }
 
-.input-username:not(:placeholder-shown)
+.input-username:not(:placeholder-shown),
 .input-email:not(:placeholder-shown) ,
 .input-password:not(:placeholder-shown){
     transform: scale(1.01);
@@ -91,13 +91,11 @@ input:not(:placeholder-shown) + label{
 
 .label-text{
     display: flex;
-    width: 25%;
     position: relative;
     z-index: 100;
     top: -12%;
-    margin: auto;
-    margin-top: 0;
-    margin-bottom: 0;
+    margin: 0;
+    padding: 0 10px 0 10px;
     justify-content: center;
     border-radius: 20px 20px 0px 0px;
     font-family: v.$font-primary;
@@ -147,5 +145,4 @@ input:not(:placeholder-shown) + label{
         background-position: 0% 50%;
     }
 }
-
 

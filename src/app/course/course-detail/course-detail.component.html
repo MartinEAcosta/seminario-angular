@@ -1,5 +1,13 @@
 <div class="bg-detail">
-    <figure class="miniature">
-    </figure>
-    <h1> {{ selectedCourse().title }} </h1>
+    <section class="section-detail">
+        <div class="container-details">
+            <h1 class="title-course"> {{ selectedCourse().title }} </h1>
+
+            <p class="description-course"> {{ selectedCourse().description }} </p>
+        </div>
+        <figure class="miniature">
+            <img src="{{ selectedCourse().imgURL }}" alt="">
+        </figure>
+    </section>
+
 </div>

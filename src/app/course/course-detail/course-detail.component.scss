@@ -1,0 +1,23 @@
+@use '../../../variables.scss' as v;
+
+.bg-detail{
+    background-color: v.$white-custom;
+    background-position: center;
+    background-size: cover;
+    padding: 3%;
+    font-family: v.$font-primary;
+}
+
+.container-details{
+    display: flex;
+    flex-direction: column;
+}
+
+.container-details .title-course{
+    font-size: xx-large;
+    margin-bottom: 2.5%;
+}
+
+.container-details .description-course{
+    font-size: large;
+}

@@ -1,5 +1,5 @@
 import { Component, inject, input, signal } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder ,  ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder ,  ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { CourseService } from '../../services/course/course.service';
 import { NgClass } from '@angular/common';
@@ -31,7 +31,7 @@ export class FormCourseComponent {
   courseForm = this.fb.group({
     title : [ '' ],
     description : [ '' ],
-    imgURL : [ '' ],
+    imgURL : [ [''] ],
     price : [ 0 ],
     offer : [ false ],
     capacity : [ 10 ], 
@@ -59,7 +59,7 @@ export class FormCourseComponent {
     
     if( this.courseForm.valid ){
       
-      const { title , description , imgURL , price = 0  , offer = false , capacity } = this.courseForm.value;
+      const { title , description , imgURL = [''] , price = 0  , offer = false , capacity } = this.courseForm.value;
       const user = this.authService?.user();
       const userID = user()?._id;
       

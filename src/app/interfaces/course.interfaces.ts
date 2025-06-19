@@ -15,7 +15,7 @@ export interface Course {
     _id:         string;
     title:       string;
     description: string;
-    imgURL:      string;
+    imgURL:      string[];
     owner:       string;
     price:       number;
     offer:       boolean;

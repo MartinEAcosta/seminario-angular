@@ -12,12 +12,13 @@ import { FooterComponent } from '../../shared/components/footer/footer.component
 import { rxResource } from '@angular/core/rxjs-interop';
 import { of } from 'rxjs';
 import { FormCourseComponent } from "../../course/form-course/form-course.component";
+import { LoaderComponent } from "../../shared/components/loader/loader.component";
 
 @Component({
     selector: 'app-course-create',
     templateUrl: './course-handler-page.html',
     styleUrl: './course-handler-page.scss',
-    imports: [HeaderComponent, ReactiveFormsModule, FooterComponent, FormCourseComponent]
+    imports: [HeaderComponent, ReactiveFormsModule, FooterComponent, FormCourseComponent, LoaderComponent]
 })
 export class CourseCreateComponent {
 

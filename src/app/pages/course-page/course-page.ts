@@ -9,15 +9,17 @@ import { of } from 'rxjs';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
+import { LoaderComponent } from "../../shared/components/loader/loader.component";
 
 @Component({
   selector: 'app-course-page',
   templateUrl: './course-page.html',
   styleUrl: './course-page.scss',
   imports: [
-    HeaderComponent, CourseDetailComponent , FooterComponent ,
-    ReactiveFormsModule ,
-  ]
+    HeaderComponent, CourseDetailComponent, FooterComponent,
+    ReactiveFormsModule,
+    LoaderComponent
+]
 })
 export class CoursePage {
 

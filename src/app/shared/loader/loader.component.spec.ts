@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormLabelErrorComponent } from './form-label-error.component';
+import { LoaderComponent } from './loader.component';
 
-describe('FormLabelErrorComponent', () => {
-  let component: FormLabelErrorComponent;
-  let fixture: ComponentFixture<FormLabelErrorComponent>;
+describe('LoaderComponent', () => {
+  let component: LoaderComponent;
+  let fixture: ComponentFixture<LoaderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FormLabelErrorComponent]
+      imports: [LoaderComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FormLabelErrorComponent);
+    fixture = TestBed.createComponent(LoaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

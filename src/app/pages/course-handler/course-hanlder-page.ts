@@ -15,8 +15,8 @@ import { FormCourseComponent } from "../../course/form-course/form-course.compon
 
 @Component({
     selector: 'app-course-create',
-    templateUrl: './course-create.component.html',
-    styleUrl: './course-create.component.scss',
+    templateUrl: './course-handler-page.html',
+    styleUrl: './course-handler-page.scss',
     imports: [HeaderComponent, ReactiveFormsModule, FooterComponent, FormCourseComponent]
 })
 export class CourseCreateComponent {
@@ -31,7 +31,7 @@ export class CourseCreateComponent {
   
   courseResource = rxResource({
     request : ( ) => ( { id : this.courseId } ),
-    loader : ( { request  } ) => {
+    loader : ({ request } ) => {
 
       if( request.id === '' ) return of();
         

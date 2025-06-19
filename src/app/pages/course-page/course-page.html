@@ -1,0 +1,8 @@
+<app-header />
+    @if( this.courseResource.isLoading() ){
+        
+    }
+    @else {
+        <app-course-detail [selectedCourse]="courseResource.value()?.course!"/>
+    }
+<app-footer />

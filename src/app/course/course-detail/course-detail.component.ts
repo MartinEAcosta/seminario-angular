@@ -9,30 +9,11 @@ import { of } from 'rxjs';
 
 @Component({
   selector: 'app-course-detail',
-  imports: [ HeaderComponent , FooterComponent ],
   templateUrl: './course-detail.component.html',
   styleUrl: './course-detail.component.scss'
 })
 export class CourseDetailComponent {
 
-  activatedRoute = inject(ActivatedRoute);
-  router = inject(Router);
-
-  courseService = inject(CourseService);
-
-  courseId = this.activatedRoute.snapshot.params['id'] || '';
-
-  courseResource = rxResource({
-    request: () => ( { id : this.courseId } ),
-    loader: ( { request } ) => {
-      if( request.id === '' ) return of();
-
-      return this.courseService.getById( request.id );
-    },
-  }); 
-
-
-
-
+  selectedCourse = input.required<Course>();
 
 }

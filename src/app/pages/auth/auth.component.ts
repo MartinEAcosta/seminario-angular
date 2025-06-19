@@ -1,3 +1,6 @@
+/*
+    Path:PORT/auth
+*/
 import { Component, Input, signal, WritableSignal } from '@angular/core';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { FormLoginComponent } from '../../auth/form-login/form-login.component';

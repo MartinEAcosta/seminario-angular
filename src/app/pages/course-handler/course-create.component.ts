@@ -1,5 +1,9 @@
+/*
+  Path:PORT/course/create
+  Path:PORT/course/update/:id
+*/
 import { Component, inject  } from '@angular/core';
-import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../../services/course/course.service';
@@ -7,7 +11,7 @@ import { HeaderComponent } from '../../shared/components/header/header.component
 import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { of } from 'rxjs';
-import { FormCourseComponent } from "../form-course/form-course.component";
+import { FormCourseComponent } from "../../course/form-course/form-course.component";
 
 @Component({
     selector: 'app-course-create',
@@ -26,8 +30,8 @@ export class CourseCreateComponent {
   courseId = this.activatedRoute.snapshot.params['id'] || '';
   
   courseResource = rxResource({
-    request : ( ) => ({ id : this.courseId }),
-    loader : ({ request }) => {
+    request : ( ) => ( { id : this.courseId } ),
+    loader : ( { request  } ) => {
 
       if( request.id === '' ) return of();
         

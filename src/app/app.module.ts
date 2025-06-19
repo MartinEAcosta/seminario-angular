@@ -16,12 +16,14 @@ import { FormRegisterComponent } from './auth/form-register/form-register.compon
 import { FormLoginComponent } from './auth/form-login/form-login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { authInterceptor } from './auth/interceptors/auth.interceptor';
-import { CourseCreateComponent } from './course/course-create/course-create.component';
+import { CourseCreateComponent } from './pages/course-handler/course-create.component';
 import { FormLabelErrorComponent } from './shared/components/form-label-error/form-label-error.component';
+import { CourseDetailComponent } from './course/course-detail/course-detail.component';
 
 @NgModule({
     declarations: [
-    FormLabelErrorComponent
+    FormLabelErrorComponent,
+    CourseDetailComponent
   ],
     imports: [
         BrowserModule,

@@ -8,7 +8,7 @@ import { NgClass } from '@angular/common';
     selector: 'app-form-login',
     templateUrl: './form-login.component.html',
     styleUrls: ['../form-global.scss', './form-login.component.scss'],
-    imports: [ ReactiveFormsModule , NgClass ]
+    imports: [ ReactiveFormsModule  ]
 })
 export class FormLoginComponent {
   

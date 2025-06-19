@@ -1,5 +1,5 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators, ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { NgClass } from '@angular/common';
@@ -19,9 +19,9 @@ export class FormLoginComponent {
   authService = inject(AuthService);
 
   fb = inject(FormBuilder);
-  
+    
   loginForm = this.fb.group({
-    email : [ '' , [Validators.email , ] ],
+    email : [ '' ],
     password : [ '' ],
   });
 

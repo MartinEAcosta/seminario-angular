@@ -1,8 +1,9 @@
 # SeminarioAngular
 
-Primeramente adapte una estructura mas tirada a lo que suelo hacer en React, separando con una carpeta componentes a partir de la es Style Guide de angular que aconseja ordenar por features, cambie la estructura.
+## Experiencia personal
+Primeramente adapte una estructura mas tirada a lo que suelo hacer en React, separando con una carpeta componentes, servicios, hooks, etc .A partir de la es Style Guide (https://angular.dev/style-guide) de Angular en donde se aconseja ordenar por features, cambie la estructura.  
+Como primera impresión no me gusto la rigidez que aportaba Angular dentro de la estructuración de proyectos pero luego de un tiempo me termino convenciendo, esto debido a la facilidad en la que se "navega" por el código. Luego al querer ir agregando funcionalidades al proyecto me fui dando cuenta en la docu que ya estaba todo creado, las herramientas que aportaba Angular se me hicieron bastante intuitivas y con un poco de documentación se podia llegar finalizar facilmente una tarea, a diferencia de lo que pasaba con React, al ser tan solo una libreria daba el poder al usuario de como resolver la tarea, teniendo diferentes opciones para solucionar un problema por ejemplo las peticiones http podrían ser manejadas con axios, en el caso de Angular al aportarte ellos mismos un estandar, que tras eso funciona correctamente me parecio genial.
 
-https://angular.dev/style-guide
 
 ## Funcionamiento de HttpClient
 

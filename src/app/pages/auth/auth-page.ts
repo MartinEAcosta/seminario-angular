@@ -9,8 +9,8 @@ import { FooterComponent } from '../../shared/components/footer/footer.component
 
 @Component({
     selector: 'app-auth',
-    templateUrl: './auth.component.html',
-    styleUrl: './auth.component.scss',
+    templateUrl: './auth-page.html',
+    styleUrl: './auth-page.scss',
     imports: [HeaderComponent, FormLoginComponent, FormRegisterComponent, FooterComponent]
 })
 export class AuthComponent {

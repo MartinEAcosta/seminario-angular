@@ -11,8 +11,8 @@ import { FooterComponent } from '../../shared/components/footer/footer.component
 
 @Component({
     selector: 'app-home',
-    templateUrl: './home.component.html',
-    styleUrl: './home.component.scss',
+    templateUrl: './home-page.html',
+    styleUrl: './home-page.scss',
     imports: [HeaderComponent, CourseListComponent, CartComponent, FooterComponent]
 })
 export class HomeComponent {

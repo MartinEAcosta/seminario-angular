@@ -9,20 +9,59 @@
                     <img src="assets/not-found-image.png" alt="">
                  <!-- } -->
             </figure>
-            <form [formGroup]="courseForm" (submit)="onSumbit()">
-                <input formControlName="title" class="input input-title" type="text" placeholder="Título del curso">
-                <textarea formControlName="description" class="input input-description" type="text" placeholder="Escribe una breve descripción del curso..."></textarea>
+            <!-- <pre>{{ courseForm.controls['title']?.errors | json }}</pre>
+            <pre>{{ courseForm.controls['description']?.errors | json }}</pre>
+            <pre>{{ courseForm.controls['capacity']?.errors | json }}</pre>
+            <pre>{{ courseForm.controls['price']?.errors | json }}</pre> -->
+            <form [formGroup]="courseForm" (ngSubmit)="onSumbit()">
+
+                <input 
+                    formControlName="title" 
+                    class="input input-title" 
+                    type="text" 
+                    placeholder="Título del curso"/>
+                
+                <app-form-error-label [message]="formUtils.getFieldError(courseForm , 'title' )" />
+
+                <textarea 
+                    formControlName="description" 
+                    class="input input-description" 
+                    type="text" 
+                    placeholder="Escribe una breve descripción del curso...">
+                </textarea>
                 <div class="container-capacity">
-                    <label class="label-capacity">Capacidad Limitada</label>
-                    <input formControlName="capacity" type="number" class="input input-capacity" [ngClass]="{ 'valid-border' : courseForm.value.capacity}" placeholder="0" />
+                    <label class="label-capacity">
+                        Capacidad Limitada
+                    </label>
+                    <input 
+                        formControlName="capacity" 
+                        type="number" 
+                        class="input input-capacity" 
+                        [ngClass]="{ 'valid-border' : courseForm.value.capacity}" 
+                        placeholder="0" 
+                    />
                 </div>    
                 <div class="container-pricing">
                     <label class="label-pricing">Precio del curso</label>
-                    <input formControlName="price" class="input-pricing" [ngClass]="{ 'valid-border' : courseForm.value.price}" type="number" placeholder="$5" >
+                    <input 
+                        formControlName="price" 
+                        class="input-pricing" 
+                        [ngClass]="{ 'valid-border' : courseForm.value.price}" 
+                        type="number" 
+                        placeholder="$5" 
+                    />
                 </div>
                 <div class="container-btn">
-                    <button class="btn btn-create" type="submit">Crear curso</button>
-                    <button class="btn btn-cancel" type="reset">Cancelar</button>
+                    <button 
+                        class="btn btn-create" 
+                        type="submit"
+                        (click)="onSumbit()"
+                        >
+                        {{ this._mode() === 'updating' ? 'Editar curso': 'Crear curso'}}
+                    </button>
+                    <button class="btn btn-cancel" type="reset">
+                        Cancelar
+                    </button>
                 </div>
                 <div class="container-file">
                     <input 

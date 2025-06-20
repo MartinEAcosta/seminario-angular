@@ -1,10 +1,12 @@
 import { Component, inject, input, signal } from '@angular/core';
-import { FormBuilder ,  ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { CourseService } from '../../services/course/course.service';
-import { NgClass } from '@angular/common';
+import { JsonPipe, NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 import { Course } from '../../interfaces/course.interfaces';
+import { FormUtils } from '../../utils/form-utils';
+import { FormErrorLabelComponent } from "../../shared/components/form-error-label/form-error-label.component";
 
 
 type Mode = 'creating' | 'updating' | 'loading';
@@ -13,33 +15,33 @@ type Mode = 'creating' | 'updating' | 'loading';
   selector: 'app-form-course',
   templateUrl: './form-course.component.html',
   styleUrl: './form-course.component.scss',
-  imports: [ ReactiveFormsModule , NgClass ],
+  imports: [ReactiveFormsModule, NgClass, FormErrorLabelComponent],
 })
 export class FormCourseComponent {
 
   _mode = signal<Mode>('loading');
-  
   course = input.required<Course>();
   
   router = inject(Router);
-  
+
   authService = inject(AuthService);
   courseService = inject(CourseService);
 
-  fb = inject(FormBuilder);
+  private fb = inject(FormBuilder);
+  formUtils = FormUtils;
 
-  courseForm = this.fb.group({
-    title : [ '' ],
-    description : [ '' ],
+  courseForm : FormGroup = this.fb.group({
+    title : [ '' , [ Validators.minLength(6) ] ],
+    description : [ '' , [ Validators.minLength(6) ] ],
     imgURL : [ [''] ],
-    price : [ 0 ],
+    price : [ 0 , [ Validators.min(0) ] ],
     offer : [ false ],
-    capacity : [ 10 ], 
+    capacity : [ 10 , [ Validators.min(1) ] ], 
   });
 
   ngOnInit () {
     if( !!this.course() ){
-      this.courseForm.patchValue({
+      this.courseForm.reset({
         title: this.course().title,
         description: this.course().description,
         imgURL: this.course().imgURL,
@@ -54,9 +56,11 @@ export class FormCourseComponent {
       this._mode.set('creating');
     }
   }
-  
+
   onSumbit = ( ) : void => {
     
+    this.courseForm.markAllAsTouched();
+
     if( this.courseForm.valid ){
       
       const { title , description , imgURL = [''] , price = 0  , offer = false , capacity } = this.courseForm.value;

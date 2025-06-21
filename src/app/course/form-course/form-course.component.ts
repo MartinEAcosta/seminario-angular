@@ -34,9 +34,9 @@ export class FormCourseComponent {
     title : [ '' , [ Validators.minLength(6) ] ],
     description : [ '' , [ Validators.minLength(6) ] ],
     imgURL : [ [''] ],
-    price : [ 0 , [ Validators.min(0) ] ],
+    price : [  , [ Validators.min(0) ] ],
     offer : [ false ],
-    capacity : [ 10 , [ Validators.min(1) ] ], 
+    capacity : [  , [ Validators.min(5) ] ], 
   });
 
   ngOnInit () {
@@ -59,7 +59,7 @@ export class FormCourseComponent {
 
   onSumbit = ( ) : void => {
     
-    this.courseForm.markAllAsTouched();
+    this.courseForm.markAllAsTouched()
 
     if( this.courseForm.valid ){
       

@@ -19,9 +19,10 @@
                     formControlName="title" 
                     class="input input-title" 
                     type="text" 
-                    placeholder="Título del curso"/>
+                    placeholder="Título del curso"
+                    />
                 
-                <app-form-error-label [message]="formUtils.getFieldError(courseForm , 'title' )" />
+                <app-form-error-label [control]="courseForm.get('title')!" />
 
                 <textarea 
                     formControlName="description" 
@@ -29,6 +30,7 @@
                     type="text" 
                     placeholder="Escribe una breve descripción del curso...">
                 </textarea>
+
                 <div class="container-capacity">
                     <label class="label-capacity">
                         Capacidad Limitada
@@ -40,6 +42,7 @@
                         [ngClass]="{ 'valid-border' : courseForm.value.capacity}" 
                         placeholder="0" 
                     />
+
                 </div>    
                 <div class="container-pricing">
                     <label class="label-pricing">Precio del curso</label>
@@ -50,6 +53,7 @@
                         type="number" 
                         placeholder="$5" 
                     />
+                    
                 </div>
                 <div class="container-btn">
                     <button 

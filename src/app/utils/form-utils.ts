@@ -1,12 +1,9 @@
-import { FormGroup } from '@angular/forms';
+import { FormGroup, ValidationErrors } from '@angular/forms';
 
 
 export class FormUtils {
 
-    static getFieldError( form : FormGroup ,  fieldName : string ) : string | null {
-        if ( !form.controls[fieldName] ) return null;
-
-        const errors = form.controls[fieldName].errors ?? {};
+    static getTextError = ( errors : ValidationErrors ) : string | null =>  {
 
         for( const key of Object.keys(errors) ){
             switch( key ){
@@ -24,9 +21,18 @@ export class FormUtils {
 
         return null;
     }
+
+    static getFieldError= ( form : FormGroup ,  fieldName : string ) : string | null =>{
+        if ( !form.controls[fieldName]) return null;
+
+        const errors = form.controls[fieldName].errors ?? {};
+
+        return FormUtils.getTextError(errors);
+
+    }
       
-    static isValidField( form : FormGroup , fieldName : string ) : boolean | null {
-        return  ( !!form.controls[fieldName].errors && form.controls[fieldName].touched );
+    static isValidField = ( form : FormGroup , fieldName : string ) : boolean | null => {
+        return  ( form.controls[fieldName].errors && form.controls[fieldName]?.touched );
     }
 
 }

@@ -2,7 +2,17 @@
 
 .errorMessage{
     display: flex;
-    padding-bottom: 3%;
     font-family: v.$font-primary;
     color: v.$red-warning;
+    align-items: center;
 }
+
+img{
+    width: 3%;
+    display: none;
+}
+
+.isActivated {
+    display: flex;
+}
+

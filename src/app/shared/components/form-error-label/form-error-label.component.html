@@ -1,3 +1,4 @@
 <span class="errorMessage">
+    <img [ngClass]="{ 'isActivated' : ( warningSvg() && errorMessage != null ) }" src="/assets/warning.svg" alt="">
     {{ errorMessage }}
 </span>

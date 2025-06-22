@@ -56,6 +56,17 @@
     border-radius: 0.5px;
 }
 
+.container-error-label{
+    display: flex;
+    margin-top: 1%;
+    align-items: center;
+    width: auto;
+}
+
+.container-error-label .hasError{
+    display: none;
+}
+
 .input-description{
     display: flex;
     width: 100%;
@@ -67,14 +78,15 @@
 
 .container-capacity{
     display: flex;
+    position: absolute;
+    bottom: 25%;
     color: v.$white-custom;
-    bottom: -52%;
     text-align: center;
     align-items: center;
     font-size: 1.2rem;
     gap: 2%;
-    position: relative;
 }
+
 
 .input-capacity{
     display: flex;

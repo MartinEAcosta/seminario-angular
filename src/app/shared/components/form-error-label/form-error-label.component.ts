@@ -1,10 +1,11 @@
 import { Component, input,  } from '@angular/core';
 import { FormUtils } from '../../../utils/form-utils';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-form-error-label',
-  imports: [],
+  selector: 'form-error-label',
+  imports: [ NgClass ],
   templateUrl: './form-error-label.component.html',
   styleUrl: './form-error-label.component.scss'
 })
@@ -12,6 +13,7 @@ export class FormErrorLabelComponent {
 
   // Es pasado todo el objeto campo del formulario señalado con la información del mismo.
   control = input.required<AbstractControl>();
+  warningSvg = input<boolean>(false);
 
   // Permite consumir el error desde el html.
   get errorMessage () {

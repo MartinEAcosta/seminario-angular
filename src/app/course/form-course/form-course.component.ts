@@ -31,8 +31,8 @@ export class FormCourseComponent {
   formUtils = FormUtils;
 
   courseForm : FormGroup = this.fb.group({
-    title : [ '' , [ Validators.minLength(6) ] ],
-    description : [ '' , [ Validators.minLength(6) ] ],
+    title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
+    description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
     imgURL : [ [''] ],
     price : [  , [ Validators.min(0) ] ],
     offer : [ false ],

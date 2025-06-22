@@ -21,16 +21,18 @@
                     type="text" 
                     placeholder="Título del curso"
                     />
-                
-                <app-form-error-label [control]="courseForm.get('title')!" />
 
+                <form-error-label [control]="courseForm.get('title')!" [warningSvg]=true />
+                
                 <textarea 
                     formControlName="description" 
                     class="input input-description" 
                     type="text" 
                     placeholder="Escribe una breve descripción del curso...">
                 </textarea>
-
+                
+                <form-error-label [control]="courseForm.get('description')!" />
+                
                 <div class="container-capacity">
                     <label class="label-capacity">
                         Capacidad Limitada

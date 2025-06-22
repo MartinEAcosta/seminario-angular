@@ -1,2 +1,7 @@
 @use '../../../variables.scss' as v;
 
+.bg-page{
+    width: 100%;
+    height: 100vh;
+    background-color: v.$white-custom;
+}

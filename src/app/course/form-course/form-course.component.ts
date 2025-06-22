@@ -34,7 +34,7 @@ export class FormCourseComponent {
     title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
     description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
     imgURL : [ [''] ],
-    price : [  , [ Validators.min(0) ] ],
+    price : [  , [ Validators.required , Validators.min(0) ] ],
     offer : [ false ],
     capacity : [  , [ Validators.min(5) ] ], 
   });

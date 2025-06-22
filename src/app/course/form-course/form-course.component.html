@@ -9,10 +9,7 @@
                     <img src="assets/not-found-image.png" alt="">
                  <!-- } -->
             </figure>
-            <!-- <pre>{{ courseForm.controls['title']?.errors | json }}</pre>
-            <pre>{{ courseForm.controls['description']?.errors | json }}</pre>
-            <pre>{{ courseForm.controls['capacity']?.errors | json }}</pre>
-            <pre>{{ courseForm.controls['price']?.errors | json }}</pre> -->
+
             <form [formGroup]="courseForm" (ngSubmit)="onSumbit()">
 
                 <input 
@@ -31,31 +28,42 @@
                     placeholder="Escribe una breve descripción del curso...">
                 </textarea>
                 
-                <form-error-label [control]="courseForm.get('description')!" />
+                <form-error-label [control]="courseForm.get('description')!" [warningSvg]=true />
                 
                 <div class="container-capacity">
-                    <label class="label-capacity">
-                        Capacidad Limitada
+                    <div class="container-inline">
+                        <label class="label-capacity">
+                            Capacidad Limitada
+                        </label>
+                        <input 
+                            formControlName="capacity" 
+                            type="number" 
+                            class="input input-capacity" 
+                            [ngClass]="{ 
+                                'invalid-border': courseForm.get('capacity')?.errors, 
+                                'valid-border': courseForm.get('capacity')?.touched && !courseForm.get('capacity')?.errors 
+                            }" 
+                            placeholder="0" 
+                        />
+                    </div>
+                    
+                    <form-error-label [control]="courseForm.get('capacity')!" />
+                </div>
+                <div class="container-pricing">
+                    <label class="label-pricing">
+                        Precio del curso
                     </label>
                     <input 
-                        formControlName="capacity" 
+                        formControlName="price"
+                        class="input input-pricing" 
                         type="number" 
-                        class="input input-capacity" 
-                        [ngClass]="{ 'valid-border' : courseForm.value.capacity}" 
-                        placeholder="0" 
+                        [ngClass]="{ 
+                            'invalid-border': courseForm.get('price')?.errors && courseForm.get('price')?.touched , 
+                            'valid-border': courseForm.get('price')?.touched && !courseForm.get('price')?.errors 
+                        }" 
+                        placeholder="5" 
                     />
-
-                </div>    
-                <div class="container-pricing">
-                    <label class="label-pricing">Precio del curso</label>
-                    <input 
-                        formControlName="price" 
-                        class="input-pricing" 
-                        [ngClass]="{ 'valid-border' : courseForm.value.price}" 
-                        type="number" 
-                        placeholder="$5" 
-                    />
-                    
+                    <form-error-label [control]="courseForm.get('price')!" />
                 </div>
                 <div class="container-btn">
                     <button 

@@ -1,9 +1,10 @@
-
 <app-header/>
-    @if( this.courseResource.isLoading()){
-        <app-loader />
-    }
-    @else{
-        <app-form-course [course]="courseResource.value()?.course!" />
-    }
+    <div class="bg-page">
+        @if( this.courseResource.isLoading()){
+            <app-loader />
+        }
+        @else{
+            <app-form-course [course]="courseResource.value()?.course!" />
+        }
+    </div>
 <app-footer/>

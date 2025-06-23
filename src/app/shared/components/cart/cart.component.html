@@ -1,20 +1,20 @@
 <div class="" [ngClass]="{'overlay' : isCartOpen()}" (click)="onCloseCart()">
-  <div class="bg-cart" (click)="onOpenCart()" [ngClass]="{'open' :  isCartOpen()}">
+  <div class="bg-cart" (click)="onOpenCart()" [ngClass]="{'open' : this.isCartOpen()}">
     <div class="container-icon">
-      <img class="imgIconCart" [ngClass]="{'imgVisibility' : isCartOpen()}" src="assets/cart-icon.svg" alt="Carrito de compras">
+      <img class="imgIconCart" [ngClass]="{'imgVisibility' : this.isCartOpen()}" src="assets/cart-icon.svg" alt="Carrito de compras">
     </div>
-    <div class="content-open" [ngClass]="{'hidden' : !isCartOpen()}">
+    <div class="content-open" [ngClass]="{'hidden' : !this.isCartOpen()}">
       <div class="header-cart">
         <p>Mi Carrito</p>
       </div>
       <div class="list-courses">
-        @for ( course of cartItems().keys(); track course ) {
+        @for ( course of this.courses.keys(); track course ) {
         <div class="card-course">
           <div class="details">
             <div class="container-imgCourse">
               <img
                 src={{course.imgURL}}
-                alt="">
+                alt="{{course.title}} image">
             </div>
               <section class="rightSection">
                 <p class="title-course">
@@ -22,9 +22,9 @@
                 </p>
                 <div class="quantity-selector">
                   <p class="text-quota">Cupos a reservar:</p>
-                  <input class="leftBtn" (click)="onDownQuantity( course )" type="button" value="-">
-                  <input class="inputNumber" type="number" name="" id="" value={{cartItems().get(course)}}>
-                  <input class="rightBtn" (click)="onUpQuantity( course )" type="button" value="+">
+                  <input class="leftBtn" (click)="this.cartService.onDownQuantity(course)" type="button" value="-">
+                  <input class="inputNumber" type="number" name="" id="" value="{{ this.courses.get(course) }}">
+                  <input class="rightBtn" (click)="this.cartService.onUpQuantity(course)" type="button" value="+">
                 </div>
               </section>
           </div>
@@ -37,7 +37,7 @@
           <input type="text" placeholder="CURSOS-2025">
         </div>
         <div class="container-btns">
-          <button class="btn-continue" (click)="onCloseCart()">Continuar Explorando</button>
+          <button class="btn-continue" (click)="this.onCloseCart()">Continuar Explorando</button>
           <button class="btn-pay">Finalizar Compra</button>
         </div>
       </div>
@@ -45,10 +45,10 @@
   </div>
 
   <!-- Si el carrito esta abierto se esconde el icono de notificación o en caso de que el tamaño sea distinto de 0 y este cerrado -->
-  <div class="container-notification" [ngClass]="{ 'hidden': isCartOpen || (cartItems().size === 0),
-                                                   'onNotification': !isCartOpen && cartItems().size !== 0 }"> 
+  <div class="container-notification" [ngClass]="{ 'hidden': this.isCartOpen() || ( this.courses.size === 0 ),
+                                                   'onNotification': !this.isCartOpen() && this.courses.size !== 0 }"> 
     <small>
-      {{ cartItems().size }} 
+      {{ this.cartService.courses().size }} 
     </small> 
   </div>
 </div>

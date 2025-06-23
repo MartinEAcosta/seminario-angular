@@ -17,15 +17,19 @@ export class AuthService {
   private _id = signal<string | null>(null);
   // Esto ayuda a que si se tiene una sesión ya iniciada y refrescar mantener la sesión.
   private _token = signal<string | null>( localStorage.getItem('x-token') );
-
+  
+  private http = inject(HttpClient);
+  private baseURL : string = `${environment.apiURL}auth`;
+  
   // Se dispara ni bien el servicio es inyectado por primera vez.
   checkStatusResource = rxResource({
     loader: () => this.checkStatus()
   });
-
-  private http = inject(HttpClient);
-  private baseURL : string = `${environment.apiURL}auth`;
   
+  user = computed( () => this._user );
+  id = computed( this._id );
+  token = computed(this._token);
+
   authStatus = computed<AuthStatus>(() => {
     if( this._authStatus() === 'checking' ) return 'checking';
 
@@ -35,10 +39,6 @@ export class AuthService {
 
     return 'not-authenticated';
   });
-
-  user = computed( () => this._user );
-  id = computed( this._id );
-  token = computed(this._token);
 
   constructor() { }
 

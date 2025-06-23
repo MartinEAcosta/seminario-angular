@@ -302,19 +302,6 @@ img{
     transform: scale(1.05);
 }
 
-@keyframes onNewNotification{
-    from{
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to{
-        transform: translateX(0);
-        opacity: 1;
-    }
-
-}
-
-
 .container-notification{
     display: flex;
     position: fixed;
@@ -331,6 +318,18 @@ img{
 
 .onNotification{
     animation: onNewNotification 0.4s ease-out;
+}
+
+@keyframes onNewNotification{
+    from{
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to{
+        transform: translateX(0);
+        opacity: 1;
+    }
+
 }
 
 .container-notification small{

@@ -1,11 +1,12 @@
-@for ( course of courses() ; track course._id) {
+@for ( course of this.courses() ; track course._id) {
     <div class="card-course">
         <div class="content-card">
             <img class="course-img" src={{course.imgURL}} alt="Course Image">
             <div class="details-course">
                 <a 
                     class="anchor"
-                    [routerLink]="['/course' , course._id]">
+                    [routerLink]="['/course' , course._id]"
+                    >
                     <p class="title">
                         {{course.title}}
                     </p>
@@ -16,9 +17,9 @@
                 <p class="price">
                     {{ course.price === 0 ? 'Gratis' : (course.price | currency:'USD':'symbol':'1.2-2') }}
                 </p>
-                <small></small>
                 <div class="extra-details">
                     <div class="actions">
+
                         @if( course.capacity != null && course.capacity > 0 ){  
                             <p class="quantity">
                                 Cantidad de cupos disponibles: 
@@ -30,19 +31,20 @@
                         @else {
                             <p class="quantity"> No se encuentra cupo disponible.</p>
                         }
+
                     </div>
+
                     <div class="buttons">
                         <app-btn-primary 
                             [isNotAvailable]="( course.capacity != undefined && course.capacity === 0 )"
                             > 
                                 Comprar 
                         </app-btn-primary>
-                         
-                        <app-btn-add-to-cart 
-                            [course]="course" 
-                        />
+                        <btn-add-to-cart [course]="course" />
                     </div>
+
                 </div>
+
                 @if( course.owner === authService.id() ) {
                     <a 
                         class="anchor-icon" 
@@ -51,7 +53,6 @@
                             <img class="edit-svg" src="/assets/edit.svg" alt="">
                         </div>
                     </a>
-
                 }
 
             </div>

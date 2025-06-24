@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject, input , InputSignal, output } from '@angular/core';
+import { Component, inject, input , output } from '@angular/core';
 
 import { AuthService } from '../../services/auth/auth.service';
 import { BtnPrimaryComponent } from '../../shared/components/btn-primary/btn-primary.component';
-import { BtnAddToCartComponent } from '../../shared/components/btn-add-to-cart/btn-add-to-cart.component';
+import { BtnBorderThinComponent } from '../../shared/components/btn-border-thin/btn-border-thin.component';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Course } from '../../interfaces/course.interfaces';
 import { RouterModule } from '@angular/router';
@@ -10,14 +10,14 @@ import { CartService } from '../../services/cart/cart.service';
 import { Cart } from '../../interfaces/cart.interface';
 
 @Component({
-    selector: 'app-course-list',
-    templateUrl: './course-list.component.html',
-    styleUrl: './course-list.component.scss',
-    imports: [BtnPrimaryComponent, BtnAddToCartComponent, CurrencyPipe, RouterModule, CommonModule],
+    selector: 'course-card',
+    templateUrl: './course-card.component.html',
+    styleUrl: './course-card.component.scss',
+    imports: [BtnPrimaryComponent, BtnBorderThinComponent, CurrencyPipe, RouterModule, CommonModule, BtnBorderThinComponent],
 })
-export class CourseListComponent {
+export class CourseCardComponent {
   
-  readonly courses = input.required<Course[]>();
+  readonly course = input.required<Course>();
   
   newCart = output<Cart>();
 

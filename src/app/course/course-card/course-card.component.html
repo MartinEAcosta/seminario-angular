@@ -1,28 +1,27 @@
-@for ( course of courses() ; track course._id) {
     <div class="card-course">
         <div class="content-card">
-            <img class="course-img" src={{course.imgURL}} alt="Course Image">
+            <img class="course-img" src={{course().imgURL}} alt="Course Image">
             <div class="details-course">
                 <a 
                     class="anchor"
-                    [routerLink]="['/course' , course._id]"
+                    [routerLink]="['/course' , course()._id]"
                     >
-                    {{course.title}}
+                    {{course().title}}
                 </a>
                 <p class="desc">
-                    {{course.description}}
+                    {{course().description}}
                 </p>
                 <p class="price">
-                    {{ course.price === 0 ? 'Gratis' : (course.price | currency:'USD':'symbol':'1.2-2') }}
+                    {{ course().price === 0 ? 'Gratis' : (course().price | currency:'USD':'symbol':'1.2-2') }}
                 </p>
                 <div class="extra-details">
                     <div class="actions">
 
-                        @if( course.capacity != null && course.capacity > 0 ){  
+                        @if( course().capacity != null && course().capacity! > 0 ){  
                             <p class="quantity">
                                 Cantidad de cupos disponibles: 
                                 <span class="quantity-number"> 
-                                    {{course.capacity}} 
+                                    {{course().capacity}} 
                                 </span>
                             </p>
                         }
@@ -34,19 +33,19 @@
 
                     <div class="buttons">
                         <app-btn-primary 
-                            [isNotAvailable]="( course.capacity != undefined && course.capacity === 0 )"
+                            [isNotAvailable]="( course().capacity != undefined && course().capacity === 0 )"
                             > 
                                 Comprar 
                         </app-btn-primary>
-                        <btn-add-to-cart (click)="onAddToCart(course)" />
+                        <btn-border-thin (click)="onAddToCart(course())" />
                     </div>
 
                 </div>
 
-                @if( course.owner === user()?._id ) {
+                @if( course().owner === user()?._id ) {
                     <a 
                         class="anchor-icon" 
-                        [routerLink]="['/course/update' , course._id ]" >
+                        [routerLink]="['/course/update' , course()._id ]" >
                         <div class="edit">
                             <img class="edit-svg" src="/assets/edit.svg" alt="">
                         </div>
@@ -56,5 +55,4 @@
             </div>
         </div>
     </div>
-}
 

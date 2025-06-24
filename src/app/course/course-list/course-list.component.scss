@@ -29,15 +29,13 @@
 }
 
 .details-course .anchor{
+    width: fit-content;
     appearance: none;
     text-decoration: none;
     color: v.$black-custom;
-}
-
-.details-course .title{
-    font-weight: bold;
-    font-size: 1.2rem;
     margin-bottom: 2%;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
 .desc{

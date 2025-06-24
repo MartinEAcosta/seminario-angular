@@ -10,19 +10,21 @@ import { NgClass } from '@angular/common';
 })
 export class BtnAddToCartComponent {
 
-  // @Input()
-  // course!: Course; 
   course = input.required<Course>();
 
   private cartService = inject(CartService);
   
-  constructor() { }
+  constructor() {
+    // setTimeout(() => {
+    
+    //   console.log(this.course());
+    // }, 3000);
+   }
 
   onAddToCart = ( course : InputSignal<Course> ) : void  => {
-    const courseValue = this.course();
-    if (courseValue && (courseValue.capacity === undefined || courseValue.capacity > 0)) {
-      this.cartService.onAddToCart(course());
-    } 
+    console.log(course());
+    if( course().capacity != undefined && course()?.capacity! <= 0 ) return;
+    this.cartService.onAddToCart( course() );
   }
 
 }

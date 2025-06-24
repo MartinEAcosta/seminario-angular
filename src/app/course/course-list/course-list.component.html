@@ -1,4 +1,4 @@
-@for ( course of this.courses() ; track course._id) {
+@for ( course of courses() ; track course._id) {
     <div class="card-course">
         <div class="content-card">
             <img class="course-img" src={{course.imgURL}} alt="Course Image">
@@ -7,9 +7,7 @@
                     class="anchor"
                     [routerLink]="['/course' , course._id]"
                     >
-                    <p class="title">
-                        {{course.title}}
-                    </p>
+                    {{course.title}}
                 </a>
                 <p class="desc">
                     {{course.description}}
@@ -45,7 +43,7 @@
 
                 </div>
 
-                @if( course.owner === authService.id() ) {
+                @if( course.owner === user()?._id ) {
                     <a 
                         class="anchor-icon" 
                         [routerLink]="['/course/update' , course._id ]" >

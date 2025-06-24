@@ -11,18 +11,18 @@ export class CartService {
   
   readonly courses = computed(() => this._courses());
   
-  onAddToCart = ( course : Course ) : WritableSignal<Map<Course,number>>  => {
+  onAddToCart = ( course : Course ) : Map<Course,number>  => {
     const hasItem : boolean = this._courses().has( course );
     if( hasItem ){
       let quantity : number = this._courses().get( course ) ?? 0;
       if( course.capacity === undefined || quantity < course.capacity ){
         this._courses().set( course, quantity+1 );
       }
-      return this._courses;
+      return this.courses();
     }
 
     this._courses.set( this._courses().set(course,1) );
-    return this._courses;
+    return this.courses();
   }
 
   onUpQuantity = ( course : Course ) : void => {

@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal, Signal } from '@angular/core';
 import { CartService } from '../../../services/cart/cart.service';
 import { Course } from '../../../interfaces/course.interfaces';
 import { NgClass } from '@angular/common';
@@ -6,7 +6,8 @@ import { NgClass } from '@angular/common';
     selector: 'app-cart',
     templateUrl: './cart.component.html',
     styleUrl: './cart.component.scss',
-    imports: [ NgClass ]
+    imports: [ NgClass ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartComponent {
 
@@ -14,7 +15,7 @@ export class CartComponent {
 
   cartService = inject(CartService);
 
-  readonly courses = this.cartService.courses();
+  courses = computed(() => this.cartService.courses());
 
   constructor( ) { }
   
@@ -23,7 +24,6 @@ export class CartComponent {
       return;
     }
     this.isCartOpen.set(!this.isCartOpen());
-
   }
 
   onCloseCart = ( ) : void => {
@@ -31,9 +31,5 @@ export class CartComponent {
     if( clickedContainer.classList.contains('overlay') || clickedContainer.classList.contains('btn-continue') ){
       this.isCartOpen.set(false);
     }
-
   }
-
-  
-
 }

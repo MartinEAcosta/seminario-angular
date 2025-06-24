@@ -8,6 +8,6 @@
         <!-- TODO: Alternativas para mejorar rendimiento -->
       <iframe width="560" height="315" src="https://www.youtube.com/embed/fO74AMjx2fk?si=F9Ssa3p5sl5vhEDK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
-    <app-course-list [courses]="coursesResource.value()?.courses" />
+    <app-course-list [courses]="coursesSignal()" />
     <app-cart/>
 <app-footer/>

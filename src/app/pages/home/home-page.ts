@@ -1,7 +1,7 @@
 /*
   Path:PORT/
 */
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { CourseService } from '../../services/course/course.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { HeaderComponent } from '../../shared/components/header/header.component';
@@ -26,4 +26,6 @@ export class HomeComponent {
     })
   });
 
+  readonly coursesSignal = computed( () => this.coursesResource.value()?.courses ?? [] );
+  
 }

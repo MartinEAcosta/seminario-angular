@@ -1,6 +1,6 @@
     <div class="card-course">
         <div class="content-card">
-            <img class="course-img" src={{course().imgURL}} alt="Course Image">
+            <img class="course-img" [routerLink]="['/course' , course()._id]" src={{course().imgURL}} alt="Course Image">
             <div class="details-course">
                 <a 
                     class="anchor"
@@ -25,7 +25,7 @@
                                 </span>
                             </p>
                         }
-                        @else {
+                        @else if ( course().capacity === 0 ){
                             <p class="quantity"> No se encuentra cupo disponible.</p>
                         }
 

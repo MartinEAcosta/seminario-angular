@@ -9,12 +9,13 @@ import { CourseCardComponent } from '../../course/course-card/course-card.compon
 import { CartComponent } from '../../shared/components/cart/cart.component';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { CartService } from '../../services/cart/cart.service';
+import { LoaderComponent } from "../../shared/components/loader/loader.component";
 
 @Component({
     selector: 'app-home',
     templateUrl: './home-page.html',
     styleUrl: './home-page.scss',
-    imports: [HeaderComponent, CourseCardComponent, CartComponent, FooterComponent, CourseCardComponent]
+    imports: [HeaderComponent, CourseCardComponent, CartComponent, FooterComponent, CourseCardComponent, LoaderComponent]
 })
 export class HomeComponent {
 

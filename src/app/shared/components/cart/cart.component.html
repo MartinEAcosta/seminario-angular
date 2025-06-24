@@ -8,7 +8,7 @@
         <p>Mi Carrito</p>
       </div>
       <div class="list-courses">
-        @for ( course of this.courses().keys(); track course ) {
+        @for ( course of this.cart().courses.keys(); track course ) {
         <div class="card-course">
           <div class="details">
             <div class="container-imgCourse">
@@ -23,7 +23,7 @@
                 <div class="quantity-selector">
                   <p class="text-quota">Cupos a reservar:</p>
                   <input class="leftBtn" (click)="this.cartService.onDownQuantity(course)" type="button" value="-">
-                  <input class="inputNumber" type="number" name="" id="" value="{{ this.courses().get(course) }}">
+                  <input class="inputNumber" type="number" name="" id="" value="{{ this.cart().courses.get(course) }}">
                   <input class="rightBtn" (click)="this.cartService.onUpQuantity(course)" type="button" value="+">
                 </div>
               </section>
@@ -45,10 +45,10 @@
   </div>
 
   <!-- Si el carrito esta abierto se esconde el icono de notificación o en caso de que el tamaño sea distinto de 0 y este cerrado -->
-  <div class="container-notification" [ngClass]="{ 'hidden': this.isCartOpen() || ( this.courses().size === 0 ),
-                                                   'onNotification': !this.isCartOpen() && this.courses().size !== 0 }"> 
+  <div class="container-notification" [ngClass]="{ 'hidden': this.isCartOpen() || ( cart().courses.size === 0 ),
+                                                   'onNotification': !this.isCartOpen() && cart().courses.size !== 0 }"> 
     <small>
-      {{ this.courses().size }} 
+      {{ amountCoursesInCart().courses.size }} 
     </small> 
   </div>
 </div>

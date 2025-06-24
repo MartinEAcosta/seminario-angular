@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, OnInit, signal, Signal } from '@angular/core';
 import { CartService } from '../../../services/cart/cart.service';
 import { Course } from '../../../interfaces/course.interfaces';
 import { NgClass } from '@angular/common';
+import { Cart } from '../../../interfaces/cart.interface';
 @Component({
     selector: 'app-cart',
     templateUrl: './cart.component.html',
@@ -10,12 +11,12 @@ import { NgClass } from '@angular/common';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartComponent {
-
-  isCartOpen = signal<boolean>(false);
-
+  
   cartService = inject(CartService);
-
-  courses = computed(() => this.cartService.courses());
+  
+  cart = input.required<Cart>();
+  isCartOpen = signal<boolean>(false);
+  amountCoursesInCart = computed(() => this.cart() );
 
   constructor( ) { }
   
@@ -32,4 +33,6 @@ export class CartComponent {
       this.isCartOpen.set(false);
     }
   }
+
+
 }

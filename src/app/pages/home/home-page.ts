@@ -8,6 +8,7 @@ import { HeaderComponent } from '../../shared/components/header/header.component
 import { CourseListComponent } from '../../course/course-list/course-list.component';
 import { CartComponent } from '../../shared/components/cart/cart.component';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
+import { CartService } from '../../services/cart/cart.service';
 
 @Component({
     selector: 'app-home',
@@ -18,6 +19,7 @@ import { FooterComponent } from '../../shared/components/footer/footer.component
 export class HomeComponent {
 
   courseService = inject(CourseService);
+  cartService = inject(CartService);
 
   // Permite tratar de manera asincronica las respuestas de los observables
   coursesResource = rxResource({

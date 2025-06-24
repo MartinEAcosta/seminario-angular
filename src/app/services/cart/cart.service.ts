@@ -1,5 +1,6 @@
 import { computed, Injectable, signal, Signal, WritableSignal } from '@angular/core';
 import { Course } from '../../interfaces/course.interfaces';
+import { Cart } from '../../interfaces/cart.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -7,40 +8,48 @@ import { Course } from '../../interfaces/course.interfaces';
 export class CartService {
 
   // Pensado como un map en donde el Curso es la key y el number la quantity reservada por el usuario.
-  private _courses : WritableSignal<Map<Course,number>> = signal(new Map<Course,number>);
+  cart = signal<Cart>({ courses : new Map() });
   
-  readonly courses = computed(() => this._courses());
-  
-  onAddToCart = ( course : Course ) : Map<Course,number>  => {
-    const hasItem : boolean = this._courses().has( course );
-    if( hasItem ){
-      let quantity : number = this._courses().get( course ) ?? 0;
-      if( course.capacity === undefined || quantity < course.capacity ){
-        this._courses().set( course, quantity+1 );
+  onAddToCart = ( course : Course )  => {
+    const currentCart = this.cart();
+    const nextCart =  new Map(currentCart.courses);
+    if( currentCart.courses.has(course) ){
+      const quantityCourse = this.cart().courses.get(course)!;
+      if( course.capacity === undefined || quantityCourse < course.capacity ){
+        nextCart.set( course , quantityCourse+1 );
+        this.cart.set({
+          ...currentCart,
+          courses: nextCart,
+        })
       }
-      return this.courses();
+      // TODO: Manejar error
+      return this.cart();
     }
 
-    this._courses.set( this._courses().set(course,1) );
-    return this.courses();
+    nextCart.set( course , 1 );
+    this.cart.set({
+      ...currentCart,
+      courses: nextCart,
+    });
+    return this.cart();
   }
 
   onUpQuantity = ( course : Course ) : void => {
-    const reservedQuantity = this._courses().get(course);
+    const reservedQuantity = this.cart().courses.get(course);
     // Si la cantidad reservada no es undefined y la capacidad no esta definida, es decir que no hay cupo limitado.
     // o en caso de estar la capacidad reservada por debajo del cupo dejar añadir al carro.
     if ( reservedQuantity != undefined 
         &&
         ( course.capacity === undefined || reservedQuantity < course.capacity ) ) 
         {
-          this._courses().set(course, reservedQuantity + 1);
+          this.cart().courses.set(course, reservedQuantity + 1);
     }
   }
 
   onDownQuantity = ( course : Course ) : void => {
-    const reservedQuantity = this._courses().get(course);
+    const reservedQuantity = this.cart().courses.get(course);
     if( reservedQuantity != undefined && reservedQuantity > 0 && (course.capacity === undefined || course.capacity > 0)  ){
-      this._courses().set( course , reservedQuantity - 1 );
+      this.cart().courses.set( course , reservedQuantity - 1 );
     }
   }
 

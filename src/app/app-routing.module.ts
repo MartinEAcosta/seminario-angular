@@ -6,10 +6,9 @@ import { AuthComponent } from './pages/auth/auth-page';
 import { NotAuthenticatedGuard } from './auth/guards/not-authenticated.guard';
 import { CourseCreateComponent } from './pages/course-handler/course-handler-page';
 import { AuthenticatedGuard } from './auth/guards/authenticated.guard';
-import { CourseDetailComponent } from './course/course-detail/course-detail.component';
 import { CoursePage } from './pages/course-page/course-page';
 
-const routes: Routes = [
+export const routes: Routes = [
   { 
     path : '' , 
     component: HomeComponent  

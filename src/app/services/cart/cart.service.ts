@@ -1,6 +1,15 @@
-import { computed, Injectable, signal, Signal, WritableSignal } from '@angular/core';
+import { effect, Injectable, signal } from '@angular/core';
 import { Course } from '../../interfaces/course.interfaces';
 import { Cart } from '../../interfaces/cart.interface';
+
+// debido a que no necesita ninguna dependencia es posible definirla afuera.
+// const loadFromLocalStorage = ( ) : Cart => {
+  // const cart = localStorage.getItem( 'cart' );
+  // if( cart ){
+  //   const localStorageObj = JSON.parse(cart);
+  // }
+  // return cart ? JSON.parse(cart) : { courses: new Map() };
+// }
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +17,12 @@ import { Cart } from '../../interfaces/cart.interface';
 export class CartService {
 
   // Pensado como un map en donde el Curso es la key y el number la quantity reservada por el usuario.
-  cart = signal<Cart>({ courses : new Map() });
+  cart = signal<Cart>({ courses : new Map<Course,number>() });
   
+  // saveToLocalStorage = effect( () => {
+  //   localStorage.setItem( 'cart' , JSON.stringify( this.cart() ) );
+  // });
+
   onAddToCart = ( course : Course )  => {
     const currentCart = this.cart();
     const nextCart =  new Map(currentCart.courses);
@@ -20,7 +33,7 @@ export class CartService {
         this.cart.set({
           ...currentCart,
           courses: nextCart,
-        })
+        });
       }
       // TODO: Manejar error
       return this.cart();

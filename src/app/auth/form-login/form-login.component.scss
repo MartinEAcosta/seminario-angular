@@ -18,6 +18,10 @@
     text-underline-offset: 3px;
 }
 
+.hasError{
+    border-color: v.$red-warning;
+}
+
 .error{
     position: absolute;
     display: flex;
@@ -25,6 +29,10 @@
     font-size: 0.9rem;
     justify-content: center;
     align-items: start;
+}
+
+.btn-sumbit{
+    margin: 0%;
 }
 
 .error-email{
@@ -36,5 +44,5 @@
 }
 
 .label-text{
-    top: -14%;
+    top: -15%;
 }

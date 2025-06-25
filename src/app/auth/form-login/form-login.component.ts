@@ -9,7 +9,7 @@ import { FormErrorLabelComponent } from "../../shared/components/form-error-labe
     selector: 'app-form-login',
     templateUrl: './form-login.component.html',
     styleUrls: ['../form-global.scss', './form-login.component.scss'],
-    imports: [ReactiveFormsModule, FormErrorLabelComponent]
+    imports: [ReactiveFormsModule, FormErrorLabelComponent , NgClass]
 })
 export class FormLoginComponent {
   

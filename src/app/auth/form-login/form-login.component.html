@@ -21,6 +21,7 @@
                 required 
                 name="password"
                 formControlName="password"
+                [ngClass]="{'hasError': ( loginForm.get('password')?.errors  && loginForm.get('password')?.touched ) ?? false }"
             >
             <label class="label-text">Contraseña</label>
             <form-error-label class="error error-password" [control]="loginForm.get('password')!"/>    

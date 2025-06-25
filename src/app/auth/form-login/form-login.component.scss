@@ -1,5 +1,10 @@
 @use '../../../variables.scss' as v;
 
+.form-auth{
+    gap: 4%;
+    padding-top: 5%;
+}
+
 .text-forgot-pass , .text-register{
     display: flex;
     margin: 1% auto;
@@ -11,4 +16,25 @@
 .text-register a {
     color: v.$white-custom;
     text-underline-offset: 3px;
+}
+
+.error{
+    position: absolute;
+    display: flex;
+    width: 50%;
+    font-size: 0.9rem;
+    justify-content: center;
+    align-items: start;
+}
+
+.error-email{
+    top: 35%;
+}
+
+.error-password{
+    top: 47%;
+}
+
+.label-text{
+    top: -14%;
 }

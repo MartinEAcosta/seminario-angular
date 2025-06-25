@@ -12,6 +12,7 @@
                 formControlName="email"
             >
             <label class="label-text label-email">Correo Electronico</label>
+            <form-error-label class="error error-email" [control]="loginForm.get('email')!"/>
 
             <input 
                 type="password" 
@@ -22,7 +23,8 @@
                 formControlName="password"
             >
             <label class="label-text">Contraseña</label>
-            
+            <form-error-label class="error error-password" [control]="loginForm.get('password')!"/>    
+        
             <button class="btn-sumbit" type="submit">
                 Ingresar
             </button>

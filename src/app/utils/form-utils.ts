@@ -15,7 +15,8 @@ export class FormUtils {
 
                 case 'min':
                     return `El valor minimo es de ${ errors['min'].min }.`
-
+                case 'email':
+                    return `El contenido del campo no luce como un email.`
             }
         }
 

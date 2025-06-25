@@ -27,10 +27,7 @@
     height: 100%;
     gap: 2%;
     align-items: center;
-    justify-self: center;
-    justify-items: center;
     justify-content: center;
-    margin: auto;
 }
 
 .input-email , .input-password , .input-username{
@@ -111,8 +108,9 @@ input:not(:placeholder-shown) + label{
 }
 .btn-sumbit{
     display: flex;
-    width: 70%;
-    height: 35px;
+    position: relative;
+    width: 50%;
+    min-height: 13%;
     border-radius: 20px;
     cursor: pointer;
     border: none;

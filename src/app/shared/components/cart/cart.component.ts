@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, OnInit, signal, Signal } from '@angular/core';
 import { CartService } from '../../../services/cart/cart.service';
 import { NgClass } from '@angular/common';
-import { Cart } from '../../../interfaces/cart.interface';
+import { Cart } from '../../../course/interfaces/cart.interface';
 @Component({
     selector: 'app-cart',
     templateUrl: './cart.component.html',

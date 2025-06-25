@@ -1,6 +1,6 @@
 import { effect, Injectable, signal } from '@angular/core';
-import { Course } from '../../interfaces/course.interfaces';
-import { Cart } from '../../interfaces/cart.interface';
+import { Course } from '../../course/interfaces/course.interfaces';
+import { Cart } from '../../course/interfaces/cart.interface';
 
 // debido a que no necesita ninguna dependencia es posible definirla afuera.
 // const loadFromLocalStorage = ( ) : Cart => {

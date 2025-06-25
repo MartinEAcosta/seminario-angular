@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { AuthResponse, User } from '../../interfaces/auth.interfaces';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { AuthResponse, User } from '../interfaces/auth.interfaces';
+import { catchError, map, Observable, of } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';

@@ -1,12 +1,12 @@
 import { Component, inject, input , output } from '@angular/core';
 
-import { AuthService } from '../../services/auth/auth.service';
-import { BtnPrimaryComponent } from '../../shared/components/btn-primary/btn-primary.component';
-import { BtnBorderThinComponent } from '../../shared/components/btn-border-thin/btn-border-thin.component';
+import { AuthService } from '../../../auth/services/auth.service';
+import { BtnPrimaryComponent } from '../../../shared/components/btn-primary/btn-primary.component';
+import { BtnBorderThinComponent } from '../../../shared/components/btn-border-thin/btn-border-thin.component';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Course } from '../../interfaces/course.interfaces';
 import { RouterModule } from '@angular/router';
-import { CartService } from '../../services/cart/cart.service';
+import { CartService } from '../../../services/cart/cart.service';
 import { Cart } from '../../interfaces/cart.interface';
 
 @Component({

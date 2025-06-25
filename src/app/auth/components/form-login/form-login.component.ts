@@ -1,14 +1,14 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { NgClass } from '@angular/common';
-import { FormErrorLabelComponent } from "../../shared/components/form-error-label/form-error-label.component";
+import { FormErrorLabelComponent } from '../../../shared/components/form-error-label/form-error-label.component';
 
 @Component({
     selector: 'app-form-login',
     templateUrl: './form-login.component.html',
-    styleUrls: ['../form-global.scss', './form-login.component.scss'],
+    styleUrls: ['../../form-global.scss', './form-login.component.scss'],
     imports: [ReactiveFormsModule, FormErrorLabelComponent , NgClass]
 })
 export class FormLoginComponent {

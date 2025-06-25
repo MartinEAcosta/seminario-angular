@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import {  catchError, map, Observable, of, tap } from 'rxjs';
-import { Course, CourseResponse, UniqueCourseResponse } from '../../interfaces/course.interfaces';
-import { defaultCourses } from '../../course/defaultCourses';
+import { Course, CourseResponse, UniqueCourseResponse } from '../interfaces/course.interfaces';
+import { defaultCourses } from '../../utils/defaultCourses';
 
 @Injectable({
   providedIn: 'root'

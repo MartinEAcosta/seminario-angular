@@ -1,12 +1,12 @@
 import { Component, inject, input, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth/auth.service';
-import { CourseService } from '../../services/course/course.service';
+import { AuthService } from '../../../auth/services/auth.service';
+import { CourseService } from '../../services/course.service';
 import { JsonPipe, NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 import { Course } from '../../interfaces/course.interfaces';
-import { FormUtils } from '../../utils/form-utils';
-import { FormErrorLabelComponent } from "../../shared/components/form-error-label/form-error-label.component";
+import { FormUtils } from '../../../utils/form-utils';
+import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
 
 
 type Mode = 'creating' | 'updating' | 'loading';

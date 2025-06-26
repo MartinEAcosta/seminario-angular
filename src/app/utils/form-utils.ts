@@ -1,6 +1,5 @@
 import { FormGroup, ValidationErrors } from '@angular/forms';
 
-
 export class FormUtils {
 
     static getTextError = ( errors : ValidationErrors ) : string | null =>  {
@@ -14,9 +13,9 @@ export class FormUtils {
                     return `Debe contener como minimo ${ errors['minlength'].requiredLength } caracteres.`;
 
                 case 'min':
-                    return `El valor minimo es de ${ errors['min'].min }.`
+                    return `El valor minimo es de ${ errors['min'].min }.`;
                 case 'email':
-                    return `El contenido del campo no luce como un email.`
+                    return `El contenido del campo no luce como un email.`;
             }
         }
 

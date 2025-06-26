@@ -1,10 +1,5 @@
 @use '../../../../variables.scss' as v;
 
-.form-auth{
-    gap: 4%;
-    padding-top: 5%;
-}
-
 .text-forgot-pass , .text-register{
     display: flex;
     margin: 1% auto;
@@ -18,31 +13,35 @@
     text-underline-offset: 3px;
 }
 
-.hasError{
-    border-color: v.$red-warning;
-}
-
 .error{
-    position: absolute;
     display: flex;
+    position: absolute;
     width: 50%;
     font-size: 0.9rem;
     justify-content: center;
     align-items: start;
 }
 
+.input-email , .input-password{
+    margin: 3% 0% 0% 0%;
+}
+
 .btn-sumbit{
-    margin: 0%;
+    margin: 2%;
 }
 
 .error-email{
-    top: 35%;
+    top: 36%;
 }
 
 .error-password{
-    top: 47%;
+    top: 48%;
 }
 
 .label-text{
-    top: -15%;
+    top: -5%;
+}
+
+.text-forgot-pass{
+    margin: 2.5%;
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home-page';
+import HomeComponent from './pages/home/home-page';
 import { AboutComponent } from './pages/about/about-page';
 import { AuthComponent } from './pages/auth/auth-page';
 import { NotAuthenticatedGuard } from './auth/guards/not-authenticated.guard';
@@ -11,7 +11,8 @@ import { CoursePage } from './pages/course-page/course-page';
 export const routes: Routes = [
   { 
     path : '' , 
-    component: HomeComponent  
+    loadComponent: () => 
+      import('./pages/home/home-page'),
   },
   { 
     path : 'about' , 

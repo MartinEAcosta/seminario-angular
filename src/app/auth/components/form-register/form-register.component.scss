@@ -1,6 +1,40 @@
 @use '../../../../variables.scss' as v;
 
+.form-auth{
+    padding-top: 5%;
+}
+
+.input-email , .input-password{
+    margin: 4% 0% 0% 0%;
+}
+
 .text-login{
     font-family: v.$font-primary;
     color: v.$white-custom
 }
+
+.error{
+    display: flex;
+    position: absolute;
+    width: 50%;
+    font-size: 0.9rem;
+    justify-content: center;
+    align-items: start;
+}
+
+.error-username{
+    top: 37%;
+}
+
+.error-email{
+    top: 50%
+}
+
+.error-password{
+    top: 63%;
+}
+
+.label-text{
+    top: -6%;
+}
+

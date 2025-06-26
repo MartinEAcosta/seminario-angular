@@ -17,7 +17,7 @@ import { LoaderComponent } from "../../shared/components/loader/loader.component
     styleUrl: './home-page.scss',
     imports: [HeaderComponent, CourseCardComponent, CartComponent, FooterComponent, CourseCardComponent, LoaderComponent]
 })
-export class HomeComponent {
+export default class HomeComponent {
 
   courseService = inject(CourseService);
   cartService = inject(CartService);

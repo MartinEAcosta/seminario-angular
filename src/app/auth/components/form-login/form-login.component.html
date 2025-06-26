@@ -10,6 +10,7 @@
                 name="email"
                 autocomplete="off"
                 formControlName="email"
+                [ngClass]="{'hasError': ( loginForm.get('email')?.errors && loginForm.get('email')?.touched ) ?? false }"
             >
             <label class="label-text label-email">Correo Electronico</label>
             <form-error-label class="error error-email" [control]="loginForm.get('email')!"/>

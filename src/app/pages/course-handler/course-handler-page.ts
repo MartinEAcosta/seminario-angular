@@ -6,7 +6,7 @@ import { Component, inject  } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../auth/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CourseService } from '../../course/services/course.service';
+import { CourseService } from '../../course/services/course/course.service';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { rxResource } from '@angular/core/rxjs-interop';

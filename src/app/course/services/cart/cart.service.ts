@@ -1,27 +1,42 @@
 import { effect, Injectable, signal } from '@angular/core';
-import { Course } from '../../course/interfaces/course.interfaces';
-import { Cart } from '../../course/interfaces/cart.interface';
+import { Course } from '../../interfaces/course.interfaces';
+import { Cart } from '../../interfaces/cart.interface';
 
 // debido a que no necesita ninguna dependencia es posible definirla afuera.
-// const loadFromLocalStorage = ( ) : Cart => {
-  // const cart = localStorage.getItem( 'cart' );
-  // if( cart ){
-  //   const localStorageObj = JSON.parse(cart);
-  // }
-  // return cart ? JSON.parse(cart) : { courses: new Map() };
-// }
+const loadFromLocalStorage = ( ) : Cart => {
+  const cart = localStorage.getItem( 'cart' );
+  let localStorageObj;
+  if( cart ){
+    localStorageObj = JSON.parse(cart);
+
+    return{
+      ...localStorageObj,
+      courses: new Map(localStorageObj.courses),
+    }
+  }
+  return { courses: new Map<Course,number>() };
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  // Pensado como un map en donde el Curso es la key y el number la quantity reservada por el usuario.
-  cart = signal<Cart>({ courses : new Map<Course,number>() });
+  // Pensado como un map en donde el Curso es la key y el number la quantity reservada por el usuario
+  // { courses : new Map<Course,number>() }
+  cart = signal<Cart>( loadFromLocalStorage() );
   
-  // saveToLocalStorage = effect( () => {
-  //   localStorage.setItem( 'cart' , JSON.stringify( this.cart() ) );
-  // });
+  saveToLocalStorage = effect( () => {
+    const cartToSave = this.cart();
+    // A la hora de parsear el Map lo convierte en un Array por lo tanto al consumirlo da error
+    // Me encargo de pasarlo a un array de key value por entrada que habia en el map.
+    const cartSerialized = {
+      ...cartToSave,
+      courses: Array.from(cartToSave.courses.entries()),
+    }
+
+    localStorage.setItem( 'cart' , JSON.stringify( cartSerialized ) );
+  });
 
   onAddToCart = ( course : Course )  => {
     const currentCart = this.cart();

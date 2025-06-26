@@ -24,7 +24,7 @@ export class HeaderComponent {
     
     if( header ) {
       
-      let opacity =  1 - (scrollY / 5) / maxScroll;
+      let opacity =  1 - (scrollY / 20) / maxScroll;
 
       opacity = Math.max(0, Math.min(1, opacity));
       header.style.backgroundColor = `rgba(233, 233, 233, ${opacity})`;

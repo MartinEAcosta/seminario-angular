@@ -1,0 +1,8 @@
+<div class="bg-page">
+    @if( this.courseResource.isLoading()){
+        <app-loader />
+    }
+    @else{
+        <app-form-course [course]="courseResource.value()?.course!" />
+    }
+</div>

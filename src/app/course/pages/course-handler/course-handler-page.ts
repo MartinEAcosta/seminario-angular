@@ -4,21 +4,19 @@
 */
 import { Component, inject  } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '../../auth/services/auth.service';
+import { AuthService } from '../../../auth/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CourseService } from '../../course/services/course/course.service';
-import { HeaderComponent } from '../../shared/components/header/header.component';
-import { FooterComponent } from '../../shared/components/footer/footer.component';
+import { CourseService } from '../../services/course/course.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { of } from 'rxjs';
-import { FormCourseComponent } from "../../course/components/form-course/form-course.component";
-import { LoaderComponent } from "../../shared/components/loader/loader.component";
+import { FormCourseComponent } from "../../components/form-course/form-course.component";
+import { LoaderComponent } from "../../../shared/components/loader/loader.component";
 
 @Component({
     selector: 'app-course-create',
     templateUrl: './course-handler-page.html',
     styleUrl: './course-handler-page.scss',
-    imports: [HeaderComponent, ReactiveFormsModule, FooterComponent, FormCourseComponent, LoaderComponent]
+    imports: [ReactiveFormsModule, FormCourseComponent, LoaderComponent]
 })
 export class CourseCreateComponent {
 

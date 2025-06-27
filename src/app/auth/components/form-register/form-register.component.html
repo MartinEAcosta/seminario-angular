@@ -22,6 +22,7 @@
                 name="email"
                 autocomplete="off"
                 formControlName="email"
+                [ngClass]="{'hasError': ( registerForm.get('email')?.errors && registerForm.get('email')?.touched ) ?? false }"
             >
             <label class="label-text label-email">Correo Electronico</label>
             <form-error-label class="error error-email" [control]="registerForm.get('email')!"/>
@@ -33,6 +34,7 @@
                 required 
                 name="password"
                 formControlName="password"
+                [ngClass]="{'hasError': ( registerForm.get('password')?.errors && registerForm.get('password')?.touched ) ?? false }"
             >
             <label class="label-text">Contraseña</label>
             <form-error-label class="error error-password" [control]="registerForm.get('password')!"/>

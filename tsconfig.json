@@ -5,7 +5,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths" : {
-      // "@alias/*": ["ruta/url"];
+      // "@courseinterfaces/*" : ["src/app/course/interfaces/*"]
+      "@interfaces/*" : ["./src/app/course/interfaces/*" , "src/app/auth/interfaces/*"],
+      "@variables/*" : ["./src/*"]
     },
     "outDir": "./dist/out-tsc",
     "strict": true,

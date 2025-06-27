@@ -30,7 +30,7 @@ export class CourseCardComponent {
   //    setTimeout(() => console.log(this.courses()), 3000);
   // }
 
-    onAddToCart = ( course : Course ) : Cart  => {
+  onAddToCart = ( course : Course ) : Cart  => {
     if( course.capacity != undefined && course?.capacity! <= 0 ) return this.cartService.cart();
     
     this.cartService.onAddToCart( course );

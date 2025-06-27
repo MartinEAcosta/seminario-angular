@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import {  catchError, map, Observable, of, tap } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { Course, CourseResponse, UniqueCourseResponse } from '../../interfaces/course.interfaces';
 import { defaultCourses } from '../../../utils/defaultCourses';
 
@@ -10,17 +10,11 @@ import { defaultCourses } from '../../../utils/defaultCourses';
 })
 export class CourseService {
   
-  private defaultArray = defaultCourses; 
   private _courses = signal<Course[]>([]);
+  private defaultArray = defaultCourses; 
   
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}courses`;
-
-  readonly courses = computed( () => this._courses() );
-
-  constructor(  ) { 
-    this.getAll();
-  }
 
   getAll = ( ) : Observable<CourseResponse> => {
     return this.http.get<CourseResponse>(`${this.baseURL}`)
@@ -40,9 +34,7 @@ export class CourseService {
   }
 
   getById = ( id : string ) : Observable<UniqueCourseResponse>  => {
-
     return this.http.get<UniqueCourseResponse>(`${this.baseURL}/${id}` );
-  
   }
 
   // TODO : REVISAR METODO

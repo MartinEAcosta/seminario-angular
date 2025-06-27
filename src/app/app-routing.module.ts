@@ -1,22 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import HomeComponent from './pages/home/home-page';
-import { AboutComponent } from './pages/about/about-page';
-import { AuthComponent } from './pages/auth/auth-page';
+import HomeComponent from './course/pages/home/home-page';
+import { AboutComponent } from './course/pages/about/about-page';
+import { AuthComponent } from './auth/pages/auth/auth-page';
 import { NotAuthenticatedGuard } from './auth/guards/not-authenticated.guard';
-import { CourseCreateComponent } from './pages/course-handler/course-handler-page';
+import { CourseCreateComponent } from './course/pages/course-handler/course-handler-page';
 import { AuthenticatedGuard } from './auth/guards/authenticated.guard';
-import { CoursePage } from './pages/course-page/course-page';
+import { CoursePage } from './course/pages/course-page/course-page';
 
 export const routes: Routes = [
   { 
     path : '' , 
     loadComponent: () => 
-      import('./pages/home/home-page'),
+      import('./course/pages/home/home-page'),
   },
   { 
     path : 'about' , 
     component: AboutComponent  
+  },
+  {
+    path : 'course/:id',
+    component : CoursePage,
   },
   {
     path : 'course/create',
@@ -28,10 +32,6 @@ export const routes: Routes = [
     component: CourseCreateComponent ,
     canMatch : [ AuthenticatedGuard ]
   },
-  {
-    path : 'course/:id',
-    component : CoursePage,
-  },
   { 
     path : 'auth' ,
      component: AuthComponent ,
@@ -40,7 +40,8 @@ export const routes: Routes = [
   {
     // En caso de no hacer match con ningun path regirige al home
     path : '**',
-    component: HomeComponent,
+    loadComponent: () =>  
+      import('./course/pages/home/home-page'),
   }
 ];
 

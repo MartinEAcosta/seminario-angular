@@ -13,7 +13,7 @@ import { FormRegisterComponent } from '../../components/form-register/form-regis
     styleUrl: './auth-page.scss',
     imports: [ FormLoginComponent, FormRegisterComponent ]
 })
-export class AuthComponent {
+export default class AuthComponent {
 
   isLoginMode : WritableSignal<boolean> = signal(true);
 

@@ -18,7 +18,7 @@ import { LoaderComponent } from "../../../shared/components/loader/loader.compon
     styleUrl: './course-handler-page.scss',
     imports: [ReactiveFormsModule, FormCourseComponent, LoaderComponent]
 })
-export class CourseCreateComponent {
+export default class CourseCreateComponent {
 
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);

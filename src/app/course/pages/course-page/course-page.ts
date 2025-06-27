@@ -19,7 +19,7 @@ import { LoaderComponent } from "../../../shared/components/loader/loader.compon
     LoaderComponent
 ]
 })
-export class CoursePage {
+export default class CoursePage {
 
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);

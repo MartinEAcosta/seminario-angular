@@ -32,9 +32,7 @@
                     </div>
 
                     <div class="buttons">
-                        <app-btn-primary 
-                            [isNotAvailable]="( course().capacity != undefined && course().capacity === 0 )"
-                            > 
+                        <app-btn-primary>
                                 Comprar 
                         </app-btn-primary>
                         <btn-border-thin (click)="onAddToCart(course())" />

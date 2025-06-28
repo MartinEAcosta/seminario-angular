@@ -18,17 +18,12 @@ import { Cart } from '../../interfaces/cart.interface';
 export class CourseCardComponent {
   
   readonly course = input.required<Course>();
-  
   newCart = output<Cart>();
-
+  
   authService = inject(AuthService);
   cartService = inject(CartService);
-
+  
   readonly user = this.authService.user();
-
-  // ngOnInit(){
-  //    setTimeout(() => console.log(this.courses()), 3000);
-  // }
 
   onAddToCart = ( course : Course ) : Cart  => {
     if( course.capacity != undefined && course?.capacity! <= 0 ) return this.cartService.cart();

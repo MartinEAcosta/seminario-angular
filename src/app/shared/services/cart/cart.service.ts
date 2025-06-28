@@ -1,6 +1,6 @@
 import { effect, Injectable, signal } from '@angular/core';
-import { Course } from '../../interfaces/course.interfaces';
-import { Cart } from '../../interfaces/cart.interface';
+import { Course } from '../../../course/interfaces/course.interfaces';
+import { Cart } from '../../../course/interfaces/cart.interface';
 
 // debido a que no necesita ninguna dependencia es posible definirla afuera.
 const loadFromLocalStorage = ( ) : Cart => {
@@ -23,7 +23,6 @@ const loadFromLocalStorage = ( ) : Cart => {
 export class CartService {
 
   // Pensado como un map en donde el Curso es la key y el number la quantity reservada por el usuario
-  // { courses : new Map<Course,number>() }
   cart = signal<Cart>( loadFromLocalStorage() );
   
   saveToLocalStorage = effect( () => {

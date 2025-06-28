@@ -2,12 +2,12 @@
         <div class="container">
             <figure class="img-course">
                 <!-- TODO : Condicional de si no agrego una portada, podria estar bien -->
-                 <!-- @if( tempMedia().length > 0 ) { -->
-                    <!-- <img [src]="tempMedia()[0]" alt="Portada del curso" class="img-course"> -->
-                 <!-- } -->
-                 <!-- @else{ -->
+                 @if( tempMedia().length > 0 ) {
+                    <img [src]="tempMedia()[0]" alt="Portada del curso" class="img-course">
+                 }
+                 @else{
                     <img src="assets/not-found-image.png" alt="">
-                 <!-- } -->
+                 }
             </figure>
 
             <form [formGroup]="courseForm" (ngSubmit)="onSumbit()">
@@ -84,12 +84,12 @@
                         class="input-file" 
                         multiple
                         accept="image/* video/*"
+                        (change)="onFileChanged( $event )"
                         />
-                        <!-- (change)="onFileChanged( $event )" -->
                     <label for="file" class="custom-file-label">Seleccionar archivo</label>
                 </div>
                 @if( this._mode() === 'updating' ){
-                    <div class="container-remove" (click)="onDeleteCourse( this.course()._id )">
+                    <div class="container-remove" (click)="onDeleteCourse( this.course()?._id! )">
                         <img class="svg-remove" src="assets/remove.svg" alt="">
                     </div>
                 }

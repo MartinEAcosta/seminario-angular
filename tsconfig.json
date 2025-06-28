@@ -7,7 +7,8 @@
     "paths" : {
       // "@courseinterfaces/*" : ["src/app/course/interfaces/*"]
       "@interfaces/*" : ["./src/app/course/interfaces/*" , "src/app/auth/interfaces/*"],
-      "@variables/*" : ["./src/*"]
+      "@guards/*" : ["./src/app/auth/guards/*"],
+      "@variables/*" : ["./src/*"],
     },
     "outDir": "./dist/out-tsc",
     "strict": true,

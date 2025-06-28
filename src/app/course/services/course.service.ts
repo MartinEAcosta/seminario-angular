@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { catchError, map, Observable, of, tap } from 'rxjs';
-import { Course, CourseResponse, UniqueCourseResponse } from '../../interfaces/course.interfaces';
-import { defaultCourses } from '../../../utils/defaultCourses';
+import { Course, CourseResponse, UniqueCourseResponse } from '../interfaces/course.interfaces';
+import { defaultCourses } from '../../utils/defaultCourses';
 
 @Injectable({
   providedIn: 'root'
@@ -61,5 +61,9 @@ export class CourseService {
     return this.http.delete<UniqueCourseResponse>(`${this.baseURL}/delete/${id}`);
   }
 
+  // updateImage = ( courseId : string , images ?: FileList ) : Observable<UniqueCourseResponse> => {
+  //   console.log(images);
+  //   return this.http.put<UniqueCourseResponse>(`${this.baseURL}/update/${courseId}` , { imgURL : images } );
+  // }
 
 }

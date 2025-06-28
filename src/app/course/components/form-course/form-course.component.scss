@@ -12,6 +12,7 @@
 
 .container{ 
     display: flex;
+    width: auto;
     height: 60%;
     background-color: v.$black-custom;
     border-radius: 1rem;
@@ -20,10 +21,14 @@
 }
 
 .img-course{
+    min-width: 45%;
+    max-width: 45%;
     display: flex;
 }
 
 .img-course  img{
+    min-width: 100%;
+    max-width: 100%;
     display: flex;
     object-fit: cover;
     border-radius: 1rem;

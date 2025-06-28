@@ -1,7 +1,7 @@
 import { CourseDetailComponent } from '../../components/course-detail/course-detail.component';
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { CourseService } from '../../services/course/course.service';
+import { CourseService } from '../../services/course.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../auth/services/auth.service';
 import { rxResource } from '@angular/core/rxjs-interop';

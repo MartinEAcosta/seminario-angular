@@ -2,12 +2,12 @@
   Path:PORT/
 */
 import { Component, computed, inject } from '@angular/core';
-import { CourseService } from '../../services/course/course.service';
+import { CourseService } from '../../../course/services/course.service';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { CourseCardComponent } from '../../components/course-card/course-card.component';
-import { CartComponent } from '../../../shared/components/cart/cart.component';
+import { CourseCardComponent } from '../../../course/components/course-card/course-card.component';
+import { CartComponent } from '../../components/cart/cart.component';
 import { CartService } from '../../services/cart/cart.service';
-import { LoaderComponent } from "../../../shared/components/loader/loader.component";
+import { LoaderComponent } from "../../components/loader/loader.component";
 
 @Component({
     selector: 'app-home',

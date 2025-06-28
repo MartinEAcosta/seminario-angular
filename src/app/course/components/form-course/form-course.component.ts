@@ -1,7 +1,7 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input, output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../auth/services/auth.service';
-import { CourseService } from '../../services/course/course.service';
+import { CourseService } from '../../services/course.service';
 import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 import { Course } from '../../interfaces/course.interfaces';
@@ -18,11 +18,12 @@ type Mode = 'creating' | 'updating' | 'loading';
 })
 export class FormCourseComponent {
 
+  course = input<Course>();
   _mode = signal<Mode>('loading');
-  course = input.required<Course>();
+  tempMedia = signal<string[]>([]); 
+  mediaFileList : FileList | undefined =  undefined;
   
   router = inject(Router);
-
   authService = inject(AuthService);
   courseService = inject(CourseService);
 
@@ -40,12 +41,12 @@ export class FormCourseComponent {
   ngOnInit () {
     if( !!this.course() ){
       this.courseForm.reset({
-        title: this.course().title,
-        description: this.course().description,
-        imgURL: this.course().imgURL,
-        price: this.course().price,
-        offer: this.course().offer,
-        capacity: this.course().capacity,
+        title: this.course()?.title,
+        description: this.course()?.description,
+        imgURL: this.course()?.imgURL,
+        price: this.course()?.price,
+        offer: this.course()?.offer,
+        capacity: this.course()?.capacity,
       });
       this._mode.set('updating');
     }
@@ -53,6 +54,18 @@ export class FormCourseComponent {
       this.router.navigateByUrl('course/create');
       this._mode.set('creating');
     }
+  }
+
+  onFileChanged = ( event : Event ) => {
+    const fileList = ( event.target as HTMLInputElement ).files;
+    this.mediaFileList = fileList ?? undefined;
+
+    // En caso de que el el fileList no sea undefined o vacio, permite generar url para utilizar de forma local
+    const imageUrls = Array.from( fileList ?? [ ] ).map( 
+      (file) => URL.createObjectURL(file)
+    );
+    console.log(this.mediaFileList);
+    this.tempMedia.set(imageUrls);
   }
 
   onSumbit = ( ) : void => {
@@ -66,12 +79,13 @@ export class FormCourseComponent {
       const userID = user()?._id;
       
       if( userID ){
-        
-        const numericPrice = price === null || price === undefined ? 0 : Number(price);
-        const numericCapacity = capacity == null ? undefined : Number(capacity);
-        
+    
+        // if( this.mediaFileList ) {
+        //   this.courseService.updateImage( this.course()?._id! , this.mediaFileList )
+        // }
+          
         if( this._mode() === 'updating' ){
-          this.courseService.updateCourse( this.course()._id , title! , description! , imgURL! , userID , numericPrice , !!offer , numericCapacity! )
+          this.courseService.updateCourse( this.course()?._id! , title! , description! , imgURL! , userID , price , !!offer , capacity! )
                               .subscribe( (isCourseCreated) => {
                                 if( isCourseCreated ) {
                                   this.router.navigateByUrl('/');
@@ -80,7 +94,7 @@ export class FormCourseComponent {
                               });
         }
         else{
-          this.courseService.createCourse( title! , description! , imgURL! , userID , numericPrice , !!offer , numericCapacity!)
+          this.courseService.createCourse( title! , description! , imgURL! , userID , price , !!offer , capacity!)
                               .subscribe( (isCourseCreated) => {
                                 if( isCourseCreated ) {
                                   this.router.navigateByUrl('/');
@@ -94,7 +108,7 @@ export class FormCourseComponent {
   };
 
   onDeleteCourse = ( id : string ) => {
-    if( this.course().owner === this.authService.id() ){
+    if( this.course()?.owner === this.authService.id() ){
       this.courseService.deleteCourse( id )
                             .subscribe( (isCourseDeleted) => {
                                 if( isCourseDeleted ) {
@@ -104,5 +118,6 @@ export class FormCourseComponent {
                             } );
     }
   }
-  
+
+
 }

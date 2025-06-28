@@ -1,7 +1,7 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
-import { AppRoutingModule, routes } from './app-routing.module';
+import { routes } from './app.routes';
 import {
   provideHttpClient,
   withFetch,
@@ -14,7 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    importProvidersFrom(BrowserModule, AppRoutingModule, ReactiveFormsModule),
+    importProvidersFrom(BrowserModule, ReactiveFormsModule),
     provideRouter(routes),
     provideHttpClient(
       withFetch(),

@@ -81,7 +81,11 @@ export class FormCourseComponent {
       if( userID ){
     
         // if( this.mediaFileList ) {
-        //   this.courseService.updateImage( this.course()?._id! , this.mediaFileList )
+        //   const formData = new FormData();
+        //   for( let image of this.tempMedia()){
+        //     formData.append("image" + {image}, image);
+        //   }
+        //   console.log(formData);
         // }
           
         if( this._mode() === 'updating' ){

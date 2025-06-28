@@ -10,6 +10,7 @@ export const authRoutes : Routes = [
         canMatch: [ NotAuthenticatedGuard ],
 
     }
+    
 ]
 
 export default authRoutes;

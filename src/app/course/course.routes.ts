@@ -21,6 +21,10 @@ export const courseRoutes : Routes = [
                 component: CourseHandlerComponent,
                 canMatch : [ AuthenticatedGuard ],
             },
+            {
+                path : '**',
+                redirectTo : 'create'
+            }
         ]
     }
 ];

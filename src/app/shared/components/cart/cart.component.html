@@ -8,23 +8,23 @@
         <p>Mi Carrito</p>
       </div>
       <div class="list-courses">
-        @for ( course of this.cart().courses.keys(); track course ) {
+        @for ( item of this.cart().values() ; track this.cart().keys() ) {
         <div class="card-course">
           <div class="details">
             <div class="container-imgCourse">
               <img
-                src={{course.imgURL}}
-                alt="{{course.title}} image">
+                src={{item.course.imgURL}}
+                alt="{{item.course.title}} image">
             </div>
               <section class="rightSection">
                 <p class="title-course">
-                  {{course.title}}
+                  {{item.course.title}}
                 </p>
                 <div class="quantity-selector">
                   <p class="text-quota">Cupos a reservar:</p>
-                  <input class="leftBtn" (click)="this.cartService.onDownQuantity(course)" type="button" value="-">
-                  <input class="inputNumber" type="number" name="" id="" value="{{ this.cart().courses.get(course) }}">
-                  <input class="rightBtn" (click)="this.cartService.onUpQuantity(course)" type="button" value="+">
+                  <input class="leftBtn" (click)="this.cartService.onDownQuantity( item.course )" type="button" value="-">
+                  <input class="inputNumber" type="number" name="" id="" value="{{ this.cart().get( item.course._id)?.quantity }}">
+                  <input class="rightBtn" (click)="this.cartService.onUpQuantity( item.course )" type="button" value="+">
                 </div>
               </section>
           </div>
@@ -45,10 +45,10 @@
   </div>
 
   <!-- Si el carrito esta abierto se esconde el icono de notificación o en caso de que el tamaño sea distinto de 0 y este cerrado -->
-  <div class="container-notification" [ngClass]="{ 'hidden': this.isCartOpen() || ( cart().courses.size === 0 ),
-                                                   'onNotification': !this.isCartOpen() && cart().courses.size !== 0 }"> 
+  <div class="container-notification" [ngClass]="{ 'hidden': this.isCartOpen() || ( this.cart().size === 0 ),
+                                                   'onNotification': !this.isCartOpen() && this.cart().size !== 0 }"> 
     <small>
-      {{ amountCoursesInCart().courses.size }} 
+      {{ this.cart().size }} 
     </small> 
   </div>
 </div>

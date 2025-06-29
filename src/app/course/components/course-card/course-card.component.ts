@@ -7,7 +7,7 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Course } from '../../interfaces/course.interfaces';
 import { RouterModule } from '@angular/router';
 import { CartService } from '../../../shared/services/cart/cart.service';
-import { Cart } from '../../interfaces/cart.interface';
+import { CartItem } from '@interfaces/cart.interface';
 
 @Component({
     selector: 'course-card',
@@ -18,19 +18,17 @@ import { Cart } from '../../interfaces/cart.interface';
 export class CourseCardComponent {
   
   readonly course = input.required<Course>();
-  newCart = output<Cart>();
   
   authService = inject(AuthService);
   cartService = inject(CartService);
   
   readonly user = this.authService.user();
 
-  onAddToCart = ( course : Course ) : Cart  => {
-    if( course.capacity != undefined && course?.capacity! <= 0 ) return this.cartService.cart();
+  onAddToCart = ( ) : void => {
+    if( this.course().capacity === 0 ) return;
     
-    this.cartService.onAddToCart( course );
-    this.newCart.emit( this.cartService.cart()) ;
-    return this.cartService.cart();
+    this.cartService.onAddToCart( this.course() );
   }
+
 
 }

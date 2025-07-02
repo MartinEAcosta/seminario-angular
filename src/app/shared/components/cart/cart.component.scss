@@ -196,9 +196,13 @@ img{
 }
 
 .leftBtn , .rightBtn{
+    width: 10%;
+    border: none;
     background-color: v.$brand-color;
     color: v.$white-custom;
     pointer-events: all;
+    z-index: 100;
+    position: relative;
 }
 
 .leftBtn {

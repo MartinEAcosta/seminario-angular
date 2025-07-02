@@ -22,9 +22,9 @@
                 </p>
                 <div class="quantity-selector">
                   <p class="text-quota">Cupos a reservar:</p>
-                  <input class="leftBtn" (click)="this.cartService.onDownQuantity( item.course )" type="button" value="-">
-                  <input class="inputNumber" type="number" name="" id="" value="{{ this.cart().get( item.course._id)?.quantity }}">
-                  <input class="rightBtn" (click)="this.cartService.onUpQuantity( item.course )" type="button" value="+">
+                  <button class="leftBtn" (click)="onDownQuantity( item )" type="button"> - </button>
+                  <input class="inputNumber" type="number" name="" id="" value="{{ cart().get( item.course._id )?.quantity }}" readonly >
+                  <button class="rightBtn" (click)="onUpQuantity( item )" type="button"> + </button>
                 </div>
               </section>
           </div>

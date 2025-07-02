@@ -30,5 +30,4 @@ export class CourseCardComponent {
     this.cartService.onAddToCart( this.course() );
   }
 
-
 }

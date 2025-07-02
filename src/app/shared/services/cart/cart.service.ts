@@ -35,38 +35,56 @@ export class CartService {
   onAddToCart = ( course : Course )  => {
     const _currentCart = this.cart();
     const currentCart = new Map<string, CartItem>( _currentCart );
+
     if( course.capacity != undefined && course.capacity <= 0 ) return;
-    console.log(this.cart().get( course._id )?.quantity);
+
     // En caso de que ya tenga en mi carrito una cantidad del curso, tomo la cantidad reservada
     // o si no la tengo 0 y posteriormente se le sumara 1 
     const currentReserved = this.cart().get( course._id )?.quantity || 0;
+
     currentCart.set( course._id , 
       { 
         course : course ,
         quantity : (currentReserved+1)
       });
+
     // actualizo la señal
     this.cart.set(currentCart);
     return this.cart();
   }
 
-  onUpQuantity = ( course : Course ) : void => {
-    const reservedQuantity = this.cart().get( course._id )?.quantity || 1;
-    // Si la cantidad reservada no es undefined y la capacidad no esta definida, es decir que no hay cupo limitado.
-    // o en caso de estar la capacidad reservada por debajo del cupo dejar añadir al carro.
-    if ( reservedQuantity != undefined 
-        &&
-        ( course.capacity === undefined || reservedQuantity < course.capacity ) ) 
-        {
-          this.cart().set( course._id , { course , quantity : reservedQuantity } );
-    }
+  upQuantity = ( course : Course , currentReserved : number ) : Map<string,CartItem> => {
+    const currentCart = new Map<string,CartItem>( this.cart() );
+    
+    // Modifico el mapa
+    currentCart.set( course._id , 
+                    {
+                      course: course ,
+                      quantity: currentReserved+1 
+                    } 
+                  );
+
+    // actualizo la señal 
+    this.cart.set( new Map<string,CartItem>( currentCart ) );
+
+    return this.cart();
   }
 
-  onDownQuantity = ( course : Course ) : void => {
-    const reservedQuantity = this.cart().get(course._id)?.quantity || 1;
-    if( reservedQuantity != undefined && reservedQuantity > 0 && (course.capacity === undefined || course.capacity > 0)  ){
-      this.cart().set( course._id , { course , quantity : reservedQuantity } );
-    }
+  downQuantity = ( course : Course , currentReserved : number ) : Map<string,CartItem> => {
+    const currentCart = new Map<string,CartItem>( this.cart() );
+
+    // Modifico el mapa
+    currentCart.set( course._id , 
+                    {
+                      course: course ,
+                      quantity: currentReserved-1 
+                    } 
+                  );
+
+    // actualizo la señal 
+    this.cart.set( new Map<string,CartItem>( currentCart ) );
+
+    return this.cart();
   }
 
 }

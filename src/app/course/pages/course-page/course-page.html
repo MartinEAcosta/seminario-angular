@@ -1,6 +1,6 @@
 @if( this.courseResource.isLoading() ){
     <app-loader />
 }
-@else {
-    <app-course-detail [selectedCourse]="courseResource.value()?.course!"/>
+@else if( !this.courseResource.error() ){
+    <app-course-detail [selectedCourse]="courseResource.value()!"/>
 }

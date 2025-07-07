@@ -6,9 +6,11 @@
     "baseUrl": ".",
     "paths" : {
       // "@courseinterfaces/*" : ["src/app/course/interfaces/*"]
+      "@utils/*" : ["./src/app/utils/*"],
+      "@mappers/*" : ["./src/app/mappers/*"],
       "@interfaces/*" : ["./src/app/course/interfaces/*" , "src/app/auth/interfaces/*"],
       "@guards/*" : ["./src/app/auth/guards/*"],
-      "@variables/*" : ["./src/*"],
+      "@variables/variables.scss" : ["./src/variables.scss"],
     },
     "outDir": "./dist/out-tsc",
     "strict": true,

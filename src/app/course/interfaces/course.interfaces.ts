@@ -22,10 +22,18 @@ export interface CourseResponse {
     capacity?:   number;
 }
 
-export interface CourseApiResponse {
+export interface CourseListApiResponse {
   ok: boolean;
   total: number;
   page: number;
   limit: number;
   data: CourseResponse[];
+}
+
+export interface CourseApiResponse {
+  ok: boolean;
+  total: number;
+  page: number;
+  limit: number;
+  data: CourseResponse;
 }

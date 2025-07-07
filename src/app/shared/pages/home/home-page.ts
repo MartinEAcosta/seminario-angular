@@ -7,8 +7,9 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { CourseService } from '../../../course/services/course.service';
 import { CartService } from '../../services/cart/cart.service';
 import { CartComponent } from '../../components/cart/cart.component';
-import { defaultCourses } from '@variables/app/utils/defaultCourses';
+import { defaultCourses } from '@utils/defaultCourses';
 import { CourseListComponent } from "../../../course/components/course-list/course-list.component";
+import { ModalErrorMessageComponent } from '../../components/modal-error-message/modal-error-message.component';
 
 @Component({
     selector: 'app-home',
@@ -25,7 +26,6 @@ export default class HomeComponent {
     loader: () => { return this.courseService.getAll() },
     defaultValue: defaultCourses,
   });
-
 
   
 }

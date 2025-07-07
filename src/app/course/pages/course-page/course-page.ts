@@ -8,6 +8,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { of } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoaderComponent } from "../../../shared/components/loader/loader.component";
+import { ModalErrorMessageComponent } from "../../../shared/components/modal-error-message/modal-error-message.component";
 
 @Component({
   selector: 'app-course-page',
@@ -16,7 +17,7 @@ import { LoaderComponent } from "../../../shared/components/loader/loader.compon
   imports: [
     CourseDetailComponent,
     ReactiveFormsModule,
-    LoaderComponent
+    LoaderComponent,
 ]
 })
 export default class CoursePage {
@@ -32,7 +33,6 @@ export default class CoursePage {
   courseResource = rxResource({
     request : ( ) => ( { id : this.courseId } ),
     loader : ( { request  } ) => {
-
       if( request.id === '' ) return of();
         
       return this.courseService.getById( request.id );

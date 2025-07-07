@@ -1,4 +1,6 @@
-export const defaultCourses = [
+import { Course } from "@interfaces/course.interfaces";
+
+export const defaultCourses : Course[] = [
                               {
                                 "_id" : "a",
                                 "title": "Introducción a JavaScript",

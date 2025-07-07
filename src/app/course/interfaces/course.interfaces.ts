@@ -1,16 +1,5 @@
 // Forma de presentar interfaces vista en una preview del curso de Fernando Herrera
 
-
-export interface CourseResponse {
-    ok:      boolean;
-    courses: Course[];
-}
-
-export interface UniqueCourseResponse {
-    ok: boolean;
-    course: Course;
-}
-
 export interface Course {
     _id:         string;
     title:       string;
@@ -20,4 +9,8 @@ export interface Course {
     price:       number;
     offer:       boolean;
     capacity?:   number;
+}
+export interface CourseResponse {
+    ok:      boolean;
+    course: Course;
 }

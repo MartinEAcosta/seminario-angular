@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { computed, inject, Injectable, signal } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { inject, Injectable, signal } from '@angular/core';
 import { catchError, map, Observable, of, tap } from 'rxjs';
-import { Course, CourseResponse, UniqueCourseResponse } from '../interfaces/course.interfaces';
+
+import { environment } from '../../../environments/environment';
+import { Course, CourseResponse } from '../interfaces/course.interfaces';
 import { defaultCourses } from '../../utils/defaultCourses';
+import { CourseMapper } from '@variables/app/mappers/course.mapper';
 
 @Injectable({
   providedIn: 'root'
@@ -16,25 +18,32 @@ export class CourseService {
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}courses`;
 
-  getAll = ( ) : Observable<CourseResponse> => {
-    return this.http.get<CourseResponse>(`${this.baseURL}`)
-                      .pipe(
-                        tap( resp => {
-                          this._courses.set(resp.courses);
-                        }),
-                        catchError((error: any) => {
-                          const defaultResp: CourseResponse = {
-                            ok : true,
-                            courses: this.defaultArray,
-                          };
-                          this._courses.set(this.defaultArray);
-                          return of(defaultResp);
-                        }),
-                      );
+  getAll = ( ) : Observable<Course[]> => {
+    return this.http
+                  .get<CourseResponse[]>(`${this.baseURL}`)
+                  .pipe(
+                      map( ( courseResponse ) => 
+                          CourseMapper.mapResponseToCourseArray( courseResponse )
+                      ),
+                      catchError( ( error: any ) => {
+                        this._courses.set(this.defaultArray);
+                        return of(this._courses());
+                      }),
+                  );
   }
 
-  getById = ( id : string ) : Observable<UniqueCourseResponse>  => {
-    return this.http.get<UniqueCourseResponse>(`${this.baseURL}/${id}` );
+  getById = ( id : string ) : Observable<Course>  => {
+    return this.http
+                  .get<CourseResponse>(`${this.baseURL}/${id}` )
+                  .pipe(
+                    map( ( courseReponse ) => 
+                      CourseMapper.mapResponseToCourse( courseReponse )
+                  ),
+                  catchError( ( error : any ) => {
+                    console.log( error );
+                    return of();
+                  }),
+                  );
   }
 
   // TODO : REVISAR METODO
@@ -46,19 +55,46 @@ export class CourseService {
                           return true;
                         }),
                         catchError( (error : any)  => {
-                          // Notificar error 
+                          //TODO : NOTIFICAR ERROR
                           console.log(error);
                           return of(false);
                         }),
                       )
   }
 
-  updateCourse = ( id : string , title : string , description : string , imgURL : string[] , owner : string , price : number , offer : boolean , capacity : number ) : Observable<UniqueCourseResponse> => {
-    return this.http.put<UniqueCourseResponse>(`${this.baseURL}/update/${id}` , { title : title , description : description , imgURL : imgURL , owner : owner , price : price , offer : offer, capacity : capacity} ).pipe( tap( res => console.log(res)))
+  updateCourse = ( id : string , title : string , description : string , imgURL : string[] , owner : string , price : number , offer : boolean , capacity : number ) : Observable<Course> => {
+    return this.http
+                  .put<CourseResponse>(
+                                        `${this.baseURL}/update/${id}` ,
+                                        { 
+                                          title : title , description : description , imgURL : imgURL , 
+                                          owner : owner , price : price , offer : offer, capacity : capacity
+                                        } 
+                                      ).pipe( 
+                                          map( ( courseResponse ) => {
+                                            return CourseMapper.mapResponseToCourse( courseResponse );
+                                          }),
+                                          catchError( ( error : any ) => {
+                                            //TODO : NOTIFICAR ERROR
+                                            console.log(error);
+                                            return of();
+                                          })
+                                      );
   }
 
-  deleteCourse = ( id : string ) : Observable<UniqueCourseResponse> => {
-    return this.http.delete<UniqueCourseResponse>(`${this.baseURL}/delete/${id}`);
+  deleteCourse = ( id : string ) : Observable<Course> => {
+    return this.http
+                  .delete<CourseResponse>(`${this.baseURL}/delete/${id}`)
+                  .pipe(
+                    map( ( courseResponse ) => {
+                      return CourseMapper.mapResponseToCourse( courseResponse);
+                    }),
+                    catchError( ( error : any ) => {
+                      // TODO : NOTIFICAR ERROR
+                      console.log(error);
+                      return of();
+                    })
+                  );
   }
 
   // updateImage = ( courseId : string , images ?: FileList ) : Observable<UniqueCourseResponse> => {

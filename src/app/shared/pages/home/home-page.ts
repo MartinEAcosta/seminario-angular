@@ -28,6 +28,6 @@ export default class HomeComponent {
     })
   });
 
-  readonly coursesSignal = computed( () => this.coursesResource.value()?.courses ?? [] );
+  readonly coursesSignal = computed( () => this.coursesResource.value() ?? [] );
   
 }

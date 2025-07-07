@@ -8,12 +8,10 @@
     <iframe width="560" height="315" src="https://www.youtube.com/embed/fO74AMjx2fk?si=F9Ssa3p5sl5vhEDK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 
-@if( this.coursesResource.isLoading() ){
-    <app-loader />
-}
-@else {
-    @for ( course of this.coursesResource.value(); track course) {
-        <course-card [course]="course" />
-    }
-}
+<app-course-list 
+    [courses]='this.coursesResource.value()' 
+    [isLoading]='this.coursesResource.isLoading()'
+    [errorMessage]='this.coursesResource.error()'
+/>
+
 <app-cart />

@@ -24,11 +24,10 @@ export class CourseService {
                       map( ( courseResponse ) => 
                          CourseMapper.mapResponseToCourseArray( courseResponse.data )
                       ),
-                      catchError( ( error: any ) => {
-                        console.error('Error al obtener todos los cursos, se retornaron los cursos por defecto.');
-                        return of( this.defaultArray );
+                      catchError( ( error: any ) => {                        
+                        return throwError( () => new Error('Error al obtener todos los cursos, se retornaron los cursos por defecto.'));
                       }),
-                );
+                  );
   }
 
   getById = ( id : string ) : Observable<Course>  => {

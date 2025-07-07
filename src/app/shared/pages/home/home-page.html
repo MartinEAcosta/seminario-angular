@@ -12,7 +12,7 @@
     <app-loader />
 }
 @else {
-    @for ( course of coursesSignal(); track course) {
+    @for ( course of this.coursesResource.value(); track course) {
         <course-card [course]="course" />
     }
 }

@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { Course, CourseResponse } from '../interfaces/course.interfaces';
+import { Course, CourseApiResponse, CourseResponse } from '../interfaces/course.interfaces';
 import { defaultCourses } from '../../utils/defaultCourses';
 import { CourseMapper } from '@variables/app/mappers/course.mapper';
 
@@ -12,7 +12,6 @@ import { CourseMapper } from '@variables/app/mappers/course.mapper';
 })
 export class CourseService {
   
-  private _courses = signal<Course[]>([]);
   private defaultArray = defaultCourses; 
   
   private http = inject(HttpClient);
@@ -20,16 +19,16 @@ export class CourseService {
 
   getAll = ( ) : Observable<Course[]> => {
     return this.http
-                  .get<CourseResponse[]>(`${this.baseURL}`)
+                  .get<CourseApiResponse>(`${this.baseURL}`)
                   .pipe(
                       map( ( courseResponse ) => 
-                          CourseMapper.mapResponseToCourseArray( courseResponse )
+                         CourseMapper.mapResponseToCourseArray( courseResponse.data )
                       ),
                       catchError( ( error: any ) => {
-                        this._courses.set(this.defaultArray);
-                        return of(this._courses());
+                        console.error('Error al obtener todos los cursos, se retornaron los cursos por defecto.');
+                        return of( this.defaultArray );
                       }),
-                  );
+                );
   }
 
   getById = ( id : string ) : Observable<Course>  => {

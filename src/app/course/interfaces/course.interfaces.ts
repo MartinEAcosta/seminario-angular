@@ -10,7 +10,22 @@ export interface Course {
     offer:       boolean;
     capacity?:   number;
 }
+
 export interface CourseResponse {
-    ok:      boolean;
-    course: Course;
+    _id:         string;
+    title:       string;
+    description: string;
+    imgURL:      string[];
+    owner:       string;
+    price:       number;
+    offer:       boolean;
+    capacity?:   number;
+}
+
+export interface CourseApiResponse {
+  ok: boolean;
+  total: number;
+  page: number;
+  limit: number;
+  data: CourseResponse[];
 }

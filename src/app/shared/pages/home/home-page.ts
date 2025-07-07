@@ -1,14 +1,17 @@
 /*
   Path:PORT/
 */
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
+// Permite retornar observables como recursos.
+import { of } from 'rxjs';
 
 import { CourseService } from '../../../course/services/course.service';
 import { CartService } from '../../services/cart/cart.service';
 import { CartComponent } from '../../components/cart/cart.component';
 import { CourseCardComponent } from '../../../course/components/course-card/course-card.component';
 import { LoaderComponent } from "../../components/loader/loader.component";
+import { defaultCourses } from '@variables/app/utils/defaultCourses';
 
 @Component({
     selector: 'app-home',
@@ -17,17 +20,14 @@ import { LoaderComponent } from "../../components/loader/loader.component";
     imports: [ CourseCardComponent, CartComponent, CourseCardComponent, LoaderComponent]
 })
 export default class HomeComponent {
-
+  
   courseService = inject(CourseService);
   cartService = inject(CartService);
-
-  // Permite tratar de manera asincronica las respuestas de los observables
+  
   coursesResource = rxResource({
-    loader: (() => {
-      return this.courseService.getAll();
-    })
+    loader: () => { return this.courseService.getAll() },
   });
 
-  readonly coursesSignal = computed( () => this.coursesResource.value() ?? [] );
+
   
 }

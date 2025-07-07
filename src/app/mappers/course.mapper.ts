@@ -2,27 +2,23 @@
 // utilizado previamente en Java.
 import type { Course , CourseResponse } from '@interfaces/course.interfaces';
 
-
 export class CourseMapper {
-
     
-    static mapResponseToCourse ( response : CourseResponse ) : Course {
+    static mapResponseToCourse ( response : CourseResponse) : Course {
         return {
-            _id: response.course._id ,
-            title: response.course.title,
-            description: response.course.description,
-            imgURL: response.course.imgURL,
-            owner: response.course.owner,
-            price: response.course.price,
-            offer: response.course.offer,
-            capacity: response.course.capacity ?? undefined,   
+            _id: response._id ,
+            title: response.title,
+            description: response.description,
+            imgURL: response.imgURL ?? [],
+            owner: response.owner,
+            price: response.price ?? 0, // Si no existe, se asigna 0 por defecto
+            offer: response.offer  ?? false, // Si no existe, se asigna false por defecto
+            capacity: response.capacity ?? undefined,   
         };
     } 
 
     static mapResponseToCourseArray ( response : CourseResponse[] ) : Course[] {
-        return response.map( ( courseResponse ) => {
-            return this.mapResponseToCourse( courseResponse ); 
-        });
+        return response.map( this.mapResponseToCourse );
     }
 
 }

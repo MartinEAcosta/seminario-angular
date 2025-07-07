@@ -7,7 +7,6 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Course } from '../../interfaces/course.interfaces';
 import { RouterModule } from '@angular/router';
 import { CartService } from '../../../shared/services/cart/cart.service';
-import { CartItem } from '@interfaces/cart.interface';
 
 @Component({
     selector: 'course-card',

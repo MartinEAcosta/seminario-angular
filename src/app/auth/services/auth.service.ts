@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { AuthResponse, User } from '@interfaces/auth.interfaces';
 import { catchError, map, Observable, of } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { AuthMapper } from '@variables/app/mappers/auth.mapper';
 
 type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
 
@@ -15,9 +16,10 @@ export class AuthService {
   private _authStatus = signal<AuthStatus>('checking');
   private _user = signal<User | null>(null);
   private _id = signal<string | null>(null);
-  // Esto ayuda a que si se tiene una sesión ya iniciada y refrescar mantener la sesión.
+  // Esto ayuda a que si se tiene una sesión ya iniciada y se refresca, se puede mantener la sesión.
   private _token = signal<string | null>( localStorage.getItem('x-token') );
-  
+  private errorMessage = signal<string | null>(null);
+
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}auth`;
   
@@ -42,16 +44,17 @@ export class AuthService {
 
   constructor() { }
 
-  registerUser = ( username : string , email : string , password : string ) : Observable<boolean> => {
-    return this.http.post<AuthResponse>(`${this.baseURL}/new` , { username , email ,password } )
-                      .pipe( 
-                        map( (resp) =>  this.handleAuthSuccess(resp) ),
-                        // En caso de tener un error se captura y se toman las acciones de "limpieza"
-                        catchError( (error : any ) => this.handleAuthError(error) )
-              );
+  registerUser = ( username : string , email : string , password : string ) : Observable<User | false> => {
+    return this.http
+                  .post<AuthResponse>(`${this.baseURL}/new` , { username , email ,password } )
+                    .pipe( 
+                      map( ( authResponse ) =>  this.handleAuthSuccess( authResponse )),
+                      // En caso de tener un error se captura y se toman las acciones de "limpieza"
+                      catchError( (error : any ) => this.handleAuthError(error) )
+            );
   }
 
-  loginUser = ( email : string , password : string ) : Observable<boolean> => {
+  loginUser = ( email : string , password : string ) : Observable<User | false> => {
     return this.http.post<AuthResponse>(`${this.baseURL}` , { email : email , password : password } )
                       .pipe(
                         map( (resp) => this.handleAuthSuccess( resp ) ),
@@ -59,7 +62,7 @@ export class AuthService {
               );
   }
 
-  logoutUser = ( ) => {
+  logoutUser = ( ) : void => {
     this._user.set(null);
     this._token.set(null);
     this._authStatus.set('not-authenticated');
@@ -67,25 +70,27 @@ export class AuthService {
     localStorage.clear();
   }
 
-  private handleAuthSuccess = ( { token , userRef } : AuthResponse )  => {
-    this._user.set(userRef);
-    this._id.set(userRef._id);
-    this._token.set(token);
-    this._authStatus.set('authenticated');
+  private handleAuthSuccess = ( authResponse : AuthResponse ) : User  => {
+    this._user.set( authResponse.userRef );
+    this._id.set( authResponse.userRef._id );
+    this._token.set( authResponse.token );
+    this._authStatus.set( 'authenticated' );
 
-    localStorage.setItem('x-token' , token);
-    return true;
+    localStorage.setItem('x-token' , authResponse.token);
+    return AuthMapper.mapResponseToUser( authResponse );
   }
 
-  private handleAuthError = ( error: any ) => {
+  private handleAuthError = ( error: any ) : Observable<false>  => {
     this.logoutUser();
-
+    this.errorMessage.set( error.errorMessage );
+    
     return of(false);
   }
 
   checkStatus = ( ) : Observable<boolean> => {
     
     const token = localStorage.getItem('x-token');
+
     if( !token ){
       this.logoutUser();
       return of(false);
@@ -95,7 +100,7 @@ export class AuthService {
                       .pipe( 
                         map( ( resp ) => {
                           // console.log(resp); 
-                          return this.handleAuthSuccess( resp )
+                          return this.handleAuthSuccess( resp )?.username ? true : false;
                         } ),
                         catchError( (error : any ) => this.handleAuthError( error ) )
                       );

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { CartService } from '../../../shared/services/cart/cart.service';
 import { NgClass } from '@angular/common';
 import { CartItem } from '@interfaces/cart.interface';
@@ -8,7 +8,6 @@ import { CartItem } from '@interfaces/cart.interface';
     templateUrl: './cart.component.html',
     styleUrl: './cart.component.scss',
     imports: [ NgClass ],
-    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartComponent {
   

@@ -32,8 +32,7 @@ export const routes: Routes = [
   {
     // En caso de no hacer match con ningun path regirige al home
     path : '**',
-    loadComponent: () =>  
-      import('./shared/pages/home/home-page'),
+    redirectTo: ''
   }
   
 ];

@@ -1,40 +1,27 @@
-import { effect, Injectable, signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Course } from '../../../course/interfaces/course.interfaces';
 import { CartItem } from '../../../course/interfaces/cart.interface';
 
-// // debido a que no necesita ninguna dependencia es posible definirla afuera.
-const loadFromLocalStorage = ( )  => {
-  
-  const cartFromLocalStorage = localStorage.getItem( 'cart' );
+// const CART_KEY = 'cart';
 
-  if( cartFromLocalStorage ){
-    const cartObj  = JSON.parse(cartFromLocalStorage);
-    return cartObj;
-  }
-  
-  return new Map();
-}
+// const loadFromLocalStorage = ( ) : Map<string,CartItem> => {
+
+// }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CartService {
 
   // Pensado como un map en donde el Curso es la key y el number la quantity reservada por el usuario
-  cart = signal<Map<string,CartItem>>( loadFromLocalStorage() );
-  
-  saveToLocalStorage = effect( () => {
-  //   // Se disparara la cuando cambien el carrito.
-    const cartChanged = this.cart();
+  cart = signal<Map<string,CartItem> >( new Map<string,CartItem>() );
 
-    const cartChangedSerialized  = JSON.stringify( cartChanged );
+  // saveToLocalStorage = effect( ( ) => {
 
-    localStorage.setItem( 'cart' , cartChangedSerialized );
-  });
+  // });
 
   onAddToCart = ( course : Course )  => {
-    const _currentCart = this.cart();
-    const currentCart = new Map<string, CartItem>( _currentCart );
+    const currentCart = new Map<string, CartItem>( this.cart() );
 
     if( course.capacity != undefined && course.capacity <= 0 ) return;
 
@@ -46,10 +33,12 @@ export class CartService {
       { 
         course : course ,
         quantity : (currentReserved+1)
-      });
+      }
+    );
 
     // actualizo la señal
-    this.cart.set(currentCart);
+    this.cart.set( new Map<string,CartItem>( currentCart ) );
+    
     return this.cart();
   }
 

@@ -8,7 +8,6 @@ export const authRoutes : Routes = [
         path : '',
         component : AuthComponent,
         canMatch: [ NotAuthenticatedGuard ],
-
     }
     
 ]

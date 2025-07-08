@@ -13,9 +13,6 @@ import { NgClass } from '@angular/common';
 })
 export class FormRegisterComponent {
 
-  @Output()
-  onChangeMode = new EventEmitter<void>();
-  
   router = inject(Router);
   authService = inject(AuthService);
   
@@ -27,10 +24,8 @@ export class FormRegisterComponent {
     password : ['', [Validators.required, Validators.minLength(6)]],
   })
 
-  constructor () {
-  }
 
-  onSumbit = () : void => {
+  onUserRegister = () : void => {
     this.registerForm.markAllAsTouched();
     console.log(this.registerForm.get('username'));
     if( this.registerForm.valid ){
@@ -45,8 +40,4 @@ export class FormRegisterComponent {
     };
   }
     
-  onClick = () : void => {
-    this.onChangeMode.emit();
-  }
-
 }

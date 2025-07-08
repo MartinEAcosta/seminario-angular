@@ -80,14 +80,6 @@ export class FormCourseComponent {
       
       if( userID ){
     
-        // if( this.mediaFileList ) {
-        //   const formData = new FormData();
-        //   for( let image of this.tempMedia()){
-        //     formData.append("image" + {image}, image);
-        //   }
-        //   console.log(formData);
-        // }
-          
         if( this._mode() === 'updating' ){
           this.courseService.updateCourse( this.course()?._id! , title! , description! , imgURL! , userID , price , !!offer , capacity! )
                               .subscribe( (isCourseCreated) => {

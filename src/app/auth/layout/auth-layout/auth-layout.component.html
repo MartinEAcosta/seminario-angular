@@ -32,11 +32,6 @@
         </div>
     </div>
     <div class="bg-auth">
-        @if ( isLoginMode() ) {
-            <app-form-login (onChangeMode)="onChangeMode()" />
-        } 
-        @else{
-            <app-form-register (onChangeMode)="onChangeMode()"/>
-        }
+        <router-outlet />
     </div>
 </section>

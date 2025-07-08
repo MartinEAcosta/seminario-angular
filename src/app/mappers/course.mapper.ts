@@ -4,7 +4,7 @@ import type { Course , CourseResponse } from '@interfaces/course.interfaces';
 
 export class CourseMapper {
     
-    static mapResponseToCourse ( response : CourseResponse) : Course {
+    static mapResponseToCourse ( response : CourseResponse ) : Course {
         return {
             _id: response._id ,
             title: response.title,

@@ -20,10 +20,11 @@ export class CourseService {
                   .get<CourseListApiResponse>(`${this.baseURL}`)
                   .pipe(
                       map( ( courseResponse ) => 
-                         CourseMapper.mapResponseToCourseArray( courseResponse.data )
+                        CourseMapper.mapResponseToCourseArray( courseResponse.data )
                       ),
-                      catchError( ( error: any ) => {                        
-                        return throwError( () => new Error('Error al obtener todos los cursos, se retornaron los cursos por defecto.'));
+                      catchError( ( ) => {
+                        // Se retorna un arreglo de cursos por defecto.
+                        return of(defaultCourses);
                       }),
                   );
   }
@@ -86,7 +87,7 @@ export class CourseService {
                   .delete<CourseResponse>(`${this.baseURL}/delete/${id}`)
                   .pipe(
                     map( ( courseResponse ) => {
-                      return CourseMapper.mapResponseToCourse( courseResponse);
+                      return CourseMapper.mapResponseToCourse( courseResponse );
                     }),
                     catchError( ({ error }) => {
                       console.error( error.errorMessage )

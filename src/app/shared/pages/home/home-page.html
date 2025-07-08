@@ -9,11 +9,9 @@
 </div>
 
 <app-course-list 
-    [courses]='this.coursesResource.value()' 
+    [courses]='this.coursesResource.value()!' 
     [isLoading]='this.coursesResource.isLoading()'
     [errorMessage]='this.coursesResource.error()'
 />
-
-
 
 <app-cart />

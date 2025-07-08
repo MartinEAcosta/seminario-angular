@@ -1,5 +1,5 @@
 import { CourseDetailComponent } from '../../components/course-detail/course-detail.component';
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CourseService } from '../../services/course.service';
 import { ActivatedRoute } from '@angular/router';
@@ -38,4 +38,5 @@ export default class CoursePage {
       return this.courseService.getById( request.id );
     },
   });
+
 }

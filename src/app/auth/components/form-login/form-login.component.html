@@ -1,47 +1,30 @@
-
 <div class="container-form">
-        <h1 class="title-form">Iniciar sesión</h1>
-        <form [formGroup]="loginForm" (submit)="onSumbit()" class="form-auth">
-            <input 
-                type="text" 
-                placeholder="example@gmail.com" 
-                class="input-email"
-                required 
-                name="email"
-                autocomplete="off"
-                formControlName="email"
-                [ngClass]="{'hasError': ( loginForm.get('email')?.errors && loginForm.get('email')?.touched ) ?? false }"
-            >
-            <label class="label-text label-email">Correo Electronico</label>
-            <form-error-label class="error error-email" [control]="loginForm.get('email')!"/>
+    <h1 class="title-form">Iniciar sesión</h1>
+    <form [formGroup]="loginForm" (submit)="onUserLogin()" class="form-auth">
+        <input type="text" placeholder="example@gmail.com" class="input-email" required name="email" autocomplete="off"
+            formControlName="email"
+            [ngClass]="{'hasError': ( loginForm.get('email')?.errors && loginForm.get('email')?.touched ) ?? false }">
+        <label class="label-text label-email">Correo Electronico</label>
+        <form-error-label class="error error-email" [control]="loginForm.get('email')!" />
 
-            <input 
-                type="password" 
-                placeholder="unaContraseñaSegur@123" 
-                class="input-password" 
-                required 
-                name="password"
-                formControlName="password"
-                [ngClass]="{'hasError': ( loginForm.get('password')?.errors  && loginForm.get('password')?.touched ) ?? false }"
-            >
-            <label class="label-text">Contraseña</label>
-            <form-error-label class="error error-password" [control]="loginForm.get('password')!"/>    
-        
-            <button class="btn-sumbit" type="submit">
-                Ingresar
-            </button>
-            <a class="text-forgot-pass underline" href="">
-                ¿Olvidaste tu contraseña?
+        <input type="password" placeholder="unaContraseñaSegur@123" class="input-password" required name="password"
+            formControlName="password"
+            [ngClass]="{'hasError': ( loginForm.get('password')?.errors  && loginForm.get('password')?.touched ) ?? false }">
+        <label class="label-text">Contraseña</label>
+        <form-error-label class="error error-password" [control]="loginForm.get('password')!" />
+
+        <button class="btn-sumbit" type="submit">
+            Ingresar
+        </button>
+        <a class="text-forgot-pass underline" href="">
+            ¿Olvidaste tu contraseña?
+        </a>
+        <p class="text-register">
+            ¿Todavia no tienes una cuenta?
+            <a class="underline">
+                Registrate.
             </a>
-            <p class="text-register">
-                ¿Todavia no tienes una cuenta? 
-                <a  
-                    class="underline"
-                    (click)="onClick()" 
-                >
-                        Registrate. 
-                </a> 
-            </p>
+        </p>
 
-        </form>
-    </div>
+    </form>
+</div>

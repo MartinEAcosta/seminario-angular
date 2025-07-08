@@ -83,7 +83,7 @@ export class AuthService {
 
   private handleAuthError = ( error: any ) : Observable<false>  => {
     this.logoutUser();
-    this.errorMessage.set( error.errorMessage );
+    this.errorMessage.set( error?.errorMessage  ?? 'Error inesperado.');
     
     return of(false);
   }
@@ -104,7 +104,7 @@ export class AuthService {
                           return this.handleAuthSuccess( resp )?.username ? true : false;
                         } ),
                         catchError( (error : any ) => this.handleAuthError( error ) )
-                      );
+    );
   }
   
 }

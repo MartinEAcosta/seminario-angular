@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, effect, input, signal } from '@angular/core';
 
 @Component({
   selector: 'app-modal-error-message',
@@ -8,7 +8,7 @@ import { Component, input } from '@angular/core';
 })
 export class ModalErrorMessageComponent {
 
+  showError = signal<boolean>(false);
   errorMessage = input.required<string | unknown>();
-
 
 }

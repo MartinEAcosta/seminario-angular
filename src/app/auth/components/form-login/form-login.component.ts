@@ -13,8 +13,6 @@ import { FormErrorLabelComponent } from '../../../shared/components/form-error-l
 })
 export class FormLoginComponent {
   
-  @Output()
-  onChangeMode = new EventEmitter<void>()
   
   router = inject(Router);
   authService = inject(AuthService);
@@ -23,27 +21,21 @@ export class FormLoginComponent {
     
   loginForm = this.fb.group({
     email : [ '' , [ Validators.required , Validators.email] ],
-    password : [ '' , [ Validators.minLength(6) ]],
+    password : [ '' , [ Validators.required,  Validators.minLength(6) ]],
   });
 
-  constructor () { }
-  
-  onSumbit = () => {
+  onUserLogin = () => {
     if( this.loginForm.valid ){
       const { email , password } = this.loginForm.value;
       this.authService.loginUser( email! , password! )
                         .subscribe( (isAuthenticated) => {
                           if(isAuthenticated){
                             this.router.navigateByUrl('');
-                            return
+                            return;
                           }
                         }
                       );
     }
-  }
-
-  onClick = ( ) : void => {
-    this.onChangeMode.emit();
   }
 
 }

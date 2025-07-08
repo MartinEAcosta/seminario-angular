@@ -1,12 +1,12 @@
 // Practica vista en el curso de Fernando Herrera, similar a patrón DTO ( Data Transfer Object ),
 // utilizado previamente en Java.
-import type { Course , CourseResponse } from '@interfaces/course.interfaces';
+import type { Course, CourseApiResponse  } from '@interfaces/course.interfaces';
 
 export class CourseMapper {
     
-    static mapResponseToCourse ( response : CourseResponse ) : Course {
+    static mapResponseToCourse ( response : CourseApiResponse ) : Course {
         return {
-            _id: response._id ,
+            id: response._id ,
             title: response.title,
             description: response.description,
             imgURL: response.imgURL ?? [],
@@ -17,7 +17,7 @@ export class CourseMapper {
         };
     } 
 
-    static mapResponseToCourseArray ( response : CourseResponse[] ) : Course[] {
+    static mapResponseToCourseArray ( response : CourseApiResponse[] ) : Course[] {
         return response.map( this.mapResponseToCourse );
     }
 

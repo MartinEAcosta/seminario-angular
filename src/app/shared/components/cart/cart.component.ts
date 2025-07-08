@@ -34,7 +34,7 @@ export class CartComponent {
 
   onUpQuantity = ( item : CartItem ) : Map<string,CartItem> => {
     const course = item.course;
-    const currentReserved = this.cart().get( course._id )?.quantity || 0;
+    const currentReserved = this.cart().get( course.id )?.quantity || 0;
 
     if (
       (course.capacity !== undefined && course.capacity <= 0) ||
@@ -46,7 +46,7 @@ export class CartComponent {
 
   onDownQuantity = ( item : CartItem ) : Map<string,CartItem> => {
     const course = item.course;
-    const currentReserved = this.cart().get(course._id)?.quantity || 1;
+    const currentReserved = this.cart().get(course.id)?.quantity || 1;
 
     if( currentReserved <= 1 ) return new Map<string,CartItem>(this.cart());
 

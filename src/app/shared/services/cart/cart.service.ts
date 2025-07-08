@@ -27,9 +27,9 @@ export class CartService {
 
     // En caso de que ya tenga en mi carrito una cantidad del curso, tomo la cantidad reservada
     // o si no la tengo 0 y posteriormente se le sumara 1 
-    const currentReserved = this.cart().get( course._id )?.quantity || 0;
+    const currentReserved = this.cart().get( course.id )?.quantity || 0;
 
-    currentCart.set( course._id , 
+    currentCart.set( course.id , 
       { 
         course : course ,
         quantity : (currentReserved+1)
@@ -46,7 +46,7 @@ export class CartService {
     const currentCart = new Map<string,CartItem>( this.cart() );
     
     // Modifico el mapa
-    currentCart.set( course._id , 
+    currentCart.set( course.id , 
                     {
                       course: course ,
                       quantity: currentReserved+1 
@@ -63,7 +63,7 @@ export class CartService {
     const currentCart = new Map<string,CartItem>( this.cart() );
 
     // Modifico el mapa
-    currentCart.set( course._id , 
+    currentCart.set( course.id , 
                     {
                       course: course ,
                       quantity: currentReserved-1 

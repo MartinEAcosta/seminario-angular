@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { Course, CourseApiResponse, CourseDTO, CourseListApiResponse, CourseResponse } from '@interfaces/course.interfaces';
+import { Course, CourseApiResponse, CourseDTO, CourseListApiResponse, CourseSingleApiResponse } from '@interfaces/course.interfaces';
 import { defaultCourses } from '@utils/defaultCourses';
 import { CourseMapper } from '@mappers/course.mapper';
 
@@ -15,7 +15,7 @@ export class CourseService {
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}courses`;
 
-  getAll = ( ) : Observable<Course[]> => {
+  getAll = ( ) : Observable<void | Course[]> => {
     return this.http
                   .get<CourseListApiResponse>(`${this.baseURL}`)
                   .pipe(
@@ -31,30 +31,30 @@ export class CourseService {
 
   getById = ( id : string ) : Observable<Course>  => {
     return this.http
-                  .get<CourseApiResponse>(`${this.baseURL}/${id}` )
+                  .get<CourseSingleApiResponse>(`${this.baseURL}/${id}` )
                   .pipe(
                     map( ( courseReponse ) => 
                       CourseMapper.mapResponseToCourse( courseReponse.data )
-                  ),
-                  catchError( ({ error }) => {
-                    console.error( error.errorMessage )
-                    return throwError(() => new Error(`${error.errorMessage}`));
-                  }),
+                    ),
+                    catchError( ({ error }) => {
+                      console.error( error.errorMessage )
+                      return throwError(() => new Error(`${error.errorMessage}`));
+                    }),
                   );
   }
 
   // TODO : REVISAR METODO
   createCourse = ( courseRequest : CourseDTO ) : Observable<Course> => {
     return this.http
-                  .post<CourseResponse>(
+                  .post<CourseSingleApiResponse>(
                                         `${this.baseURL}/new` , 
                                         { 
                                           ...courseRequest
                                         } 
                                       ).pipe(
-                                          map( ( courseResponse ) => {
-                                            return CourseMapper.mapResponseToCourse( courseResponse );
-                                          }),
+                                          map( ( courseResponse ) => 
+                                            CourseMapper.mapResponseToCourse( courseResponse.data )
+                                          ),
                                           catchError( ({ error }) => {
                                             console.error( error.errorMessage )
                                             return throwError(() => new Error(`${error.errorMessage}`));
@@ -64,14 +64,14 @@ export class CourseService {
 
   updateCourse = ( courseRequest : CourseDTO ) : Observable<Course> => {
     return this.http
-                  .put<CourseResponse>(
+                  .put<CourseSingleApiResponse>(
                                         `${this.baseURL}/update/${courseRequest._id}` ,
                                         { 
                                           ...courseRequest
                                         } 
                                       ).pipe( 
                                           map( ( courseResponse ) => {
-                                            return CourseMapper.mapResponseToCourse( courseResponse );
+                                            return CourseMapper.mapResponseToCourse( courseResponse.data );
                                           }),
                                           catchError( ({ error }) => {
                                             console.error( error.errorMessage )
@@ -80,16 +80,19 @@ export class CourseService {
                                         );
   }
 
-  deleteCourse = ( id : string ) : Observable<Course> => {
+  deleteCourse = ( id : string ) : Observable<boolean> => {
     return this.http
-                  .delete<CourseResponse>(`${this.baseURL}/delete/${id}`)
+                  .delete<CourseSingleApiResponse>(`${this.baseURL}/delete/${id}`)
                   .pipe(
                     map( ( courseResponse ) => {
-                      return CourseMapper.mapResponseToCourse( courseResponse );
+                      return courseResponse.ok;
+                      
                     }),
                     catchError( ({ error }) => {
                       console.error( error.errorMessage )
-                      return throwError(() => new Error(`${error.errorMessage}`));
+                      throwError(() => new Error(`${error.errorMessage}`));
+                    
+                      return of(false);
                     }),
                   );
   }

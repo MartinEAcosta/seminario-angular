@@ -52,7 +52,7 @@ export class FormCourseComponent {
 
   handleUpdatingMode = () => {
     if( this.course( )  ){
-      this.router.navigate(['/course/update', this.course()?._id!])
+      this.router.navigate(['/course/update', this.course()?.id!])
       this.courseForm.reset({
         title: this.course()?.title,
         description: this.course()?.description,
@@ -87,7 +87,7 @@ export class FormCourseComponent {
 
         // Debido a que son solo los valores del formulario debo añadir el id que lo contiene 
         // la señal pasada por componente padre.
-        updateCourseDTO._id = this.course()?._id!;
+        updateCourseDTO._id = this.course()?.id!;
         
         this.courseService.updateCourse( updateCourseDTO );
       } 

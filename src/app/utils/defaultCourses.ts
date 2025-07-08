@@ -2,7 +2,7 @@ import { Course } from "@interfaces/course.interfaces";
 
 export const defaultCourses : Course[] = [
                               {
-                                "_id" : "a",
+                                "id" : "a",
                                 "title": "Introducción a JavaScript",
                                 "description": "Aprendé los fundamentos de JavaScript desde cero, incluyendo variables, funciones y estructuras de control.",
                                 "imgURL": ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiJXRK-EDY4xo4jNoyJFwwNcjOMzcw_239qA&s"],
@@ -12,7 +12,7 @@ export const defaultCourses : Course[] = [
                                 "capacity": 100
                               },
                               {
-                                "_id" : "b",
+                                "id" : "b",
                                 "title": "Angular desde Cero",
                                 "description": "Dominá el framework Angular creando componentes, servicios y rutas.",
                                 "imgURL": ["https://res.cloudinary.com/dl1k2dee0/image/upload/v1720469620/courses/angular-fh/banner/angular-fh.jpg"],
@@ -22,7 +22,7 @@ export const defaultCourses : Course[] = [
                                 "capacity": 80
                               },
                               {
-                                "_id" : "c",
+                                "id" : "c",
                                 "title": "Curso Fullstack con MERN",
                                 "description": "Construí una aplicación completa utilizando MongoDB, Express, React y Node.js.",
                                 "imgURL": ["https://img-c.udemycdn.com/course/750x422/2264768_a446_2.jpg"],
@@ -32,7 +32,7 @@ export const defaultCourses : Course[] = [
                                 "capacity": 50
                               },
                               {
-                                "_id" : "d",
+                                "id" : "d",
                                 "title": "SQL y Bases de Datos Relacionales",
                                 "description": "Aprendé a diseñar y consultar bases de datos con PostgreSQL y MySQL.",
                                 "imgURL": ["https://saludelectronica.com/wp-content/uploads/2022/05/imagen2-1024x584.png"],
@@ -41,7 +41,7 @@ export const defaultCourses : Course[] = [
                                 "offer": false
                               },
                               {
-                                "_id" : "e",
+                                "id" : "e",
                                 "title": "Git y GitHub para Desarrolladores",
                                 "description": "Controlá versiones como un profesional usando Git y GitHub en tus proyectos.",
                                 "imgURL": ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs73xVg7ec40WwHunzV8K4vOkyHmSRaw5Q0g&s"],

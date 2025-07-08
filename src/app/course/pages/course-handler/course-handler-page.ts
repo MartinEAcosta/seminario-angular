@@ -24,8 +24,6 @@ export default class CourseHandlerComponent {
   router = inject(Router);
 
   courseService = inject(CourseService);
-  authService = inject(AuthService);
-
   courseId = this.activatedRoute.snapshot.params['id'] || '';
   
   courseResource = rxResource({

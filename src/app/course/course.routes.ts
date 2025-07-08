@@ -13,13 +13,13 @@ export const courseRoutes : Routes = [
                 canMatch : [ AuthenticatedGuard ],
             },
             {
-                path : ':id',
-                component : CoursePage,
-            },
-            {
                 path : 'update/:id',
                 component: CourseHandlerComponent,
                 canMatch : [ AuthenticatedGuard ],
+            },
+            {
+                path : ':id',
+                component : CoursePage,
             },
             {
                 path : '**',

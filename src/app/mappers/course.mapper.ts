@@ -21,4 +21,5 @@ export class CourseMapper {
         return response.map( this.mapResponseToCourse );
     }
 
+
 }

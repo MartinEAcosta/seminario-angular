@@ -25,7 +25,7 @@ export class FormRegisterComponent {
   })
 
 
-  onUserRegister = () : void => {
+  onRegister = () : void => {
     this.registerForm.markAllAsTouched();
     console.log(this.registerForm.get('username'));
     if( this.registerForm.valid ){

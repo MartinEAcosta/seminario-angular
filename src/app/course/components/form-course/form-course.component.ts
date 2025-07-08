@@ -1,10 +1,11 @@
 import { Component, inject, input, output, signal } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgClass } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
+import type { Course, CourseDTO } from '../../interfaces/course.interfaces';
 import { AuthService } from '../../../auth/services/auth.service';
 import { CourseService } from '../../services/course.service';
-import { NgClass } from '@angular/common';
-import { Router } from '@angular/router';
-import { Course } from '../../interfaces/course.interfaces';
 import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
 
 
@@ -18,8 +19,7 @@ type Mode = 'creating' | 'updating' | 'loading';
 })
 export class FormCourseComponent {
 
-  course = input<Course>();
-  _mode = signal<Mode>('loading');
+  course = input<Course | undefined >();
   tempMedia = signal<string[]>([]); 
   mediaFileList : FileList | undefined =  undefined;
   
@@ -39,69 +39,60 @@ export class FormCourseComponent {
   });
 
   ngOnInit () {
-    if( !!this.course() ){
+    if( !this.course() ){
+      return this.handleCreatingMode();
+    }
+    
+    return this.handleUpdatingMode();
+  }
+
+  handleCreatingMode = () => {
+    return this.router.navigateByUrl('/course/create');
+  }
+
+  handleUpdatingMode = () => {
+    if( this.course( )  ){
+      this.router.navigate(['/course/update', this.course()?._id!])
       this.courseForm.reset({
         title: this.course()?.title,
         description: this.course()?.description,
         imgURL: this.course()?.imgURL,
         price: this.course()?.price,
         offer: this.course()?.offer,
-        capacity: this.course()?.capacity,
+        capacity: this.course()?.capacity
       });
-      this._mode.set('updating');
     }
-    else{
-      this.router.navigateByUrl('course/create');
-      this._mode.set('creating');
-    }
-  }
-
-  onFileChanged = ( event : Event ) => {
-    const fileList = ( event.target as HTMLInputElement ).files;
-    this.mediaFileList = fileList ?? undefined;
-
-    // En caso de que el el fileList no sea undefined o vacio, permite generar url para utilizar de forma local
-    const imageUrls = Array.from( fileList ?? [ ] ).map( 
-      (file) => URL.createObjectURL(file)
-    );
-    console.log(this.mediaFileList);
-    this.tempMedia.set(imageUrls);
   }
 
   onSumbit = ( ) : void => {
     
-    this.courseForm.markAllAsTouched()
+    this.courseForm.markAllAsTouched();
+    const uid = this.authService.id();
 
-    if( this.courseForm.valid ){
-      
-      const { title , description , imgURL = [''] , price = 0  , offer = false , capacity } = this.courseForm.value;
-      const user = this.authService?.user();
-      const userID = user()?._id;
-      
-      if( userID ){
-    
-        if( this._mode() === 'updating' ){
-          this.courseService.updateCourse( this.course()?._id! , title! , description! , imgURL! , userID , price , !!offer , capacity! )
-                              .subscribe( (isCourseCreated) => {
-                                if( isCourseCreated ) {
-                                  this.router.navigateByUrl('/');
-                                  return;
-                                }     
-                              });
-        }
-        else{
-          this.courseService.createCourse( title! , description! , imgURL! , userID , price , !!offer , capacity!)
-                              .subscribe( (isCourseCreated) => {
-                                if( isCourseCreated ) {
-                                  this.router.navigateByUrl('/');
-                                  return;
-                                }     
-                              });
-        }
+    if( this.course() === undefined && this.courseForm.valid ){
 
+      const createCourseDTO : CourseDTO = this.courseForm.value;
+
+      if( uid ){
+        createCourseDTO.owner = uid;
+        console.log(createCourseDTO);
+        this.courseService.createCourse( createCourseDTO );
       }
-    }    
-  };
+    }
+    else{
+
+      const updateCourseDTO : CourseDTO = this.courseForm.value;
+      
+      if( this.course()?.owner === uid ){
+
+        // Debido a que son solo los valores del formulario debo añadir el id que lo contiene 
+        // la señal pasada por componente padre.
+        updateCourseDTO._id = this.course()?._id!;
+        
+        this.courseService.updateCourse( updateCourseDTO );
+      } 
+    }
+  }    
 
   onDeleteCourse = ( id : string ) => {
     if( this.course()?.owner === this.authService.id() ){
@@ -115,5 +106,16 @@ export class FormCourseComponent {
     }
   }
 
+    onFileChanged = ( event : Event ) => {
+    const fileList = ( event.target as HTMLInputElement ).files;
+    this.mediaFileList = fileList ?? undefined;
+
+    // En caso de que el el fileList no sea undefined o vacio, permite generar url para utilizar de forma local
+    const imageUrls = Array.from( fileList ?? [ ] ).map( 
+      (file) => URL.createObjectURL(file)
+    );
+    console.log(this.mediaFileList);
+    this.tempMedia.set(imageUrls);
+  }
 
 }

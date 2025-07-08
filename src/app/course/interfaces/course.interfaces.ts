@@ -11,6 +11,17 @@ export interface Course {
     capacity?:   number;
 }
 
+export interface CourseDTO {
+    _id?:         string;
+    title:       string;
+    description: string;
+    imgURL:      string[];
+    owner?:       string;
+    price?:       number;
+    offer?:       boolean;
+    capacity?:   number;
+}
+
 export interface CourseResponse {
     _id:         string;
     title:       string;

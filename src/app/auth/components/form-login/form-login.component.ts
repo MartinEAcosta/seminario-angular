@@ -24,7 +24,7 @@ export class FormLoginComponent {
     password : [ '' , [ Validators.required,  Validators.minLength(6) ]],
   });
 
-  onUserLogin = () => {
+  onLogin = () => {
     if( this.loginForm.valid ){
       const { email , password } = this.loginForm.value;
       this.authService.loginUser( email! , password! )

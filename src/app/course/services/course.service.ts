@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { Course, CourseApiResponse, CourseListApiResponse, CourseResponse } from '@interfaces/course.interfaces';
+import { Course, CourseApiResponse, CourseDTO, CourseListApiResponse, CourseResponse } from '@interfaces/course.interfaces';
 import { defaultCourses } from '@utils/defaultCourses';
 import { CourseMapper } from '@mappers/course.mapper';
 
@@ -44,13 +44,12 @@ export class CourseService {
   }
 
   // TODO : REVISAR METODO
-  createCourse = ( title : string , description : string , imgURL : string[] , owner : string , price : number , offer : boolean , capacity : number ) : Observable<Course> => {
+  createCourse = ( courseRequest : CourseDTO ) : Observable<Course> => {
     return this.http
                   .post<CourseResponse>(
                                         `${this.baseURL}/new` , 
                                         { 
-                                          title : title , description : description , imgURL : imgURL , 
-                                          owner : owner , price : price , offer : offer, capacity : capacity
+                                          ...courseRequest
                                         } 
                                       ).pipe(
                                           map( ( courseResponse ) => {
@@ -63,13 +62,12 @@ export class CourseService {
                                         );
   }
 
-  updateCourse = ( id : string , title : string , description : string , imgURL : string[] , owner : string , price : number , offer : boolean , capacity : number ) : Observable<Course> => {
+  updateCourse = ( courseRequest : CourseDTO ) : Observable<Course> => {
     return this.http
                   .put<CourseResponse>(
-                                        `${this.baseURL}/update/${id}` ,
+                                        `${this.baseURL}/update/${courseRequest._id}` ,
                                         { 
-                                          title : title , description : description , imgURL : imgURL , 
-                                          owner : owner , price : price , offer : offer, capacity : capacity
+                                          ...courseRequest
                                         } 
                                       ).pipe( 
                                           map( ( courseResponse ) => {

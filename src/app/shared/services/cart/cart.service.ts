@@ -5,6 +5,10 @@ import { throwError } from 'rxjs';
 
 const CART_KEY = 'cart';
 
+// La razón por la que devolvia el carrito vació es debido a que en el servicio de autenticación
+// a la hora de chequear el status, en caso de que no se obtenga el token se llama la función de limpieza logout()
+// que se encarga de realizar el clear del localStorage, esto con el fin de que no queden datos vinculados a la sesión
+// aunque si se quiere se podria reemplazar el localStorage.clear() por el .removeItem('item').
 const loadFromLocalStorage = ( ) : Map<string,CartItem> => {
   const cartStrigify = localStorage.getItem( CART_KEY );
 
@@ -33,13 +37,13 @@ const loadFromLocalStorage = ( ) : Map<string,CartItem> => {
 export class CartService {
 
   // Pensado como un map en donde el Curso es la key y el number la quantity reservada por el usuario
-  cart = signal<Map<string,CartItem> >( loadFromLocalStorage() );
+  cart = signal< Map<string,CartItem> >( loadFromLocalStorage() );
   cartFromLocalStorage = computed ( () => this.cart() );
 
   saveToLocalStorage = effect( ( ) => {
     const cartArrayValues = Array.from( this.cartFromLocalStorage().values() )
     const cartSearilized = JSON.stringify( cartArrayValues );
-    console.log(cartSearilized);
+
     localStorage.setItem( CART_KEY , cartSearilized );
   });
 

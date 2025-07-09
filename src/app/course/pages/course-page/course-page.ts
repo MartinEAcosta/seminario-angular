@@ -5,10 +5,9 @@ import { CourseService } from '../../services/course.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../auth/services/auth.service';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { of } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoaderComponent } from "../../../shared/components/loader/loader.component";
-import { ModalErrorMessageComponent } from "../../../shared/components/modal-error-message/modal-error-message.component";
 
 @Component({
   selector: 'app-course-page',

@@ -6,14 +6,9 @@ export interface User {
     _id:      string;
 }
 
-export interface RegisterUserDTO {
-    username: string;
-    email: string;
-    password: string;
-}
-
-export interface LoginUserDTO {
-    email: string;
+export interface UserDTO {
+    username?: string;
+    email?: string;
     password: string;
 }
 

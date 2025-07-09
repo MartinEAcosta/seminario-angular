@@ -1,9 +1,10 @@
 import { Router } from '@angular/router';
 import { Component, EventEmitter, inject, Output } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { AuthService } from './../../services/auth.service';
 import { FormErrorLabelComponent } from '../../../shared/components/form-error-label/form-error-label.component';
+import { UserDTO } from '@interfaces/auth.interfaces';
 
 @Component({
     selector: 'app-form-login',
@@ -19,15 +20,15 @@ export class FormLoginComponent {
 
   fb = inject(FormBuilder);
     
-  loginForm = this.fb.group({
+  loginForm : FormGroup = this.fb.group({
     email : [ '' , [ Validators.required , Validators.email] ],
     password : [ '' , [ Validators.required,  Validators.minLength(6) ]],
   });
 
   onLogin = () => {
     if( this.loginForm.valid ){
-      const { email , password } = this.loginForm.value;
-      this.authService.loginUser( email! , password! )
+      const loginUserDTO : UserDTO = this.loginForm.value;
+      this.authService.loginUser( loginUserDTO )
                         .subscribe( (isAuthenticated) => {
                           if(isAuthenticated){
                             this.router.navigateByUrl('');

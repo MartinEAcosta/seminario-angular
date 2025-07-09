@@ -4,7 +4,7 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 import { environment } from '../../../environments/environment';
-import { AuthResponse, User } from '@interfaces/auth.interfaces';
+import { AuthResponse, User, UserDTO } from '@interfaces/auth.interfaces';
 import { AuthMapper } from '@mappers/auth.mapper';
 
 type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
@@ -45,9 +45,9 @@ export class AuthService {
 
   constructor() { }
 
-  registerUser = ( username : string , email : string , password : string ) : Observable<User | false> => {
+  registerUser = ( userRequest : UserDTO ) : Observable<User | false> => {
     return this.http
-                  .post<AuthResponse>(`${this.baseURL}/new` , { username , email ,password } )
+                  .post<AuthResponse>(`${this.baseURL}/new` , { userRequest } )
                     .pipe( 
                       map( ( authResponse ) =>  this.handleAuthSuccess( authResponse )),
                       // En caso de tener un error se captura y se toman las acciones de "limpieza"
@@ -55,8 +55,8 @@ export class AuthService {
             );
   }
 
-  loginUser = ( email : string , password : string ) : Observable<User | false> => {
-    return this.http.post<AuthResponse>(`${this.baseURL}` , { email : email , password : password } )
+  loginUser = ( userRequest : UserDTO ) : Observable<User | false> => {
+    return this.http.post<AuthResponse>(`${this.baseURL}` , { userRequest } )
                       .pipe(
                         map( (resp) => this.handleAuthSuccess( resp ) ),
                         catchError( ( error : any ) =>  this.handleAuthError( error ) )

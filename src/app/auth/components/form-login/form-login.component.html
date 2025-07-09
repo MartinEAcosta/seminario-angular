@@ -13,7 +13,7 @@
         <label class="label-text">Contraseña</label>
         <form-error-label class="error error-password" [control]="loginForm.get('password')!" />
 
-        <button class="btn-sumbit" type="submit">
+        <button class="btn-sumbit" type="submit" (submit)="onLogin()">
             Ingresar
         </button>
         <a class="text-forgot-pass underline" href="">

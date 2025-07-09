@@ -1,5 +1,5 @@
 import { CourseDetailComponent } from '../../components/course-detail/course-detail.component';
-import { Component, effect, inject } from '@angular/core';
+import { Component, computed, effect, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CourseService } from '../../services/course.service';
 import { ActivatedRoute } from '@angular/router';
@@ -37,5 +37,14 @@ export default class CoursePage {
       return this.courseService.getById( request.id );
     },
   });
+
+  // TODO : Manejo de excepción realizado, verificar si se puede optimizar via un Guard.
+  errorResource = computed( () => this.courseResource.value() === undefined && !this.courseResource.isLoading() );
+  hasErrorResource = effect( () => {
+    if( this.errorResource() ){
+      this.router.navigateByUrl('/');
+    }
+  });
+
 
 }

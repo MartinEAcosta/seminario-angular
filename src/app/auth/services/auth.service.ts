@@ -43,8 +43,6 @@ export class AuthService {
     return 'not-authenticated';
   });
 
-  constructor() { }
-
   registerUser = ( userRequest : UserDTO ) : Observable<User | false> => {
     return this.http
                   .post<AuthResponse>(`${this.baseURL}/new` , { ...userRequest } )
@@ -70,35 +68,18 @@ export class AuthService {
 
     localStorage.clear();
   }
-
-  private handleAuthSuccess = ( authResponse : AuthResponse ) : User  => {
-    this._user.set( authResponse.userRef );
-    this._id.set( authResponse.userRef._id );
-    this._token.set( authResponse.token );
-    this._authStatus.set( 'authenticated' );
-
-    localStorage.setItem('x-token' , authResponse.token);
-    return AuthMapper.mapResponseToUser( authResponse );
-  }
-
-  private handleAuthError = ( error: any ) : Observable<false>  => {
-    this.logoutUser();
-    this.errorMessage.set( error?.errorMessage  ?? 'Error inesperado.');
-    
-    return of(false);
-  }
-
+  
   checkStatus = ( ) : Observable<boolean> => {
     
     const token = localStorage.getItem('x-token');
-
+    
     if( !token ){
       this.logoutUser();
       return of(false);
     }
 
     return this.http.get<AuthResponse>(`${this.baseURL}/renew`, { } )
-                      .pipe( 
+    .pipe( 
                         map( ( resp ) => {
                           // console.log(resp); 
                           return this.handleAuthSuccess( resp )?.username ? true : false;
@@ -107,4 +88,21 @@ export class AuthService {
     );
   }
   
+  private handleAuthSuccess = ( authResponse : AuthResponse ) : User  => {
+    this._user.set( authResponse.userRef );
+    this._id.set( authResponse.userRef._id );
+    this._token.set( authResponse.token );
+    this._authStatus.set( 'authenticated' );
+  
+    localStorage.setItem('x-token' , authResponse.token);
+    return AuthMapper.mapResponseToUser( authResponse );
+  }
+  
+  private handleAuthError = ( error: any ) : Observable<false>  => {
+    this.logoutUser();
+    this.errorMessage.set( error?.errorMessage  ?? 'Error inesperado.');
+    
+    return of(false);
+  }
+
 }

@@ -1,6 +1,4 @@
 import { Routes } from '@angular/router';
-import { NotAuthenticatedGuard } from './auth/guards/not-authenticated.guard';
-import { AuthenticatedGuard } from './auth/guards/authenticated.guard';
 import HomeComponent from './shared/pages/home/home-page';
 
 export const routes: Routes = [

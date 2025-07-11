@@ -82,6 +82,68 @@
 
 .container-inline{
     display: flex;
+    align-items: center;
+}
+
+.switch-container{
+    display: flex;
+    margin-right: 15px;
+}
+
+.switch-checkbox{
+    position: absolute;
+    // TODO: Probar cambiar a display none
+    left: -100vw;
+}
+
+.switch-label{
+    font-size: 2rem;
+    text-indent: -100vw;
+    cursor: pointer;
+    background-color: grey;
+    position: relative;
+    border: solid 1px transparent;
+    width: 65px;
+    height: 30px;
+    border-radius: 2rem;
+    box-shadow: inset 0px 0px 5px 5px rgba(0,0,0,0.5) , 5px 2px 5px rgb(0,0,0 , 0.5);
+}
+
+.switch-label:after{
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 30px;
+    height: 100%;
+    padding: 2px;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    background-color: rgb(197, 14, 14, 0.8);
+    content: 'OFF';
+    color: v.$white-custom;
+    text-indent: 0;
+    text-transform: uppercase;
+    font-family: v.$font-primary;
+    font-size: 0.7rem;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgb(197, 14, 14, 0.8);
+    transition: 0.5s;
+}
+
+.switch-checkbox:checked + .switch-label{
+    background-color: v.$white-custom;
+    transition: 0.5s;
+}
+
+.switch-checkbox:checked + .switch-label::after{
+    color: rgb(255,255,255);
+    content: 'ON';
+    background-color: rgb(0, 150, 50 ,0.8);
+    box-shadow: 0 2px 5px rgb(0, 150, 50 ,0.8);
+    transform: translate(35px);
 }
 
 .input-capacity{

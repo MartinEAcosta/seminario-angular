@@ -7,7 +7,7 @@ import type { Course, CourseDTO } from '../../interfaces/course.interfaces';
 import { AuthService } from '../../../auth/services/auth.service';
 import { CourseService } from '../../services/course.service';
 import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
-import { tap } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
 
 
 type Mode = 'creating' | 'updating' | 'loading';
@@ -40,7 +40,6 @@ export class FormCourseComponent {
   });
 
   ngOnInit () {
-    const limitedCapacitySignal = computed( () => this.courseForm.get('wantLimitedCapacity')!.value);
     if( !this.course() ){
       return this.handleCreatingMode();
     }
@@ -60,7 +59,7 @@ export class FormCourseComponent {
     })
   });
 
-  onWantLimitedCapacityChanged = ( ) => {
+  onWantLimitedCapacityChanged = ( ) : Subscription => {
     return this.courseForm.get('wantLimitedCapacity')!.valueChanges
                                                     .pipe(
                                                       tap(( limited ) => {
@@ -76,7 +75,7 @@ export class FormCourseComponent {
   }
 
 
-  handleUpdatingMode = () => {
+  handleUpdatingMode = () : void => {
     if( this.course( )  ){
       this.router.navigate(['/course/update', this.course()?.id!]);
       this.courseForm.reset({
@@ -119,7 +118,7 @@ export class FormCourseComponent {
     }
   }    
 
-  onDeleteCourse = ( id : string ) => {
+  onDeleteCourse = ( id : string )  => {
     if( this.course()?.owner === this.authService.id() ){
       this.courseService.deleteCourse( id )
                             .subscribe( (isCourseDeleted) => {

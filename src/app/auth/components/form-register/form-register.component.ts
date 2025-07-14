@@ -27,7 +27,7 @@ export class FormRegisterComponent {
     email : [
               '',
               // Validacion sincrona
-              [Validators.required, Validators.email ],
+              [Validators.required, Validators.pattern( FormUtils.emailPattern ) ],
               // Validaciones asincronas
               // [FormUtils.checkingServerResponse]
             ],

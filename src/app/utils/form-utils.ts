@@ -26,6 +26,10 @@ export class FormUtils {
                     if( errors['pattern'].requiredPattern === FormUtils.notOnlySpacesPattern ) {
                         return `El campo no puede contener espacios.`;
                     }
+                    // Agregado debido a que la funcionalidad del validator.email con que tenga un @ lo acepta.
+                    else if( errors['pattern'].requiredPattern === FormUtils.emailPattern ){
+                        return `El contenido del campo no luce como un email.`;
+                    }   
                     return `Error de validación personalizada.`;
             
                 default:

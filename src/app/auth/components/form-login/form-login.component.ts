@@ -5,6 +5,7 @@ import { NgClass } from '@angular/common';
 import { AuthService } from './../../services/auth.service';
 import { FormErrorLabelComponent } from '../../../shared/components/form-error-label/form-error-label.component';
 import { UserDTO } from '@interfaces/auth.interfaces';
+import { FormUtils } from '@utils/form-utils';
 
 @Component({
     selector: 'app-form-login',
@@ -21,8 +22,16 @@ export class FormLoginComponent {
   fb = inject(FormBuilder);
     
   loginForm : FormGroup = this.fb.group({
-    email : [ '' , [ Validators.required , Validators.email] ],
-    password : [ '' , [ Validators.required,  Validators.minLength(6) ]],
+    email : [ 
+              '' ,[ 
+                    Validators.required , Validators.pattern( FormUtils.emailPattern )  
+                  ]
+            ],
+    password : [ 
+                '' ,[
+                      Validators.required,  Validators.minLength(6) 
+                    ]
+              ],
   });
 
   onLogin = () => {

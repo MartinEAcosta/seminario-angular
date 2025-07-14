@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, output, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, output, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -39,11 +39,21 @@ export class FormCourseComponent {
     capacity : [ { value : 5 , disabled: false } , [ Validators.min(5) ] ], 
   });
 
-  // TODO: ESTA EN FUNCIONAMIENTO PERO HAY QUE REFACTORIZAR
+  ngOnInit () {
+    const limitedCapacitySignal = computed( () => this.courseForm.get('wantLimitedCapacity')!.value);
+    if( !this.course() ){
+      return this.handleCreatingMode();
+    }
+    return this.handleUpdatingMode();
+  }
+
+  handleCreatingMode = () => {
+    return this.router.navigateByUrl('/course/create');
+  }
+  
   onFormChanged = effect ( (onCleanup) => {
     const limitedCapacitySubscription = this.onWantLimitedCapacityChanged();
-
-
+    
     // Es necesario una función de limpieza debido a que sino queda la referencia por algun lado
     onCleanup ( ( ) => {
       limitedCapacitySubscription?.unsubscribe();
@@ -65,16 +75,6 @@ export class FormCourseComponent {
                                                     ).subscribe();
   }
 
-  ngOnInit () {
-    if( !this.course() ){
-      return this.handleCreatingMode();
-    }
-    return this.handleUpdatingMode();
-  }
-
-  handleCreatingMode = () => {
-    return this.router.navigateByUrl('/course/create');
-  }
 
   handleUpdatingMode = () => {
     if( this.course( )  ){

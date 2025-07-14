@@ -3,13 +3,14 @@ import { Validators, ReactiveFormsModule, FormBuilder, FormGroup } from '@angula
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
-import { NgClass } from '@angular/common';
+import { JsonPipe, NgClass } from '@angular/common';
+import { FormUtils } from '@utils/form-utils';
 
 @Component({
     selector: 'app-form-register',
     templateUrl: './form-register.component.html',
     styleUrls: ['../../form-global.scss', './form-register.component.scss'],
-    imports: [ReactiveFormsModule, FormErrorLabelComponent, NgClass]
+    imports: [ReactiveFormsModule, FormErrorLabelComponent , NgClass , JsonPipe ]
 })
 export class FormRegisterComponent {
 
@@ -19,10 +20,22 @@ export class FormRegisterComponent {
   private fb = inject(FormBuilder);
 
   registerForm : FormGroup = this.fb.group({
-    username : ['', [Validators.required, Validators.minLength(3)]],
-    email : ['', [Validators.required, Validators.email ]],
-    password : ['', [Validators.required, Validators.minLength(6)]],
-  })
+    username : [
+                '', 
+                [Validators.required, Validators.minLength(3) , Validators.pattern( FormUtils.notOnlySpacesPattern ) ] 
+              ],
+    email : [
+              '',
+              // Validacion sincrona
+              [Validators.required, Validators.email ],
+              // Validaciones asincronas
+              // [FormUtils.checkingServerResponse]
+            ],
+    password : [
+                '', 
+                [Validators.required, Validators.minLength(6)]
+              ],
+  });
 
 
   onRegister = () : void => {

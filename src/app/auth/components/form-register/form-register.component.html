@@ -53,4 +53,7 @@
             </p>
 
     </form>
+    <pre>
+        {{ this.registerForm.get('email')?.errors | json }}
+    </pre>
 </div>

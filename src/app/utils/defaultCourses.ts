@@ -8,7 +8,6 @@ export const defaultCourses : Course[] = [
                                 "imgURL": ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiJXRK-EDY4xo4jNoyJFwwNcjOMzcw_239qA&s"],
                                 "owner": "665fa63c94c4f85d3f9e73a1",
                                 "price": 2499,
-                                "offer": true,
                                 "capacity": 100
                               },
                               {
@@ -18,7 +17,6 @@ export const defaultCourses : Course[] = [
                                 "imgURL": ["https://res.cloudinary.com/dl1k2dee0/image/upload/v1720469620/courses/angular-fh/banner/angular-fh.jpg"],
                                 "owner": "665fa63c94c4f85d3f9e73a1",
                                 "price": 2999,
-                                "offer": false,
                                 "capacity": 80
                               },
                               {
@@ -28,7 +26,6 @@ export const defaultCourses : Course[] = [
                                 "imgURL": ["https://img-c.udemycdn.com/course/750x422/2264768_a446_2.jpg"],
                                 "owner": "665fa63c94c4f85d3f9e73a1",
                                 "price": 3999,
-                                "offer": true,
                                 "capacity": 50
                               },
                               {
@@ -38,7 +35,6 @@ export const defaultCourses : Course[] = [
                                 "imgURL": ["https://saludelectronica.com/wp-content/uploads/2022/05/imagen2-1024x584.png"],
                                 "owner": "665fa63c94c4f85d3f9e73a1",
                                 "price": 1999,
-                                "offer": false
                               },
                               {
                                 "id" : "e",
@@ -47,7 +43,6 @@ export const defaultCourses : Course[] = [
                                 "imgURL": ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs73xVg7ec40WwHunzV8K4vOkyHmSRaw5Q0g&s"],
                                 "owner": "665fa63c94c4f85d3f9e73a1",
                                 "price": 1499,
-                                "offer": true,
                                 "capacity": 200
                               }
                             ]

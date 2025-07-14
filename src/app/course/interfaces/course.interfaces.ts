@@ -7,7 +7,6 @@ export interface Course {
     imgURL:      string[];
     owner:       string;
     price:       number;
-    offer:       boolean;
     capacity?:   number;
 }
 
@@ -18,7 +17,6 @@ export interface CourseDTO {
     imgURL:      string[];
     owner?:       string;
     price?:       number;
-    offer?:       boolean;
     capacity?:   number;
 }
 
@@ -29,7 +27,6 @@ export interface CourseApiResponse {
     imgURL:      string[];
     owner:       string;
     price:       number;
-    offer:       boolean;
     capacity?:   number;
 }
 

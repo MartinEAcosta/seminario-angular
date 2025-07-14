@@ -33,11 +33,11 @@
                 <div class="container-capacity">
                     <div class="container-inline">
                         <div class="switch-container">
-                            <input type="checkbox" id="switch-label" class="switch-checkbox">
+                            <input type="checkbox" id="switch-label" class="switch-checkbox" formControlName="wantLimitedCapacity" >
                             <label for="switch-label" class="switch-label" >
                             </label>
                         </div>
-                        <label class="label-capacity">
+                        <label class="label-capacity" [ngClass]="{ 'unlimited-capacity' : !courseForm.get('wantLimitedCapacity')?.value}">
                             Capacidad Limitada
                         </label>
                         <input 
@@ -46,13 +46,16 @@
                             class="input input-capacity" 
                             [ngClass]="{ 
                                 'invalid-border': courseForm.get('capacity')?.errors, 
-                                'valid-border': courseForm.get('capacity')?.touched && !courseForm.get('capacity')?.errors 
+                                'valid-border': courseForm.get('capacity')?.touched && !courseForm.get('capacity')?.errors && courseForm.get('wantLimitedCapacity')?.value ,
+                                'unlimited-capacity' :!courseForm.get('wantLimitedCapacity')?.value
                             }" 
-                            placeholder="0" 
+                            placeholder="5" 
+                            [disabled]="this.courseForm.get('capacity')!.disabled"
                         />
                     </div>
-                    
-                    <form-error-label [control]="courseForm.get('capacity')!" />
+                    <div class="container-error">
+                        <form-error-label [control]="courseForm.get('capacity')!" />
+                    </div>
                 </div>
                 <div class="container-pricing">
                     <label class="label-pricing">
@@ -89,8 +92,8 @@
                         class="input-file" 
                         multiple
                         accept="image/* video/*"
-                        (change)="onFileChanged( $event )"
                         />
+                        <!-- (change)="onFileChanged( $event )" -->
                     <label for="file" class="custom-file-label">Seleccionar archivo</label>
                 </div>
                 @if( this.course() ){

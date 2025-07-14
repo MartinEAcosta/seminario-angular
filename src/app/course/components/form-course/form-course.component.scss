@@ -71,8 +71,8 @@
 }
 
 .container-capacity{
-    position: absolute;
-    bottom: 15%;
+    position: relative;
+    bottom: -55%;
     color: v.$white-custom;
     text-align: center;
     align-items: center;
@@ -146,11 +146,22 @@
     transform: translate(35px);
 }
 
+.label-capacity{
+    color: v.$white-custom;    
+    transition: color 0.5s ease;
+}
+
+.unlimited-capacity{
+    color: grey;
+    transition: color 0.5s ease;
+}
+
 .input-capacity{
     display: flex;
     width: 5%;
     border-bottom: solid 2px rgba(0, 0, 0, 0.2);
     font-size: 1.2rem;
+    margin: 0px 5px;
     text-align: center;
     -webkit-appearance: none;
     -moz-appearance: textfield;
@@ -158,9 +169,8 @@
     transition: all 0.3s ease;
 }
 
-.error-capacity{
-    display: flex;
-    flex-direction: column;
+.container-error{
+    position: relative;
 }
 
 // No dejeba que se centre el texto del input 

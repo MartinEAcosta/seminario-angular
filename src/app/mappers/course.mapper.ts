@@ -12,7 +12,6 @@ export class CourseMapper {
             imgURL: response.imgURL ?? [],
             owner: response.owner,
             price: response.price ?? 0, // Si no existe, se asigna 0 por defecto
-            offer: response.offer  ?? false, // Si no existe, se asigna false por defecto
             capacity: response.capacity ?? undefined,   
         };
     } 

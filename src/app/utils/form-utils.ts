@@ -1,7 +1,11 @@
-import { FormGroup, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
 
 export class FormUtils {
 
+    static namePattern = '([a-zA-Z]+) ([a-zA-Z]+)';
+    static emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+    static notOnlySpacesPattern = '^[a-zA-Z0-9]+$';
+    
     static getTextError = ( errors : ValidationErrors ) : string | null =>  {
 
         for( const key of Object.keys(errors) ){
@@ -14,8 +18,19 @@ export class FormUtils {
 
                 case 'min':
                     return `El valor minimo es de ${ errors['min'].min }.`;
+
                 case 'email':
                     return `El contenido del campo no luce como un email.`;
+                
+                case 'pattern':
+                    if( errors['pattern'].requiredPattern === FormUtils.notOnlySpacesPattern ) {
+                        return `El campo no puede contener espacios.`;
+                    }
+                    return `Error de validación personalizada.`;
+            
+                default:
+                    return `Error no controlado.`;
+
             }
         }
 
@@ -35,5 +50,15 @@ export class FormUtils {
         console.log(form.controls[fieldName].touched);
         return  ( !!form.controls[fieldName].errors && form.controls[fieldName].touched );
     }
+
+    // // Validación asincrona de chequeo que no exista un username igual.
+    // static async checkingServerResponse = ( control : AbstractControl ) : Promise<AbstractControl | null> => {
+
+    //     const formValue =  control.value;
+
+    //     if( !formValue) return Promise.resolve(null);
+        
+        
+    // }  
 
 }

@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NgClass } from '@angular/common';
@@ -10,7 +10,7 @@ import { UserDTO } from '@interfaces/auth.interfaces';
     selector: 'app-form-login',
     templateUrl: './form-login.component.html',
     styleUrls: ['../../form-global.scss', './form-login.component.scss'],
-    imports: [ReactiveFormsModule, FormErrorLabelComponent, NgClass]
+    imports: [ReactiveFormsModule, FormErrorLabelComponent, NgClass , RouterLink]
 })
 export class FormLoginComponent {
   

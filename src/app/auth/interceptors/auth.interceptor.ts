@@ -5,12 +5,13 @@ import { HttpHandlerFn, HttpRequest } from "@angular/common/http";
 export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
     
     
-    // Inject the current `AuthService` and use it to get an authentication token:
+    // toma la referencia del authService en caso de que haya, sino la crea y toma el token
     const token = inject(AuthService).token();
     // console.log({token});
     
     if( token ){
-        // Clone the request to add the authentication header.
+        // Se clona debido a que las peticicones como si son inmutables, por lo tanto
+        // tal como lo indica la docu se debe de clonar.
         const newReq = req.clone({
             headers: req.headers.append('x-token', token ),
         });

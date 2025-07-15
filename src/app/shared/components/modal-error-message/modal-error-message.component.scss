@@ -2,25 +2,36 @@
 
 .modal-error-message{
     display: flex;
-    height: auto;
+    width: 30%;
+    height: 10%;
     position: fixed;
-    bottom: 0px;
+    bottom: 10px;
+    left: 20px;
+    border-radius: 20px;
     z-index: 1000;
     text-align: left;
     align-items: center;
     transform: translateX(0);
     transition: transform 1s ease-out;
+    background-color: rgba(197, 14, 14 , 0.85);
+}
+
+.warning-svg{
+    display: flex;
+    max-width: 10%;
+    margin: 1%;
+}
+
+.warning-svg img{
+    width: 100%;
+    height: 100%;
 }
 
 .error-message{
     display: flex;
     width: 100%;
     height: 100%;
-    background-color: rgba(197, 14, 14 , 0.85);
     color: v.$white-custom;
     font-family: v.$font-primary;
     font-size: x-large;
-    border-radius: 10px;
-    margin: 1%;
-    padding: 1%;
 }

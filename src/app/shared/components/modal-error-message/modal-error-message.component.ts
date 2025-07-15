@@ -6,9 +6,9 @@ import { Component, effect, input, signal } from '@angular/core';
   templateUrl: './modal-error-message.component.html',
   styleUrl: './modal-error-message.component.scss'
 })
-export class ModalErrorMessageComponent {
+export default class ModalErrorMessageComponent {
 
-  showError = signal<boolean>(false);
+  showError = signal<boolean>(true);
   errorMessage = input.required<string | unknown>();
 
 }

@@ -56,7 +56,7 @@ export class AuthService {
   loginUser = ( userRequest : UserDTO ) : Observable<User | false> => {
     return this.http.post<AuthResponse>(`${this.baseURL}` , { ...userRequest } )
                       .pipe(
-                        map( (resp) => this.handleAuthSuccess( resp ) ),
+                        map( ( authResponse ) => this.handleAuthSuccess( authResponse ) ),
                         catchError( ( error : any ) =>  this.handleAuthError( error ) )
               );
   }
@@ -80,9 +80,8 @@ export class AuthService {
 
     return this.http.get<AuthResponse>(`${this.baseURL}/renew`, { } )
                       .pipe( 
-                        map( ( resp ) => {
-                          // console.log(resp); 
-                          return this.handleAuthSuccess( resp )?.username ? true : false;
+                        map( ( authResponse ) => {
+                          return this.handleAuthSuccess( authResponse )?.username ? true : false;
                         } ),
                         catchError( (error : any ) => this.handleAuthError( error ) )
     );

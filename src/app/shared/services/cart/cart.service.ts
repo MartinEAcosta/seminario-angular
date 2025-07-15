@@ -55,30 +55,27 @@ export class CartService {
     // En caso de que ya tenga en mi carrito una cantidad del curso, tomo la cantidad reservada
     // o si no la tengo 0 y posteriormente se le sumara 1 
     const currentReserved = this.cart().get( course.id )?.quantity || 0;
-
-    currentCart.set( course.id , 
-      { 
-        course : course ,
-        quantity : (currentReserved+1)
-      }
-    );
-
-    // actualizo la señal
-    this.cart.set( currentCart );
     
+    this.upQuantity( course , currentReserved);
+
     return this.cart();
   }
 
   upQuantity = ( course : Course , currentReserved : number ) : Map<string,CartItem> => {
     const currentCart = new Map<string,CartItem>( this.cart() );
     
-    // Modifico el mapa
-    currentCart.set( course.id , 
-                    {
-                      course: course ,
-                      quantity: currentReserved+1 
-                    } 
-                  );
+    if( currentCart.get( course.id )?.course.capacity === undefined 
+          || 
+        currentCart.get( course.id )?.quantity! < currentCart.get( course.id )!.course.capacity! ){
+      // Modifico el mapa
+      currentCart.set( course.id , 
+                      {
+                        course: course ,
+                        quantity: currentReserved+1 
+                      } 
+                    );
+
+    }
 
     // actualizo la señal 
     this.cart.set( currentCart );

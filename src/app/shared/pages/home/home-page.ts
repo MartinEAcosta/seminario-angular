@@ -13,7 +13,7 @@ import { CourseListComponent } from "../../../course/components/course-list/cour
     selector: 'app-home',
     templateUrl: './home-page.html',
     styleUrl: './home-page.scss',
-    imports: [ CartComponent, CourseListComponent ]
+    imports: [CartComponent, CourseListComponent]
 })
 export default class HomeComponent {
   

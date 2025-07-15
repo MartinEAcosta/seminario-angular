@@ -13,15 +13,29 @@
         <label class="label-text">Contraseña</label>
         <form-error-label class="error error-password" [control]="loginForm.get('password')!" />
 
-        <button class="btn-sumbit" type="submit" (submit)="onLogin()">
+        <button 
+            class="btn-sumbit"
+            type="submit" 
+            (submit)="onLogin()" 
+            >
             Ingresar
         </button>
-        <a class="text-forgot-pass underline" href="">
+
+        <a 
+            class="text-forgot-pass underline" 
+            href=""
+            >
             ¿Olvidaste tu contraseña?
         </a>
-        <p class="text-register">
+
+        <p 
+            class="text-register"
+            >
             ¿Todavia no tienes una cuenta?
-            <a [routerLink]="['/auth/register']" class="underline">
+            <a 
+                [routerLink]="['/auth/register']"
+                class="underline"
+                >
                 Registrate.
             </a>
         </p>

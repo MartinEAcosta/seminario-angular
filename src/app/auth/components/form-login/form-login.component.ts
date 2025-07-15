@@ -1,5 +1,5 @@
 import { Router, RouterLink } from '@angular/router';
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, computed, EventEmitter, inject, Output } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { AuthService } from './../../services/auth.service';
@@ -35,6 +35,7 @@ export class FormLoginComponent {
   });
 
   onLogin = () => {
+    this.loginForm.markAllAsTouched();
     if( this.loginForm.valid ){
       const loginUserDTO : UserDTO = this.loginForm.value;
       this.authService.loginUser( loginUserDTO )

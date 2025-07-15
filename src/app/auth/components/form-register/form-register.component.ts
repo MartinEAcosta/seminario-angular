@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, computed, EventEmitter, inject, Output } from '@angular/core';
 import { Validators, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -16,6 +16,8 @@ export class FormRegisterComponent {
 
   router = inject(Router);
   authService = inject(AuthService);
+  isLoading = computed( () => this.authService.authStatus() );
+
   
   private fb = inject(FormBuilder);
 
@@ -40,7 +42,6 @@ export class FormRegisterComponent {
 
   onRegister = () : void => {
     this.registerForm.markAllAsTouched();
-    console.log(this.registerForm.get('username'));
     if( this.registerForm.valid ){
       const registerUserDTO = this.registerForm.value;
       this.authService.registerUser( registerUserDTO )

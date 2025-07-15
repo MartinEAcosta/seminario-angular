@@ -13,5 +13,7 @@
     [isLoading]='this.coursesResource.isLoading()'
     [errorMessage]='this.coursesResource.error()'
 />
-
+@if(this.uiService.errorMessage()){
+    <app-modal-error-message />
+}
 <app-cart />

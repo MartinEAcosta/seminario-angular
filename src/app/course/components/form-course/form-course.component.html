@@ -90,9 +90,9 @@
                         name="file" 
                         class="input-file" 
                         multiple
-                        accept="image/* video/*"
+                        accept="image/*"
+                        (change)="onFileChanged( $event )"
                         />
-                        <!-- (change)="onFileChanged( $event )" -->
                     <label for="file" class="custom-file-label">Seleccionar archivo</label>
                 </div>
                 @if( this.course() ){

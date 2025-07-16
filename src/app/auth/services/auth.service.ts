@@ -4,9 +4,9 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 import { environment } from '../../../environments/environment';
+import { UIService } from 'src/app/shared/services/ui/ui.service';
 import { AuthResponse, User, UserDTO } from '@interfaces/auth.interfaces';
 import { AuthMapper } from '@mappers/auth.mapper';
-import { UIService } from 'src/app/shared/services/ui/ui.service';
 
 type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
 

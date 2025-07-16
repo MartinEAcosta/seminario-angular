@@ -130,16 +130,16 @@ export class FormCourseComponent {
     }
   }
 
-  // onFileChanged = ( event : Event ) => {
-  //   const fileList = ( event.target as HTMLInputElement ).files;
-  //   this.mediaFileList = fileList ?? undefined;
+  onFileChanged = ( event : Event ) => {
+    const fileList = ( event.target as HTMLInputElement ).files;
+    this.mediaFileList = fileList ?? undefined;
 
-  //   // En caso de que el el fileList no sea undefined o vacio, permite generar url para utilizar de forma local
-  //   const imageUrls = Array.from( fileList ?? [ ] ).map( 
-  //     (file) => URL.createObjectURL(file)
-  //   );
-  //   console.log(this.mediaFileList);
-  //   this.tempMedia.set(imageUrls);
-  // }
+    // En caso de que el el fileList no sea undefined o vacio, permite generar url para utilizar de forma local
+    const imageUrls = Array.from( fileList ?? [ ] ).map( 
+                                                        (file) => URL.createObjectURL(file)
+                                                      );
+    console.log(this.mediaFileList);
+    this.tempMedia.set(imageUrls);
+  }
 
 }

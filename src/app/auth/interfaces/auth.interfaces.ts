@@ -1,9 +1,8 @@
 
 export interface User {
+    id:      string;
     username: string;
     email:    string;
-    password: string;
-    _id:      string;
 }
 
 export interface UserDTO {
@@ -12,8 +11,9 @@ export interface UserDTO {
     password: string;
 }
 
+
 export interface AuthResponse {
     ok:      boolean;
-    userRef: User;
+    user: User;
     token:   string;
 }

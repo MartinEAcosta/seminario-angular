@@ -40,7 +40,7 @@
 
                 </div>
 
-                @if( course().owner === user()?._id ) {
+                @if( course().owner === user()?.id ) {
                     <a 
                         class="anchor-icon" 
                         [routerLink]="['/course/update' , course().id ]" >

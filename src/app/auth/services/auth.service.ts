@@ -50,7 +50,7 @@ export class AuthService {
                     .pipe( 
                       map( ( authResponse ) =>  this.handleAuthSuccess( authResponse )),
                       // En caso de tener un error se captura y se toman las acciones de "limpieza"
-                      catchError( (error : any ) => this.handleAuthError( error.error ) )
+                      catchError( (error : any ) => this.handleAuthError( error ) )
             );
   }
 
@@ -58,7 +58,7 @@ export class AuthService {
     return this.http.post<AuthResponse>(`${this.baseURL}` , { ...userRequest } )
                       .pipe(
                         map( ( authResponse ) => this.handleAuthSuccess( authResponse ) ),
-                        catchError( ( error : any ) =>  this.handleAuthError( error.error ) )
+                        catchError( ( error : any ) =>  this.handleAuthError( error ) )
               );
   }
 
@@ -87,8 +87,8 @@ export class AuthService {
   }
   
   private handleAuthSuccess = ( authResponse : AuthResponse ) : User  => {
-    this._user.set( authResponse.userRef );
-    this._id.set( authResponse.userRef._id );
+    this._user.set( authResponse.user );
+    this._id.set( authResponse.user.id );
     this._token.set( authResponse.token );
     this._authStatus.set( 'authenticated' );
   

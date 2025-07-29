@@ -4,10 +4,9 @@ export class AuthMapper {
 
     static mapResponseToUser( response : AuthResponse ) : User {
         return {
-            username: response.userRef.username,
-            email:    response.userRef.email,
-            password: response.userRef.password,
-            _id:      response.userRef._id,
+            id:      response.user.id,
+            username: response.user.username,
+            email:    response.user.email,
         };
     }
 

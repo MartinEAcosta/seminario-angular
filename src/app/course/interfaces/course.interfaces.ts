@@ -21,9 +21,10 @@ export interface CourseDTO {
 }
 
 export interface CourseApiResponse {
-    _id:         string;
+    id:          string;
     title:       string;
     description: string;
+    category?:    string;
     imgURL:      string[];
     owner:       string;
     price:       number;
@@ -38,5 +39,5 @@ export interface ApiResponse<T> {
   data: T; // Puede ser un CourseApiData o un CourseApiData[]
 }
 
-export type CourseSingleApiResponse = ApiResponse<CourseApiResponse>;
-export type CourseListApiResponse = ApiResponse<CourseApiResponse[]>;
+export type CourseResponse = ApiResponse<CourseApiResponse>;
+export type CourseListResponse = ApiResponse<CourseApiResponse[]>;

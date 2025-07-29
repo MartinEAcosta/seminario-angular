@@ -1,10 +1,10 @@
-import { ApiResponse } from './../interfaces/course.interfaces';
+import { CourseListResponse, CourseResponse } from './../interfaces/course.interfaces';
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { Course, CourseApiResponse, CourseDTO, CourseListApiResponse, CourseSingleApiResponse } from '@interfaces/course.interfaces';
+import { Course, CourseDTO } from '@interfaces/course.interfaces';
 import { defaultCourses } from '@utils/defaultCourses';
 import { CourseMapper } from '@mappers/course.mapper';
 
@@ -18,12 +18,15 @@ export class CourseService {
 
   getAll = ( ) : Observable<void | Course[]> => {
     return this.http
-                  .get<CourseListApiResponse>(`${this.baseURL}`)
+                  .get<CourseListResponse>(`${this.baseURL}`)
                   .pipe(
-                      map( ( courseResponse ) => 
-                        CourseMapper.mapResponseToCourseArray( courseResponse.data )
+                      map( ( courseResponse ) => {
+                        console.log(courseResponse);
+                        return CourseMapper.mapResponseToCourseArray( courseResponse );
+                      }
                       ),
-                      catchError( ( ) => {
+                      catchError( (error ) => {
+                        console.log(error)
                         // Se retorna un arreglo de cursos por defecto.
                         return of(defaultCourses);
                       }),
@@ -32,7 +35,7 @@ export class CourseService {
 
   getById = ( id : string ) : Observable<Course>  => {
     return this.http
-                  .get<CourseSingleApiResponse>(`${this.baseURL}/${id}` )
+                  .get<CourseResponse>(`${this.baseURL}/${id}` )
                   .pipe(
                     map( ( courseReponse ) => 
                       CourseMapper.mapResponseToCourse( courseReponse.data )
@@ -47,7 +50,7 @@ export class CourseService {
   // TODO : REVISAR METODO
   createCourse = ( courseRequest : CourseDTO ) : Observable<Course> => {
     return this.http
-                  .post<CourseSingleApiResponse>(
+                  .post<CourseResponse>(
                                         `${this.baseURL}/new` , 
                                         { 
                                           ...courseRequest
@@ -65,7 +68,7 @@ export class CourseService {
 
   updateCourse = ( courseRequest : CourseDTO ) : Observable<Course> => {
     return this.http
-                  .put<CourseSingleApiResponse>(
+                  .put<CourseResponse>(
                                         `${this.baseURL}/update/${courseRequest._id}` ,
                                         { 
                                           ...courseRequest
@@ -83,7 +86,7 @@ export class CourseService {
 
   deleteCourse = ( id : string ) : Observable<boolean> => {
     return this.http
-                  .delete<CourseSingleApiResponse>(`${this.baseURL}/delete/${id}`)
+                  .delete<CourseResponse>(`${this.baseURL}/delete/${id}`)
                   .pipe(
                     map( ( courseResponse ) => {
                       return courseResponse.ok;

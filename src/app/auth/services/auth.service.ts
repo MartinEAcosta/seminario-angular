@@ -72,7 +72,7 @@ export class AuthService {
   
   checkStatus = ( ) : Observable<boolean> => {
     const token = localStorage.getItem('x-token');
-    
+    console.log(token);
     if( !token ){
       this.logoutUser();
       return of(false);
@@ -80,9 +80,10 @@ export class AuthService {
     return this.http.get<AuthResponse>(`${this.baseURL}/renew`, { } )
                       .pipe( 
                         map( ( authResponse ) => {
-                          return this.handleAuthSuccess( authResponse )?.username ? true : false;
+                            if( authResponse.ok ) this.handleAuthSuccess( authResponse );
+                            return authResponse.ok;
                         } ),
-                        catchError( (error : any ) => this.handleAuthError( error.error ) )
+                        catchError( (error : any ) => { console.log(error); return this.handleAuthError( error.error )} )
     );
   }
   
@@ -97,8 +98,8 @@ export class AuthService {
   }
   
   private handleAuthError = ( error: any ) : Observable<false>  => {
-    this.logoutUser();
     console.log(error);
+    this.logoutUser();
     this.uiService.setErrorMessage( error.errorMessage );
     console.log(this.uiService.errorMessage());
     

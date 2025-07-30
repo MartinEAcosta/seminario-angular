@@ -1,3 +1,8 @@
+export interface AuthResponse {
+    ok:      boolean;
+    user:    User;
+    token:   string;
+}
 
 export interface User {
     id:      string;
@@ -12,8 +17,3 @@ export interface UserDTO {
 }
 
 
-export interface AuthResponse {
-    ok:      boolean;
-    user: User;
-    token:   string;
-}

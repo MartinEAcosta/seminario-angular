@@ -21,12 +21,11 @@ export class CourseService {
                   .get<CourseListResponse>(`${this.baseURL}`)
                   .pipe(
                       map( ( courseResponse ) => {
-                        console.log(courseResponse);
+                        // console.log(courseResponse);
                         return CourseMapper.mapResponseToCourseArray( courseResponse );
                       }
                       ),
                       catchError( (error ) => {
-                        console.log(error)
                         // Se retorna un arreglo de cursos por defecto.
                         return of(defaultCourses);
                       }),

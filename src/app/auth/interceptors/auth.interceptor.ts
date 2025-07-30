@@ -13,7 +13,7 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) 
         // Se clona debido a que las peticicones como si son inmutables, por lo tanto
         // tal como lo indica la docu se debe de clonar.
         const newReq = req.clone({
-            headers: req.headers.append('x-token', token ),
+            headers: req.headers.append('Authorization', `Bearer ${token}`),
         });
         // console.log("Funciono por lo menos", newReq);
         return next(newReq);

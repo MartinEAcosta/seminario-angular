@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
@@ -15,6 +15,8 @@ export class CourseService {
   
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}courses`;
+
+  selectedCourse = signal<Course | null>(null);
 
   getAll = ( ) : Observable<void | Course[]> => {
     return this.http
@@ -40,7 +42,6 @@ export class CourseService {
                       CourseMapper.mapResponseToCourse( courseReponse.data )
                     ),
                     catchError( ({ error }) => {
-                      
                       return throwError(() => new Error(`${error.errorMessage}`));
                     }),
                   );

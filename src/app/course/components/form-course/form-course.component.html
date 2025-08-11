@@ -10,7 +10,7 @@
                  }
             </figure>
 
-            <form [formGroup]="courseForm" (ngSubmit)="onSumbit()">
+            <form [formGroup]="courseForm" (ngSubmit)="onSubmit()">
 
                 <input 
                     formControlName="title" 
@@ -76,7 +76,6 @@
                     <button 
                         class="btn btn-create" 
                         type="submit"
-                        (click)="onSumbit()"
                         >
                         {{ this.course()?.id  ? 'Editar curso': 'Crear curso'}}
                     </button>

@@ -74,7 +74,7 @@ export class FormCourseComponent {
                                                     ).subscribe();
   }
 
-  onSumbit = ( ) : void => {
+  onSubmit = ( ) : void => {
     
     this.courseForm.markAllAsTouched();
     const uid = this.authService.id();

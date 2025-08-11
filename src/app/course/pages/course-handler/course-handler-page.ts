@@ -30,10 +30,13 @@ export default class CourseHandlerComponent {
     request : ( ) => ( { id : this.courseId } ),
     loader : ({ request } ) => {
       
-      if (!request.id) {
+      if ( !request.id ) {
         return of();
       }
-
+      else if( this.courseService.selectedCourse() != null && request.id === this.courseService.selectedCourse()?.id ){
+        return of( this.courseService.selectedCourse()! );
+      }
+      console.log('petición')
       return this.courseService
                   .getById( request.id )
                     .pipe(
@@ -43,7 +46,6 @@ export default class CourseHandlerComponent {
                       })
                     );
     },
-
   });
 
 }

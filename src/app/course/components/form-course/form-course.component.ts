@@ -42,10 +42,10 @@ export class FormCourseComponent {
   });
 
   ngOnInit () {
-    if( !this.course() ){
-      return this.handleCreatingMode();
-    }
-    return this.handleUpdatingMode();
+    // if( !this.course() ){
+    //   return this.handleCreatingMode();
+    // }
+    // return this.handleUpdatingMode();
   }
 
   handleCreatingMode = () => {

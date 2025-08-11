@@ -14,11 +14,18 @@ export const courseRoutes : Routes = [
                 canMatch : [ AuthenticatedGuard ],
             },
             {
+                path : 'update',
+                component : CourseHandlerComponent,
+                canActivate : [ ValidateParamGuard ],
+                canMatch : [ AuthenticatedGuard ],
+            },
+            {
                 path : 'update/:id',
                 component : CourseHandlerComponent,
                 canActivate : [ ValidateParamGuard ],
                 canMatch : [ AuthenticatedGuard ],
             },
+
             {
                 path : ':id',
                 component : CoursePage,

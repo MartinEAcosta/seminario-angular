@@ -24,12 +24,12 @@ export default class CourseHandlerComponent {
   router = inject(Router);
 
   courseService = inject(CourseService);
-  courseId : string | undefined = this.activatedRoute.snapshot.params['id'];
+  courseId = this.activatedRoute.snapshot.params['id'];
   
   courseResource = rxResource({
     request : ( ) => ( { id : this.courseId } ),
     loader : ({ request } ) => {
-
+      console.log( request);
       if( request.id === undefined ) return of();
         
       return this.courseService.getById(request.id );

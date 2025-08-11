@@ -10,7 +10,6 @@ export const AuthenticatedGuard: CanMatchFn = async(
 
     const authService = inject(AuthService);
     const router = inject(Router);
-
     // firstValueFrom: permite trabajar con observables, espera la respuesta como si fuera una promesa.
     const isAuthenticated = await firstValueFrom( authService.checkStatus() );
 

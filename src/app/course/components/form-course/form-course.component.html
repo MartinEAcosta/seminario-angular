@@ -27,7 +27,7 @@
                     type="text" 
                     placeholder="Escribe una breve descripción del curso...">
                 </textarea>
-                
+
                 <form-error-label [control]="courseForm.get('description')!" [warningSvg]=true />
                 
                 <div class="container-capacity">
@@ -76,6 +76,7 @@
                     <button 
                         class="btn btn-create" 
                         type="submit"
+                        (click)="onSumbit()"
                         >
                         {{ this.course()?.id  ? 'Editar curso': 'Crear curso'}}
                     </button>

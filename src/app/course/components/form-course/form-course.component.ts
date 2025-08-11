@@ -27,13 +27,15 @@ export class FormCourseComponent {
   router = inject(Router);
   authService = inject(AuthService);
   courseService = inject(CourseService);
+  // categories = rxResource(() => this.courseService.getCategories() );
 
   private fb = inject(FormBuilder);
 
   courseForm : FormGroup = this.fb.group({
     title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
     description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
-    imgURL : [ [''] ],
+    category : [ '' ],
+    imgUrl : [ [''] ],
     price : [ 0 , [ Validators.required , Validators.min(0) ] ],
     wantLimitedCapacity: [ true ],
     capacity : [ { value : 5 , disabled: false } , [ Validators.min(5) ] ], 
@@ -50,6 +52,19 @@ export class FormCourseComponent {
     return this.router.navigateByUrl('/course/create');
   }
   
+  handleUpdatingMode = () : void => {
+    if( this.course( )  ){
+      this.router.navigate(['/course/update', this.course()?.id!]);
+      this.courseForm.patchValue({
+        title: this.course()?.title,
+        description: this.course()?.description,
+        imgUrl: this.course()?.imgUrl,
+        price: this.course()?.price,
+        capacity: this.course()?.capacity
+      });
+    }
+  }
+
   onFormChanged = effect ( (onCleanup) => {
     const limitedCapacitySubscription = this.onWantLimitedCapacityChanged();
     
@@ -75,32 +90,33 @@ export class FormCourseComponent {
   }
 
 
-  handleUpdatingMode = () : void => {
-    if( this.course( )  ){
-      this.router.navigate(['/course/update', this.course()?.id!]);
-      this.courseForm.reset({
-        title: this.course()?.title,
-        description: this.course()?.description,
-        imgURL: this.course()?.imgURL,
-        price: this.course()?.price,
-        capacity: this.course()?.capacity
-      });
-    }
-  }
 
   onSumbit = ( ) : void => {
     
     this.courseForm.markAllAsTouched();
     const uid = this.authService.id();
+    if( !uid ) return;
 
     if( this.course() === undefined && this.courseForm.valid ){
 
-      const createCourseDTO : CourseDTO = this.courseForm.value;
+      const formValues = this.courseForm.getRawValue();
+      const createCourseDTO : CourseDTO = {
+        title       : formValues.title,
+        description : formValues.description,
+        category    : formValues.category,
+        // Igualmente el backend lo reemplaza por el usuario que se encuentre logueado.
+        owner       : uid,
+        imgUrl      : formValues.imgUrl,
+        price       : formValues.price ? formValues.price : 0,
+        capacity    : formValues.wantLimitedCapacity ? formValues.capacity : undefined,
+      }
 
       if( uid ){
-        createCourseDTO.owner = uid;
-        console.log(createCourseDTO);
-        this.courseService.createCourse( createCourseDTO );
+        // console.log(createCourseDTO);
+        this.courseService.createCourse( createCourseDTO ).subscribe({
+          next : ( course ) => { console.log( course ) },
+          error : ( error ) => { console.log( error ) },
+        });
       }
     }
     else{
@@ -114,6 +130,9 @@ export class FormCourseComponent {
         updateCourseDTO._id = this.course()?.id!;
         
         this.courseService.updateCourse( updateCourseDTO );
+        if( this.mediaFileList != undefined ||  this.mediaFileList!.length >= 1 ) {
+          this.courseService.updateImage( this.mediaFileList! );
+        }
       } 
     }
   }    
@@ -132,13 +151,16 @@ export class FormCourseComponent {
 
   onFileChanged = ( event : Event ) => {
     const fileList = ( event.target as HTMLInputElement ).files;
-    this.mediaFileList = fileList ?? undefined;
+    if( !fileList ) return;
+
+    this.mediaFileList = fileList;
 
     // En caso de que el el fileList no sea undefined o vacio, permite generar url para utilizar de forma local
-    const imageUrls = Array.from( fileList ?? [ ] ).map( 
+    const imageUrls = Array.from( fileList ?? [ ] )
+                                                  .map( 
                                                         (file) => URL.createObjectURL(file)
                                                       );
-    console.log(this.mediaFileList);
+
     this.tempMedia.set(imageUrls);
   }
 

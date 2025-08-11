@@ -40,7 +40,7 @@ export class CourseService {
                       CourseMapper.mapResponseToCourse( courseReponse.data )
                     ),
                     catchError( ({ error }) => {
-                      console.error( error.errorMessage )
+                      
                       return throwError(() => new Error(`${error.errorMessage}`));
                     }),
                   );

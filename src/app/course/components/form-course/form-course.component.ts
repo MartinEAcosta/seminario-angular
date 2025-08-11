@@ -9,9 +9,6 @@ import { CourseService } from '../../services/course.service';
 import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
 import { Subscription, tap } from 'rxjs';
 
-
-type Mode = 'creating' | 'updating' | 'loading';
-
 @Component({
   selector: 'app-form-course',
   templateUrl: './form-course.component.html',
@@ -42,19 +39,7 @@ export class FormCourseComponent {
   });
 
   ngOnInit () {
-    // if( !this.course() ){
-    //   return this.handleCreatingMode();
-    // }
-    // return this.handleUpdatingMode();
-  }
-
-  handleCreatingMode = () => {
-    return this.router.navigateByUrl('/course/create');
-  }
-  
-  handleUpdatingMode = () : void => {
-    if( this.course( )  ){
-      this.router.navigate(['/course/update', this.course()?.id!]);
+    if( this.course() != undefined ){
       this.courseForm.patchValue({
         title: this.course()?.title,
         description: this.course()?.description,
@@ -88,8 +73,6 @@ export class FormCourseComponent {
                                                       }),
                                                     ).subscribe();
   }
-
-
 
   onSumbit = ( ) : void => {
     

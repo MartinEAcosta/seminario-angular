@@ -2,12 +2,15 @@ import { Component, computed, effect, inject, input, output, signal } from '@ang
 import { Router } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { catchError, map, Subscription, tap, forkJoin } from 'rxjs';
 
 import type { Course, CourseDTO } from '../../interfaces/course.interfaces';
 import { AuthService } from '../../../auth/services/auth.service';
 import { CourseService } from '../../services/course.service';
 import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
-import { Subscription, tap } from 'rxjs';
+import { FileService } from 'src/app/shared/services/file/file.service';
+
+const folder = 'courses';
 
 @Component({
   selector: 'app-form-course',
@@ -24,6 +27,7 @@ export class FormCourseComponent {
   router = inject(Router);
   authService = inject(AuthService);
   courseService = inject(CourseService);
+  fileService = inject(FileService);
   // categories = rxResource(() => this.courseService.getCategories() );
 
   private fb = inject(FormBuilder);
@@ -32,7 +36,7 @@ export class FormCourseComponent {
     title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
     description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
     category : [ '' ],
-    imgUrl : [ [''] ],
+    thumbnail_url : [ [''] ],
     price : [ 0 , [ Validators.required , Validators.min(0) ] ],
     wantLimitedCapacity: [ true ],
     capacity : [ { value : 5 , disabled: false } , [ Validators.min(5) ] ], 
@@ -43,7 +47,7 @@ export class FormCourseComponent {
       this.courseForm.patchValue({
         title: this.course()?.title,
         description: this.course()?.description,
-        imgUrl: this.course()?.imgUrl,
+        thumbnail_url: this.course()?.thumbnail_url,
         price: this.course()?.price,
         capacity: this.course()?.capacity
       });
@@ -74,6 +78,22 @@ export class FormCourseComponent {
                                                     ).subscribe();
   }
 
+  
+  onFileChanged = ( event : Event ) => {
+    const fileList = ( event.target as HTMLInputElement ).files;
+    if( !fileList ) return;
+
+    this.mediaFileList = fileList ?? undefined;
+
+    // En caso de que el el fileList no sea undefined o vacio, permite generar url para utilizar de forma local
+    const imageUrls = Array.from( fileList ?? [ ] )
+                                                  .map( 
+                                                        (file) => URL.createObjectURL(file)
+                                                  );
+
+    this.tempMedia.set(imageUrls);
+  }
+
   onSubmit = ( ) : void => {
     
     this.courseForm.markAllAsTouched();
@@ -84,22 +104,20 @@ export class FormCourseComponent {
 
       const formValues = this.courseForm.getRawValue();
       const createCourseDTO : CourseDTO = {
-        title       : formValues.title,
-        description : formValues.description,
-        category    : formValues.category,
+        title         : formValues.title,
+        description   : formValues.description,
+        category      : formValues.category,
         // Igualmente el backend lo reemplaza por el usuario que se encuentre logueado.
-        owner       : uid,
-        imgUrl      : formValues.imgUrl,
-        price       : formValues.price ? formValues.price : 0,
-        capacity    : formValues.wantLimitedCapacity ? formValues.capacity : undefined,
+        owner         : uid,
+        thumbnail_url : formValues.thumbnail_url,
+        price         : formValues.price ? formValues.price : 0,
+        capacity      : formValues.wantLimitedCapacity ? formValues.capacity : undefined,
       }
 
       if( uid ){
         // console.log(createCourseDTO);
-        this.courseService.createCourse( createCourseDTO ).subscribe({
-          next : ( course ) => { console.log( course ) },
-          error : ( error ) => { console.log( error ) },
-        });
+        this.courseService.createCourse( createCourseDTO ).subscribe();
+
       }
     }
     else{
@@ -111,10 +129,14 @@ export class FormCourseComponent {
         // Debido a que son solo los valores del formulario debo añadir el id que lo contiene 
         // la señal pasada por componente padre.
         updateCourseDTO._id = this.course()?.id!;
-        
-        this.courseService.updateCourse( updateCourseDTO );
-        if( this.mediaFileList != undefined ||  this.mediaFileList!.length >= 1 ) {
-          this.courseService.updateImage( this.mediaFileList! );
+        if( this.mediaFileList != undefined ) {
+          this.fileService.uploadImage( folder, this.mediaFileList[0] )
+                            .subscribe( fileResponse => {
+                              console.log(fileResponse);
+                              updateCourseDTO.thumbnail_url.push(fileResponse.public_id);
+                              console.log(updateCourseDTO.thumbnail_url);
+                              this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log(res ) );
+                            });
         }
       } 
     }
@@ -130,21 +152,6 @@ export class FormCourseComponent {
                                 }     
                             } );
     }
-  }
-
-  onFileChanged = ( event : Event ) => {
-    const fileList = ( event.target as HTMLInputElement ).files;
-    if( !fileList ) return;
-
-    this.mediaFileList = fileList;
-
-    // En caso de que el el fileList no sea undefined o vacio, permite generar url para utilizar de forma local
-    const imageUrls = Array.from( fileList ?? [ ] )
-                                                  .map( 
-                                                        (file) => URL.createObjectURL(file)
-                                                      );
-
-    this.tempMedia.set(imageUrls);
   }
 
 }

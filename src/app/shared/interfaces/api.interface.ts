@@ -13,7 +13,7 @@ export interface CourseUniqueResponse {
     title       : string;
     description : string;
     category    : string;
-    imgUrl      : string[];
+    thumbnail_url      : string[];
     owner       : string;
     price       : number;
     capacity?   : number;

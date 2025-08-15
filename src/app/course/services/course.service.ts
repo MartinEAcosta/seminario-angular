@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
 import { Course, CourseDTO } from '@interfaces/course.interfaces';
 import { defaultCourses } from '@utils/defaultCourses';
 import { CourseMapper } from '@mappers/course.mapper';
-import { CourseListResponse, CourseResponse, FileResponse } from 'src/app/shared/interfaces/api.interface';
+import { CourseListResponse, CourseResponse } from 'src/app/shared/interfaces/api.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -67,14 +67,16 @@ export class CourseService {
   }
 
   updateCourse = ( courseRequest : CourseDTO ) : Observable<Course> => {
+    const { _id , ...rest } = courseRequest;
     return this.http
                   .put<CourseResponse>(
-                                        `${this.baseURL}/update/${courseRequest._id}` ,
+                                        `${this.baseURL}/update/${_id}` ,
                                         { 
-                                          ...courseRequest
+                                          ...rest
                                         } 
                                       ).pipe( 
                                           map( ( courseResponse ) => {
+                                            console.log(courseResponse);
                                             return CourseMapper.mapResponseToCourse( courseResponse.data );
                                           }),
                                           catchError( ({ error }) => {
@@ -98,25 +100,6 @@ export class CourseService {
                                             throwError(() => new Error(`${error.errorMessage}`));
                                             return of(false);
                                           }),
-                                      );
-  }
-
-  // getCategories = ( ) : Observable<Category> => {
-
-  // }
-  
-  updateImage = ( images : FileList ) => {
-    return this.http
-                    .post<FileResponse>(
-                                        `${this.baseURL}/upload/single/course`, 
-                                        images,
-                                      )
-                                      .pipe(
-                                        map( res => {
-                                          console.log(res);
-                                          return;
-                                        }),
-                                        catchError( error => error),
                                       );
   }
 

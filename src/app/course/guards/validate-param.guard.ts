@@ -17,7 +17,7 @@ export const ValidateParamGuard : CanActivateFn = (
     const courseId = route.paramMap?.get('id');
     
     if( !courseId ||  !idPattern.test( courseId ) ) {
-        console.log('Error al querer realizar el update de un curso sin dar un id.')
+        // console.log('Error al querer realizar el update de un curso sin dar un id.')
         router.navigateByUrl('/');
         return false;
     }

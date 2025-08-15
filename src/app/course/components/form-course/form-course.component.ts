@@ -36,7 +36,7 @@ export class FormCourseComponent {
     title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
     description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
     category : [ '' ],
-    thumbnail_url : [ [''] ],
+    thumbnail_url : [ '' ],
     price : [ 0 , [ Validators.required , Validators.min(0) ] ],
     wantLimitedCapacity: [ true ],
     capacity : [ { value : 5 , disabled: false } , [ Validators.min(5) ] ], 
@@ -133,7 +133,7 @@ export class FormCourseComponent {
           this.fileService.uploadImage( folder, this.mediaFileList[0] )
                             .subscribe( fileResponse => {
                               console.log(fileResponse);
-                              updateCourseDTO.thumbnail_url.push(fileResponse.public_id);
+                              updateCourseDTO.thumbnail_url = fileResponse.public_id;
                               console.log(updateCourseDTO.thumbnail_url);
                               this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log(res ) );
                             });

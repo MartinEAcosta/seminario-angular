@@ -10,7 +10,7 @@ export class CourseMapper {
             id: response.id ,
             title: response.title,
             description: response.description,
-            thumbnail_url: response.thumbnail_url ?? [],
+            thumbnail_url: response.thumbnail_url ?? '',
             owner: response.owner,
             price: response.price ?? 0, // Si no existe, se asigna 0 por defecto
             capacity: response.capacity ?? undefined,   

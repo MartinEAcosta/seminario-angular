@@ -2,8 +2,8 @@
         <div class="container">
             <figure class="img-course">
                 <!-- TODO : Condicional de si no agrego una portada, podria estar bien -->
-                 @if( tempMedia().length > 0 ) {
-                    <img [src]="tempMedia()[0]" alt="Portada del curso" class="img-course">
+                 @if( course()?.thumbnail_url ) {
+                    <img [src]="course()?.thumbnail_url" alt="Portada del curso" class="img-course">
                  }
                  @else{
                     <img src="assets/not-found-image.png" alt="">
@@ -102,4 +102,24 @@
                 }
             </form>
         </div>
-    </section>
+
+        <section class="bg-slider-content">
+            <div class="thumbnail-container">
+                <figure class="thumbnail-figure">
+                    @if( course()?.thumbnail_url ){
+                        <img [src]="course()?.thumbnail_url" alt="">
+                    }
+                    @else{
+                        <img src="assets/not-found-image.png" alt="">
+                    }
+                </figure>
+                <p class="text-thumbnail">Seleccionar una portada</p>
+            </div>
+            <div class="lessons-container">
+                <figure class="add-figure">
+                    <img src="./assets/add-icon.svg" alt="">
+                </figure>
+            </div>
+        </section>
+
+    </section> 

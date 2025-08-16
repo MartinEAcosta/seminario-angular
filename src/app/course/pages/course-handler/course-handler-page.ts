@@ -36,7 +36,7 @@ export default class CourseHandlerComponent {
       else if( this.courseService.selectedCourse() != null && request.id === this.courseService.selectedCourse()?.id ){
         return of( this.courseService.selectedCourse()! );
       }
-      console.log('petición')
+
       return this.courseService
                   .getById( request.id )
                     .pipe(

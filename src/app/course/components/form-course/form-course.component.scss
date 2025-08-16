@@ -321,54 +321,52 @@ input::-webkit-outer-spin-button {
     background-color: v.$black-custom;
 }
 
-.thumbnail-container{
+.card-thumbnail{
     display: flex;
     width: 25%;
     height: 90%;
-    border-right: thin solid v.$white-custom;
-    margin: auto 0;
     flex-direction: column;
     align-items: center;
 }
 
-.thumbnail-figure {
-    width: 85%;
-    height: 85%;
+.thumbnail-container{
+    border-right: thin solid v.$white-custom;
 }
 
-.thumbnail-figure img{
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
-    border-radius: 1rem;
-}
-
-.text-thumbnail{
+.text-simple{
     font-family: v.$font-primary;
     color: v.$white-custom;
     margin-top: 1%;
 }
 
-.lessons-container{
-    width: 25%;
-    height: 90%;
-    display: flex;
+.thumbnail-figure .not-selected-thumnail{
+    width: 100%;
+    height: 25%;
+    border-radius: 1rem;
 }
 
-.add-figure{
-    display: flex;
-    width: 80%;
-    height: 90%;
+.thumbnail-image{
+    height: 100%;
+    width: 100%;
     border-radius: 1rem;
-    margin: auto;
-    background-color: rgb(53, 53, 53);
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
-    align-items: center;
 }
+
+.figure{
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    height: 85%;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
+    background-color: rgb(53, 53, 53);
+    border-radius: 1rem;
+}
+
 
 .lessons-container img{
     width: 100%;
     height: 25%;
+    pointer-events: none;
 }

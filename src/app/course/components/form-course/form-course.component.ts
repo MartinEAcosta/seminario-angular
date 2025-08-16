@@ -23,7 +23,7 @@ export class FormCourseComponent {
   course = input<Course | undefined >();
   tempMedia = signal<string[]>([]); 
   mediaFileList : FileList | undefined =  undefined;
-  
+
   router = inject(Router);
   authService = inject(AuthService);
   courseService = inject(CourseService);

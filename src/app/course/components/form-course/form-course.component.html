@@ -104,20 +104,21 @@
         </div>
 
         <section class="bg-slider-content">
-            <div class="thumbnail-container">
-                <figure class="thumbnail-figure">
+            <div class="thumbnail-container card-thumbnail">
+                <figure class="figure thumbnail-figure">
                     @if( course()?.thumbnail_url ){
-                        <img [src]="course()?.thumbnail_url" alt="">
+                        <img [src]="course()?.thumbnail_url" alt="" class="thumbnail-image">
                     }
                     @else{
-                        <img src="assets/not-found-image.png" alt="">
+                        <img src="assets/image-icon.svg" alt="" class="not-selected-thumnail">
+                        <p class="text-simple">Seleccionar una portada</p>
                     }
                 </figure>
-                <p class="text-thumbnail">Seleccionar una portada</p>
             </div>
-            <div class="lessons-container">
-                <figure class="add-figure">
+            <div class="lessons-container card-thumbnail">
+                <figure class="figure">
                     <img src="./assets/add-icon.svg" alt="">
+                    <p class="text-simple"> Añade una nueva lección</p>
                 </figure>
             </div>
         </section>

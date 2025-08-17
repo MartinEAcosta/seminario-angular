@@ -18,14 +18,14 @@
                     type="text" 
                     placeholder="Título del curso"
                     />
-
-                    <form-error-label [control]="courseForm.get('title')!" [warningSvg]=true />
-
-                    @if( this.course() ){
-                        <div class="container-remove" (click)="onDeleteCourse( this.course()?.id! )">
-                            <img class="svg-remove" src="assets/remove.svg" alt="">
-                        </div>
-                    }
+                    
+                <form-error-label [control]="courseForm.get('title')!" [warningSvg]=true />
+                    
+                @if( this.course() ){
+                    <div class="container-remove" (click)="onDeleteCourse( this.course()?.id! )">
+                        <img class="svg-remove" src="assets/remove.svg" alt="">
+                    </div>
+                }
                     
                 <textarea 
                     formControlName="description" 
@@ -78,6 +78,7 @@
                     />
                     <form-error-label [control]="courseForm.get('price')!" />
                 </div>
+
                 <div class="container-btn">
                     <button 
                         class="btn btn-create" 
@@ -89,7 +90,19 @@
                         Cancelar
                     </button>
                 </div>
-                <div class="container-file">
+
+                <div class="container-files">                    
+                    <input 
+                        type="file" 
+                        class="input-file" 
+                        multiple
+                        accept="image/*"
+                        />
+                    <label for="file" class="custom-file-label custom-content">
+                        <img src="assets/new-white-icon.svg" alt="">
+                        Agregar contenido
+                    </label>
+
                     <input 
                         type="file" 
                         id="file" 

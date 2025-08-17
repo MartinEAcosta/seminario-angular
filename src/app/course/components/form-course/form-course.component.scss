@@ -1,10 +1,10 @@
 @use "../../../../variables.scss" as v;
 
 .bg-section {
-    max-width: 100%;
-    min-height: 100%;
     display: flex;
     flex-direction: column;
+    max-width: 100%;
+    min-height: 100%;
     background-color: v.$white-custom;
     background-position: center;
     background-size: cover;
@@ -14,17 +14,17 @@
 .container{ 
     display: flex;
     width: 90%;
-    height: 100%;
-    margin: auto;
-    padding: 1.5%;
+    height: 47vh;
+    margin: 1.5% auto;
+    padding: 2%;
     background-color: v.$black-custom;
     border-radius: 1rem;
     gap: 2%;
 }
 
 .img-course{
-    min-width: 40%;
-    max-width: 45%;
+    min-width: 35%;
+    max-width: 35%;
     display: flex;
 }
 
@@ -53,7 +53,7 @@
 .input-title{
     display: flex;
     flex-direction: column;
-    width: 40vw;
+    width: 100%;
     height: 15%;
     text-align: start;
     align-items: bottom;
@@ -73,23 +73,28 @@
 }
 
 .container-capacity{
+    display: flex;
+    width: 65%;
+    height: 100%;
     position: relative;
-    bottom: -55%;
+    bottom: 15%;
+    right: -100%;
     color: v.$white-custom;
     text-align: center;
     align-items: center;
     font-size: 1.2rem;
-    gap: 2%;
 }
 
 .container-inline{
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .switch-container{
     display: flex;
-    margin-right: 15px;
+    cursor: pointer;
+    margin-left: 10px;
 }
 
 .switch-checkbox{
@@ -160,7 +165,7 @@
 
 .input-capacity{
     display: flex;
-    width: 5%;
+    width: 10%;
     border-bottom: solid 2px rgba(0, 0, 0, 0.2);
     font-size: 1.2rem;
     margin: 0px 5px;
@@ -188,7 +193,7 @@ input::-webkit-outer-spin-button {
     flex-direction: column;
     position: absolute;
     right: 6%;
-    bottom: 35%;
+    bottom: 50%;
     text-align: center;
 }
 
@@ -222,7 +227,7 @@ input::-webkit-outer-spin-button {
     height: 6%;
     position: absolute;
     right: 5%;
-    bottom: 25%;
+    bottom: 35%;
     gap: 5%;
 }
 
@@ -266,7 +271,7 @@ input::-webkit-outer-spin-button {
 .container-file{
     display: flex;
     position: absolute;
-    bottom: 35%;
+    bottom: 45%;
 }
 
 .input-file {
@@ -274,8 +279,12 @@ input::-webkit-outer-spin-button {
 }
 
 .custom-file-label {
-  display: inline-block;
-  padding: 10px 20px;
+  display: flex;
+  width: 25%;
+  height: 10%;
+  padding: 10px 10px;
+  justify-content: space-evenly;
+  align-items: center;
   background-color: rgb(10, 130, 40);
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5); 
   color: white;
@@ -290,6 +299,11 @@ input::-webkit-outer-spin-button {
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8); 
     transform: scale(1.05);
     transition: all 0.3s ease;
+}
+
+.custom-file-label img{
+    width: 10%;
+    height: 5%;
 }
 
 .container-remove{

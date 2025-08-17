@@ -21,8 +21,7 @@ const folder = 'courses';
 export class FormCourseComponent {
 
   public course = input<Course | undefined >();
-  public thumbnailImage = signal<string | undefined>( this.course()?.thumbnail_url );
-  
+  public thumbnailImage = signal<string | undefined>( undefined );
   public tempMedia = signal<string[]>([]); 
   public mediaFileList : FileList | undefined =  undefined;
 
@@ -45,6 +44,7 @@ export class FormCourseComponent {
   constructor ( ) { }
 
   ngOnInit () {
+    this.thumbnailImage.set( this.course()?.thumbnail_url );
     if( this.course() != undefined ){
       this.courseForm.patchValue({
         title: this.course()?.title,
@@ -81,17 +81,17 @@ export class FormCourseComponent {
   }
 
   
-  onFileChanged = ( event : Event ) => {
-    const fileList = ( event.target as HTMLInputElement ).files;
-    if( !fileList ) return;
+  onThumbnailChanged = ( event : Event ) => {
+    const thumbnaillFile = ( event.target as HTMLInputElement ).files;
+    if( !thumbnaillFile ) return;
 
-    this.mediaFileList = fileList ?? undefined;
     // En caso de que el el fileList no sea undefined o vacio, permite generar url para utilizar de forma local
-    const imageUrls = Array.from( fileList ?? [ ] )
+    const imageUrl = Array.from( thumbnaillFile ?? [ ] )
                                                   .map( 
                                                         (file) => URL.createObjectURL(file)
                                                   );
-    this.tempMedia.set(imageUrls);
+
+    this.thumbnailImage.set( imageUrl.shift() );
   }
 
   onSubmit = ( ) : void => {

@@ -2,8 +2,8 @@
         <div class="container">
             <figure class="img-course">
                 <!-- TODO : Condicional de si no agrego una portada, podria estar bien -->
-                 @if( course()?.thumbnail_url ) {
-                    <img [src]="course()?.thumbnail_url" alt="Portada del curso" class="img-course">
+                 @if( thumbnailImage() ) {
+                    <img [src]="thumbnailImage()" alt="Portada del curso" class="img-course">
                  }
                  @else{
                     <img src="assets/not-found-image.png" alt="">
@@ -19,8 +19,14 @@
                     placeholder="Título del curso"
                     />
 
-                <form-error-label [control]="courseForm.get('title')!" [warningSvg]=true />
-                
+                    <form-error-label [control]="courseForm.get('title')!" [warningSvg]=true />
+
+                    @if( this.course() ){
+                        <div class="container-remove" (click)="onDeleteCourse( this.course()?.id! )">
+                            <img class="svg-remove" src="assets/remove.svg" alt="">
+                        </div>
+                    }
+                    
                 <textarea 
                     formControlName="description" 
                     class="input input-description" 
@@ -32,25 +38,25 @@
                 
                 <div class="container-capacity">
                     <div class="container-inline">
-                        <div class="switch-container">
-                            <input type="checkbox" id="switch-label" class="switch-checkbox" formControlName="wantLimitedCapacity" >
-                            <label for="switch-label" class="switch-label" >
-                            </label>
-                        </div>
                         <label class="label-capacity" [ngClass]="{ 'unlimited-capacity' : !courseForm.get('wantLimitedCapacity')?.value}">
                             Capacidad Limitada
                         </label>
                         <input 
-                            formControlName="capacity" 
-                            type="number" 
-                            class="input input-capacity" 
-                            [ngClass]="{ 
+                        formControlName="capacity" 
+                        type="number" 
+                        class="input input-capacity" 
+                        [ngClass]="{ 
                                 'invalid-border': courseForm.get('capacity')?.errors, 
                                 'valid-border': courseForm.get('capacity')?.touched && !courseForm.get('capacity')?.errors && courseForm.get('wantLimitedCapacity')?.value ,
                                 'unlimited-capacity' :!courseForm.get('wantLimitedCapacity')?.value
                             }" 
                             placeholder="5" 
-                        />
+                            />
+                            <div class="switch-container">
+                                <input type="checkbox" id="switch-label" class="switch-checkbox" formControlName="wantLimitedCapacity" >
+                                <label for="switch-label" class="switch-label" >
+                                </label>
+                            </div>
                     </div>
                     <div class="container-error">
                         <form-error-label [control]="courseForm.get('capacity')!" />
@@ -89,25 +95,22 @@
                         id="file" 
                         name="file" 
                         class="input-file" 
-                        multiple
-                        accept="image/*"
-                        (change)="onFileChanged( $event )"
+                        accept="image"
+                        (change)="onThumbnailChanged( $event )"
                         />
-                    <label for="file" class="custom-file-label">Seleccionar archivo</label>
+                    <label for="file" class="custom-file-label">
+                        <img src="assets/thumbnail-icon.svg" alt="">
+                        Seleccionar portada
+                    </label>
                 </div>
-                @if( this.course() ){
-                    <div class="container-remove" (click)="onDeleteCourse( this.course()?.id! )">
-                        <img class="svg-remove" src="assets/remove.svg" alt="">
-                    </div>
-                }
             </form>
         </div>
 
         <section class="bg-slider-content">
             <div class="thumbnail-container card-thumbnail">
                 <figure class="figure thumbnail-figure">
-                    @if( course()?.thumbnail_url ){
-                        <img [src]="course()?.thumbnail_url" alt="" class="thumbnail-image">
+                    @if( thumbnailImage() ){
+                        <img [src]="thumbnailImage()" alt="" class="thumbnail-image">
                     }
                     @else{
                         <img src="assets/image-icon.svg" alt="" class="not-selected-thumnail">

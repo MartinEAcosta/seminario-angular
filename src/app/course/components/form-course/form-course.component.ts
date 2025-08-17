@@ -20,19 +20,19 @@ const folder = 'courses';
 })
 export class FormCourseComponent {
 
-  course = input<Course | undefined >();
-  tempMedia = signal<string[]>([]); 
-  mediaFileList : FileList | undefined =  undefined;
+  public course = input<Course | undefined >();
+  public thumbnailImage = signal<string | undefined>( this.course()?.thumbnail_url );
+  
+  public tempMedia = signal<string[]>([]); 
+  public mediaFileList : FileList | undefined =  undefined;
 
-  router = inject(Router);
-  authService = inject(AuthService);
-  courseService = inject(CourseService);
-  fileService = inject(FileService);
-  // categories = rxResource(() => this.courseService.getCategories() );
+  private router = inject(Router);
+  private authService = inject(AuthService);
+  private courseService = inject(CourseService);
+  private fileService = inject(FileService);
 
   private fb = inject(FormBuilder);
-
-  courseForm : FormGroup = this.fb.group({
+  public courseForm : FormGroup = this.fb.group({
     title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
     description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
     category : [ '' ],
@@ -41,6 +41,8 @@ export class FormCourseComponent {
     wantLimitedCapacity: [ true ],
     capacity : [ { value : 5 , disabled: false } , [ Validators.min(5) ] ], 
   });
+  
+  constructor ( ) { }
 
   ngOnInit () {
     if( this.course() != undefined ){
@@ -84,13 +86,11 @@ export class FormCourseComponent {
     if( !fileList ) return;
 
     this.mediaFileList = fileList ?? undefined;
-
     // En caso de que el el fileList no sea undefined o vacio, permite generar url para utilizar de forma local
     const imageUrls = Array.from( fileList ?? [ ] )
                                                   .map( 
                                                         (file) => URL.createObjectURL(file)
                                                   );
-
     this.tempMedia.set(imageUrls);
   }
 
@@ -100,9 +100,13 @@ export class FormCourseComponent {
     const uid = this.authService.id();
     if( !uid ) return;
 
+    // En caso de no tener una señal course la cual es inyectada por el componente course-handler-page
+    // basada en la obtención de parametros y si es un id valida, en caso de pasar estas verificaciónes
+    // se realiza el get y se inyecta, si no se encuentra queda como no definido, lo que siginificaria 
+    // que el curso sera uno nuevo.
+    const formValues = this.courseForm.getRawValue();
     if( this.course() === undefined && this.courseForm.valid ){
 
-      const formValues = this.courseForm.getRawValue();
       const createCourseDTO : CourseDTO = {
         title         : formValues.title,
         description   : formValues.description,
@@ -122,19 +126,27 @@ export class FormCourseComponent {
     }
     else{
 
-      const updateCourseDTO : CourseDTO = this.courseForm.value;
+      const updateCourseDTO : CourseDTO = {
+        title         : formValues.title,
+        description   : formValues.description,
+        category      : formValues.category,
+        // Igualmente el backend lo reemplaza por el usuario que se encuentre logueado.
+        owner         : uid,
+        thumbnail_url : formValues.thumbnail_url,
+        price         : formValues.price ? formValues.price : 0,
+        capacity      : formValues.wantLimitedCapacity ? formValues.capacity : undefined,
+      }
       
+      // Si el curso seleccionado no le corresponde al usuario registrado no permite el update.
       if( this.course()?.owner === uid ){
-
-        // Debido a que son solo los valores del formulario debo añadir el id que lo contiene 
-        // la señal pasada por componente padre.
+        
         updateCourseDTO._id = this.course()?.id!;
+
         if( this.mediaFileList != undefined ) {
+
           this.fileService.uploadImage( folder, this.mediaFileList[0] )
                             .subscribe( fileResponse => {
-                              console.log(fileResponse);
                               updateCourseDTO.thumbnail_url = fileResponse.public_id;
-                              console.log(updateCourseDTO.thumbnail_url);
                               this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log(res ) );
                             });
         }

@@ -49,14 +49,13 @@ export class CourseService {
 
   // TODO : REVISAR METODO
   createCourse = ( courseRequest : CourseDTO ) : Observable<Course> => {
-    console.log(courseRequest)
     return this.http
                   .post<CourseResponse>(
                                         `${this.baseURL}/new` , 
                                         {...courseRequest}
                                       ).pipe(
                                           map( ( courseResponse ) => {
-                                            console.log(courseResponse);
+                                            // console.log(courseResponse);
                                             return CourseMapper.mapResponseToCourse( courseResponse.data )
                                           }
                                           ),

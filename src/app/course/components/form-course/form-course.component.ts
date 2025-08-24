@@ -34,7 +34,7 @@ export class FormCourseComponent {
   public courseForm : FormGroup = this.fb.group({
     title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
     description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
-    category : [ '' ],
+    category : [ ' ' ],
     thumbnail_url : [ '' ],
     price : [ 0 , [ Validators.required , Validators.min(0) ] ],
     wantLimitedCapacity: [ true ],
@@ -112,7 +112,7 @@ export class FormCourseComponent {
         description   : formValues.description,
         category      : formValues.category,
         // Igualmente el backend lo reemplaza por el usuario que se encuentre logueado.
-        owner         : uid,
+        id_owner      : uid,
         thumbnail_url : formValues.thumbnail_url,
         price         : formValues.price ? formValues.price : 0,
         capacity      : formValues.wantLimitedCapacity ? formValues.capacity : undefined,
@@ -131,14 +131,14 @@ export class FormCourseComponent {
         description   : formValues.description,
         category      : formValues.category,
         // Igualmente el backend lo reemplaza por el usuario que se encuentre logueado.
-        owner         : uid,
+        id_owner      : uid,
         thumbnail_url : formValues.thumbnail_url,
         price         : formValues.price ? formValues.price : 0,
         capacity      : formValues.wantLimitedCapacity ? formValues.capacity : undefined,
       }
       
       // Si el curso seleccionado no le corresponde al usuario registrado no permite el update.
-      if( this.course()?.owner === uid ){
+      if( this.course()?.id_owner === uid ){
         
         updateCourseDTO._id = this.course()?.id!;
 
@@ -155,7 +155,7 @@ export class FormCourseComponent {
   }    
 
   onDeleteCourse = ( id : string )  => {
-    if( this.course()?.owner === this.authService.id() ){
+    if( this.course()?.id_owner === this.authService.id() ){
       this.courseService.deleteCourse( id )
                             .subscribe( (isCourseDeleted) => {
                                 if( isCourseDeleted ) {

@@ -49,6 +49,7 @@ export class CourseService {
 
   // TODO : REVISAR METODO
   createCourse = ( courseRequest : CourseDTO ) : Observable<Course> => {
+    console.log(courseRequest)
     return this.http
                   .post<CourseResponse>(
                                         `${this.baseURL}/new` , 
@@ -60,6 +61,7 @@ export class CourseService {
                                           }
                                           ),
                                           catchError( ({ error }) => {
+                                            console.log(error);
                                             console.error( error.errorMessage )
                                             return throwError(() => new Error(`${error.errorMessage}`));
                                           }),

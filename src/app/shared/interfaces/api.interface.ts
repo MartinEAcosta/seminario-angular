@@ -14,7 +14,7 @@ export interface CourseUniqueResponse {
     description : string;
     category    : string;
     thumbnail_url : string;
-    owner       : string;
+    id_owner    : string;
     price       : number;
     capacity?   : number;
 }

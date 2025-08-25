@@ -23,7 +23,7 @@ export class CourseService {
                   .get<CourseListResponse>(`${this.baseURL}`)
                   .pipe(
                       map( ( courseResponse ) => {
-                        // console.log(courseResponse);
+                        console.log(courseResponse);
                         return CourseMapper.mapResponseToCourseArray( courseResponse );
                       }
                       ),
@@ -68,10 +68,10 @@ export class CourseService {
   }
 
   updateCourse = ( courseRequest : CourseDTO ) : Observable<Course> => {
-    const { _id , ...rest } = courseRequest;
+    const { id , ...rest } = courseRequest;
     return this.http
                   .put<CourseResponse>(
-                                        `${this.baseURL}/update/${_id}` ,
+                                        `${this.baseURL}/update/${id}` ,
                                         { 
                                           ...rest
                                         } 

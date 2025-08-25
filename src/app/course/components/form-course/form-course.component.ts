@@ -2,7 +2,7 @@ import { Component, computed, effect, inject, input, output, signal } from '@ang
 import { Router } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { catchError, map, Subscription, tap, forkJoin } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
 
 import type { Course, CourseDTO } from '../../interfaces/course.interfaces';
 import { AuthService } from '../../../auth/services/auth.service';
@@ -36,7 +36,7 @@ export class FormCourseComponent {
     description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
     category : [ ' ' ],
     thumbnail_url : [ '' ],
-    price : [ 0 , [ Validators.required , Validators.min(0) ] ],
+    price : [ 0 , [ Validators.required ] ],
     wantLimitedCapacity: [ true ],
     capacity : [ { value : 5 , disabled: false } , [ Validators.min(5) ] ], 
   });
@@ -121,34 +121,36 @@ export class FormCourseComponent {
       if( uid ){
         // console.log(createCourseDTO);
         this.courseService.createCourse( createCourseDTO ).subscribe();
-
       }
     }
     else{
-
+      console.log('e');
       const updateCourseDTO : CourseDTO = {
         title         : formValues.title,
         description   : formValues.description,
         category      : formValues.category,
         // Igualmente el backend lo reemplaza por el usuario que se encuentre logueado.
-        id_owner      : uid,
         thumbnail_url : formValues.thumbnail_url,
-        price         : formValues.price ? formValues.price : 0,
+        id_owner      : uid,
+        price         : formValues.price,
         capacity      : formValues.wantLimitedCapacity ? formValues.capacity : undefined,
       }
       
       // Si el curso seleccionado no le corresponde al usuario registrado no permite el update.
       if( this.course()?.id_owner === uid ){
         
-        updateCourseDTO._id = this.course()?.id!;
+        updateCourseDTO.id = this.course()?.id!;
+          console.log('2')
 
         if( this.mediaFileList != undefined ) {
-
           this.fileService.uploadImage( folder, this.mediaFileList[0] )
                             .subscribe( fileResponse => {
                               updateCourseDTO.thumbnail_url = fileResponse.public_id;
                               this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log(res ) );
                             });
+        }
+        else{
+          this.courseService.updateCourse( updateCourseDTO ).subscribe();
         }
       } 
     }

@@ -21,8 +21,9 @@ const folder = 'courses';
 export class FormCourseComponent {
 
   public course = input<Course | undefined >();
-  public thumbnailImage = signal<string | undefined>( undefined );
   public tempMedia = signal<string[]>([]); 
+  public tempThumbnail = signal<string | undefined>( undefined );
+  public thumbnailFile : File | undefined = undefined;
   public mediaFileList : FileList | undefined =  undefined;
 
   private router = inject(Router);
@@ -44,7 +45,6 @@ export class FormCourseComponent {
   constructor ( ) { }
 
   ngOnInit () {
-    this.thumbnailImage.set( this.course()?.thumbnail_url );
     if( this.course() != undefined ){
       this.courseForm.patchValue({
         title: this.course()?.title,
@@ -82,16 +82,17 @@ export class FormCourseComponent {
 
   
   onThumbnailChanged = ( event : Event ) => {
-    const thumbnaillFile = ( event.target as HTMLInputElement ).files;
-    if( !thumbnaillFile ) return;
+    const thumbnailChanged = ( event.target as HTMLInputElement ).files;
+    if( !thumbnailChanged ) return;
 
     // En caso de que el el fileList no sea undefined o vacio, permite generar url para utilizar de forma local
-    const imageUrl = Array.from( thumbnaillFile ?? [ ] )
+    const imageUrl = Array.from( thumbnailChanged ?? [ ] )
                                                   .map( 
                                                         (file) => URL.createObjectURL(file)
                                                   );
 
-    this.thumbnailImage.set( imageUrl.shift() );
+    this.tempThumbnail.set( imageUrl.shift() );
+    this.thumbnailFile = thumbnailChanged[0];
   }
 
   onSubmit = ( ) : void => {
@@ -124,7 +125,6 @@ export class FormCourseComponent {
       }
     }
     else{
-      console.log('e');
       const updateCourseDTO : CourseDTO = {
         title         : formValues.title,
         description   : formValues.description,
@@ -140,10 +140,17 @@ export class FormCourseComponent {
       if( this.course()?.id_owner === uid ){
         
         updateCourseDTO.id = this.course()?.id!;
-          console.log('2')
 
         if( this.mediaFileList != undefined ) {
           this.fileService.uploadImage( folder, this.mediaFileList[0] )
+                            .subscribe( fileResponse => {
+                              updateCourseDTO.thumbnail_url = fileResponse.public_id;
+                              this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log(res ) );
+                            });
+        }
+        else if( this.thumbnailFile != undefined ) {
+          console.log('anuel')
+                    this.fileService.uploadImage( folder, this.thumbnailFile )
                             .subscribe( fileResponse => {
                               updateCourseDTO.thumbnail_url = fileResponse.public_id;
                               this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log(res ) );

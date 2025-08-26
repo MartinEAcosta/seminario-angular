@@ -81,7 +81,7 @@ export class CourseService {
                                             return CourseMapper.mapResponseToCourse( courseResponse.data );
                                           }),
                                           catchError( ({ error }) => {
-                                            console.error( error.errorMessage )
+                                            console.error( error )
                                             return throwError(() => new Error(`${error.errorMessage}`));
                                           }),
                                         );

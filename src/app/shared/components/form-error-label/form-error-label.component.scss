@@ -2,6 +2,7 @@
 
 .errorMessage{
     display: flex;
+    width: auto;
     font-family: v.$font-primary;
     color: v.$red-warning;
     align-items: center;

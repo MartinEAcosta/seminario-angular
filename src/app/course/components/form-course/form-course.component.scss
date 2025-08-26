@@ -44,58 +44,80 @@
     font-family: v.$font-primary;
 }
 
-.input-title::placeholder{
-    color: v.$white-custom;
-    opacity: 0.7;
-    text-align: center;
+.form-course{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.container-form-top{
+    display: flex;
+    width: 100%;
+    max-height: 25%;
+    flex-direction: column;
+    // background-color: red;
 }
 
 .input-title{
-    display: flex;
-    flex-direction: column;
-    max-width: 80%;
-    height: 15%;
-    text-align: start;
-    align-items: bottom;
-    font-size: 2.5rem;
+    width: 75%;
+    height: 100%;
+    font-size: 2rem;
     text-align: center;
     border-bottom: solid 2px v.$brand-color;
     border-radius: 0.5px;
 }
 
+.input-title::placeholder{
+    color: v.$white-custom;
+    opacity: 0.7;
+    text-align: center;
+}
+.container-form-description{
+    display: flex;
+    width: 75%;
+    max-height: 30%;
+    flex-direction: column;
+}
 
 .input-description{
     display: flex;
     width: 100%;
-    height: auto;
+    height: 60%;
     resize: none;
     overflow: hidden;
     font-size: 1.5rem;
 }
 
+.container-form-right{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    height: 40%;
+    margin: 0 0 auto auto;
+}
+
 .container-capacity{
     display: flex;
-    width: 25%;
-    height: 100%;
-    position: absolute;
-    bottom: -5%;
-    right: 4%;
+    width: 100%;
+    height: 50%;
     color: v.$white-custom;
     text-align: center;
     align-items: center;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 .container-inline{
     display: flex;
+    width: 100%;
+    justify-content: space-around;
+    background-color: red;
     align-items: center;
-    justify-content: center;
 }
 
 .switch-container{
     display: flex;
     cursor: pointer;
-    margin-left: 10px;
 }
 
 .switch-checkbox{
@@ -155,6 +177,7 @@
 }
 
 .label-capacity{
+    width: 100%;
     color: v.$white-custom;
     transition: color 0.5s ease;
 }
@@ -190,16 +213,14 @@ input::-webkit-outer-spin-button {
 
 .container-pricing{
     display: flex;
-    width: 10%;
+    width: 100%;
+    height: 50%;
     flex-direction: column;
-    position: absolute;
-    right: 6%;
-    bottom: 50%;
     text-align: center;
 }
 
 .input-pricing{
-    height: 3rem;
+    height: 2rem;
     font-size: 1.2rem;
     text-align: center;
     background-color: transparent;
@@ -322,14 +343,15 @@ input::-webkit-outer-spin-button {
 }
 .container-remove{
     display: flex;
+    position: absolute;
+    cursor: pointer;
+    width: 2.2%;
+    top: 23%;
+    right: 5.5%;
 }
 
 .svg-remove{
-    position: absolute;
-    width: 2%;
-    right: 5.5%;
-    top: 23%;
-    cursor: pointer;
+    width: 100%;
     filter: drop-shadow( 0px 0px 15px rgba(0,0,0,1) );
     transition: all 0.3s;
 }

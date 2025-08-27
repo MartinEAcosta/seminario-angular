@@ -7,6 +7,7 @@ import { Course, CourseDTO } from '@interfaces/course.interfaces';
 import { defaultCourses } from '@utils/defaultCourses';
 import { CourseMapper } from '@mappers/course.mapper';
 import { CourseListResponse, CourseResponse } from 'src/app/shared/interfaces/api.interface';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,8 @@ export class CourseService {
   
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}courses`;
+
+  private fb = inject(FormBuilder)
 
   selectedCourse = signal<Course | null>(null);
 
@@ -104,4 +107,27 @@ export class CourseService {
                                       );
   }
 
+  createForm = ( ) : FormGroup => {
+    return this.fb.group({
+      title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
+      description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
+      category : [ ' ' ],
+      thumbnail_url : [ '' ],
+      price : [ 0 , [ Validators.required ] ],
+      wantLimitedCapacity: [ true ],
+      capacity : [ { value : 5 , disabled: false } , [ Validators.min(5) ] ], 
+    });
+  }
+
+  patchValuesForm = ( course : Course , form : FormGroup ) : FormGroup => {
+    form.patchValue({
+      title: course.title,
+      description: course.description,
+      thumbnail_url: course.thumbnail_url,
+      price: course.price,
+      capacity: course.capacity
+    });
+
+    return form;
+  }
 }

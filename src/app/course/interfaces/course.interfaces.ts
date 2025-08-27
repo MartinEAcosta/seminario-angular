@@ -10,12 +10,12 @@ export interface Course {
 }
 
 export interface CourseDTO {
-    id?          : string;
+    id?           : string;
     title         : string;
     description   : string;
     category      : string;
     thumbnail_url : string;
-    id_owner      : string;
+    id_owner     ?: string;
     price?        : number;
     capacity?     : number;
 }

@@ -1,9 +1,23 @@
 // Practica vista en el curso de Fernando Herrera, similar a patrón DTO ( Data Transfer Object ),
 // utilizado previamente en Java.
-import type { Course } from '@interfaces/course.interfaces';
+import type { Course, CourseDTO } from '@interfaces/course.interfaces';
 import { CourseListResponse, CourseUniqueResponse } from '../shared/interfaces/api.interface';
+import { FormGroup } from '@angular/forms';
 
 export class CourseMapper {
+
+    static mapToCourseDto ( form : FormGroup ) : CourseDTO {
+      const formValues = form.getRawValue();
+      return {
+        title         : formValues.title,
+        description   : formValues.description,
+        category      : formValues.category,
+        // Igualmente el backend lo reemplaza por el usuario que se encuentre logueado.
+        thumbnail_url : formValues.thumbnail_url,
+        price         : formValues.price ? formValues.price : 0,
+        capacity      : formValues.wantLimitedCapacity ? formValues.capacity : undefined,
+      }
+    }
     
     static mapResponseToCourse ( response : CourseUniqueResponse ) : Course {
         return {

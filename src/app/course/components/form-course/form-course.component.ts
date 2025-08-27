@@ -1,14 +1,15 @@
-import { Component, computed, effect, inject, input, output, signal } from '@angular/core';
+import { Component, effect, inject, input, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgClass } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subscription, tap } from 'rxjs';
 
-import type { Course, CourseDTO } from '../../interfaces/course.interfaces';
+import type { Course } from '../../interfaces/course.interfaces';
 import { AuthService } from '../../../auth/services/auth.service';
 import { CourseService } from '../../services/course.service';
 import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
 import { FileService } from 'src/app/shared/services/file/file.service';
+import { CourseMapper } from '@mappers/course.mapper';
 
 const folder = 'courses';
 
@@ -31,28 +32,13 @@ export class FormCourseComponent {
   private courseService = inject(CourseService);
   private fileService = inject(FileService);
 
-  private fb = inject(FormBuilder);
-  public courseForm : FormGroup = this.fb.group({
-    title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
-    description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
-    category : [ ' ' ],
-    thumbnail_url : [ '' ],
-    price : [ 0 , [ Validators.required ] ],
-    wantLimitedCapacity: [ true ],
-    capacity : [ { value : 5 , disabled: false } , [ Validators.min(5) ] ], 
-  });
+  public courseForm : FormGroup = this.courseService.createForm();
   
   constructor ( ) { }
 
   ngOnInit () {
     if( this.course() != undefined ){
-      this.courseForm.patchValue({
-        title: this.course()?.title,
-        description: this.course()?.description,
-        thumbnail_url: this.course()?.thumbnail_url,
-        price: this.course()?.price,
-        capacity: this.course()?.capacity
-      });
+      this.courseService.patchValuesForm( this.course()! , this.courseForm );
     }
   }
 
@@ -100,65 +86,49 @@ export class FormCourseComponent {
     this.courseForm.markAllAsTouched();
     const uid = this.authService.id();
     if( !uid ) return;
-
+    
     // En caso de no tener una señal course la cual es inyectada por el componente course-handler-page
     // basada en la obtención de parametros y si es un id valida, en caso de pasar estas verificaciónes
     // se realiza el get y se inyecta, si no se encuentra queda como no definido, lo que siginificaria 
     // que el curso sera uno nuevo.
-    const formValues = this.courseForm.getRawValue();
     if( this.course() === undefined && this.courseForm.valid ){
-
-      const createCourseDTO : CourseDTO = {
-        title         : formValues.title,
-        description   : formValues.description,
-        category      : formValues.category,
-        // Igualmente el backend lo reemplaza por el usuario que se encuentre logueado.
-        id_owner      : uid,
-        thumbnail_url : formValues.thumbnail_url,
-        price         : formValues.price ? formValues.price : 0,
-        capacity      : formValues.wantLimitedCapacity ? formValues.capacity : undefined,
-      }
+      
+      const createCourseDto = CourseMapper.mapToCourseDto( this.courseForm );
 
       if( uid ){
         // console.log(createCourseDTO);
-        this.courseService.createCourse( createCourseDTO ).subscribe();
+        this.courseService.createCourse( createCourseDto ).subscribe();
       }
     }
-    else{
-      const updateCourseDTO : CourseDTO = {
-        title         : formValues.title,
-        description   : formValues.description,
-        category      : formValues.category,
-        // Igualmente el backend lo reemplaza por el usuario que se encuentre logueado.
-        thumbnail_url : formValues.thumbnail_url,
-        id_owner      : uid,
-        price         : formValues.price,
-        capacity      : formValues.wantLimitedCapacity ? formValues.capacity : undefined,
-      }
+    else if ( this.courseForm.valid ){
+      const updateCourseDTO = CourseMapper.mapToCourseDto( this.courseForm );
       
       // Si el curso seleccionado no le corresponde al usuario registrado no permite el update.
       if( this.course()?.id_owner === uid ){
         
         updateCourseDTO.id = this.course()?.id!;
 
-        if( this.mediaFileList != undefined ) {
-          this.fileService.uploadImage( folder, this.mediaFileList[0] )
-                            .subscribe( fileResponse => {
-                              updateCourseDTO.thumbnail_url = fileResponse.public_id;
-                              this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log(res ) );
-                            });
-        }
-        else if( this.thumbnailFile != undefined ) {
-          console.log('anuel')
-                    this.fileService.uploadImage( folder, this.thumbnailFile )
-                            .subscribe( fileResponse => {
-                              updateCourseDTO.thumbnail_url = fileResponse.public_id;
-                              this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log(res ) );
-                            });
+        // if( this.mediaFileList != undefined ) {
+        //   this.fileService
+        //         .uploadImage( folder, this.mediaFileList[0] )
+        //           .subscribe( fileResponse => {
+        //             updateCourseDTO.thumbnail_url = fileResponse.public_id;
+        //             this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log( res ) );
+        //           });
+        // }
+        // else 
+        if( this.thumbnailFile != undefined ) {
+          this.fileService
+                .uploadImage( folder, this.thumbnailFile )
+                  .subscribe( fileResponse => {
+                    updateCourseDTO.thumbnail_url = fileResponse.public_id;
+                    this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log( res ) );
+                  });
         }
         else{
           this.courseService.updateCourse( updateCourseDTO ).subscribe();
         }
+        
       } 
     }
   }    

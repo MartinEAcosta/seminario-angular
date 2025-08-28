@@ -28,11 +28,15 @@ export type CourseListResponse = ApiResponse<CourseUniqueResponse[]>;
 // * File * 
 
 export interface FileUniqueResponse {
-    id            : string,
-    filename      : string,
-    public_id     : string,
-    size          : number,
-    extension     : string,
+    id               : string; // Podría venir de la DB
+    id_course        : string;
+    title            : string;
+    unit             : number;
+    chapter          : number;
+    public_id        : string;
+    url              : string;
+    size             : number;
+    extension        : string;
     resource_type : "image" | "video" | "raw" | "auto",
 }
 

@@ -15,23 +15,23 @@ export class FileService {
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}upload`;
 
-  uploadImages = ( folder : string , images?: FileList ) : Observable<UploadedFile[]> => {
+  uploadImages = ( folder : string , images: FileList , id : string ) : Observable<UploadedFile[]> => {
     if( !images ) return of([]);
 
     const uploadObservable = Array.from( images ).map( (imageFile) => 
-      this.uploadImage( folder, imageFile )
+      this.uploadImage( folder, imageFile , id )
     );
     // Se encarga de esperar hasta todas las peticiones emitan un valor, en caso de fallar
     // vuelve hacia atras
     return forkJoin(uploadObservable);
   }
   
-  uploadImage = ( folder : string, image : File  ) : Observable<UploadedFile> => {
+  uploadImage = ( folder : string, image : File , id : string ) : Observable<UploadedFile> => {
     const formData = new FormData( );
     formData.append( 'files', image );
     return this.http
                     .post<FileResponse>(
-                                        `${this.baseURL}/single/${folder}`, 
+                                        `${this.baseURL}/single/${folder}/${id}`, 
                                         formData,
                                       )
                                       .pipe(

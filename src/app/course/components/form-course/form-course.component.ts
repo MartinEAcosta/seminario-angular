@@ -119,9 +119,10 @@ export class FormCourseComponent {
         // else 
         if( this.thumbnailFile != undefined ) {
           this.fileService
-                .uploadImage( folder, this.thumbnailFile )
+                .uploadImage( folder, this.thumbnailFile , updateCourseDTO.id )
                   .subscribe( fileResponse => {
-                    updateCourseDTO.thumbnail_url = fileResponse.public_id;
+                    console.log(fileResponse)
+                    updateCourseDTO.thumbnail_url = fileResponse.url;
                     this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log( res ) );
                   });
         }

@@ -9,7 +9,6 @@ export class FileMapper {
     static mapResponseToFile = ( response : FileUniqueResponse ) : UploadedFile => {
         return {
             id            : response.id,
-            filename      : response.filename,
             size          : response.size,
             extension     : response.extension,
             resource_type : response.resource_type,

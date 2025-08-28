@@ -1,9 +1,9 @@
+import { ResourceValidTypes } from "./api.interface";
 
 export interface UploadedFile {
     id            : string,
-    filename      : string,
     size          : number,
     extension     : string,
-    resource_type : string,
+    resource_type : ResourceValidTypes,
     public_id     : string,
 }

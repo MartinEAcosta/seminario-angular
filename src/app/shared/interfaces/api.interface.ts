@@ -13,8 +13,9 @@ export interface CourseUniqueResponse {
     title       : string;
     description : string;
     category    : string;
-    thumbnail_url : string;
-    owner       : string;
+    thumbnail_url : string | null;
+    thumbnail_id : string | null;
+    id_owner       : string;
     price       : number;
     capacity?   : number;
 }
@@ -27,13 +28,15 @@ export type CourseListResponse = ApiResponse<CourseUniqueResponse[]>;
 
 // * File * 
 
+export type ResourceValidTypes = "image" | "video" | "raw" | "auto" ;
+
+
 export interface FileUniqueResponse {
     id            : string,
-    filename      : string,
-    public_id     : string,
     size          : number,
     extension     : string,
-    resource_type : "image" | "video" | "raw" | "auto",
+    resource_type : ResourceValidTypes,
+    public_id     : string,
 }
 
 export type FileResponse = ApiResponse<FileUniqueResponse>; 

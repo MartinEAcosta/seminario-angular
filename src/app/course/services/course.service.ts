@@ -7,6 +7,7 @@ import { Course, CourseDTO } from '@interfaces/course.interfaces';
 import { defaultCourses } from '@utils/defaultCourses';
 import { CourseMapper } from '@mappers/course.mapper';
 import { CourseListResponse, CourseResponse } from 'src/app/shared/interfaces/api.interface';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,8 @@ export class CourseService {
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}courses`;
 
+  private fb = inject(FormBuilder)
+
   selectedCourse = signal<Course | null>(null);
 
   getAll = ( ) : Observable<void | Course[]> => {
@@ -23,7 +26,7 @@ export class CourseService {
                   .get<CourseListResponse>(`${this.baseURL}`)
                   .pipe(
                       map( ( courseResponse ) => {
-                        // console.log(courseResponse);
+                        console.log(courseResponse);
                         return CourseMapper.mapResponseToCourseArray( courseResponse );
                       }
                       ),
@@ -55,11 +58,12 @@ export class CourseService {
                                         {...courseRequest}
                                       ).pipe(
                                           map( ( courseResponse ) => {
-                                            console.log(courseResponse);
+                                            // console.log(courseResponse);
                                             return CourseMapper.mapResponseToCourse( courseResponse.data )
                                           }
                                           ),
                                           catchError( ({ error }) => {
+                                            console.log(error);
                                             console.error( error.errorMessage )
                                             return throwError(() => new Error(`${error.errorMessage}`));
                                           }),
@@ -67,10 +71,10 @@ export class CourseService {
   }
 
   updateCourse = ( courseRequest : CourseDTO ) : Observable<Course> => {
-    const { _id , ...rest } = courseRequest;
+    const { id , ...rest } = courseRequest;
     return this.http
                   .put<CourseResponse>(
-                                        `${this.baseURL}/update/${_id}` ,
+                                        `${this.baseURL}/update/${id}` ,
                                         { 
                                           ...rest
                                         } 
@@ -80,7 +84,7 @@ export class CourseService {
                                             return CourseMapper.mapResponseToCourse( courseResponse.data );
                                           }),
                                           catchError( ({ error }) => {
-                                            console.error( error.errorMessage )
+                                            console.error( error )
                                             return throwError(() => new Error(`${error.errorMessage}`));
                                           }),
                                         );
@@ -103,4 +107,27 @@ export class CourseService {
                                       );
   }
 
+  createForm = ( ) : FormGroup => {
+    return this.fb.group({
+      title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
+      description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
+      category : [ ' ' ],
+      thumbnail_url : [ '' ],
+      price : [ 0 , [ Validators.required ] ],
+      wantLimitedCapacity: [ true ],
+      capacity : [ { value : 5 , disabled: false } , [ Validators.min(5) ] ], 
+    });
+  }
+
+  patchValuesForm = ( course : Course , form : FormGroup ) : FormGroup => {
+    form.patchValue({
+      title: course.title,
+      description: course.description,
+      thumbnail_url: course.thumbnail_url,
+      price: course.price,
+      capacity: course.capacity
+    });
+
+    return form;
+  }
 }

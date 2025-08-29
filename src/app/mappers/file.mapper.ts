@@ -10,6 +10,7 @@ export class FileMapper {
         return {
             id            : response.id,
             size          : response.size,
+            url           : response.url,
             extension     : response.extension,
             resource_type : response.resource_type,
             public_id     : response.public_id,

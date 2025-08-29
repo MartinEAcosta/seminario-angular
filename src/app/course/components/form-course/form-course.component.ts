@@ -121,9 +121,9 @@ export class FormCourseComponent {
           this.fileService
                 .uploadImage( folder, this.thumbnailFile , updateCourseDTO.id )
                   .subscribe( fileResponse => {
-                    console.log(fileResponse)
                     updateCourseDTO.thumbnail_url = fileResponse.url ?? null;
-                    updateCourseDTO.thumbnail_id = fileResponse.public_id ?? null;
+                    updateCourseDTO.thumbnail_id = fileResponse.id ?? null;
+                    
                     this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log( res ) );
                   });
         }

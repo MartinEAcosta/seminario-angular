@@ -13,9 +13,9 @@ export interface CourseUniqueResponse {
     title       : string;
     description : string;
     category    : string;
-    thumbnail_url : string | null;
-    thumbnail_id : string | null;
-    id_owner       : string;
+    thumbnail_url ?: string | null;
+    thumbnail_id  ?: string | null;
+    id_owner    : string;
     price       : number;
     capacity?   : number;
 }
@@ -34,6 +34,7 @@ export type ResourceValidTypes = "image" | "video" | "raw" | "auto" ;
 export interface FileUniqueResponse {
     id            : string,
     size          : number,
+    url           : string,
     extension     : string,
     resource_type : ResourceValidTypes,
     public_id     : string,

@@ -82,57 +82,62 @@ export class FormCourseComponent {
   }
 
   onSubmit = ( ) : void => {
-    
     this.courseForm.markAllAsTouched();
-    const uid = this.authService.id();
-    if( !uid ) return;
-    
-    // En caso de no tener una señal course la cual es inyectada por el componente course-handler-page
-    // basada en la obtención de parametros y si es un id valida, en caso de pasar estas verificaciónes
-    // se realiza el get y se inyecta, si no se encuentra queda como no definido, lo que siginificaria 
-    // que el curso sera uno nuevo.
-    if( this.course() === undefined && this.courseForm.valid ){
-      
-      const createCourseDto = CourseMapper.mapToCourseDto( this.courseForm );
 
-      if( uid ){
-        // console.log(createCourseDTO);
-        this.courseService.createCourse( createCourseDto ).subscribe();
+    if( this.courseForm.valid ){
+  
+      const uid = this.authService.id();
+      if( !uid ) return;
+      
+      // En caso de no tener una señal course la cual es inyectada por el componente course-handler-page
+      // basada en la obtención de parametros y si es un id valida, en caso de pasar estas verificaciónes
+      // se realiza el get y se inyecta, si no se encuentra queda como no definido, lo que siginificaria 
+      // que el curso sera uno nuevo.
+      if( this.course() === undefined ){
+        
+        const createCourseDto = CourseMapper.mapToCourseDto( this.courseForm );
+
+        if( uid ){
+          // console.log(createCourseDTO);
+          this.courseService.createCourse( createCourseDto ).subscribe();
+        }
+      }
+      else {
+        const updateCourseDTO = CourseMapper.mapToCourseDto( this.courseForm );
+        
+        // Si el curso seleccionado no le corresponde al usuario registrado no permite el update.
+        if( this.course()?.id_owner === uid ){
+          
+          updateCourseDTO.id = this.course()?.id!;
+
+          // if( this.mediaFileList != undefined ) {
+          //   this.fileService
+          //         .uploadImage( folder, this.mediaFileList[0] )
+          //           .subscribe( fileResponse => {
+          //             updateCourseDTO.thumbnail_url = fileResponse.public_id;
+          //             this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log( res ) );
+          //           });
+          // }
+          // else 
+          if( this.thumbnailFile != undefined ) {
+            this.fileService
+                  .uploadImage( folder, this.thumbnailFile , updateCourseDTO.id )
+                    .subscribe( fileResponse => {
+                      updateCourseDTO.thumbnail_url = fileResponse.url ?? null;
+                      updateCourseDTO.thumbnail_id = fileResponse.public_id ?? null;
+                      
+                      console.log(updateCourseDTO)
+                      this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log( res ) );
+                    });
+          }
+          else{
+            this.courseService.updateCourse( updateCourseDTO ).subscribe();
+          }
+          
+        } 
       }
     }
-    else if ( this.courseForm.valid ){
-      const updateCourseDTO = CourseMapper.mapToCourseDto( this.courseForm );
-      
-      // Si el curso seleccionado no le corresponde al usuario registrado no permite el update.
-      if( this.course()?.id_owner === uid ){
-        
-        updateCourseDTO.id = this.course()?.id!;
-
-        // if( this.mediaFileList != undefined ) {
-        //   this.fileService
-        //         .uploadImage( folder, this.mediaFileList[0] )
-        //           .subscribe( fileResponse => {
-        //             updateCourseDTO.thumbnail_url = fileResponse.public_id;
-        //             this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log( res ) );
-        //           });
-        // }
-        // else 
-        if( this.thumbnailFile != undefined ) {
-          this.fileService
-                .uploadImage( folder, this.thumbnailFile , updateCourseDTO.id )
-                  .subscribe( fileResponse => {
-                    updateCourseDTO.thumbnail_url = fileResponse.url ?? null;
-                    updateCourseDTO.thumbnail_id = fileResponse.id ?? null;
-                    
-                    this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log( res ) );
-                  });
-        }
-        else{
-          this.courseService.updateCourse( updateCourseDTO ).subscribe();
-        }
-        
-      } 
-    }
+    
   }    
 
   onDeleteCourse = ( id : string )  => {

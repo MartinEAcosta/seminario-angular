@@ -13,7 +13,7 @@ import { UploadedFile } from '../../interfaces/file.interface';
 export class FileService {
 
   private http = inject(HttpClient);
-  private baseURL : string = `${environment.apiURL}upload`;
+  private baseURL : string = `${environment.apiURL}file`;
 
   uploadImages = ( folder : string , images: FileList , id : string ) : Observable<UploadedFile[]> => {
     if( !images ) return of([]);
@@ -31,7 +31,7 @@ export class FileService {
     formData.append( 'files', image );
     return this.http
                     .post<FileResponse>(
-                                        `${this.baseURL}/single/${folder}/${id}`, 
+                                        `${this.baseURL}/upload/single/${folder}/${id}`, 
                                         formData,
                                       )
                                       .pipe(

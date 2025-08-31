@@ -1,5 +1,5 @@
 import { Router, RouterLink } from '@angular/router';
-import { Component, computed, EventEmitter, inject, Output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { AuthService } from './../../services/auth.service';

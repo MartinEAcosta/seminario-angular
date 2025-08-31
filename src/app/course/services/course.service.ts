@@ -72,6 +72,7 @@ export class CourseService {
 
   updateCourse = ( courseRequest : CourseDTO ) : Observable<Course> => {
     const { id , ...rest } = courseRequest;
+    console.log(courseRequest);
     return this.http
                   .put<CourseResponse>(
                                         `${this.baseURL}/update/${id}` ,
@@ -83,6 +84,7 @@ export class CourseService {
                                             return CourseMapper.mapResponseToCourse( courseResponse.data );
                                           }),
                                           catchError( ({ error }) => {
+                                            console.log(error)
                                             return throwError(() => new Error(`${error.errorMessage}`));
                                           }),
                                         );

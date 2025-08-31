@@ -124,7 +124,7 @@ export class FormCourseComponent {
                   .uploadImage( folder, this.thumbnailFile , updateCourseDTO.id )
                     .subscribe( fileResponse => {
                       updateCourseDTO.thumbnail_url = fileResponse.url ?? null;
-                      updateCourseDTO.thumbnail_id = fileResponse.public_id ?? null;
+                      updateCourseDTO.file_id = fileResponse.id;
                       
                       console.log(updateCourseDTO)
                       this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log( res ) );
@@ -142,13 +142,17 @@ export class FormCourseComponent {
 
   onDeleteCourse = ( id : string )  => {
     if( this.course()?.id_owner === this.authService.id() ){
-      this.courseService.deleteCourse( id )
-                            .subscribe( (isCourseDeleted) => {
-                                if( isCourseDeleted ) {
-                                  this.router.navigateByUrl('/');
-                                  return;
-                                }     
-                            } );
+      if( this.course()?.file_id ){
+        
+        this.fileService.deleteFile( "courses" , this.course()?.file_id! ).subscribe()
+      }
+      // this.courseService.deleteCourse( id )
+      //                       .subscribe( (isCourseDeleted) => {
+      //                           if( isCourseDeleted ) {
+      //                             this.router.navigateByUrl('/');
+      //                             return;
+      //                           }     
+      //                       } );
     }
   }
 

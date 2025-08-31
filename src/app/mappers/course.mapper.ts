@@ -14,7 +14,7 @@ export class CourseMapper {
         category      : formValues.category,
         // Igualmente el backend lo reemplaza por el usuario que se encuentre logueado.
         thumbnail_url : formValues.thumbnail_url,
-        thumbnail_id  : formValues.thumbnail_id,
+        file_id  : formValues.file_id,
         price         : formValues.price ? formValues.price : 0,
         capacity      : formValues.wantLimitedCapacity ? formValues.capacity : undefined,
       }
@@ -27,7 +27,7 @@ export class CourseMapper {
             description: response.description,
             category: response.category ?? " ",
             thumbnail_url: response.thumbnail_url ?? "",
-            thumbnail_id: response.thumbnail_id ?? "",
+            file_id: response.file_id ?? "",
             id_owner: response.id_owner,
             price: response.price ?? 0, // Si no existe, se asigna 0 por defecto
             capacity: response.capacity ?? undefined,   

@@ -4,7 +4,7 @@ import { catchError, forkJoin, map, Observable, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { FileMapper } from '@mappers/file.mapper';
-import { FileResponse } from '../../interfaces/api.interface';
+import { FileRemovedResponse, FileResponse } from '../../interfaces/api.interface';
 import { UploadedFile } from '../../interfaces/file.interface';
 
 @Injectable({
@@ -30,18 +30,34 @@ export class FileService {
     const formData = new FormData( );
     formData.append( 'files', image );
     return this.http
-                    .post<FileResponse>(
-                                        `${this.baseURL}/upload/single/${folder}/${id}`, 
-                                        formData,
-                                      )
-                                      .pipe(
-                                        map( fileResponse => {
-                                          return FileMapper.mapResponseToFile( fileResponse.data );
-                                        }),
-                                        catchError( ({ error }) => {
-                                                              return throwError(() => new Error(`${error}`));
-                                        }),
-                                      );
+                .post<FileResponse>(
+                                    `${this.baseURL}/upload/single/${folder}/${id}`, 
+                                    formData,
+                                  )
+                                  .pipe(
+                                    map( fileResponse => {
+                                      return FileMapper.mapResponseToFile( fileResponse.data );
+                                    }),
+                                    catchError( ({ error }) => {
+                                      return throwError(() => new Error(`${error}`));
+                                    }),
+                                  );
+  }
+
+  deleteFile = ( folder : string , public_id : string ) : Observable<FileRemovedResponse> => {
+    return this.http
+                .delete<FileRemovedResponse>(
+                                      `${this.baseURL}/delete/${folder}/${public_id}`,
+                                    )
+                                    .pipe(
+                                      map( fileResponse => {
+                                        console.log(fileResponse);
+                                        return fileResponse;
+                                      }),
+                                      catchError( ({error}) => {
+                                        return throwError(() => new Error(`${error}`));
+                                      }),
+                                    );
   }
 
   getImageByPublicId = ( public_id : string ) => {

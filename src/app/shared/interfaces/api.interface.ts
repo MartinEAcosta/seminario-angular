@@ -14,7 +14,7 @@ export interface CourseUniqueResponse {
     description : string;
     category    : string;
     thumbnail_url ?: string | null;
-    thumbnail_id  ?: string | null;
+    file_id  ?: string | null;
     id_owner    : string;
     price       : number;
     capacity?   : number;
@@ -33,11 +33,13 @@ export type ResourceValidTypes = "image" | "video" | "raw" | "auto" ;
 
 export interface FileUniqueResponse {
     id            : string,
+    public_id     : string,
+    folder        : string,
     size          : number,
     url           : string,
     extension     : string,
     resource_type : ResourceValidTypes,
-    public_id     : string,
 }
 
+export type FileRemovedResponse = ApiResponse<boolean>;
 export type FileResponse = ApiResponse<FileUniqueResponse>; 

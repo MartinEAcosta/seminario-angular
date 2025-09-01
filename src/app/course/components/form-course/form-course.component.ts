@@ -125,8 +125,7 @@ export class FormCourseComponent {
                     .subscribe( fileResponse => {
                       updateCourseDTO.thumbnail_url = fileResponse.url ?? null;
                       updateCourseDTO.file_id = fileResponse.id;
-                      
-                      console.log(updateCourseDTO)
+
                       this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log( res ) );
                     });
           }
@@ -143,8 +142,9 @@ export class FormCourseComponent {
   onDeleteCourse = ( id : string )  => {
     if( this.course()?.id_owner === this.authService.id() ){
       if( this.course()?.file_id ){
-        
-        this.fileService.deleteFile( "courses" , this.course()?.file_id! ).subscribe()
+
+        // TODO: MODIFICAR DEBIDO A QUE NO ES THUMBNAIL
+        this.fileService.deleteFile( this.course()?.id! ).subscribe()
       }
       // this.courseService.deleteCourse( id )
       //                       .subscribe( (isCourseDeleted) => {

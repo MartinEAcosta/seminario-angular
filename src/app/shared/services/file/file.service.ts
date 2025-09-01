@@ -44,10 +44,10 @@ export class FileService {
                                   );
   }
 
-  deleteFile = ( folder : string , public_id : string ) : Observable<FileRemovedResponse> => {
+  deleteFile = ( id : string ) : Observable<FileRemovedResponse> => {
     return this.http
                 .delete<FileRemovedResponse>(
-                                      `${this.baseURL}/delete/${folder}/${public_id}`,
+                                      `${this.baseURL}/course-thumbnail/${id}`,
                                     )
                                     .pipe(
                                       map( fileResponse => {

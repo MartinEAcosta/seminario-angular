@@ -110,18 +110,18 @@ export class FormCourseComponent {
           
           updateCourseDTO.id = this.course()?.id!;
 
-          // if( this.mediaFileList != undefined ) {
-          //   this.fileService
-          //         .uploadImage( folder, this.mediaFileList[0] )
-          //           .subscribe( fileResponse => {
-          //             updateCourseDTO.thumbnail_url = fileResponse.public_id;
-          //             this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log( res ) );
-          //           });
-          // }
+          if( this.mediaFileList != undefined ) {
+            this.fileService
+                  .updateFile( folder, this.mediaFileList[0] , updateCourseDTO.id )
+                    .subscribe( fileResponse => {
+                      updateCourseDTO.thumbnail_url = fileResponse.public_id;
+                      this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log( res ) );
+                    });
+          }
           // else 
           if( this.thumbnailFile != undefined ) {
             this.fileService
-                  .uploadImage( folder, this.thumbnailFile , updateCourseDTO.id )
+                  .updateFile( folder, this.thumbnailFile , updateCourseDTO.id )
                     .subscribe( fileResponse => {
                       updateCourseDTO.thumbnail_url = fileResponse.url ?? null;
                       updateCourseDTO.file_id = fileResponse.id;
@@ -142,17 +142,15 @@ export class FormCourseComponent {
   onDeleteCourse = ( id : string )  => {
     if( this.course()?.id_owner === this.authService.id() ){
       if( this.course()?.file_id ){
-
-        // TODO: MODIFICAR DEBIDO A QUE NO ES THUMBNAIL
-        this.fileService.deleteFile( this.course()?.id! ).subscribe()
+        this.fileService.deleteCourseThumbnail( this.course()?.id! ).subscribe()
       }
-      // this.courseService.deleteCourse( id )
-      //                       .subscribe( (isCourseDeleted) => {
-      //                           if( isCourseDeleted ) {
-      //                             this.router.navigateByUrl('/');
-      //                             return;
-      //                           }     
-      //                       } );
+      this.courseService.deleteCourse( id )
+                            .subscribe( (isCourseDeleted) => {
+                                if( isCourseDeleted ) {
+                                  this.router.navigateByUrl('/');
+                                  return;
+                                }     
+                            } );
     }
   }
 

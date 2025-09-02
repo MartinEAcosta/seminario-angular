@@ -1,6 +1,6 @@
 @use '../../../../variables.scss' as v;
 
-.bg-detail{
+.bg-course-detail{
     background-color: v.$white-custom;
     background-position: center;
     background-size: cover;
@@ -8,16 +8,70 @@
     font-family: v.$font-primary;
 }
 
-.container-details{
+.section-hero{
+    width: 100%;
+    display: flex;
+    gap: 3%;
+}
+
+.container-course-presentation{
+    width: 60%;
     display: flex;
     flex-direction: column;
 }
 
-.container-details .title-course{
+.title-course {
     font-size: xx-large;
+    color: v.$black-custom;
+    font-weight: 600;
     margin-bottom: 2.5%;
 }
 
-.container-details .description-course{
+.description-course {
     font-size: large;
+    color: v.$black-custom;
 }
+
+.container-btns{
+    margin: 4%;
+    display:  flex;
+    gap: 5%;
+}
+
+.btn{
+    padding: 1.5% 3%;
+    border-radius: 0.5rem;
+    border: thin solid;
+    font-size: medium;
+    box-shadow: 1px 3px 15px rgba(0, 0, 0, 0.25);
+}
+
+.btn-primary{
+    display: flex;
+    align-items: center;
+    color: v.$black-custom;
+    background-color: v.$brand-color;
+    border-color: v.$brand-color;
+    font-weight: 600;
+}
+
+.play-svg{
+    width: 1rem;
+    margin: 0 0.5rem 0 0;
+}
+
+.btn-secondary{
+    border-color: v.$golden-yellow;
+    
+}
+
+.section-hero .thumbnail {
+    width: 40%;
+}
+
+.section-hero .thumbnail img {
+    width: 100%;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+

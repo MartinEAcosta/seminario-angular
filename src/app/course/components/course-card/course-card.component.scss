@@ -3,27 +3,37 @@
 .card-course{
     display: flex;
     width: 100%;
-    border-bottom: solid 1px #ccc;
 }
 
 .content-card{
     display: flex;
-    padding: 20px;
-    width: 100%;
+    width: 98%;
+    max-height: 250px;
+    border-bottom: solid 1px #ccc;
+    padding: 20px 0px 20px 20px;
 }
 
+.content-card figure{
+    display: flex;
+    width: 25%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
 .content-card .course-img{
-    width: 400px;
+    width: 100%;
+    height: 100%;
     border-radius: 10px;
     cursor: pointer;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
 }
 
+
 .details-course{
     display: flex;
     flex-direction: column;
-    margin: 0px  15px;
-    width: 100%;
+    margin: 0px 15px;
+    width: 75%;
     height: 100%;
     font-family: v.$font-primary;
     color: v.$black-custom;
@@ -40,7 +50,15 @@
 }
 
 .desc{
+    max-width: 85%;
+    max-height: 50%;
     font-weight: 500;
+    line-height: 1.5em;     /* Altura de línea */
+    overflow: scroll;
+    scrollbar-width: none;
+    text-overflow: ellipsis;
+    mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+    mask-repeat: no-repeat;
 }
 
 .details-course .price{

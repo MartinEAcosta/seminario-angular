@@ -118,7 +118,6 @@ export class FormCourseComponent {
                       this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log( res ) );
                     });
           }
-          // else 
           if( this.thumbnailFile != undefined ) {
             this.fileService
                   .updateFile( folder, this.thumbnailFile , updateCourseDTO.id )
@@ -129,15 +128,11 @@ export class FormCourseComponent {
                       this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log( res ) );
                     });
           }
-          else{
-            this.courseService.updateCourse( updateCourseDTO ).subscribe();
-          }
-          
+          this.courseService.updateCourse( updateCourseDTO ).subscribe();
         } 
       }
     }
-    
-  }    
+  }
 
   onDeleteCourse = ( id : string )  => {
     if( this.course()?.id_owner === this.authService.id() ){

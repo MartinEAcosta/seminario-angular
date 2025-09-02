@@ -1,6 +1,8 @@
     <div class="card-course">
         <div class="content-card">
-            <img class="course-img" [routerLink]="['/course' , course().id]" src={{course().thumbnail_url}} alt="Course Image">
+            <figure>
+                <img class="course-img" [routerLink]="['/course' , course().id]" src={{course().thumbnail_url}} alt="Course Image">
+            </figure>
             <div class="details-course">
                 <a 
                     class="anchor"
@@ -8,9 +10,11 @@
                 >
                     {{course().title}}
                 </a>
-                <p class="desc">
-                    {{course().description}}
-                </p>
+                <div>
+                    <p class="desc">
+                        {{course().description}}
+                    </p>
+                </div>
                 <p class="price">
                     {{ course().price === 0 ? 'Gratis' : (course().price | currency:'USD':'symbol':'1.2-2') }}
                 </p>

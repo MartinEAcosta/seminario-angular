@@ -70,6 +70,7 @@ export class FormCourseComponent {
   onThumbnailChanged = ( event : Event ) => {
     const thumbnailChanged = ( event.target as HTMLInputElement ).files;
     if( !thumbnailChanged ) return;
+    
 
     // En caso de que el el fileList no sea undefined o vacio, permite generar url para utilizar de forma local
     const imageUrl = Array.from( thumbnailChanged ?? [ ] )

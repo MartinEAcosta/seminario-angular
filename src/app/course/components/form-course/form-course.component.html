@@ -102,7 +102,7 @@
                         type="file" 
                         class="input-file" 
                         multiple
-                        accept="image/*"
+                        accept="image/*,video/*"
                         />
                     <label for="file" class="custom-file-label custom-content">
                         <img src="assets/new-white-icon.svg" alt="">
@@ -113,8 +113,8 @@
                         type="file" 
                         id="file" 
                         name="file" 
-                        class="input-file" 
-                        accept="image"
+                        class="input-file"
+                        accept="image/*"
                         (change)="onThumbnailChanged( $event )"
                         />
                     <label for="file" class="custom-file-label">

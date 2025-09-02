@@ -1,16 +1,21 @@
 @use '../../../../variables.scss' as v;
 
-.errorMessage{
+.container-error{
     display: flex;
-    width: auto;
+    width: 70%;
+}
+
+.errorMessage{
+    width: fit-content;
     font-family: v.$font-primary;
+    font-size: 1rem;
     color: v.$red-warning;
     align-items: center;
     margin: 0.5%;
 }
 
 img{
-    width: 3%;
+    width: 1.2rem;
     padding: 0.5%;
     display: none;
 }

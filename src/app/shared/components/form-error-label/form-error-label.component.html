@@ -1,4 +1,6 @@
-<span class="errorMessage">
+<div class="container-error">
     <img [ngClass]="{ 'isActivated' : ( warningSvg() && errorMessage != null ) }" src="/assets/warning.svg" alt="">
-    {{ errorMessage }}
-</span>
+    <span class="errorMessage">
+        {{ errorMessage }}
+    </span>
+</div>

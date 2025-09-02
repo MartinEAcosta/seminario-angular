@@ -54,14 +54,14 @@
 .container-form-top{
     display: flex;
     width: 100%;
-    max-height: 25%;
+    height: 20%;
     flex-direction: column;
     // background-color: red;
 }
 
 .input-title{
     width: 75%;
-    height: 100%;
+    height: 60%;
     font-size: 2rem;
     text-align: center;
     border-bottom: solid 2px v.$brand-color;
@@ -76,23 +76,24 @@
 .container-form-description{
     display: flex;
     width: 75%;
-    max-height: 30%;
+    height: 20%;
     flex-direction: column;
 }
 
 .input-description{
     display: flex;
     width: 100%;
-    height: 60%;
+    height: auto;
     resize: none;
-    overflow: hidden;
-    font-size: 1.5rem;
+    overflow: visible;
+    scrollbar-width: none;
+    font-size: 1.3rem;
 }
 
 .container-form-right{
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 35%;
     height: 40%;
     margin: 0 0 auto auto;
 }
@@ -247,7 +248,7 @@ input::-webkit-outer-spin-button {
     height: 6%;
     position: absolute;
     right: 5%;
-    bottom: 35%;
+    bottom: 32%;
     gap: 5%;
 }
 
@@ -293,7 +294,7 @@ input::-webkit-outer-spin-button {
     flex-direction: column;
     width: 14%;
     position: absolute;
-    bottom: 35%;
+    bottom: 32%;
 }
 
 .input-file {

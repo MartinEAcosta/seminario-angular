@@ -1,48 +1,42 @@
 <header>
-    <a
-      [routerLink]="['']" 
-      class="logo">{{brandName}}</a>
+  <div class="container-brand-icon">
+    <a [routerLink]="['']" class="logo">{{brandName}}</a>
+  </div>
 
   <nav>
-    <search>
-      
-      <input 
-        type="text" 
-        placeholder="Busca un tema que te interese..." 
-        name="" 
-        id=""
-        class="search-input"
-      >
 
-    </search>
-    <a [routerLink]="['/']">
-      INICIO
-    </a>
-    <a 
-      [routerLink]="['/about']">
-      SOBRE NOSOTROS
-    </a>
-    @if ( authService.authStatus() === "authenticated") {
-      
-      <a
-        [routerLink]="['/course/create']"
-      >
-        CREA TU CURSO
+    <div class="container-search">
+      <div class="container-input-svg">
+        <img src="/assets/search-icon.svg" alt="Search icon" class="search-icon">
+        <input type="text" placeholder="Busca un tema que te interese..." name="" id="" class="search-input">
+      </div>
+    </div>
+
+    <div class="container-nav-anchors">
+      <a [routerLink]="['/']">
+        Inicio
       </a>
-      <a
-        [routerLink]="['/']"
-        (click)="authService.logoutUser()"
-        class="last-element">
-        CERRAR SESIÓN
+      <a [routerLink]="['/about']">
+        Biblioteca
       </a>
-    }
-    @else{
-      <a
-        [routerLink]="['/auth/login']"
-        class="last-element">
-        INICIAR SESIÓN
-      </a>
-    }
+
+      @if ( authService.authStatus() === "authenticated") {
+        <a [routerLink]="['/course/create']">
+          Crea tu curso
+        </a>
+        <a [routerLink]="['/']" (click)="authService.logoutUser()" class="last-element">
+          Cerrar sesión
+        </a>
+      }
+
+      @else{
+        <a [routerLink]="['/auth/login']" class="last-element">
+          Iniciar sesión
+        </a>
+      }
+
+    </div>
+    
   </nav>
 
 </header>

@@ -79,7 +79,8 @@ export class CourseService {
                                         { 
                                           ...rest
                                         } 
-                                      ).pipe( 
+                                      )
+                                        .pipe( 
                                           map( ( courseResponse ) => {
                                             return CourseMapper.mapResponseToCourse( courseResponse.data );
                                           }),

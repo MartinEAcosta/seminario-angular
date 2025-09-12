@@ -4,7 +4,7 @@ import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angula
 import { NgClass } from '@angular/common';
 import { AuthService } from './../../services/auth.service';
 import { FormErrorLabelComponent } from '../../../shared/components/form-error-label/form-error-label.component';
-import { UserDTO } from '@interfaces/auth.interfaces';
+import { UserDTO } from 'src/app/auth/models/auth.interfaces';
 import { FormUtils } from '@utils/form-utils';
 
 @Component({

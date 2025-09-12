@@ -40,6 +40,17 @@
                     <form-error-label [control]="courseForm.get('description')!" [warningSvg]=true />
                 </div>
 
+                <div class="container-form-category">
+                    @if( categoriesResource.hasValue() ){
+                        <select name="category" id="" class="select-category">
+                            <option class="option-category" value="" selected disabled> Elige una categoria </option>
+                            @for (category of categoriesResource.value(); track category) {
+                                <option class="option-category" [value]="category.name">{{ category.name }}</option>
+                            }
+                        </select>
+                    }
+                </div>
+
                 <div class="container-form-right">
                     <div class="container-pricing">
                         <label class="label-pricing">

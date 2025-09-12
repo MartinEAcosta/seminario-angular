@@ -3,10 +3,10 @@ import { inject, Injectable, signal } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { Course, CourseDTO } from '@interfaces/course.interfaces';
+import { Course, CourseDTO } from 'src/app/course/models/course.interfaces';
 import { defaultCourses } from '@utils/defaultCourses';
 import { CourseMapper } from '@mappers/course.mapper';
-import { CourseListResponse, CourseResponse } from 'src/app/shared/interfaces/api.interface';
+import { CourseListResponse, CourseResponse } from 'src/app/shared/models/api.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Injectable({

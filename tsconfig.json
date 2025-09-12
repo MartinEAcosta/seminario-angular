@@ -8,7 +8,7 @@
       // "@courseinterfaces/*" : ["src/app/course/interfaces/*"]
       "@utils/*" : ["./src/app/utils/*"],
       "@mappers/*" : ["./src/app/mappers/*"],
-      "@interfaces/*" : ["./src/app/course/interfaces/*" , "src/app/auth/interfaces/*"],
+      "@interfaces/*" : ["src/app/course/models/*" , "src/app/auth/models/*"],
       "@guards/*" : ["./src/app/auth/guards/*"],
       "@variables/variables.scss" : ["./src/variables.scss"],
     },

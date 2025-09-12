@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { Course } from '../../interfaces/course.interfaces';
+import { Course } from '../../models/course.interfaces';
 
 
 @Component({

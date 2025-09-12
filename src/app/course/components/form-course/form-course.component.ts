@@ -2,14 +2,16 @@ import { Component, effect, inject, input, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { Subscription, tap } from 'rxjs';
 
-import type { Course } from '../../interfaces/course.interfaces';
+import type { Course } from '../../models/course.interfaces';
 import { AuthService } from '../../../auth/services/auth.service';
 import { CourseService } from '../../services/course.service';
 import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
 import { FileService } from 'src/app/shared/services/file/file.service';
 import { CourseMapper } from '@mappers/course.mapper';
+import { CategoryService } from 'src/app/category/services/category.service';
 
 const folder = 'courses';
 
@@ -26,12 +28,16 @@ export class FormCourseComponent {
   public tempThumbnail = signal<string | undefined>( undefined );
   public thumbnailFile : File | undefined = undefined;
   public mediaFileList : FileList | undefined =  undefined;
-
+  
   private router = inject(Router);
   private authService = inject(AuthService);
   private courseService = inject(CourseService);
+  private categoryService = inject(CategoryService);  
   private fileService = inject(FileService);
-
+  
+  public categoriesResource = rxResource({ 
+    loader : () => { return this.categoryService.getAllCategories() }
+  });
   public courseForm : FormGroup = this.courseService.createForm();
   
   constructor ( ) { }

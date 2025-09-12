@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { Course } from '@interfaces/course.interfaces';
+import { Course } from 'src/app/course/models/course.interfaces';
 import { LoaderComponent } from "../../../shared/components/loader/loader.component";
 import { CourseCardComponent } from "../course-card/course-card.component";
 

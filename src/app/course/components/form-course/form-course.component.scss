@@ -90,12 +90,33 @@
     font-size: 1.3rem;
 }
 
+.container-form-category{
+    display: flex;
+    width: 25%;
+    height: 10%;
+}
+
+.select-category{
+    display: flex;
+    width: 100%;
+    font-family: v.$font-primary;
+    border-radius: 0.5rem;
+    // color: v.$white-custom;
+    background-color: v.$white-custom;
+    box-shadow: inset 3px 3px 12px 3px rgba(0, 0, 0, 0.5);
+    outline: none;
+    border: none;
+    padding-left: 3%;
+    transition: all 0.5s ease;
+}
+
 .container-form-right{
     display: flex;
     flex-direction: column;
+    position: relative;
     width: 35%;
-    height: 40%;
-    margin: 0 0 auto auto;
+    height: 45%;
+    margin: -5% 0 auto auto;
 }
 
 .container-capacity{

@@ -1,7 +1,7 @@
 /*
   Path:PORT/
 */
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 import { CourseService } from '../../../course/services/course.service';

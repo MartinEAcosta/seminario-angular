@@ -2,7 +2,7 @@ export interface Course {
     id              : string;
     title           : string;
     description     : string;
-    category        : string;
+    id_category     : string;
     thumbnail_url   : string | null;
     file_id         : string | null;
     id_owner        : string;
@@ -14,7 +14,7 @@ export interface CourseDTO {
     id?           : string;
     title         : string;
     description   : string;
-    category      : string;
+    id_category   : string;
     thumbnail_url : string | null;
     file_id       : string | null;
     id_owner     ?: string;

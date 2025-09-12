@@ -1,0 +1,55 @@
+export interface ApiResponse<T> {
+  ok        : boolean;
+  total?    : number; // Opcional para respuestas de un solo elemento
+  page?     : number;  // Opcional para respuestas de un solo elemento
+  limit?    : number; // Opcional para respuestas de un solo elemento
+  data      : T; 
+}
+
+// * Course *
+
+export interface CourseUniqueResponse {
+  id          : string;
+  title       : string;
+  description : string;
+  id_category    : string;
+  thumbnail_url ?: string | null;
+  file_id       ?: string | null;
+  id_owner    : string;
+  price       : number;
+  capacity?   : number;
+}
+
+
+export type CourseResponse = ApiResponse<CourseUniqueResponse>;
+export type CourseListResponse = ApiResponse<CourseUniqueResponse[]>;
+
+// * Auth *|
+
+// * File * 
+
+export type ResourceValidTypes = "image" | "video" | "raw" | "auto" ;
+
+
+export interface FileUniqueResponse {
+  id            : string;
+  public_id     : string;
+  folder        : string;
+  size          : number;
+  url           : string;
+  extension     : string;
+  resource_type : ResourceValidTypes;
+}
+
+export type FileRemovedResponse = ApiResponse<boolean>;
+export type FileResponse = ApiResponse<FileUniqueResponse>; 
+
+// * Category * 
+
+export interface CategoryUniqueResponse {
+  id   : string;
+  name : string,
+  slug : string,
+}
+
+export type CategoryListResponse = ApiResponse<CategoryUniqueResponse[]>

@@ -5,7 +5,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 
 import { environment } from '../../../environments/environment';
 import { UIService } from 'src/app/shared/services/ui/ui.service';
-import { AuthResponse, User, UserDTO } from '@interfaces/auth.interfaces';
+import { AuthResponse, User, UserDTO } from 'src/app/auth/models/auth.interfaces';
 import { AuthMapper } from '@mappers/auth.mapper';
 
 type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';

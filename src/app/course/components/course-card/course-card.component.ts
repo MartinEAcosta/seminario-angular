@@ -4,7 +4,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { BtnPrimaryComponent } from '../../../shared/components/btn-primary/btn-primary.component';
 import { BtnBorderThinComponent } from '../../../shared/components/btn-border-thin/btn-border-thin.component';
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { Course } from '../../interfaces/course.interfaces';
+import { Course } from '../../models/course.interfaces';
 import { RouterModule } from '@angular/router';
 import { CartService } from '../../../shared/services/cart/cart.service';
 

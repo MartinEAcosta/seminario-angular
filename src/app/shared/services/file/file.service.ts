@@ -4,8 +4,8 @@ import { catchError, forkJoin, map, Observable, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { FileMapper } from '@mappers/file.mapper';
-import { FileRemovedResponse, FileResponse } from '../../interfaces/api.interface';
-import { UploadedFile } from '../../interfaces/file.interface';
+import { FileRemovedResponse, FileResponse } from '../../models/api.interface';
+import { UploadedFile } from '../../models/file.interface';
 
 @Injectable({
   providedIn: 'root'

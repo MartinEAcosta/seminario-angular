@@ -44,7 +44,7 @@ export class AuthService {
     return 'not-authenticated';
   });
 
-  registerUser = ( userRequest : UserDTO ) : Observable<User | false> => {
+  public registerUser = ( userRequest : UserDTO ) : Observable<User | false> => {
     return this.http
                   .post<AuthResponse>(`${this.baseURL}/new` , { ...userRequest } )
                     .pipe( 
@@ -54,7 +54,7 @@ export class AuthService {
             );
   }
 
-  loginUser = ( userRequest : UserDTO ) : Observable<User | false> => {
+  public loginUser = ( userRequest : UserDTO ) : Observable<User | false> => {
     return this.http.post<AuthResponse>(`${this.baseURL}` , { ...userRequest } )
                       .pipe(
                         map( ( authResponse ) => this.handleAuthSuccess( authResponse ) ),
@@ -62,7 +62,7 @@ export class AuthService {
               );
   }
 
-  logoutUser = ( ) : void => {
+  public logoutUser = ( ) : void => {
     this._user.set(null);
     this._token.set(null);
     this._authStatus.set('not-authenticated');
@@ -70,7 +70,7 @@ export class AuthService {
     localStorage.clear();
   }
   
-  checkStatus = ( ) : Observable<boolean> => {
+  public checkStatus = ( ) : Observable<boolean> => {
     const token = localStorage.getItem('x-token');
     console.log(token);
     if( !token ){

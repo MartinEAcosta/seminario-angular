@@ -21,7 +21,7 @@ export class CourseService {
 
   selectedCourse = signal<Course | null>(null);
 
-  getAll = ( ) : Observable<void | Course[]> => {
+  public getAll = ( ) : Observable<void | Course[]> => {
     return this.http
                   .get<CourseListResponse>(`${this.baseURL}`)
                   .pipe(
@@ -37,7 +37,7 @@ export class CourseService {
                   );
   }
 
-  getById = ( id : string ) : Observable<Course>  => {
+  public getById = ( id : string ) : Observable<Course>  => {
     return this.http
                   .get<CourseResponse>(`${this.baseURL}/${id}` )
                   .pipe(
@@ -51,7 +51,7 @@ export class CourseService {
   }
 
   // TODO : REVISAR METODO
-  createCourse = ( courseRequest : CourseDTO ) : Observable<Course> => {
+  public createCourse = ( courseRequest : CourseDTO ) : Observable<Course> => {
     return this.http
                   .post<CourseResponse>(
                                         `${this.baseURL}/new` , 
@@ -70,7 +70,7 @@ export class CourseService {
                                         );
   }
 
-  updateCourse = ( courseRequest : CourseDTO ) : Observable<Course> => {
+  public updateCourse = ( courseRequest : CourseDTO ) : Observable<Course> => {
     const { id , ...rest } = courseRequest;
     console.log(courseRequest);
     return this.http
@@ -91,7 +91,7 @@ export class CourseService {
                                         );
   }
 
-  deleteCourse = ( id : string ) : Observable<boolean> => {
+  public deleteCourse = ( id : string ) : Observable<boolean> => {
     return this.http
                   .delete<CourseResponse>(
                                           `${this.baseURL}/delete/${id}`
@@ -108,7 +108,7 @@ export class CourseService {
                                       );
   }
 
-  createForm = ( ) : FormGroup => {
+  public createForm = ( ) : FormGroup => {
     return this.fb.group({
       title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
       description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
@@ -120,7 +120,7 @@ export class CourseService {
     });
   }
 
-  patchValuesForm = ( course : Course , form : FormGroup ) : FormGroup => {
+  public patchValuesForm = ( course : Course , form : FormGroup ) : FormGroup => {
     form.patchValue({
       title: course.title,
       description: course.description,

@@ -112,7 +112,7 @@ export class CourseService {
     return this.fb.group({
       title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
       description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
-      category : [ ' ' ],
+      id_category : [ ' '  ],
       thumbnail_url : [ '' ],
       price : [ 0 , [ Validators.required ] ],
       wantLimitedCapacity: [ true ],
@@ -124,6 +124,7 @@ export class CourseService {
     form.patchValue({
       title: course.title,
       description: course.description,
+      id_category: course.id_category,
       thumbnail_url: course.thumbnail_url,
       price: course.price,
       capacity: course.capacity

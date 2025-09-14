@@ -7,7 +7,7 @@ import { Course, CourseDTO } from 'src/app/course/models/course.interfaces';
 import { defaultCourses } from '@utils/defaultCourses';
 import { CourseMapper } from '@mappers/course.mapper';
 import { CourseListResponse, CourseResponse } from 'src/app/shared/models/api.interface';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'

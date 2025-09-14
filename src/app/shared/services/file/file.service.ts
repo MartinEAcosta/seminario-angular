@@ -15,6 +15,11 @@ export class FileService {
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}file`;
 
+  public thumbnailFile = signal<File | null>(null);
+  public mediaFiles = signal<FileList | null>(null);
+
+  constructor ( ) { }
+
   updateFiles = ( folder : string , files : FileList , id : string ) : Observable<UploadedFile[]> => {
     if( !files ) return of([]);
 

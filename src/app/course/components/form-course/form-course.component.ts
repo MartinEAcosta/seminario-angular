@@ -1,17 +1,16 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, effect, Input, Output, signal, EventEmitter, Signal, inject } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { rxResource } from '@angular/core/rxjs-interop';
 import { Subscription, tap } from 'rxjs';
 
 import type { Course } from '../../models/course.interfaces';
-import { AuthService } from '../../../auth/services/auth.service';
-import { CourseService } from '../../services/course.service';
 import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
-import { FileService } from 'src/app/shared/services/file/file.service';
-import { CourseMapper } from '@mappers/course.mapper';
+import { Router } from 'express';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { CategoryService } from 'src/app/category/services/category.service';
+import { FileService } from 'src/app/shared/services/file/file.service';
+import { CourseService } from '../../services/course.service';
 
 const folder = 'courses';
 
@@ -23,31 +22,39 @@ const folder = 'courses';
 })
 export class FormCourseComponent {
 
-  public course = input<Course | undefined >();
+  @Input()
+  public course! : Signal<Course | undefined>;
+  @Input()
+  public courseForm! : FormGroup;
+  @Output() 
+  public submitForm = new EventEmitter<void>();
+  
+  // public course = input<Course | undefined >();
+  @Output()
   public tempMedia = signal<string[]>([]); 
   public tempThumbnail = signal<string | undefined>( undefined );
-  public thumbnailFile : File | undefined = undefined;
-  public mediaFileList : FileList | undefined =  undefined;
+  // public thumbnailFile : File | undefined = undefined;
+  // public mediaFileList : FileList | undefined =  undefined;
   
   private router = inject(Router);
   private authService = inject(AuthService);
-  private courseService = inject(CourseService);
-  private categoryService = inject(CategoryService);  
+  private courseService = inject(CourseService)
+  private categoryService = inject(CategoryService);
   private fileService = inject(FileService);
   
   public categoriesResource = rxResource({ 
     loader : () => { return this.categoryService.getAllCategories() }
   });
-  public courseForm : FormGroup = this.courseService.createForm();
   
   constructor ( ) { }
 
-  ngOnInit () {
-    if( this.course() != undefined ){
-      this.courseService.patchValuesForm( this.course()! , this.courseForm );
-    }
-  }
+  // ngOnInit () {
+  //     this.courseService.patchValuesForm( this.course()! , this.courseForm );
+  //   }
+  // }
 
+  // TODO: Buscar alternativa, no estoy seguro si es lo mejor trabajar con subscripciones,
+  // *buscar alternativa en signals.
   onFormChanged = effect ( (onCleanup) => {
     const limitedCapacitySubscription = this.onWantLimitedCapacityChanged();
     
@@ -85,7 +92,6 @@ export class FormCourseComponent {
                                                   );
 
     this.tempThumbnail.set( imageUrl.shift() );
-    this.thumbnailFile = thumbnailChanged[0];
   }
 
   onSubmit = ( ) : void => {
@@ -96,48 +102,8 @@ export class FormCourseComponent {
       const uid = this.authService.id();
       if( !uid ) return;
       
-      // En caso de no tener una señal course la cual es inyectada por el componente course-handler-page
-      // basada en la obtención de parametros y si es un id valida, en caso de pasar estas verificaciónes
-      // se realiza el get y se inyecta, si no se encuentra queda como no definido, lo que siginificaria 
-      // que el curso sera uno nuevo.
-      if( this.course() === undefined ){
-        
-        const createCourseDto = CourseMapper.mapToCourseDto( this.courseForm );
-
-        if( uid ){
-          // console.log(createCourseDTO);
-          this.courseService.createCourse( createCourseDto ).subscribe();
-        }
-      }
-      else {
-        const updateCourseDTO = CourseMapper.mapToCourseDto( this.courseForm );
-        
-        // Si el curso seleccionado no le corresponde al usuario registrado no permite el update.
-        if( this.course()?.id_owner === uid ){
-          
-          updateCourseDTO.id = this.course()?.id!;
-
-          if( this.mediaFileList != undefined ) {
-            this.fileService
-                  .updateFile( folder, this.mediaFileList[0] , updateCourseDTO.id )
-                    .subscribe( fileResponse => {
-                      updateCourseDTO.thumbnail_url = fileResponse.public_id;
-                      this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log( res ) );
-                    });
-          }
-          if( this.thumbnailFile != undefined ) {
-            this.fileService
-                  .updateFile( folder, this.thumbnailFile , updateCourseDTO.id )
-                    .subscribe( fileResponse => {
-                      updateCourseDTO.thumbnail_url = fileResponse.url ?? null;
-                      updateCourseDTO.file_id = fileResponse.id;
-
-                      this.courseService.updateCourse( updateCourseDTO ).subscribe( res => console.log( res ) );
-                    });
-          }
-          this.courseService.updateCourse( updateCourseDTO ).subscribe();
-        } 
-      }
+      this.submitForm.emit();
+       
     }
   }
 

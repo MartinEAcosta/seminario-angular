@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
@@ -7,7 +7,7 @@ import { Course, CourseDTO } from 'src/app/course/models/course.interfaces';
 import { defaultCourses } from '@utils/defaultCourses';
 import { CourseMapper } from '@mappers/course.mapper';
 import { CourseListResponse, CourseResponse } from 'src/app/shared/models/api.interface';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +19,6 @@ export class CourseService {
 
   private fb = inject(FormBuilder)
 
-  selectedCourse = signal<Course | null>(null);
-
   public getAll = ( ) : Observable<void | Course[]> => {
     return this.http
                   .get<CourseListResponse>(`${this.baseURL}`)
@@ -30,7 +28,7 @@ export class CourseService {
                         return CourseMapper.mapResponseToCourseArray( courseResponse );
                       }
                       ),
-                      catchError( (error ) => {
+                      catchError( ( error ) => {
                         // Se retorna un arreglo de cursos por defecto.
                         return of(defaultCourses);
                       }),
@@ -112,7 +110,7 @@ export class CourseService {
     return this.fb.group({
       title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
       description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
-      id_category : [ ' '  ],
+      id_category : [ '68c0586b3f02a200a876e493'  ],
       thumbnail_url : [ '' ],
       price : [ 0 , [ Validators.required ] ],
       wantLimitedCapacity: [ true ],

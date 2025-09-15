@@ -5,12 +5,12 @@ import { Subscription, tap } from 'rxjs';
 
 import type { Course } from '../../models/course.interfaces';
 import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
-import { Router } from 'express';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { CategoryService } from 'src/app/category/services/category.service';
 import { FileService } from 'src/app/shared/services/file/file.service';
 import { CourseService } from '../../services/course.service';
+import { Router } from '@angular/router';
 
 const folder = 'courses';
 
@@ -23,7 +23,7 @@ const folder = 'courses';
 export class FormCourseComponent {
 
   @Input()
-  public course! : Signal<Course | undefined>;
+  public course! : Course | undefined;
   @Input()
   public courseForm! : FormGroup;
   @Output() 
@@ -108,9 +108,9 @@ export class FormCourseComponent {
   }
 
   onDeleteCourse = ( id : string )  => {
-    if( this.course()?.id_owner === this.authService.id() ){
-      if( this.course()?.file_id ){
-        this.fileService.deleteCourseThumbnail( this.course()?.id! ).subscribe()
+    if( this.course?.id_owner === this.authService.id() ){
+      if( this.course?.file_id ){
+        this.fileService.deleteCourseThumbnail( this.course?.id! ).subscribe()
       }
       this.courseService.deleteCourse( id )
                             .subscribe( (isCourseDeleted) => {

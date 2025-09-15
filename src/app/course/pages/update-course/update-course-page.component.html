@@ -1,0 +1,13 @@
+<div class="bg-page">
+    
+    @if( this.course === undefined ){
+        <app-loader />
+    }
+    @else{
+        <app-form-course 
+            [course]="course"
+            [courseForm]="courseForm"
+            (submitForm)="onUpdateCourse()"
+        />
+    }
+</div>

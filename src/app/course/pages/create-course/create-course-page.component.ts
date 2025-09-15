@@ -30,7 +30,7 @@ export class CreateCoursePageComponent {
 
   constructor ( ) { }
 
-  onSubmit = ( ) : void => {
+  onCreateCourse = ( ) : void => {
     this.courseForm.markAllAsTouched();
 
     if( this.courseForm.valid ){

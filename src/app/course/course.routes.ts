@@ -3,8 +3,9 @@ import { AuthenticatedGuard } from "@guards/authenticated.guard";
 import CourseHandlerComponent from "./pages/course-handler/course-handler-page";
 import CoursePage from "./pages/course-page/course-page";
 import { ValidateParamGuard } from "./guards/validate-param.guard";
+import { UpdateCoursePageComponent } from "./pages/update-course/update-course-page.component";
 import { CourseResolver } from "./resolver/course-resolver";
-import { UpdateCoursePageComponent } from "./pages/update-course/update-course-page/update-course-page.component";
+import { CreateCoursePageComponent } from "./pages/create-course/create-course-page.component";
 
 export const courseRoutes : Routes = [
     {
@@ -12,7 +13,7 @@ export const courseRoutes : Routes = [
         children : [
             {
                 path : 'create',
-                component : CourseHandlerComponent,
+                component : CreateCoursePageComponent,
                 canMatch : [ AuthenticatedGuard ],
             },
             {
@@ -24,8 +25,11 @@ export const courseRoutes : Routes = [
             {
                 path : 'update/:id',
                 component : UpdateCoursePageComponent,
+                canActivate : [ ValidateParamGuard ],
                 canMatch : [ AuthenticatedGuard ],
-                resolve : [ CourseResolver ]
+                resolve : {
+                    resolvedCourse : CourseResolver
+                }
             },
 
             {

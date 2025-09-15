@@ -16,7 +16,7 @@ import { LoaderComponent } from "../../../shared/components/loader/loader.compon
     selector: 'app-course-create',
     templateUrl: './course-handler-page.html',
     styleUrl: './course-handler-page.scss',
-    imports: [ReactiveFormsModule, FormCourseComponent, LoaderComponent]
+    imports: [ReactiveFormsModule, LoaderComponent]
 })
 export default class CourseHandlerComponent {
 
@@ -26,26 +26,26 @@ export default class CourseHandlerComponent {
   courseService = inject(CourseService);
   courseId = this.activatedRoute.snapshot.paramMap.get('id');
 
-  courseResource = rxResource({
-    request : ( ) => ( { id : this.courseId } ),
-    loader : ({ request } ) => {
+  // courseResource = rxResource({
+  //   request : ( ) => ( { id : this.courseId } ),
+  //   loader : ({ request } ) => {
       
-      if ( !request.id ) {
-        return of();
-      }
-      else if( this.courseService.selectedCourse() != null && request.id === this.courseService.selectedCourse()?.id ){
-        return of( this.courseService.selectedCourse()! );
-      }
+  //     if ( !request.id ) {
+  //       return of();
+  //     }
+  //     else if( this.courseService.selectedCourse() != null && request.id === this.courseService.selectedCourse()?.id ){
+  //       return of( this.courseService.selectedCourse()! );
+  //     }
 
-      return this.courseService
-                  .getById( request.id )
-                    .pipe(
-                      catchError( err => {
-                        this.router.navigateByUrl('/course/create');
-                        return of();
-                      })
-                    );
-    },
-  });
+  //     return this.courseService
+  //                 .getById( request.id )
+  //                   .pipe(
+  //                     catchError( err => {
+  //                       this.router.navigateByUrl('/course/create');
+  //                       return of();
+  //                     })
+  //                   );
+  //   },
+  // });
 
 }

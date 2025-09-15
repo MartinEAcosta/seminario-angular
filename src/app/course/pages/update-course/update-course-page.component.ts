@@ -1,13 +1,16 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from 'src/app/course/models/course.interfaces';
-import { Component, inject, input, signal } from '@angular/core';
-import { FormCourseComponent } from "src/app/course/components/form-course/form-course.component";
+import { Component, inject } from '@angular/core';
+
 import { CourseService } from 'src/app/course/services/course.service';
-import { CourseMapper } from '@mappers/course.mapper';
 import { FileService } from 'src/app/shared/services/file/file.service';
+import { CourseMapper } from '@mappers/course.mapper';
+import { FormCourseComponent } from "src/app/course/components/form-course/form-course.component";
+import { LoaderComponent } from "src/app/shared/components/loader/loader.component";  
 
 @Component({
   selector: 'app-update-course-page',
-  imports: [FormCourseComponent],
+  imports: [FormCourseComponent, LoaderComponent],
   templateUrl: './update-course-page.component.html',
   styleUrl: './update-course-page.component.scss'
 })
@@ -16,14 +19,22 @@ import { FileService } from 'src/app/shared/services/file/file.service';
 export class UpdateCoursePageComponent {
   folder = 'courses';
   
+  public router = inject(Router);
   public courseService = inject(CourseService);
   public fileService = inject(FileService);
   
-  public course = input.required<Course>();
+  public course : Course | undefined;
   public courseForm = this.courseService.createForm();
   
-  constructor ( ) {
-    this.courseForm = this.courseService.patchValuesForm( this.course() , this.courseForm );
+  constructor ( private activatedRoute : ActivatedRoute ) {
+    
+  }
+
+  ngOnInit( ) {
+    this.activatedRoute.data.subscribe(({ resolvedCourse }) => {
+      this.course = resolvedCourse;
+      this.courseForm = this.courseService.patchValuesForm( this.course! , this.courseForm );
+    });
   }
 
 
@@ -34,7 +45,7 @@ export class UpdateCoursePageComponent {
     // Si el curso seleccionado no le corresponde al usuario registrado no permite el update.
     // if( this.course()?.id_owner === uid ){
       
-    updateCourseDTO.id = this.course()?.id!;
+    updateCourseDTO.id = this.course?.id!;
     
     if( this.fileService.thumbnailFile() != null ){
       this.fileService

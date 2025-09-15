@@ -12,31 +12,13 @@ export const ValidateParamGuard : CanActivateFn = (
 ) => {
     
     const router = inject(Router);
-    const courseService = inject(CourseService);
 
     const courseId = route.paramMap?.get('id');
     
     if( !courseId ||  !idPattern.test( courseId ) ) {
-        // console.log('Error al querer realizar el update de un curso sin dar un id.')
         router.navigateByUrl('/');
         return false;
     }
-    else{
-        return courseService.getById( courseId )
-                                        .pipe( 
-                                            map( response => {
-                                                if( response.id ){
-                                                    courseService.selectedCourse.set( response );
-                                                    return true;
-                                                }
-                                                router.navigateByUrl('/');
-                                                return false;
-                                            } ),
-                                            catchError( err => {
-                                                router.navigateByUrl('/course/create');
-                                                return of();
-                                            }),
-                                        );
-        
-    }
+
+    return true;
 }

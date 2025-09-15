@@ -13,7 +13,7 @@ export class CourseMapper {
         description   : formValues.description,
         id_category   : formValues.id_category,
         thumbnail_url : formValues.thumbnail_url,
-        file_id  : formValues.file_id,
+        file_id       : formValues.file_id,
         price         : formValues.price ? formValues.price : 0,
         capacity      : formValues.wantLimitedCapacity ? formValues.capacity : undefined,
       }
@@ -24,7 +24,7 @@ export class CourseMapper {
             id: response.id ,
             title: response.title,
             description: response.description,
-            id_category: response.id_category ?? " ",
+            id_category: response.id_category,
             thumbnail_url: response.thumbnail_url ?? "",
             file_id: response.file_id ?? "",
             id_owner: response.id_owner,

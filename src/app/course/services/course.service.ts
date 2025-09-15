@@ -28,7 +28,7 @@ export class CourseService {
                         return CourseMapper.mapResponseToCourseArray( courseResponse );
                       }
                       ),
-                      catchError( ( error ) => {
+                      catchError( (error ) => {
                         // Se retorna un arreglo de cursos por defecto.
                         return of(defaultCourses);
                       }),

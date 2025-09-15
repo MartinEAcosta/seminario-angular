@@ -48,10 +48,10 @@ export class FormCourseComponent {
   
   constructor ( ) { }
 
-  // ngOnInit () {
-  //     this.courseService.patchValuesForm( this.course()! , this.courseForm );
-  //   }
-  // }
+  ngOnDestroy() {
+    // TODO: PROVISORIO
+    this.fileService.thumbnailFile.set(null);
+  }
 
   // TODO: Buscar alternativa, no estoy seguro si es lo mejor trabajar con subscripciones,
   // *buscar alternativa en signals.
@@ -92,6 +92,7 @@ export class FormCourseComponent {
                                                   );
 
     this.tempThumbnail.set( imageUrl.shift() );
+    this.fileService.thumbnailFile.set( thumbnailChanged[0] );
   }
 
   onSubmit = ( ) : void => {
@@ -100,10 +101,11 @@ export class FormCourseComponent {
     if( this.courseForm.valid ){
   
       const uid = this.authService.id();
+      // Imposible asignar un curso con un owner vació
       if( !uid ) return;
       
       this.submitForm.emit();
-       
+
     }
   }
 

@@ -11,8 +11,8 @@ import { LoaderComponent } from "src/app/shared/components/loader/loader.compone
 @Component({
   selector: 'app-update-course-page',
   imports: [FormCourseComponent, LoaderComponent],
-  templateUrl: './update-course-page.component.html',
-  styleUrl: './update-course-page.component.scss'
+  templateUrl: './update-course-page.html',
+  styleUrl: './update-course-page.scss'
 })
 
 
@@ -46,17 +46,25 @@ export class UpdateCoursePageComponent {
     // if( this.course()?.id_owner === uid ){
       
     updateCourseDTO.id = this.course?.id!;
+    updateCourseDTO.id_category = "68c0586b3f02a200a876e493";
     
+    // TODO : setear previamente thumbnailFile
     if( this.fileService.thumbnailFile() != null ){
       this.fileService
             .updateFile( this.folder , this.fileService.thumbnailFile()! , updateCourseDTO.id )
               .subscribe( fileResponse => {
                 updateCourseDTO.thumbnail_url = fileResponse.url!;
                 updateCourseDTO.file_id = fileResponse.id;
+                this.courseService.updateCourse( updateCourseDTO ).subscribe();
               });
     }
+    else{
+      this.courseService.updateCourse( updateCourseDTO ).subscribe();
+    }
 
-    this.courseService.updateCourse( updateCourseDTO ).subscribe();
+    // *No estoy seguro si es correcta la manera de borrar la referencia del store 
+    this.fileService.thumbnailFile.set(null);
+    
   }
 
 }

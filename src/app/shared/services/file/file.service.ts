@@ -20,23 +20,23 @@ export class FileService {
 
   constructor ( ) { }
 
-  updateFiles = ( folder : string , files : FileList , id : string ) : Observable<UploadedFile[]> => {
+  updateFiles = ( folder : string , files : FileList  ) : Observable<UploadedFile[]> => {
     if( !files ) return of([]);
 
     const uploadObservable = Array.from( files ).map( ( uniqueFile ) => 
-      this.updateFile( folder, uniqueFile  , id )
+      this.updateFile( folder, uniqueFile  )
     );
     // Se encarga de esperar hasta todas las peticiones emitan un valor, en caso de fallar
     // vuelve hacia atras
     return forkJoin(uploadObservable);
   }
   
-  updateFile = ( folder : string, file : File , id : string ) : Observable<UploadedFile> => {
+  updateFile = ( folder : string, file : File ) : Observable<UploadedFile> => {
     const formData = new FormData( );
     formData.append( 'files', file );
     return this.http
                 .post<FileResponse>(
-                                    `${this.baseURL}/upload/single/${folder}/${id}`, 
+                                    `${this.baseURL}/upload/single/${folder}`, 
                                     formData,
                                   )
                                   .pipe(

@@ -41,24 +41,19 @@ export class CreateCoursePageComponent {
         
       const createCourseDto = CourseMapper.mapToCourseDto( this.courseForm );
       //* Verificar si hay una mejor opción.
-      this.courseService.createCourse( createCourseDto )
+      if( this.fileService.thumbnailFile() != null ){
+        this.fileService.updateFile( this.folder , this.fileService.thumbnailFile()! )
                           .subscribe(
-                            courseResponse => {
-                              const res = courseResponse;
-                              if( this.fileService.thumbnailFile() != null ){
-                                this.fileService.updateFile( this.folder , this.fileService.thumbnailFile()! , courseResponse.id )
-                                                  .subscribe(
-                                                    fileUploadedResponse => {
-                                                      res.file_id = fileUploadedResponse.id;
-                                                      res.thumbnail_url = fileUploadedResponse.url!
-                                                      this.courseService.updateCourse( res ).subscribe();
-                                                    }
-                                                  );
-                              }
-                              return of(res);
+                            fileUploadedResponse => {
+                              createCourseDto.file_id = fileUploadedResponse.id;
+                              createCourseDto.thumbnail_url = fileUploadedResponse.url!
+                              this.courseService.createCourse( createCourseDto ).subscribe();
                             }
                           );
-      
+      }
+      else{
+        this.courseService.createCourse( createCourseDto ).subscribe();
+      }
     }
   } 
 }

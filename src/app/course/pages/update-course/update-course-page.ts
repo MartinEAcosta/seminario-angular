@@ -50,7 +50,7 @@ export class UpdateCoursePageComponent {
     // TODO : setear previamente thumbnailFile
     if( this.fileService.thumbnailFile() != null ){
       this.fileService
-            .updateFile( this.folder , this.fileService.thumbnailFile()! , updateCourseDTO.id )
+            .updateFile( this.folder , this.fileService.thumbnailFile()! )
               .subscribe( fileResponse => {
                 updateCourseDTO.thumbnail_url = fileResponse.url!;
                 updateCourseDTO.file_id = fileResponse.id;

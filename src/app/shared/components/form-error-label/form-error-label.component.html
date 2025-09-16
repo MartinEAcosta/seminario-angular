@@ -1,6 +1,12 @@
-<div class="container-error">
-    <img [ngClass]="{ 'isActivated' : ( warningSvg() && errorMessage != null ) }" src="/assets/warning.svg" alt="">
-    <span class="errorMessage">
+<div class="container-error" [ngClass]="{ 'centered' : ( centered() && errorMessage != null ) }"  >
+    <div
+        class="container-svg"
+        [ngClass]="{ 'isActivated' : ( warningSvg() && errorMessage != null ) }" 
+    >
+        <img 
+            src="/assets/warning.svg" alt="">
+    </div>
+    <p class="errorMessage">
         {{ errorMessage }}
-    </span>
+    </p>
 </div>

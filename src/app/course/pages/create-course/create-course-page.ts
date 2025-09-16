@@ -1,16 +1,13 @@
-import { UploadedFile } from '../../../shared/models/file.interface';
-import { AuthService } from '../../../auth/services/auth.service';
+import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Component, inject } from '@angular/core';
-import { CourseService } from '../../services/course.service';
-import { CategoryService } from 'src/app/category/services/category.service';
 
-import { rxResource } from '@angular/core/rxjs-interop';
-import { FormGroup } from '@angular/forms';
-import { CourseMapper } from '@mappers/course.mapper';
+import { AuthService } from '../../../auth/services/auth.service';
+import { CourseService } from '../../services/course.service';
 import { FileService } from 'src/app/shared/services/file/file.service';
-import { of } from 'rxjs';
+import { CourseMapper } from '@mappers/course.mapper';
 import { FormCourseComponent } from "../../components/form-course/form-course.component";
+import { CourseFormState } from '../../state/course-form-state';
 
 @Component({
   selector: 'app-create-course-page',
@@ -25,12 +22,12 @@ export class CreateCoursePageComponent {
   private courseService = inject(CourseService);
   private fileService = inject(FileService);
   private authService = inject(AuthService);
-
+  private courseFormState = inject(CourseFormState);
+  
   public courseForm : FormGroup = this.courseService.createForm();
 
   constructor ( ) { }
 
-  // TODO : Manejar imagenes thumbnail.
   onCreateCourse = ( ) : void => {
     this.courseForm.markAllAsTouched();
 
@@ -40,9 +37,9 @@ export class CreateCoursePageComponent {
       if( !uid ) return;
         
       const createCourseDto = CourseMapper.mapToCourseDto( this.courseForm );
-      //* Verificar si hay una mejor opción.
-      if( this.fileService.thumbnailFile() != null ){
-        this.fileService.updateFile( this.folder , this.fileService.thumbnailFile()! )
+
+      if( this.courseFormState.thumbnailFile() != null ){
+        this.fileService.updateFile( this.folder , this.courseFormState.thumbnailFile()! )
                           .subscribe(
                             fileUploadedResponse => {
                               createCourseDto.file_id = fileUploadedResponse.id;
@@ -54,6 +51,7 @@ export class CreateCoursePageComponent {
       else{
         this.courseService.createCourse( createCourseDto ).subscribe();
       }
+      this.courseFormState.reset();
     }
   } 
 }

@@ -14,24 +14,19 @@
 }
 
 .error{
-    display: flex;
     position: absolute;
-    width: 50%;
-    font-size: 0.9rem;
-    justify-content: center;
-    align-items: start;
 }
 
 .error-username{
-    top: 37%;
+    top: 15%;
 }
 
 .error-email{
-    top: 50%
+    top: 28%
 }
 
 .error-password{
-    top: 63%;
+    top: 41%;
 }
 
 .label-text{

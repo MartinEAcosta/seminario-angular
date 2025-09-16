@@ -13,7 +13,6 @@ export class HeaderComponent {
 
   authService = inject(AuthService);
 
-  brandName = 'Udemix';
     
 }
 

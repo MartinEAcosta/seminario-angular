@@ -1,3 +1,4 @@
+import { CourseFormState } from './../../state/course-form-state';
 import { Component, effect, Input, Output, signal, EventEmitter, Signal, inject } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -6,14 +7,10 @@ import { Subscription, tap } from 'rxjs';
 import type { Course } from '../../models/course.interfaces';
 import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { rxResource } from '@angular/core/rxjs-interop';
-import { CategoryService } from 'src/app/category/services/category.service';
 import { FileService } from 'src/app/shared/services/file/file.service';
 import { CourseService } from '../../services/course.service';
 import { Router } from '@angular/router';
 import { CategorySelectComponent } from "src/app/category/components/category-select/category-select.component";
-
-const folder = 'courses';
 
 @Component({
   selector: 'app-form-course',
@@ -30,7 +27,6 @@ export class FormCourseComponent {
   @Output() 
   public submitForm = new EventEmitter<void>();
   
-  @Output()
   public tempMedia = signal<string[]>([]); 
   public tempThumbnail = signal<string | undefined>( undefined );
   
@@ -38,12 +34,18 @@ export class FormCourseComponent {
   private authService = inject(AuthService);
   private courseService = inject(CourseService)
   private fileService = inject(FileService);
+  private courseFormState = inject(CourseFormState)
   
-  constructor ( ) { }
+  constructor ( ) {
+    effect( () => {
+      if( this.course != undefined ){
+        this.tempThumbnail.set( this.course?.thumbnail_url ? this.course.thumbnail_url : undefined );
+      }
+    });
+  }
 
   ngOnDestroy() {
-    // TODO: PROVISORIO
-    this.fileService.thumbnailFile.set(null);
+    this.courseFormState.reset();
   }
 
   // TODO: Buscar alternativa, no estoy seguro si es lo mejor trabajar con subscripciones,
@@ -85,7 +87,7 @@ export class FormCourseComponent {
                                                   );
 
     this.tempThumbnail.set( imageUrl.shift() );
-    this.fileService.thumbnailFile.set( thumbnailChanged[0] );
+    this.courseFormState.thumbnailFile.set( thumbnailChanged[0] );
   }
 
   onSubmit = ( ) : void => {
@@ -95,7 +97,6 @@ export class FormCourseComponent {
     if( this.courseForm.valid ){
   
       const uid = this.authService.id();
-      // Imposible asignar un curso con un owner vació
       if( !uid ) return;
       
       this.submitForm.emit();

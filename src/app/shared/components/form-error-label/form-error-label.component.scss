@@ -2,25 +2,33 @@
 
 .container-error{
     display: flex;
-    width: 70%;
+    align-items: center;
+    width: 100%;
+}
+
+.centered{
+    justify-content: center;
 }
 
 .errorMessage{
-    width: fit-content;
     font-family: v.$font-primary;
-    font-size: 1rem;
+    font-size: 80%;
     color: v.$red-warning;
-    align-items: center;
-    margin: 0.5%;
 }
 
-img{
-    width: 1.2rem;
-    padding: 0.5%;
+.container-svg{
     display: none;
+    width: 1.2rem;
+}
+
+.container-error img{
+    width: 100%;
 }
 
 .isActivated {
-    display: flex;
+    & img{
+        display: block;
+    }
+    display: block;
 }
 

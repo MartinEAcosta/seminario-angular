@@ -2,6 +2,7 @@
 
 .container-form{
     display: flex;
+    position: relative;
     flex-direction: column;
     width: 100%;
     height: 100vh;
@@ -102,6 +103,7 @@ input:not(:placeholder-shown) + label{
     cursor: pointer;
     text-decoration: underline;
     text-underline-offset: 3px;
+    color: v.$white-custom;
 }
 
 .btn-sumbit{

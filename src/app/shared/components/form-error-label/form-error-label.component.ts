@@ -14,6 +14,7 @@ export class FormErrorLabelComponent {
   // Es pasado todo el objeto campo del formulario señalado con la información del mismo.
   control = input.required<AbstractControl>();
   warningSvg = input<boolean>(false);
+  centered = input<boolean>(false);
 
   // Permite consumir el error desde el html.
   get errorMessage () {

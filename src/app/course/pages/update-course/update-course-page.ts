@@ -7,6 +7,7 @@ import { FileService } from 'src/app/shared/services/file/file.service';
 import { CourseMapper } from '@mappers/course.mapper';
 import { FormCourseComponent } from "src/app/course/components/form-course/form-course.component";
 import { LoaderComponent } from "src/app/shared/components/loader/loader.component";  
+import { CourseFormState } from '../../state/course-form-state';
 
 @Component({
   selector: 'app-update-course-page',
@@ -22,13 +23,12 @@ export class UpdateCoursePageComponent {
   public router = inject(Router);
   public courseService = inject(CourseService);
   public fileService = inject(FileService);
+  private courseFormState = inject(CourseFormState);
   
   public course : Course | undefined;
   public courseForm = this.courseService.createForm();
   
-  constructor ( private activatedRoute : ActivatedRoute ) {
-    
-  }
+  constructor ( private activatedRoute : ActivatedRoute ) {  }
 
   ngOnInit( ) {
     this.activatedRoute.data.subscribe(({ resolvedCourse }) => {
@@ -47,10 +47,9 @@ export class UpdateCoursePageComponent {
       
     updateCourseDTO.id = this.course?.id!;
     
-    // TODO : setear previamente thumbnailFile
-    if( this.fileService.thumbnailFile() != null ){
+    if( this.courseFormState.thumbnailFile() != null ){
       this.fileService
-            .updateFile( this.folder , this.fileService.thumbnailFile()! )
+            .updateFile( this.folder , this.courseFormState.thumbnailFile()! )
               .subscribe( fileResponse => {
                 updateCourseDTO.thumbnail_url = fileResponse.url!;
                 updateCourseDTO.file_id = fileResponse.id;
@@ -61,9 +60,7 @@ export class UpdateCoursePageComponent {
       this.courseService.updateCourse( updateCourseDTO ).subscribe();
     }
 
-    // *No estoy seguro si es correcta la manera de borrar la referencia del store 
-    this.fileService.thumbnailFile.set(null);
-    
+    this.courseFormState.reset();    
   }
 
 }

@@ -2,8 +2,8 @@
         <div class="container">
             <figure class="img-course">
                 <!-- TODO : Condicional de si no agrego una portada, podria estar bien -->
-                 @if( this.course?.thumbnail_url ) {
-                    <img [src]="this.course?.thumbnail_url " alt="Portada del curso" class="img-course">
+                 @if( tempThumbnail() ) {
+                    <img [src]="tempThumbnail()" alt="Portada del curso" class="img-course">
                  }
                  @else{
                     <img src="assets/not-found-image.png" alt="">

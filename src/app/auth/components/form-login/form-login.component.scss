@@ -7,35 +7,29 @@
     color: v.$white-custom;
 }
 
-
 .text-register a {
     color: v.$white-custom;
     text-underline-offset: 3px;
-}
-
-.error{
-    display: flex;
-    position: absolute;
-    width: 50%;
-    font-size: 0.9rem;
-    justify-content: center;
-    align-items: start;
 }
 
 .input-email , .input-password{
     margin: 3% 0% 0% 0%;
 }
 
-.btn-sumbit{
-    margin: 2%;
+.error{
+    position: absolute;
 }
 
 .error-email{
-    top: 36%;
+    top: 13%;
 }
 
 .error-password{
-    top: 48%;
+    top: 25%
+}
+
+.btn-sumbit{
+    margin: 2%;
 }
 
 .label-text{

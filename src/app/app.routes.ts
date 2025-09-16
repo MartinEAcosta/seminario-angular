@@ -20,12 +20,18 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./auth/auth.routes'),
   },  
-
+  
   { 
     path : 'about' , 
     loadComponent: () =>
       import('./shared/pages/about/about-page'),
   },
+
+  // {
+  //   path : 'enrollments',
+  //   loadComponent: ()
+  // },
+
 
   {
     // En caso de no hacer match con ningun path regirige al home

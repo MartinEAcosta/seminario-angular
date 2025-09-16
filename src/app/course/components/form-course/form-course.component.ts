@@ -11,6 +11,7 @@ import { CategoryService } from 'src/app/category/services/category.service';
 import { FileService } from 'src/app/shared/services/file/file.service';
 import { CourseService } from '../../services/course.service';
 import { Router } from '@angular/router';
+import { CategorySelectComponent } from "src/app/category/components/category-select/category-select.component";
 
 const folder = 'courses';
 
@@ -18,7 +19,7 @@ const folder = 'courses';
   selector: 'app-form-course',
   templateUrl: './form-course.component.html',
   styleUrl: './form-course.component.scss',
-  imports: [ReactiveFormsModule, NgClass, FormErrorLabelComponent],
+  imports: [ReactiveFormsModule, NgClass, FormErrorLabelComponent, CategorySelectComponent],
 })
 export class FormCourseComponent {
 
@@ -29,22 +30,14 @@ export class FormCourseComponent {
   @Output() 
   public submitForm = new EventEmitter<void>();
   
-  // public course = input<Course | undefined >();
   @Output()
   public tempMedia = signal<string[]>([]); 
   public tempThumbnail = signal<string | undefined>( undefined );
-  // public thumbnailFile : File | undefined = undefined;
-  // public mediaFileList : FileList | undefined =  undefined;
   
   private router = inject(Router);
   private authService = inject(AuthService);
   private courseService = inject(CourseService)
-  private categoryService = inject(CategoryService);
   private fileService = inject(FileService);
-  
-  public categoriesResource = rxResource({ 
-    loader : () => { return this.categoryService.getAllCategories() }
-  });
   
   constructor ( ) { }
 
@@ -96,6 +89,7 @@ export class FormCourseComponent {
   }
 
   onSubmit = ( ) : void => {
+
     this.courseForm.markAllAsTouched();
 
     if( this.courseForm.valid ){

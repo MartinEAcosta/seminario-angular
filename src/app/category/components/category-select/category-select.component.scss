@@ -1,0 +1,112 @@
+@use '../../../../variables.scss' as v;
+
+.container-form-category{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 25%;
+    font-size: 0.9rem;
+    border-radius: 0.5rem;
+    font-family: v.$font-primary;
+    color: v.$white-custom;
+}
+
+.container-form-category:hover{
+    & .option-down-icon{
+        transform: rotate(0deg);
+        transition: all 0.5s ease;    
+    }
+}
+
+.container-form-select{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: 100%;
+}
+
+.container-form-category:hover{
+    & .options {
+        visibility: visible;
+    }
+}
+
+.option-default{
+    display: flex;
+    background-color: v.$white-custom;
+    padding: 4%;
+    margin-bottom: 2%;
+    border-radius: 0.5rem;
+    box-shadow: inset 1px 5px 15px rgba(255,255,255,0.02);
+    box-shadow: 5px 2px 5px rgb(0,0,0 , 0.5);
+    background-color: rgba(2, 15, 30, 1);
+    align-items: center;
+}
+
+.option-default-selected{
+    display: flex;
+    width: 90%;
+    height: 100%;
+    justify-content: center;
+}
+
+
+.container-icon{
+    width: 10%;
+    height: 100%;
+}
+
+
+.icon{
+    display: flex;
+    width: 10%;
+    height: 100%;
+}
+
+.container-icon .icon{
+    width: 100%;
+}
+
+.option-down-icon{
+    transform: rotate(-90deg);
+    transition: all 0.5s ease;    
+}
+
+.options{
+    text-align: center;
+    appearance: none;
+    list-style: none;
+    visibility: hidden;
+}
+
+.option-category{
+    position: relative;
+    border: none;
+    z-index: 1000;
+    padding: 3% 4%;
+    color: v.$white-custom;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.7);        
+    background-color: rgb(2, 15, 30);
+}
+
+.option-category:hover{
+    background-color: rgb(15, 25, 35); 
+    cursor: pointer;
+}
+
+.option-category:first-child{
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.option-category:last-child{
+    border-radius: 0 0 0.5rem 0.5rem;
+}
+
+.option-clear{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.selected-category{
+    display: none;
+}

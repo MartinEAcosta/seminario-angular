@@ -1,0 +1,40 @@
+<div class="container-form-category">
+    <div class="container-form-select">
+        @if( categoriesResource.hasValue() ){
+            <div class="option-default"> 
+                <p class="option-default-selected">
+                    @if( categorySelected() === undefined ){
+                        Elige una categoria 
+                    }@else {
+                        {{ categorySelected()?.name }}
+                    }
+                </p>
+                <div
+                    class="container-icon">
+                    <img class="icon option-down-icon" src="assets/down-icon.svg" alt="">
+                </div>
+            </div>
+            <ul class="options">
+                @for (category of categoriesResource.value(); track category) {
+                    <li 
+                        [ngClass]="{ 'selected-category' : this.categorySelected() === category }"
+                        (click)="onSelectCategory( category )" 
+                        class="option-category">
+                        {{ category.name }}
+                    </li>
+                }
+                @if( this.categorySelected() != undefined ){
+                    <li 
+                        (click)="categorySelected.set(undefined)"
+                        class="option-category option-clear">
+                        Limpiar categoria
+                        <img 
+                            class="icon"
+                            src="assets/clean-icon.svg" 
+                            alt="">
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</div>

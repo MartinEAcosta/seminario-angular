@@ -23,13 +23,8 @@ export class CreateCoursePageComponent {
 
   private router = inject(Router);
   private courseService = inject(CourseService);
-  private categoryService = inject(CategoryService);
   private fileService = inject(FileService);
   private authService = inject(AuthService);
-  
-  public categoriesResource = rxResource({ 
-    loader : () => { return this.categoryService.getAllCategories() }
-  });
 
   public courseForm : FormGroup = this.courseService.createForm();
 

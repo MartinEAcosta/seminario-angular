@@ -40,21 +40,9 @@
                     <form-error-label [control]="courseForm.get('description')!" [warningSvg]=true />
                 </div>
 
-                <div class="container-form-category">
-                    <div class="container-form-select">
-                        @if( categoriesResource.hasValue() ){
-                            <div class="option-default"> 
-                                Elige una categoria 
-                                <img class="option-down-icon" src="assets/down-icon.svg" alt="">
-                            </div>
-                            <ul class="options">
-                                @for (category of categoriesResource.value(); track category) {
-                                    <li class="option-category">{{ category.name }}</li>
-                                }
-                            </ul>
-                        }
-                    </div>
-                </div>
+                <app-category-select 
+                    (clickCategory)="courseForm.get('id_category')?.setValue($event)"
+                />
 
                 <div class="container-form-right">
                     <div class="container-pricing">

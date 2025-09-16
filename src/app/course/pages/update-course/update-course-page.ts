@@ -46,7 +46,6 @@ export class UpdateCoursePageComponent {
     // if( this.course()?.id_owner === uid ){
       
     updateCourseDTO.id = this.course?.id!;
-    updateCourseDTO.id_category = "68c0586b3f02a200a876e493";
     
     // TODO : setear previamente thumbnailFile
     if( this.fileService.thumbnailFile() != null ){

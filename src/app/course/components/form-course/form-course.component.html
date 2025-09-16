@@ -41,6 +41,7 @@
                 </div>
 
                 <app-category-select 
+                    [courseProvided]="course"
                     (clickCategory)="courseForm.get('id_category')?.setValue($event)"
                 />
 

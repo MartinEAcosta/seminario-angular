@@ -1,4 +1,4 @@
-import { Component, computed, EventEmitter, inject, Input, Output, signal } from '@angular/core';
+import { Component, computed, effect, EventEmitter, inject, Input, Output, signal } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Category } from '../../models/category.interfaces';
@@ -24,17 +24,22 @@ export class CategorySelectComponent {
     loader : () => { return this.categoryService.getAllCategories() }
   });
 
-  public categoryComputed = computed( () => 
-                                          this.categoriesResource.value()
-                                                                  ?.find( 
-                                                                          category => 
-                                                                                    category.id === this.courseProvided?.id_category 
-                                                                        )
-                                    );
+  public categorySelected = signal<Category | undefined>( undefined );
 
-  public categorySelected = signal<Category | undefined>( this.categoryComputed() );
+  constructor ( ) {
+    effect( () => {
+      if( this.categoriesResource.hasValue() ) {
+        const initialCategory = this.categoriesResource.value()
+                                                        ?.find( 
+                                                                category => 
+                                                                        category.id === this.courseProvided?.id_category 
+                                                              )
 
-  constructor ( ) { }
+        this.categorySelected.set(initialCategory)
+      }
+    })
+  }
+
 
   public onSelectCategory ( category : Category ) : Category {
     this.clickCategory.emit(category.id);

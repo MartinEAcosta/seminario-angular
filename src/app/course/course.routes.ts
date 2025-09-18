@@ -2,7 +2,7 @@ import { Routes } from "@angular/router";
 import { AuthenticatedGuard } from "@guards/authenticated.guard";
 import { ValidateParamGuard } from "./guards/validate-param.guard";
 import { CourseResolver } from "./resolver/course-resolver";
-import { CoursePage } from "./pages/course-page/course-page";
+import { CoursePage } from "./pages/course-detail/course-page";
 import { UpdateCoursePageComponent } from "./pages/update-course/update-course-page";
 import { CreateCoursePageComponent } from "./pages/create-course/create-course-page";
 

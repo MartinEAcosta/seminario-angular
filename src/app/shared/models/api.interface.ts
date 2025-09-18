@@ -48,8 +48,21 @@ export type FileResponse = ApiResponse<FileUniqueResponse>;
 
 export interface CategoryUniqueResponse {
   id   : string;
-  name : string,
-  slug : string,
+  name : string;
+  slug : string;
 }
 
 export type CategoryListResponse = ApiResponse<CategoryUniqueResponse[]>
+
+// * Enrollment *
+
+export interface EnrollmentUniqueResponse {
+  id             : string;
+  id_user        : string;
+  id_course      : string;
+  purchaseDate   : Date;
+  progress       : number;
+  completionDate : Date;
+}
+
+export type EnrollmentListResponse = ApiResponse<EnrollmentUniqueResponse[]>

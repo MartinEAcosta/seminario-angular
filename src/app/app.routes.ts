@@ -9,7 +9,6 @@ export const routes: Routes = [
   },
 
   {
-
     path: 'course',
     loadChildren : () => 
       import('./course/course.routes'),
@@ -26,12 +25,12 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./shared/pages/about/about-page'),
   },
-
-  // {
-  //   path : 'enrollments',
-  //   loadComponent: ()
-  // },
-
+  
+  {
+    path : 'enrollments',
+    loadChildren: () => 
+      import('./enrollment/enrollment.routes'),
+  },
 
   {
     // En caso de no hacer match con ningun path regirige al home

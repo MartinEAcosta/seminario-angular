@@ -28,7 +28,7 @@ export class CourseService {
                         return CourseMapper.mapResponseToCourseArray( courseResponse );
                       }
                       ),
-                      catchError( (error ) => {
+                      catchError( ( error ) => {
                         // Se retorna un arreglo de cursos por defecto.
                         return of(defaultCourses);
                       }),
@@ -51,15 +51,15 @@ export class CourseService {
   // TODO : REVISAR METODO
   public createCourse = ( courseRequest : CourseDTO ) : Observable<Course> => {
     return this.http
-                  .post<CourseResponse>(
-                                        `${this.baseURL}/new` , 
-                                        {...courseRequest}
-                                      ).pipe(
+                  .post<CourseResponse>(  
+                                          `${this.baseURL}/new` , 
+                                          {...courseRequest}
+                                        )
+                                        .pipe(
                                           map( ( courseResponse ) => {
                                             // console.log(courseResponse);
                                             return CourseMapper.mapResponseToCourse( courseResponse.data )
-                                          }
-                                          ),
+                                          }),
                                           catchError( ({ error }) => {
                                             console.log(error);
                                             console.error( error.errorMessage )

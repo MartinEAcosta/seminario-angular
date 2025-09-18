@@ -1,0 +1,14 @@
+<div class="container-bg">
+    <div class="container-content">
+        <div class="container-title">
+            <h1 class="title">Tu biblioteca</h1>
+        </div>
+        <div class="container-enrollments">
+            @if( enrollmentResources.hasValue() ){
+                @for( enrollment of enrollmentResources.value(); track enrollment.id ){
+                    <app-enrollment-card [enrollment]="enrollment" />
+                }
+            }
+        </div>
+    </div>
+</div>

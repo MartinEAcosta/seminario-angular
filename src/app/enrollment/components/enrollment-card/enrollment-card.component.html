@@ -1,3 +1,18 @@
 <div class="enrollment-card">
-    <h1>{{enrollment().id}}</h1>
+    <h1 class="title">{{enrollment().course.title}}</h1>
+    <figure>
+        <img 
+            class="thumbnail-course"
+            src="{{ enrollment().course.thumbnail_url }}" alt="">
+    </figure>
+    <div class="container-details">
+        <h2 class="text-progress">Progreso</h2>
+        
+        <div class="progress-container">
+            <div class="progress-fill" style="width: 40%"></div>
+        </div>
+        <span class="progress-text">40%</span>
+        
+        <p class="text-details"> Fecha de adquisición: {{enrollment().purchaseDate | date}}</p>
+    </div>
 </div>

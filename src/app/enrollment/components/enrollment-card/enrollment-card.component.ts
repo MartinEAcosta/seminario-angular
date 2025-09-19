@@ -1,15 +1,16 @@
 import { Component, input } from '@angular/core';
-import { Enrollment } from '../../models/enrollment.interfaces';
+import { EnrollmentDetailed } from '../../models/enrollment.interfaces';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-enrollment-card',
-  imports: [],
+  imports: [ DatePipe ],
   templateUrl: './enrollment-card.component.html',
   styleUrl: './enrollment-card.component.scss'
 })
 export class EnrollmentCardComponent {
 
-  enrollment = input.required<Enrollment>();
+  enrollment = input.required<EnrollmentDetailed>();
 
   constructor() { }
 

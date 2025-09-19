@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { EnrollmentListResponse } from 'src/app/shared/models/api.interface';
+import { EnrollmentDetailedListResponse, EnrollmentListResponse } from 'src/app/shared/models/api.interface';
 import { environment } from 'src/environments/environment';
-import { Enrollment } from '../models/enrollment.interfaces';
+import { Enrollment, EnrollmentDetailed } from '../models/enrollment.interfaces';
 import { EnrollmentMapper } from '@mappers/enrollment.mapper';
 
 @Injectable({
@@ -29,13 +29,15 @@ export class EnrollmentService {
                     );
   }
 
-  public getEnrollmentsByUserId = ( id_user : string ) : Observable<Enrollment[]> => {
+  public getEnrollmentsByUserId = ( id_user : string ) : Observable<EnrollmentDetailed[]> => {
     return this.http
-                    .get<EnrollmentListResponse>( `${this.baseURL}/${id_user}` )
+                    .get<EnrollmentDetailedListResponse>( `${this.baseURL}/${id_user}` )
                     .pipe(
                       map( ( enrollmentsResponse ) => {
                         console.log(enrollmentsResponse);
-                        return EnrollmentMapper.mapResponseToEnrollmentArray( enrollmentsResponse );
+                        const a = EnrollmentMapper.mapResponseToEnrollmentDetailedArray( enrollmentsResponse );
+                        console.log(a);
+                        return a;
                       }),
                       catchError( ({error}) => {
                         return throwError(() => new Error(`${error.errorMessage}`));

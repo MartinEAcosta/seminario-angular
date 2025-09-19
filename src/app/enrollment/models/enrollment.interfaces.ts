@@ -7,3 +7,17 @@ export interface Enrollment {
   progress       : number;
   completionDate : Date;
 }
+
+export interface EnrollmentDetailed {
+  id             : string;
+  id_user        : string;
+  course         : {
+    id_course : string;
+    title : string;
+    id_owner : string;
+    thumbnail_url : string;
+  }
+  purchaseDate   : Date;
+  progress       : number;
+  completionDate : Date;
+}

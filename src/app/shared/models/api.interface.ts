@@ -65,4 +65,19 @@ export interface EnrollmentUniqueResponse {
   completionDate : Date;
 }
 
+export interface EnrollmentDetailedUniqueResponse {
+  id : string;
+  id_user : string;
+  course : {
+    _id : string;
+    title : string;
+    id_owner : string;
+    thumbnail_url : string;
+  }
+  purchaseDate : Date;
+  progress : number;
+  completionDate : Date;
+}
+
 export type EnrollmentListResponse = ApiResponse<EnrollmentUniqueResponse[]>
+export type EnrollmentDetailedListResponse = ApiResponse<EnrollmentDetailedUniqueResponse[]>

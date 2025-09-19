@@ -14,7 +14,7 @@
     top: 0px;
 }
 
-.container-searchbar{
+.container-bar{
     display: flex;
     border-radius: 0.3rem;
     height: 4rem;
@@ -28,11 +28,18 @@
 
 .container-filter{
     display: flex;
+    width: 100%;
+    justify-content: left;
+    align-items: center;
+}
+
+.container-filter-select{
+    display: flex;
     flex-direction: column;
     position: relative;
     justify-content: center;
     margin-left: 1%;
-    width: 15%;
+    width: 20%;
     height: 60%;
     font-size: 0.9rem;
     border-radius: 0.5rem;
@@ -47,14 +54,14 @@
     max-height: 100%;
 }
 
-.container-filter:hover{
+.container-filter-select:hover{
     & .options {
         display: block;
         visibility: visible;
     }
 }
 
-.container-filter:hover{
+.container-filter-select:hover{
     & .down-icon{
         transform: rotate(0deg);
         transition: all 0.5s ease;    
@@ -79,7 +86,7 @@
     justify-content: center;
 }
 
-.container-icon{
+.container-down-icon{
     width: 10%;
     height: 100%;
 }
@@ -101,10 +108,14 @@
     appearance: none;
     list-style: none;
     visibility: hidden;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
 }
 
 .option-filter{
-    position: relative;
     border: none;
     height: 25%;
     z-index: 1000;
@@ -128,7 +139,40 @@
     border-radius: 0 0 0.5rem 0.5rem;
 }
 
+.container-search{
+    display: flex;
+    width: 35%;
+    height: 60%;
+    border-radius: 0.5rem;
+    border: solid thin v.$white-custom;
+    align-items: center;
+}
 
+.container-search-icon{
+    display: flex;
+    padding: 0 5%;
+    border-right: solid thin v.$white-custom;
+    height: 100%;
+    cursor: pointer;
+}
+
+.input-search{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    margin-left: 1%;
+    font-family: v.$font-primary;
+    align-items: center;
+    background-color: inherit;
+    color: v.$white-custom;
+    border: none;
+    outline: none;
+}
+
+.input-search::placeholder{
+    color: rgba(233 ,233,233, 0.75);
+
+}
 
 .title{
     font-size: 2.5rem;
@@ -150,7 +194,3 @@
     margin: 3% 2%;
 }
 
-.loader{
-    display: flex;
-    justify-content: center;
-}

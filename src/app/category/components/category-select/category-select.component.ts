@@ -1,4 +1,4 @@
-import { Component, computed, effect, EventEmitter, inject, Input, Output, signal } from '@angular/core';
+import { Component, effect, EventEmitter, inject, Input, Output, signal } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Category } from '../../models/category.interfaces';

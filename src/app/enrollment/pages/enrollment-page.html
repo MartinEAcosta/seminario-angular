@@ -3,6 +3,31 @@
         <div class="container-title">
             <h1 class="title">Tu biblioteca</h1>
         </div>
+
+        <div class="container-searchbar">
+            <p class="text-searchbar">Filtrar por:</p>
+
+            <div class="container-filter">
+                <div class="container-select">
+                    <div class="option-default"> 
+                        <p class="option-default-selected">
+                                Selecciona un filtro
+                        </p>
+                        <div
+                            class="container-icon">
+                            <img class="down-icon" src="assets/down-icon.svg" alt="">
+                        </div>
+                    </div>
+                    <ul class="options">
+                        <li class="option-filter"> Fecha de adquisición </li>
+                        <li class="option-filter"> Progreso </li>
+                        <li class="option-filter"> Completados </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        
         <div class="container-enrollments">
             @if( enrollmentResources.hasValue() ){
                 @for( enrollment of enrollmentResources.value(); track enrollment.id ){

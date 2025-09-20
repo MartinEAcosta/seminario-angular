@@ -1,0 +1,15 @@
+@use '../../../../variables.scss' as v;
+
+.title{
+    font-size: 2.5rem;
+    padding-bottom: 1%;
+    font-family: v.$font-primary;
+    color: v.$black-custom;
+}
+
+.container-title{
+    display: flex;
+    width: 100%;
+    height: 10%;
+    border-bottom: solid v.$brand-color;
+}

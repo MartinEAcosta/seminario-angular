@@ -36,7 +36,8 @@
                     </div>
 
                     <div class="buttons">
-                        <app-btn-primary>
+                        <app-btn-primary
+                            [routerLink]="['/payment/buy']">
                                 Comprar 
                         </app-btn-primary>
                         <btn-border-thin (click)="onAddToCart()" />

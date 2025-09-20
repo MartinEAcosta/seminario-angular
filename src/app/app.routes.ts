@@ -33,6 +33,12 @@ export const routes: Routes = [
   },
 
   {
+    path : 'payment',
+    loadChildren: () => 
+      import('./payment/payment.routes'),
+  },
+
+  {
     // En caso de no hacer match con ningun path regirige al home
     path : '**',
     redirectTo: ''

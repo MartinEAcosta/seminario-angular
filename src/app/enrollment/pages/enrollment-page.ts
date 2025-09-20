@@ -7,12 +7,13 @@ import { EnrollmentService } from '../services/enrollment.service';
 import { EnrollmentCardComponent } from "../components/enrollment-card/enrollment-card.component";
 import { SearchFilterBarComponent } from "src/app/shared/components/search-filter-bar/search-filter-bar.component";
 import { LoaderComponent } from "src/app/shared/components/loader/loader.component";
+import { PageTitleComponent } from "src/app/shared/components/page-title/page-title.component";
 
 @Component({
   selector: 'app-enrollment-page',
   templateUrl: './enrollment-page.html',
   styleUrl: './enrollment-page.scss',
-  imports: [EnrollmentCardComponent, SearchFilterBarComponent, LoaderComponent]
+  imports: [EnrollmentCardComponent, SearchFilterBarComponent, LoaderComponent, PageTitleComponent]
 })
 export default class EnrollmentsPage {
 

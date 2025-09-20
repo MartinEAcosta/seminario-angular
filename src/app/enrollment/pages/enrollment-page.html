@@ -4,44 +4,20 @@
             <h1 class="title">Tu biblioteca</h1>
         </div>
 
-        <div class="container-bar">
-            <div class="container-filter">
-                <p class="text-searchbar">Filtrar por:</p>
-
-                <div class="container-filter-select">
-                    <div class="container-select">
-                        <div class="option-default"> 
-                            <p class="option-default-selected">
-                                    Selecciona un filtro
-                            </p>
-                            <div
-                                class="container-down-icon">
-                                <img class="down-icon" src="assets/down-icon.svg" alt="">
-                            </div>
-                        </div>
-                        <ul class="options">
-                            <li class="option-filter"> Fecha de adquisición </li>
-                            <li class="option-filter"> Progreso </li>
-                            <li class="option-filter"> Completados </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container-search">
-                <div class="container-search-icon"  >
-                    <img class="search-icon" src="/assets/search-icon-white.svg" alt="">
-                </div>
-                <input class="input-search" placeholder="Escribe algo de tu interes..." type="text" name="" id="">
-            </div>
-        </div>
+        <app-search-filter-bar />
         
         <div class="container-enrollments">
-            @if( enrollmentResources.hasValue() ){
+            @if( enrollmentResources.isLoading() ){
+                <div class="container-loader">
+                    <app-loader />
+                </div>
+            }
+            @else{
                 @for( enrollment of enrollmentResources.value(); track enrollment.id ){
                     <app-enrollment-card [enrollment]="enrollment" />
                 }
             }
+
         </div>
     </div>
 </div>

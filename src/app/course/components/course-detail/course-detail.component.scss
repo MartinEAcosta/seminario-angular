@@ -43,26 +43,33 @@
     border-radius: 0.5rem;
     border: thin solid;
     font-size: medium;
-    box-shadow: 1px 3px 15px rgba(0, 0, 0, 0.25);
+    color: v.$white-custom;
+    font-weight: 600;
+    box-shadow: 1px 3px 15px rgba(0, 0, 0, 0.45);
 }
 
 .btn-primary{
     display: flex;
     align-items: center;
-    color: v.$black-custom;
-    background-color: v.$brand-color;
-    border-color: v.$brand-color;
-    font-weight: 600;
+    background-color: v.$black-custom;
+    border-color: v.$black-custom;
+    transition: all 0.3s ease;
 }
 
-.play-svg{
+.btn:hover{
+    box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.65);
+    transform: scale(1.05);
+    transition: all 0.5s ease;
+}
+
+.svg{
     width: 1rem;
     margin: 0 0.5rem 0 0;
 }
 
 .btn-secondary{
-    border-color: v.$golden-yellow;
-    
+    background-color: v.$brand-color;
+    border-color: v.$brand-color;
 }
 
 .section-hero .thumbnail {

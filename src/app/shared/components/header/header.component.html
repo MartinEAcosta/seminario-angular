@@ -4,7 +4,6 @@
   </div>
 
   <nav>
-
     <div class="container-search">
       <div class="container-input-svg">
         <img src="/assets/search-icon.svg" alt="Search icon" class="search-icon">
@@ -16,11 +15,14 @@
       <a [routerLink]="['/']">
         Inicio
       </a>
-      <a [routerLink]="['/enrollments']">
-        Biblioteca
+      <a [routerLink]="['/explore']">
+          Explorar
       </a>
-
       @if ( authService.authStatus() === "authenticated") {
+        <a [routerLink]="['/enrollments']">
+          Biblioteca
+        </a>
+
         <a [routerLink]="['/course/create']">
           Crea tu curso
         </a>

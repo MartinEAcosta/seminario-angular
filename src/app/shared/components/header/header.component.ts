@@ -1,7 +1,6 @@
-import { Component, ElementRef, HostListener, inject, viewChild } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
-import { RouterLink, Scroll } from '@angular/router';
-import { ɵDomEventsPlugin } from '@angular/platform-browser';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-header',

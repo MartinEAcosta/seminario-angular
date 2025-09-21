@@ -2,7 +2,10 @@
     <div class="container-content">
         <app-page-title [title]="'Continuar transacción'" />
 
-        <div class="shopping-list">
+        <div class="container-shopping-list">
+            @for( item of shoppingList().values(); track item){
+
+            }
             <!-- Pequeñas cards  -->
         </div>
 
@@ -11,6 +14,6 @@
         </div>
 
         <!-- gestor de pago supongo , hay que ver como implementar -->
-
+         
     </div>
 </div>

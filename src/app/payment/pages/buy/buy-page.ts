@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { CartService } from '../../../cart/state/cart.service';
+import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { CourseService } from 'src/app/course/services/course.service';
@@ -14,7 +15,10 @@ export class BuyPage {
 
   private router = inject(Router);
   private authService = inject(AuthService);
+  private cartService = inject(CartService);
   private courseService = inject(CourseService);
+
+  public shoppingList = computed( () => this.cartService.cart()); 
 
   constructor ( ) { }
 

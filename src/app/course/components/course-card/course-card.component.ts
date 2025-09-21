@@ -6,7 +6,7 @@ import { BtnBorderThinComponent } from '../../../shared/components/btn-border-th
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Course } from '../../models/course.interfaces';
 import { RouterModule } from '@angular/router';
-import { CartService } from '../../../shared/services/cart/cart.service';
+import { CartService } from '../../../cart/state/cart.service';
 
 @Component({
     selector: 'course-card',

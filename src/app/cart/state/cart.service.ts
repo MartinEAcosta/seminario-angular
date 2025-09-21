@@ -1,7 +1,7 @@
 import { computed, effect, Injectable, signal } from '@angular/core';
-import { Course } from '../../../course/models/course.interfaces';
+import { Course } from '../../course/models/course.interfaces';
 import { throwError } from 'rxjs';
-import { CartItem } from '../../models/cart.interface';
+import { CartItem } from '../models/cart.interface';
 
 const CART_KEY = 'cart';
 

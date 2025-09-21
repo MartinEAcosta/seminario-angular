@@ -1,0 +1,24 @@
+<div class="card-course">
+    <div class="details">
+        <div class="container-imgCourse">
+            <img
+                src={{item.course.thumbnail_url}}
+                alt="{{item.course.title}} image">
+        </div>
+        
+        <section class="rightSection">
+
+            <p class="title-course">
+                {{item.course.title}}
+            </p>
+
+            <div class="quantity-selector">
+                <p class="text-quota">Cupos a reservar:</p>
+                <button class="leftBtn" (click)="onDownQuantity( item )" type="button"> - </button>
+                <input class="inputNumber" type="number" name="" id="" value="{{ cart().get( item.course.id )?.quantity }}" readonly >
+                <button class="rightBtn" (click)="onUpQuantity( item )" type="button"> + </button>
+            </div>
+
+        </section>
+    </div>
+</div>

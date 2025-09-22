@@ -2,11 +2,27 @@
     <div class="container-content">
         <app-page-title [title]="'Continuar transacción'" />
 
-        <div class="container-shopping-list">
-            @for( item of shoppingList().values(); track item){
-
-            }
-            <!-- Pequeñas cards  -->
+    
+        <div class="container-shopping">
+            <div class="container-shopping-header">
+                <h1 class="header-title">
+                    Tu carrito de compras
+                </h1>
+            </div>
+            <div class="container-shopping-list">
+                @for( item of shoppingList().values(); track item){
+                    <div class="detailed-card">
+                        <div class="card">
+                            <app-cart-item-card [item]="item" /> 
+                        </div>
+                        <div class="detailed-resume">
+                            <p>{{ item.course.title }} x {{ item.quantity }} </p>
+                            <p>{{ item.course.price * item.quantity| currency }}</p>
+                        </div>
+                    </div>
+                }
+                <!-- Pequeñas cards  -->
+            </div>
         </div>
 
         <div class="shopping-detail">

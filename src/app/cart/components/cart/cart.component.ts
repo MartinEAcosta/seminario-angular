@@ -1,13 +1,15 @@
-import { Component, computed, inject, input, signal } from '@angular/core';
-import { CartService } from '../../state/cart.service';
+import { Component, computed, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
+
+import { CartService } from '../../state/cart.service';
 import { CartItemCardComponent } from "../cart-item-card/cart-item-card.component";
 
 @Component({
     selector: 'app-cart',
     templateUrl: './cart.component.html',
     styleUrl: './cart.component.scss',
-    imports: [NgClass, CartItemCardComponent],
+    imports: [NgClass, CartItemCardComponent, RouterLink],
 })
 export class CartComponent {
   

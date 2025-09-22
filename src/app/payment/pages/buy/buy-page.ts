@@ -4,10 +4,12 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { CourseService } from 'src/app/course/services/course.service';
 import { PageTitleComponent } from "src/app/shared/components/page-title/page-title.component";
+import { CartItemCardComponent } from "src/app/cart/components/cart-item-card/cart-item-card.component";
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-buy-page',
-  imports: [PageTitleComponent],
+  imports: [PageTitleComponent, CartItemCardComponent, CurrencyPipe],
   templateUrl: './buy-page.html',
   styleUrl: './buy-page.scss'
 })

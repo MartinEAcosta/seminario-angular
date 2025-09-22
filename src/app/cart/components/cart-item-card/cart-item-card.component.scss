@@ -43,7 +43,7 @@ img{
 .title-course{
     width: 70%;
     padding: 1% 0%;
-
+    pointer-events: none;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -59,7 +59,7 @@ img{
 
 .desc-course{
     width: 70%;
-
+    pointer-events: none;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -115,7 +115,7 @@ img{
     background-color: v.$brand-color;
     color: v.$white-custom;
     pointer-events: all;
-    z-index: 100;
+    z-index: 0;
     position: relative;
 }
 

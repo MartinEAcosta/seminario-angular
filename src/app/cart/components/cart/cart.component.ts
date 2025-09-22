@@ -4,12 +4,13 @@ import { NgClass } from '@angular/common';
 
 import { CartService } from '../../state/cart.service';
 import { CartItemCardComponent } from "../cart-item-card/cart-item-card.component";
+import { DiscountCodeInputComponent } from "../discount-code-input/discount-code-input.component";
 
 @Component({
     selector: 'app-cart',
     templateUrl: './cart.component.html',
     styleUrl: './cart.component.scss',
-    imports: [NgClass, CartItemCardComponent, RouterLink],
+    imports: [NgClass, CartItemCardComponent, RouterLink, DiscountCodeInputComponent],
 })
 export class CartComponent {
   

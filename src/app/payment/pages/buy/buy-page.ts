@@ -6,10 +6,11 @@ import { CourseService } from 'src/app/course/services/course.service';
 import { PageTitleComponent } from "src/app/shared/components/page-title/page-title.component";
 import { CartItemCardComponent } from "src/app/cart/components/cart-item-card/cart-item-card.component";
 import { CurrencyPipe } from '@angular/common';
+import { DiscountCodeInputComponent } from "src/app/cart/components/discount-code-input/discount-code-input.component";
 
 @Component({
   selector: 'app-buy-page',
-  imports: [PageTitleComponent, CartItemCardComponent, CurrencyPipe],
+  imports: [PageTitleComponent, CartItemCardComponent, CurrencyPipe, DiscountCodeInputComponent],
   templateUrl: './buy-page.html',
   styleUrl: './buy-page.scss'
 })
@@ -17,7 +18,7 @@ export class BuyPage {
 
   private router = inject(Router);
   private authService = inject(AuthService);
-  private cartService = inject(CartService);
+  public cartService = inject(CartService);
   private courseService = inject(CourseService);
 
   public shoppingList = computed( () => this.cartService.cart()); 

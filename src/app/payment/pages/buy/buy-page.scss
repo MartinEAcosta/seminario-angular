@@ -17,10 +17,9 @@
 .container-shopping{
     display: flex;
     width: 50vw;
-    height: 50vh;
+    height: 55vh;
     flex-direction: column;
     margin: 3%;
-    overflow-y: scroll;
     overflow-x: hidden;
     box-sizing: content-box;
     border-radius: 2rem;
@@ -30,7 +29,7 @@
 }
 
 .container-shopping::-webkit-scrollbar {
-  width: 12px; /* grosor */
+  width: 0px; /* grosor */
 }
 
 .container-shopping::-webkit-scrollbar-track {
@@ -46,18 +45,22 @@
 
 .container-shopping-header{
     display: flex;
+    position: sticky;
+    top: 0;
     width: 100%;
-    height: 100%;
+    height: 15%;
     font-family: v.$font-primary;
     font-weight: 500;
     color: v.$black-custom;
+    z-index: 10;
     background-color: v.$white-custom;
     border-bottom: solid thin rgba(153, 153, 153, 0.5);
+    box-shadow: 5px 5px 15px rgba( 0 ,0 ,0 ,0.1);
 }
 
 .header-title{
     display: flex;
-    padding: 1% 2.5%;
+    padding: 1.5% 2.5%;
 }
 
 .container-shopping-list{
@@ -72,6 +75,10 @@
     width: 100%;
 }
 
+.card{
+    width: 60%;
+}
+
 .detailed-resume{
     display: flex;
     flex-direction: column;
@@ -80,14 +87,49 @@
     justify-content: center;
     align-items: center;
     border-bottom: solid thin rgba(203 ,203, 203, 0.75);
-    border-left: solid thin rgba(203 ,203, 203, 0.75)
+    border-left: solid thin rgba(203 ,203, 203, 0.75);
 }
 
 .detailed-resume p{
     font-size: small;
 }
 
+.container-shopping-footer{
+    display: flex;
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    font-family: v.$font-primary;
+    color: v.$white-custom;
+    align-items: center;
+    padding: 2% 1%;
+    z-index: 10;
+    background-color: v.$brand-color;
+    box-shadow: 5px 5px 5px 15px rgba( 0 ,0 ,0 ,0.1);
+}
 
-.card{
-    width: 60%;
+.container-referral{
+    display: flex;
+    align-items: center;
+    width: 55%;
+}
+
+.btn-apply{
+    display: flex;
+    justify-content: center;
+    background-color: v.$black-custom;
+    color: v.$white-custom;
+    border-radius: 1rem;
+    border: none;
+}
+
+.container-total{
+    display: flex;
+    width: 30%;
+    align-items: center;
+    height: 100%;
+}
+
+.total-text{
+    margin: auto;
 }

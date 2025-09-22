@@ -100,4 +100,8 @@ export class CartService {
     return this.cart();
   }
 
+  calculateTotal = ( ) => {
+    // TODO: immplemtnar
+  }
+
 }

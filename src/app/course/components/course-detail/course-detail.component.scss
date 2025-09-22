@@ -46,6 +46,7 @@
     color: v.$white-custom;
     font-weight: 600;
     box-shadow: 1px 3px 15px rgba(0, 0, 0, 0.45);
+    transition: all 0.3s ease;
 }
 
 .btn-primary{
@@ -53,7 +54,6 @@
     align-items: center;
     background-color: v.$black-custom;
     border-color: v.$black-custom;
-    transition: all 0.3s ease;
 }
 
 .btn:hover{

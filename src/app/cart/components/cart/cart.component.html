@@ -13,10 +13,7 @@
         }
       </div>
       <div class="actions">
-        <div class="container-referral">
-          <p class="text-referral">¿Tiene un cupón de descuento? Ingresalo Aquí.</p>
-          <input type="text" placeholder="CURSOS-2025">
-        </div>
+        <app-discount-code-input />
         <div class="container-btns">
           <button class="btn-continue" (click)="this.onCloseCart()">Continuar Explorando</button>
           <button class="btn-pay" [routerLink]="['payment/buy']">Finalizar Compra</button>

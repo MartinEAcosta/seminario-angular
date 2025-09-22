@@ -11,11 +11,13 @@
 <div class="container-recommended">
     <h2>Los mejores valorados</h2>
 </div>
-    
-    <app-course-list 
+
+<div class="container-course-list">
+<app-course-list 
     [courses]='this.coursesResource.value()!' 
     [isLoading]='this.coursesResource.isLoading()'
     [errorMessage]='this.coursesResource.error()'
-    />
+/>
+</div>
 <app-modal-error-message />
 <app-cart />

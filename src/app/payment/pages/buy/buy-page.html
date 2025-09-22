@@ -6,7 +6,7 @@
         <div class="container-shopping">
             <div class="container-shopping-header">
                 <h1 class="header-title">
-                    Tu carrito de compras
+                    Carrito de compras
                 </h1>
             </div>
             <div class="container-shopping-list">
@@ -16,13 +16,23 @@
                             <app-cart-item-card [item]="item" /> 
                         </div>
                         <div class="detailed-resume">
-                            <p>{{ item.course.title }} x {{ item.quantity }} </p>
+                            <p> <span class="shortened-title">{{ item.course.title }}</span> x {{ item.quantity }} </p>
                             <p>{{ item.course.price * item.quantity| currency }}</p>
                         </div>
                     </div>
                 }
-                <!-- Pequeñas cards  -->
             </div>
+
+            <div class="container-shopping-footer">
+                <div class="container-referral">
+                    <app-discount-code-input />
+                </div>
+                <div class="container-total">
+                    <p class="total-text">Total a pagar: </p>
+                    <span> {{ this.cartService.calculateTotal()}}</span>
+                </div>
+            </div>
+
         </div>
 
         <div class="shopping-detail">

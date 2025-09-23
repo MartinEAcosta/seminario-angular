@@ -1,24 +1,30 @@
-import { CourseFormState } from './../../state/course-form-state';
-import { Component, effect, Input, Output, signal, EventEmitter, Signal, inject } from '@angular/core';
+import { Component, effect, Input, Output, EventEmitter, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subscription, tap } from 'rxjs';
 
 import type { Course } from '../../models/course.interfaces';
-import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
+import { CourseFormState } from './../../state/course-form-state';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { FileService } from 'src/app/shared/services/file/file.service';
 import { CourseService } from '../../services/course.service';
-import { Router } from '@angular/router';
+import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
 import { CategorySelectComponent } from "src/app/category/components/category-select/category-select.component";
+import { ThumbnailSelectorComponent } from "../thumbnail-selector/thumbnail-selector.component";
 
 @Component({
   selector: 'app-form-course',
   templateUrl: './form-course.component.html',
   styleUrl: './form-course.component.scss',
-  imports: [ReactiveFormsModule, NgClass, FormErrorLabelComponent, CategorySelectComponent],
+  imports: [ReactiveFormsModule, NgClass, FormErrorLabelComponent, CategorySelectComponent, ThumbnailSelectorComponent],
 })
 export class FormCourseComponent {
+
+  private router = inject(Router);
+  private authService = inject(AuthService);
+  private courseService = inject(CourseService);
+  private fileService = inject(FileService);
 
   @Input()
   public course! : Course | undefined;
@@ -27,19 +33,12 @@ export class FormCourseComponent {
   @Output() 
   public submitForm = new EventEmitter<void>();
   
-  public tempMedia = signal<string[]>([]); 
-  public tempThumbnail = signal<string | undefined>( undefined );
-  
-  private router = inject(Router);
-  private authService = inject(AuthService);
-  private courseService = inject(CourseService)
-  private fileService = inject(FileService);
-  private courseFormState = inject(CourseFormState)
-  
+  public courseFormState = inject(CourseFormState);
+
   constructor ( ) {
     effect( () => {
-      if( this.course != undefined ){
-        this.tempThumbnail.set( this.course?.thumbnail_url ? this.course.thumbnail_url : undefined );
+      if( this.course != undefined && this.course.thumbnail_url ){
+        this.courseFormState.setTempThumbnail( this.course?.thumbnail_url );
       }
     });
   }
@@ -74,21 +73,6 @@ export class FormCourseComponent {
                                                     ).subscribe();
   }
 
-  
-  onThumbnailChanged = ( event : Event ) => {
-    const thumbnailChanged = ( event.target as HTMLInputElement ).files;
-    if( !thumbnailChanged ) return;
-    
-
-    // En caso de que el el fileList no sea undefined o vacio, permite generar url para utilizar de forma local
-    const imageUrl = Array.from( thumbnailChanged ?? [ ] )
-                                                  .map( 
-                                                        (file) => URL.createObjectURL(file)
-                                                  );
-
-    this.tempThumbnail.set( imageUrl.shift() );
-    this.courseFormState.thumbnailFile.set( thumbnailChanged[0] );
-  }
 
   onSubmit = ( ) : void => {
 

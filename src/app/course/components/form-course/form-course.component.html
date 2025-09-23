@@ -1,14 +1,17 @@
 <section class="bg-section">
         <div class="container">
-            <figure class="img-course">
-                <!-- TODO : Condicional de si no agrego una portada, podria estar bien -->
+            <!-- <figure class="img-course">
                  @if( tempThumbnail() ) {
                     <img [src]="tempThumbnail()" alt="Portada del curso" class="img-course">
                  }
                  @else{
                     <img src="assets/not-found-image.png" alt="">
                  }
-            </figure>
+            </figure> -->
+
+            <div class="container-thumbnail">
+                <app-thumbnail-selector />
+            </div>
 
             <form class="form-course" [formGroup]="courseForm" (ngSubmit)="onSubmit()">
 
@@ -120,29 +123,21 @@
                         name="file" 
                         class="input-file"
                         accept="image/*"
-                        (change)="onThumbnailChanged( $event )"
+                        (change)="this.courseFormState.onThumbnailChanged( $event )"
                         />
                     <label for="file" class="custom-file-label">
                         <img src="assets/thumbnail-icon.svg" alt="">
-                        Seleccionar portada
+                        Agregar portada
                     </label>
                 </div>
             </form>
         </div>
 
         <section class="bg-slider-content">
-            <div class="thumbnail-container card-thumbnail">
-                <figure class="figure thumbnail-figure">
-                    @if( this.course?.thumbnail_url  ){
-                        <img [src]="this.course?.thumbnail_url " alt="" class="thumbnail-image">
-                    }
-                    @else{
-                        <img src="assets/image-icon.svg" alt="" class="not-selected-thumnail">
-                        <p class="text-simple">Seleccionar una portada</p>
-                    }
-                </figure>
+            <div class="container-thumbnail-selector">
+                <app-thumbnail-selector  />
             </div>
-            <div class="lessons-container card-thumbnail">
+            <div class="lessons-container">
                 <figure class="figure">
                     <img src="./assets/add-icon.svg" alt="">
                     <p class="text-simple"> Añade una nueva lección</p>

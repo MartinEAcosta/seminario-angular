@@ -106,13 +106,14 @@ export class CourseService {
                                       );
   }
 
+  // TODO : Podria ser migrado a CourseFormState debido a que no genera ninguna petición al back
   public createForm = ( ) : FormGroup => {
     return this.fb.group({
       title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
       description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
-      id_category : [ '68c0586b3f02a200a876e493'  ],
+      id_category : [ '' ],
       thumbnail_url : [ '' ],
-      price : [ 0 , [ Validators.required ] ],
+      price : [ 0 , [ Validators.required , Validators.min(0) ] ],
       wantLimitedCapacity: [ true ],
       capacity : [ { value : 5 , disabled: false } , [ Validators.min(5) ] ], 
     });

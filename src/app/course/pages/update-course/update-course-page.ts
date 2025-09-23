@@ -37,7 +37,6 @@ export class UpdateCoursePageComponent {
     });
   }
 
-
   public onUpdateCourse = ( ) : void => {
 
     const updateCourseDTO = CourseMapper.mapToCourseDto( this.courseForm );

@@ -1,0 +1,19 @@
+<div class="container-thumbnail card-thumbnail">
+    <input 
+        type="file" 
+        id="file" 
+        name="file" 
+        class="input-file"
+        accept="image/*"
+        (change)="this.courseFormState.onThumbnailChanged( $event )"
+    />
+    <div class="figure thumbnail-figure">
+        @if( this.courseFormState.tempThumbnail() ){
+            <img [src]="this.courseFormState.tempThumbnail()" alt="" class="thumbnail-image">
+        }
+        @else{
+        <img src="assets/image-icon.svg" alt="" class="not-selected-thumnail">
+        <p class="text-simple">Seleccionar una portada</p>
+        }
+    </div>
+</div>

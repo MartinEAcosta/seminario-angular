@@ -61,6 +61,7 @@
 .header-title{
     display: flex;
     padding: 1.5% 2.5%;
+
 }
 
 .container-shopping-list{
@@ -76,7 +77,8 @@
 }
 
 .card{
-    width: 60%;
+    max-width: 60%;
+    min-width: 60%;
 }
 
 .detailed-resume{
@@ -97,39 +99,45 @@
 .container-shopping-footer{
     display: flex;
     position: sticky;
-    bottom: 0;
+    bottom: 0px;
+    margin-top: auto;
     width: 100%;
     font-family: v.$font-primary;
     color: v.$white-custom;
     align-items: center;
-    padding: 2% 1%;
     z-index: 10;
+    padding: 0% 2.5%;
     background-color: v.$brand-color;
     box-shadow: 5px 5px 5px 15px rgba( 0 ,0 ,0 ,0.1);
 }
 
 .container-referral{
     display: flex;
+    flex-direction: column;
     align-items: center;
-    width: 55%;
-}
-
-.btn-apply{
-    display: flex;
-    justify-content: center;
-    background-color: v.$black-custom;
-    color: v.$white-custom;
-    border-radius: 1rem;
-    border: none;
+    max-width: 60%;
+    min-width: 60%;
+    padding: 1% 0%;
+    border-right: solid thin rgba(203 ,203, 203, 0.75);
 }
 
 .container-total{
     display: flex;
-    width: 30%;
+    max-width: 40%;
+    min-width: 40%;
     align-items: center;
     height: 100%;
+    margin-left: 1.5%;
 }
 
 .total-text{
-    margin: auto;
+    display: flex;
+    width: 40%;
+}
+
+.price-text{
+    display: flex;
+    width: 60%;
+    font-weight: 500;
+
 }

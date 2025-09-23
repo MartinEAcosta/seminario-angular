@@ -40,14 +40,14 @@ export class CartService {
   cart = signal< Map<string,CartItem> >( loadFromLocalStorage() );
   cartFromLocalStorage = computed ( () => this.cart() );
 
-  saveToLocalStorage = effect( ( ) => {
+  private saveToLocalStorage = effect( ( ) => {
     const cartArrayValues = Array.from( this.cartFromLocalStorage().values() )
     const cartSearilized = JSON.stringify( cartArrayValues );
 
     localStorage.setItem( CART_KEY , cartSearilized );
   });
 
-  onAddToCart = ( course : Course )  => {
+  public onAddToCart = ( course : Course )  => {
     const currentCart = new Map<string, CartItem>( this.cart() );
 
     if( course.capacity != undefined && course.capacity <= 0 ) return;
@@ -61,7 +61,7 @@ export class CartService {
     return this.cart();
   }
 
-  upQuantity = ( course : Course , currentReserved : number ) : Map<string,CartItem> => {
+  public upQuantity = ( course : Course , currentReserved : number ) : Map<string,CartItem> => {
     const currentCart = new Map<string,CartItem>( this.cart() );
     
     if( currentCart.get( course.id )?.course.capacity === undefined 
@@ -83,7 +83,7 @@ export class CartService {
     return this.cart();
   }
 
-  downQuantity = ( course : Course , currentReserved : number ) : Map<string,CartItem> => {
+  public downQuantity = ( course : Course , currentReserved : number ) : Map<string,CartItem> => {
     const currentCart = new Map<string,CartItem>( this.cart() );
 
     // Modifico el mapa
@@ -100,8 +100,14 @@ export class CartService {
     return this.cart();
   }
 
-  calculateTotal = ( ) => {
-    // TODO: immplemtnar
+  public calculateTotal = ( ) => {
+    let total = 0;
+    for (const item of this.cart().values()) {
+      total += (item.course.price * item.quantity);
+    }
+    // * En caso de haber cupón de descuento verificar con el back-end
+    return total;
   }
+  
 
 }

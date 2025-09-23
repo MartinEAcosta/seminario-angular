@@ -29,14 +29,10 @@
                 </div>
                 <div class="container-total">
                     <p class="total-text">Total a pagar: </p>
-                    <span> {{ this.cartService.calculateTotal()}}</span>
+                    <span class="price-text"> {{ this.cartService.calculateTotal() | currency }}</span>
                 </div>
             </div>
 
-        </div>
-
-        <div class="shopping-detail">
-            <!-- Calculadora de precio -->
         </div>
 
         <!-- gestor de pago supongo , hay que ver como implementar -->

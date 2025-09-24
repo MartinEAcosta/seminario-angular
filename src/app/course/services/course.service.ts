@@ -48,7 +48,6 @@ export class CourseService {
                   );
   }
 
-  // TODO : REVISAR METODO
   public createCourse = ( courseRequest : CourseDTO ) : Observable<Course> => {
     return this.http
                   .post<CourseResponse>(  
@@ -70,7 +69,6 @@ export class CourseService {
 
   public updateCourse = ( courseRequest : CourseDTO ) : Observable<Course> => {
     const { id , ...rest } = courseRequest;
-    console.log(courseRequest);
     return this.http
                   .put<CourseResponse>(
                                         `${this.baseURL}/update/${id}` ,

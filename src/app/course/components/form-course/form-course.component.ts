@@ -5,19 +5,20 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subscription, tap } from 'rxjs';
 
 import type { Course } from '../../models/course.interfaces';
-import { CourseFormState } from './../../state/course-form-state';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { FileService } from 'src/app/shared/services/file/file.service';
 import { CourseService } from '../../services/course.service';
 import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
 import { CategorySelectComponent } from "src/app/category/components/category-select/category-select.component";
 import { ThumbnailSelectorComponent } from "../thumbnail-selector/thumbnail-selector.component";
+import { SliderContentManagerComponent } from "../slider-content-manager/slider-content-manager.component";
+import { CourseFormState } from '../../state/course/course-form-state';
 
 @Component({
   selector: 'app-form-course',
   templateUrl: './form-course.component.html',
   styleUrl: './form-course.component.scss',
-  imports: [ReactiveFormsModule, NgClass, FormErrorLabelComponent, CategorySelectComponent, ThumbnailSelectorComponent],
+  imports: [ReactiveFormsModule, NgClass, FormErrorLabelComponent, CategorySelectComponent, ThumbnailSelectorComponent, SliderContentManagerComponent],
 })
 export class FormCourseComponent {
 

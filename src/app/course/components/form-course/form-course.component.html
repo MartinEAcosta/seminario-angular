@@ -1,13 +1,5 @@
 <section class="bg-section">
         <div class="container">
-            <!-- <figure class="img-course">
-                 @if( tempThumbnail() ) {
-                    <img [src]="tempThumbnail()" alt="Portada del curso" class="img-course">
-                 }
-                 @else{
-                    <img src="assets/not-found-image.png" alt="">
-                 }
-            </figure> -->
 
             <div class="container-thumbnail">
                 <app-thumbnail-selector />
@@ -133,16 +125,6 @@
             </form>
         </div>
 
-        <section class="bg-slider-content">
-            <div class="container-thumbnail-selector">
-                <app-thumbnail-selector  />
-            </div>
-            <div class="lessons-container">
-                <figure class="figure">
-                    <img src="./assets/add-icon.svg" alt="">
-                    <p class="text-simple"> Añade una nueva lección</p>
-                </figure>
-            </div>
-        </section>
+        <app-slider-content-manager />
 
     </section> 

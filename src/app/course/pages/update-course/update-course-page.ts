@@ -7,7 +7,7 @@ import { FileService } from 'src/app/shared/services/file/file.service';
 import { CourseMapper } from '@mappers/course.mapper';
 import { FormCourseComponent } from "src/app/course/components/form-course/form-course.component";
 import { LoaderComponent } from "src/app/shared/components/loader/loader.component";  
-import { CourseFormState } from '../../state/course-form-state';
+import { CourseFormState } from '../../state/course/course-form-state';
 
 @Component({
   selector: 'app-update-course-page',

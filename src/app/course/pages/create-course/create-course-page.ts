@@ -7,7 +7,7 @@ import { CourseService } from '../../services/course.service';
 import { FileService } from 'src/app/shared/services/file/file.service';
 import { CourseMapper } from '@mappers/course.mapper';
 import { FormCourseComponent } from "../../components/form-course/form-course.component";
-import { CourseFormState } from '../../state/course-form-state';
+import { CourseFormState } from '../../state/course/course-form-state';
 
 @Component({
   selector: 'app-create-course-page',

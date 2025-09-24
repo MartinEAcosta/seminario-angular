@@ -1,5 +1,5 @@
 import { Component, EventEmitter, inject, input } from '@angular/core';
-import { CourseFormState } from '../../state/course-form-state';
+import { CourseFormState } from '../../state/course/course-form-state';
 
 @Component({
   selector: 'app-thumbnail-selector',

@@ -17,7 +17,6 @@ export class CourseService {
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}courses`;
 
-  private fb = inject(FormBuilder)
 
   public getAll = ( ) : Observable<void | Course[]> => {
     return this.http
@@ -104,29 +103,4 @@ export class CourseService {
                                       );
   }
 
-  // TODO : Podria ser migrado a CourseFormState debido a que no genera ninguna petición al back
-  public createForm = ( ) : FormGroup => {
-    return this.fb.group({
-      title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
-      description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
-      id_category : [ '' ],
-      thumbnail_url : [ '' ],
-      price : [ 0 , [ Validators.required , Validators.min(0) ] ],
-      wantLimitedCapacity: [ true ],
-      capacity : [ { value : 5 , disabled: false } , [ Validators.min(5) ] ], 
-    });
-  }
-
-  public patchValuesForm = ( course : Course , form : FormGroup ) : FormGroup => {
-    form.patchValue({
-      title: course.title,
-      description: course.description,
-      id_category: course.id_category,
-      thumbnail_url: course.thumbnail_url,
-      price: course.price,
-      capacity: course.capacity
-    });
-
-    return form;
-  }
 }

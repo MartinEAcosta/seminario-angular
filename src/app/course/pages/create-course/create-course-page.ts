@@ -24,7 +24,7 @@ export class CreateCoursePageComponent {
   private authService = inject(AuthService);
   private courseFormState = inject(CourseFormState);
   
-  public courseForm : FormGroup = this.courseService.createForm();
+  public courseForm : FormGroup = this.courseFormState.createForm();
 
   constructor ( ) { }
 

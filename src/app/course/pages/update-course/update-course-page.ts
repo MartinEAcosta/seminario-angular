@@ -26,14 +26,14 @@ export class UpdateCoursePageComponent {
   private courseFormState = inject(CourseFormState);
   
   public course : Course | undefined;
-  public courseForm = this.courseService.createForm();
+  public courseForm = this.courseFormState.createForm();
   
   constructor ( private activatedRoute : ActivatedRoute ) {  }
 
   ngOnInit( ) {
     this.activatedRoute.data.subscribe(({ resolvedCourse }) => {
       this.course = resolvedCourse;
-      this.courseForm = this.courseService.patchValuesForm( this.course! , this.courseForm );
+      this.courseForm = this.courseFormState.patchValuesForm( this.course! , this.courseForm );
     });
   }
 

@@ -1,0 +1,72 @@
+@use '../../../../variables.scss' as v;
+
+.form-lesson{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+
+}
+
+.container-lesson-top{
+    width: 100%;
+    height: 20%;
+    margin: 1%;
+}
+
+.input-title{
+    display: flex;
+    background-color: inherit;
+    border: none;
+    border-bottom: solid thin v.$brand-color;
+    outline: none;
+    width: 60%;
+    height: 55%;
+    font-size: large;
+    color: v.$white-custom;
+    font-family: v.$font-primary;
+    padding: 0% 1%;
+}
+
+.textarea-desc{
+    display: flex;
+    width: 65%;
+    height: 100%;
+    margin: 0% 1%;
+    padding: 1%;
+    outline: none;
+    resize: none;
+    border: solid thin v.$black-custom;
+    border-radius: 0.5rem;
+    font-family: v.$font-primary;
+    color: v.$white-custom;
+    background-color: rgba(233,233,233,0.2);
+}
+
+.textarea-desc::placeholder{
+    font-family: v.$font-primary;
+    color: v.$black-custom;
+}
+
+.container-btns{
+    display: flex;
+    width: 100%;
+    height: 20%;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+    position: absolute;
+    bottom: -2%;
+}
+
+.container-btns button{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    height: 55%;
+    padding: 2%;
+    border-radius: 0.5rem;
+}
+

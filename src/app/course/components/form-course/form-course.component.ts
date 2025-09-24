@@ -11,8 +11,8 @@ import { CourseService } from '../../services/course.service';
 import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
 import { CategorySelectComponent } from "src/app/category/components/category-select/category-select.component";
 import { ThumbnailSelectorComponent } from "../thumbnail-selector/thumbnail-selector.component";
-import { SliderContentManagerComponent } from "../slider-content-manager/slider-content-manager.component";
 import { CourseFormState } from '../../state/course/course-form-state';
+import { SliderContentManagerComponent } from 'src/app/lesson/components/slider-content-manager/slider-content-manager.component';
 
 @Component({
   selector: 'app-form-course',

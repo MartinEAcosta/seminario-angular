@@ -1,0 +1,35 @@
+<section 
+    [ngClass]="[ lessonFormState.isLessonFormVisible() ? 'expand' : '' ]"
+    class="bg-slider-content">
+    <div class="container-options">
+        <div class="container-thumbnail-selector">
+            <app-thumbnail-selector  />
+        </div>
+        <div class="container-lesson-thumbnail">
+            <figure class="figure">
+                <img src="./assets/add-icon.svg" alt="Add Icon">
+                <p class="text-simple"> Añade una nueva lección</p>
+            </figure>
+        </div>
+    </div>
+
+    <div class="container-lesson-expand">
+        <div class="container-media-preview">
+            <figure class="figure-attach">
+                <img
+                    class="attach-icon" 
+                    src="./assets/attach-icon.svg" alt="Attach Icon">
+                <p class="text-simple"> Añade contenido a la lección</p>
+            </figure>
+        </div>
+        
+        
+    </div>
+    
+    <div class="icon-expand">
+        <figure (click)="this.lessonFormState.toggleVisibilityOfLessonForm()">
+            <img src="./assets/expand-icon.svg" alt="Expand icon">
+        </figure>
+    </div>
+
+</section>

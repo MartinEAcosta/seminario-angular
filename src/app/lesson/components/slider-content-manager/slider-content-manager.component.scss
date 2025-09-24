@@ -10,10 +10,26 @@
     height: 31vh;
     background-color: v.$black-custom;
     overflow: hidden;
+    transition: height 0.5s ease;
 }
 
 .bg-slider-content.expand{
-    height: 100vh;
+    height: 100%;
+
+
+    & .container-options {
+        height: 31vh;
+    }
+    & .icon-expand {
+        display: flex;
+        margin-top: auto;
+        bottom: 0px;
+
+        & img {
+            transform: rotate(-180deg);
+            transition: all 0.5s ease;
+        }
+    }
 }
 
 .container-options{
@@ -66,25 +82,50 @@ img{
 
 .container-lesson-expand{
     display: flex;
-    width: 100%;
-    margin: 1%;
+    width: 96%;
+    height: 100%;
+    border-top: solid thin rgba(233, 233, 233, 0.15);
+    box-shadow: 0 -4px 6px -5px rgba(0, 0, 0, 0.3);
+    margin: auto;
+    padding: 1% 0%;
+}
+
+.container-media-preview{
+    display: flex;
+    width: 45%;
+    height: 50vh;
+    border-radius: 1rem;
+    background-color: rgb(53, 53, 53);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+.figure-attach{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    text-align: center;
+}
+
+.attach-icon{
+    margin: auto;
+    width: 12%;
 }
 
 .icon-expand{
     position: sticky;
     width: 100%;
     height: 20px;
-    background-color: rgba(233, 233, 233, 0.25);
-    bottom: -1%;
+    background-color: rgb(71, 71, 71);
+    bottom: -2%;
 }
 
 .icon-expand figure{
     width: 100%;
-    height: 100%;
+    height: 90%;
     cursor: pointer;
 }
 
 .icon-expand figure img{
     width: 100%;
-    height: 100%;
+    height: 90%;
 }

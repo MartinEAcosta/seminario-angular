@@ -28,7 +28,7 @@ export class FormCourseComponent {
   private fileService = inject(FileService);
 
   @Input()
-  public course! : Course | undefined;
+  public course : Course | undefined;
   @Input()
   public courseForm! : FormGroup;
   @Output() 

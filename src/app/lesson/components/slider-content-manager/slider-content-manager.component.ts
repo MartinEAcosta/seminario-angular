@@ -1,8 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { ThumbnailSelectorComponent } from 'src/app/course/components/thumbnail-selector/thumbnail-selector.component';
 import { LessonFormState } from '../../state/lesson/lesson-form-state';
 import { FormLessonComponent } from "../form-lesson/form-lesson.component";
+import { rxResource } from '@angular/core/rxjs-interop';
+import { LessonService } from '../../services/lesson.service';
+import { Lesson } from '../../models/lesson.interfaces';
 
 @Component({
   selector: 'app-slider-content-manager',
@@ -12,6 +15,18 @@ import { FormLessonComponent } from "../form-lesson/form-lesson.component";
 })
 export class SliderContentManagerComponent {
 
-  lessonFormState = inject(LessonFormState);
+  public lessonService = inject(LessonService);
+  public lessonFormState = inject(LessonFormState);
+  public courseId = input<string | null>();
+  
+  public lessonsResource = rxResource<Lesson[],string>({
+    request: () => this.courseId()!,
+    loader: ({request}) => this.lessonService.getAllLessonFromCourse( request ),
+    
+  });
+
+  constructor( ) { }
+
+
 
 }

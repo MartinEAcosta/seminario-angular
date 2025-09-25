@@ -18,7 +18,7 @@ export class CourseService {
   private baseURL : string = `${environment.apiURL}courses`;
 
 
-  public getAll = ( ) : Observable<void | Course[]> => {
+  public getAll = ( ) : Observable<Course[]> => {
     return this.http
                   .get<CourseListResponse>(`${this.baseURL}`)
                   .pipe(

@@ -3,15 +3,20 @@
     class="bg-slider-content">
     <div class="container-options">
         <div class="container-thumbnail-selector">
-            <app-thumbnail-selector  />
+            <app-thumbnail-selector />
         </div>
         <div class="container-lesson-thumbnail">
-            <figure class="figure">
+            <figure (click)="lessonFormState.onAddLesson()" class="figure">
                 <img 
                     class="icon"
                     src="./assets/add-icon.svg" alt="Add Icon">
                 <p class="text-simple"> Añade una nueva lección</p>
             </figure>
+            <!-- @for ( lesson of lessons(); track lesson) {
+                <figure class="figure">
+                    <img src="" alt="">
+                </figure>
+            } -->
         </div>
     </div>
 

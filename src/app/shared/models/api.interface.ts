@@ -52,7 +52,7 @@ export interface CategoryUniqueResponse {
   slug : string;
 }
 
-export type CategoryListResponse = ApiResponse<CategoryUniqueResponse[]>
+export type CategoryListResponse = ApiResponse<CategoryUniqueResponse[]>;
 
 // * Enrollment *
 
@@ -79,5 +79,11 @@ export interface EnrollmentDetailedUniqueResponse {
   completionDate : Date;
 }
 
-export type EnrollmentListResponse = ApiResponse<EnrollmentUniqueResponse[]>
-export type EnrollmentDetailedListResponse = ApiResponse<EnrollmentDetailedUniqueResponse[]>
+export type EnrollmentListResponse = ApiResponse<EnrollmentUniqueResponse[]>;
+export type EnrollmentDetailedListResponse = ApiResponse<EnrollmentDetailedUniqueResponse[]>;
+
+//* Lessons * //
+
+export interface LessonUniqueResponse {
+  
+}

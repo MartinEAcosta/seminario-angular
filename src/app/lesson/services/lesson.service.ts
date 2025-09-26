@@ -3,6 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Lesson } from '../models/lesson.interfaces';
 import { catchError, map, Observable, throwError } from 'rxjs';
+import { LessonMapper } from '@mappers/lesson.mapper';
+import { LessonListResponse, LessonResponse } from 'src/app/shared/models/api.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +18,10 @@ export class LessonService {
 
   public getAllLessonFromCourse = ( courseId : string ) : Observable<Lesson[]> => {
     return this.http
-                    .get<LessonResponse>(`${this.baseURL}/${courseId}`)
+                    .get<LessonListResponse>(`${this.baseURL}/${courseId}`)
                     .pipe(
                       map( (lessonResponse) => {
+                        console.log(lessonResponse)
                         return LessonMapper.mapResponseToLessonArray( lessonResponse );
                       }),
                       catchError( ({ error }) => {

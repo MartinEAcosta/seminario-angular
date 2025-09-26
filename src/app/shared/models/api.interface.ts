@@ -85,5 +85,16 @@ export type EnrollmentDetailedListResponse = ApiResponse<EnrollmentDetailedUniqu
 //* Lessons * //
 
 export interface LessonUniqueResponse {
-  
+  id : string;
+  id_course : string;
+  title : string;
+  description : string;
+  id_file : string;
+  unit : number;
+  chapter : number;
+  lesson_number : number;
+  uploaded_at : Date;
 }
+
+export type LessonResponse = ApiResponse<LessonUniqueResponse>;
+export type LessonListResponse = ApiResponse<LessonUniqueResponse[]>

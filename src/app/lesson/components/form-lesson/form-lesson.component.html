@@ -21,9 +21,9 @@
 
         <form-error-label [control]="lessonForm.get('description')!" [warningSvg]="true" />
     </div>
-    <div class="container-btns">
-        <button>Anterior lección</button>
-        <button>Siguiente lección</button>
+    <div class="container-lesson-bottom">
+        <app-btn-navigation [text]="'Anterior lección'"  [isNextButton]="false" />
+        <app-btn-navigation [text]="'Siguiente lección'" [isNextButton]="true" />
     </div>
 
 </form>

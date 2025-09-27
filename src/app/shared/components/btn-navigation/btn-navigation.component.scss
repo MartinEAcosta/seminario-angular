@@ -1,0 +1,26 @@
+@use '../../../../variables.scss' as v;
+
+.btn-navigation{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    height: 2.5rem;
+    padding: 2%;
+    border-radius: 0.5rem;
+    border: none;
+    font-family: v.$font-primary;
+    font-weight: 600;
+    box-shadow: 5px 5px 5px rgba(0 , 0, 0, 0.4);
+}
+
+.back{
+    background-color: v.$yellow-caution;
+    color: v.$black-custom;
+}
+
+.next{
+    background-color: v.$green-success;
+    color: v.$black-custom;
+}

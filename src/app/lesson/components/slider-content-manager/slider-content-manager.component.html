@@ -1,25 +1,46 @@
 <section 
     [ngClass]="[ lessonFormState.isLessonFormVisible() ? 'expand' : '' ]"
     class="bg-slider-content">
-    <div class="container-options">
-        <div class="container-thumbnail-selector">
-            <app-thumbnail-selector />
-        </div>
-        <div class="container-lesson-thumbnail">
-            <figure (click)="lessonFormState.onAddLesson()" class="figure">
-                <img 
-                    class="icon"
-                    src="./assets/add-icon.svg" alt="Add Icon">
-                <p class="text-simple"> Añade una nueva lección</p>
-            </figure>
-            <!-- @for ( lesson of lessons(); track lesson) {
-                <figure class="figure">
-                    <img src="" alt="">
-                </figure>
-            } -->
-        </div>
-    </div>
+    @if( lessonsResource.isLoading() ){
+        <app-loader />
+    }
+    @else {
+        <div class="container-options">
 
+            <div class="container-thumbnail-selector">
+                <app-thumbnail-selector />
+            </div>
+
+            <div class="container-lessons-thumbnails">
+                <div class="container-add-lesson">
+                    <div class="card-thumbnail add-lesson">
+                        <figure (click)="lessonFormState.onAddLesson()" class="figure">
+                            <img 
+                            class="icon"
+                            src="./assets/add-icon.svg" alt="Add Icon">
+                            <p class="text-simple"> Añade una nueva lección</p>
+                        </figure>
+                    </div>
+                </div>
+
+                <div class="container-slider">
+                    <div class="slider-content">
+                        @for( lesson of lessonsResource.value() ; track lesson ){
+                            <div 
+                            (click)="this.lessonFormState.patchValuesForm( lesson , this.lessonForm )" 
+                            class="card-thumbnail thumbnail-lesson">
+                                <figure class="figure">
+                                    <img src="" alt="">
+                                </figure>
+                            </div>
+                        }
+                    </div>
+                </div>
+                    
+            </div>
+        </div>
+    }
+        
     <div class="container-lesson-expand">
         <div class="container-media-preview">
             <figure class="figure-attach">
@@ -30,7 +51,7 @@
             </figure>
         </div>
         <div class="container-form-lesson">
-            <app-form-lesson />
+            <app-form-lesson [lessonForm]="lessonForm" />
         </div>
     </div>
     

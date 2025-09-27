@@ -1,7 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { LessonService } from 'src/app/lesson/services/lesson.service';
-import { FormErrorLabelComponent } from "src/app/shared/components/form-error-label/form-error-label.component";
 import { LessonFormState } from '../../state/lesson/lesson-form-state';
+import { FormGroup } from '@angular/forms';
 import { Lesson } from '../../models/lesson.interfaces';
 
 @Component({
@@ -15,7 +15,8 @@ export class FormLessonComponent {
   public lessonService = inject(LessonService);
   public lessonFormState = inject(LessonFormState);
 
-  public lessonForm = this.lessonFormState.createForm();
+  @Input()
+  public lessonForm! : FormGroup;
 
   constructor() { }
 

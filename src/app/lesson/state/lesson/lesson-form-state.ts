@@ -36,6 +36,7 @@ export class LessonFormState {
       title: lesson.title,
       description: lesson.description,
     });
+    console.log(form.value);
     return form;
   }
 

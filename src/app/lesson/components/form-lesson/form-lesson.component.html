@@ -1,16 +1,25 @@
-<form class="form-lesson" >
+<form 
+    [formGroup]="lessonForm"
+    class="form-lesson">
     
     <div class="container-lesson-top">
         <input 
+            formControlName="title"
             class="input-title"
             placeholder="Escribé el titulo de la lección"
             type="text" name="" id="">
+        <form-error-label [control]="lessonForm.get('title')!" [warningSvg]="true" />
+
     </div>
-    <div>
+    <div class="container-lesson-middle">
         <textarea
+            formControlName="description"
             class="textarea-desc"
             name="" id=""
-            placeholder="Escribe una descripción en caso de que la necesites..."></textarea>
+            placeholder="Escribe una descripción en caso de que la necesites..."
+        ></textarea>
+
+        <form-error-label [control]="lessonForm.get('description')!" [warningSvg]="true" />
     </div>
     <div class="container-btns">
         <button>Anterior lección</button>

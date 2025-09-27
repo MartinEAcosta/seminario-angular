@@ -18,7 +18,9 @@ import { SliderContentManagerComponent } from 'src/app/lesson/components/slider-
   selector: 'app-form-course',
   templateUrl: './form-course.component.html',
   styleUrl: './form-course.component.scss',
-  imports: [ReactiveFormsModule, NgClass, FormErrorLabelComponent, CategorySelectComponent, ThumbnailSelectorComponent, SliderContentManagerComponent],
+  imports: [ReactiveFormsModule, NgClass, FormErrorLabelComponent, 
+            CategorySelectComponent, ThumbnailSelectorComponent, SliderContentManagerComponent
+          ],
 })
 export class FormCourseComponent {
 

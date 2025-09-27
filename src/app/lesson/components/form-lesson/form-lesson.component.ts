@@ -1,12 +1,13 @@
 import { Component, inject, Input } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+
 import { LessonService } from 'src/app/lesson/services/lesson.service';
 import { LessonFormState } from '../../state/lesson/lesson-form-state';
-import { FormGroup } from '@angular/forms';
-import { Lesson } from '../../models/lesson.interfaces';
+import { FormErrorLabelComponent } from "src/app/shared/components/form-error-label/form-error-label.component";
 
 @Component({
   selector: 'app-form-lesson',
-  imports: [],
+  imports: [ReactiveFormsModule, FormErrorLabelComponent],
   templateUrl: './form-lesson.component.html',
   styleUrl: './form-lesson.component.scss'
 })

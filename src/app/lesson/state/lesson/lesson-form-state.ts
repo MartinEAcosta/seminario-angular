@@ -10,18 +10,19 @@ export class LessonFormState {
   private fb = inject(FormBuilder);
 
   public lessonSelected = signal<Lesson | null>( null );
-  public isLessonFormVisible = signal<boolean>( true ); 
+  public isLessonFormVisible = signal<boolean>( false ); 
 
   constructor() { }
+
+  public setIsLessonFormVisible = ( bol : boolean ) => {
+    this.isLessonFormVisible.set( bol );
+  }
 
   public toggleVisibilityOfLessonForm = ( ) : void => {
     this.isLessonFormVisible.set( !this.isLessonFormVisible() );
   }
 
-  public onAddLesson = ( ) => {
-    this.isLessonFormVisible.set( true );
-    this.createForm();
-  }
+
 
   public createForm = () : FormGroup => {
     return this.fb.group({
@@ -36,7 +37,6 @@ export class LessonFormState {
       title: lesson.title,
       description: lesson.description,
     });
-    console.log(form.value);
     return form;
   }
 

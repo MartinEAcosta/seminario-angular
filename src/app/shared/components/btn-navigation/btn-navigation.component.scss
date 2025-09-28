@@ -13,14 +13,28 @@
     font-family: v.$font-primary;
     font-weight: 600;
     box-shadow: 5px 5px 5px rgba(0 , 0, 0, 0.4);
+    transition: all 0.5s ease;
+    color: v.$black-custom;
+
+}
+
+.btn-navigation:hover{
+    transform: scale(1.05);
+    transition: all 0.5s ease;
 }
 
 .back{
     background-color: v.$yellow-caution;
-    color: v.$black-custom;
+}
+
+.back:hover{
+    background-color: rgba(255, 190, 40, 0.85);
 }
 
 .next{
     background-color: v.$green-success;
-    color: v.$black-custom;
+}
+
+.next:hover{
+    background-color: rgba(0, 150, 50, 0.85);
 }

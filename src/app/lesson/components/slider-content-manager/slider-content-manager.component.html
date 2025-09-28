@@ -14,7 +14,7 @@
             <div class="container-lessons-thumbnails">
                 <div class="container-add-lesson">
                     <div class="card-thumbnail add-lesson">
-                        <figure (click)="lessonFormState.onAddLesson()" class="figure">
+                        <figure (click)="onAddLesson()" class="figure">
                             <img 
                             class="icon"
                             src="./assets/add-icon.svg" alt="Add Icon">
@@ -25,9 +25,9 @@
 
                 <div class="container-slider">
                     <div class="slider-content">
-                        @for( lesson of lessonsResource.value() ; track lesson ){
+                        @for( lesson of lessonArray() ; track lesson ){
                             <div 
-                            (click)="this.lessonFormState.patchValuesForm( lesson , this.lessonForm )" 
+                            (click)="onSelectLesson( lesson )" 
                             class="card-thumbnail thumbnail-lesson">
                                 <figure class="figure">
                                     <img src="" alt="">
@@ -56,7 +56,7 @@
     </div>
     
     <div class="icon-expand">
-        <figure (click)="this.lessonFormState.toggleVisibilityOfLessonForm()">
+        <figure (click)="onExpandSlider()">
             <img src="./assets/expand-icon.svg" alt="Expand icon">
         </figure>
     </div>

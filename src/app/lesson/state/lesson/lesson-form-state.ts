@@ -9,6 +9,8 @@ export class LessonFormState {
 
   private fb = inject(FormBuilder);
 
+  public lessons = signal<Lesson[]>([]);
+
   public lessonSelected = signal<Lesson | null>( null );
   public isLessonFormVisible = signal<boolean>( false ); 
 
@@ -22,8 +24,6 @@ export class LessonFormState {
     this.isLessonFormVisible.set( !this.isLessonFormVisible() );
   }
 
-
-
   public createForm = () : FormGroup => {
     return this.fb.group({
       title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
@@ -31,13 +31,27 @@ export class LessonFormState {
     });
   }
 
-
   public patchValuesForm = ( lesson : Lesson , form : FormGroup ) : FormGroup => {
     form.patchValue({
       title: lesson.title,
       description: lesson.description,
     });
     return form;
+  }
+
+  createEmptyLesson = ( ) => {
+    const newLesson : Lesson ={
+      id_course: '',
+      title: '',
+      description: '',
+      id_file: '',
+      unit: 0,
+      chapter: 0,
+      lesson_number: 0,
+      uploaded_at: new Date(),
+    };
+    this.lessons.set([...this.lessons() , newLesson]);
+    return newLesson;
   }
 
 }

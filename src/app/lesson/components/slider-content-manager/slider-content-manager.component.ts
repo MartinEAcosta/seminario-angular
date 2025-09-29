@@ -19,10 +19,12 @@ import { FormLessonComponent } from "../form-lesson/form-lesson.component";
 })
 export class SliderContentManagerComponent {
 
+  public courseId = input<string | null>();
+
   public lessonService = inject(LessonService);
   public lessonFormState = inject(LessonFormState);
+
   public lessonForm : FormGroup = this.lessonFormState.createForm();
-  public courseId = input<string | null>();
   
   public lessonsResource = rxResource<Lesson[],string>({
     request: () => this.courseId()!,
@@ -30,7 +32,7 @@ export class SliderContentManagerComponent {
       return this.lessonService
                   .getAllLessonFromCourse( request )
                   .pipe(
-                    tap( res => this.lessonArray.set(res)),
+                    tap( res => this.lessonFormState.lessons.set(res)),
                     catchError( error => {
                       return of([]);
                     })
@@ -38,15 +40,22 @@ export class SliderContentManagerComponent {
     },
   });
 
-  public lessonArray = signal<Lesson[]>([]);
-
   constructor( ) { }
 
   onExpandSlider = ( ) => {
-    if( this.lessonArray().length === 0){
-      this.createEmptyLesson();
+    if( this.lessonFormState.isLessonFormVisible() ){
+        this.lessonFormState.toggleVisibilityOfLessonForm();
     }
-    this.lessonFormState.toggleVisibilityOfLessonForm();
+    else{
+      if( this.lessonFormState.lessons().length === 0 ){
+        const newLesson = this.lessonFormState.createEmptyLesson();
+        this.onSelectLesson( newLesson );
+      }
+      else{
+        const firstLesson = this.lessonFormState.lessons()[0];
+        this.onSelectLesson( firstLesson );
+      }
+    }
   }
 
   onSelectLesson = ( lesson : Lesson ) => {
@@ -56,23 +65,10 @@ export class SliderContentManagerComponent {
 
   public onAddLesson = ( ) => {
     this.lessonFormState.setIsLessonFormVisible( true );
-    const emptyLesson = this.createEmptyLesson();
+    const emptyLesson = this.lessonFormState.createEmptyLesson();
     this.lessonForm = this.lessonFormState.patchValuesForm( emptyLesson , this.lessonForm );
   }
 
-  createEmptyLesson = ( ) => {
-    const newLesson : Lesson ={
-      id_course: '',
-      title: '',
-      description: '',
-      id_file: '',
-      unit: 0,
-      chapter: 0,
-      lesson_number: 0,
-      uploaded_at: new Date(),
-    };
-    this.lessonArray.set([...this.lessonArray() , newLesson]);
-    return newLesson;
-  }
+
 
 }

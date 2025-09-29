@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Lesson } from '../models/lesson.interfaces';
+import { Lesson, LessonPopulated } from '../models/lesson.interfaces';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { LessonMapper } from '@mappers/lesson.mapper';
-import { LessonListResponse, LessonResponse } from 'src/app/shared/models/api.interface';
+import { LessonListResponse, LessonPopulatedListResponse, LessonResponse } from 'src/app/shared/models/api.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +16,13 @@ export class LessonService {
   
   constructor() { }
 
-  public getAllLessonFromCourse = ( courseId : string ) : Observable<Lesson[]> => {
+  public getAllLessonFromCourse = ( courseId : string ) : Observable<LessonPopulated[]> => {
     return this.http
-                    .get<LessonListResponse>(`${this.baseURL}/${courseId}`)
+                    .get<LessonPopulatedListResponse>(`${this.baseURL}/detailed/course/${courseId}`)
                     .pipe(
                       map( (lessonResponse) => {
                         console.log(lessonResponse)
-                        return LessonMapper.mapResponseToLessonArray( lessonResponse );
+                        return LessonMapper.mapResponseToLessonPopulatedArray( lessonResponse );
                       }),
                       catchError( ({ error }) => {
                         console.log(error)

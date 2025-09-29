@@ -6,7 +6,7 @@ import { catchError, of, tap } from 'rxjs';
 
 import { LessonService } from '../../services/lesson.service';
 import { LessonFormState } from '../../state/lesson/lesson-form-state';
-import { Lesson } from '../../models/lesson.interfaces';
+import { Lesson, LessonPopulated } from '../../models/lesson.interfaces';
 import { ThumbnailSelectorComponent } from 'src/app/course/components/thumbnail-selector/thumbnail-selector.component';
 import { LoaderComponent } from "src/app/shared/components/loader/loader.component";
 import { FormLessonComponent } from "../form-lesson/form-lesson.component";
@@ -26,7 +26,7 @@ export class SliderContentManagerComponent {
 
   public lessonForm : FormGroup = this.lessonFormState.createForm();
   
-  public lessonsResource = rxResource<Lesson[],string>({
+  public lessonsResource = rxResource<LessonPopulated[],string>({
     request: () => this.courseId()!,
     loader: ({request}) => { 
       return this.lessonService
@@ -58,7 +58,7 @@ export class SliderContentManagerComponent {
     }
   }
 
-  onSelectLesson = ( lesson : Lesson ) => {
+  onSelectLesson = ( lesson : LessonPopulated ) => {
     this.lessonFormState.patchValuesForm( lesson , this.lessonForm );
     this.lessonFormState.setIsLessonFormVisible( true );
   }

@@ -96,5 +96,21 @@ export interface LessonUniqueResponse {
   uploaded_at : Date;
 }
 
+export interface LessonPopulatedUniqueResponse {
+  id : string;
+  id_course : string;
+  title : string;
+  description : string;
+  file : {
+    id_file : string;
+    url     : string;
+  };
+  unit : number;
+  chapter : number;
+  lesson_number : number;
+  uploaded_at : Date;
+}
+
 export type LessonResponse = ApiResponse<LessonUniqueResponse>;
 export type LessonListResponse = ApiResponse<LessonUniqueResponse[]>
+export type LessonPopulatedListResponse = ApiResponse<LessonPopulatedUniqueResponse[]>

@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Lesson } from '../../models/lesson.interfaces';
+import { Lesson, LessonPopulated } from '../../models/lesson.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +9,9 @@ export class LessonFormState {
 
   private fb = inject(FormBuilder);
 
-  public lessons = signal<Lesson[]>([]);
+  public lessons = signal<LessonPopulated[]>([]);
 
-  public lessonSelected = signal<Lesson | null>( null );
+  public lessonSelected = signal<LessonPopulated | null>( null );
   public isLessonFormVisible = signal<boolean>( false ); 
 
   constructor() { }
@@ -31,7 +31,7 @@ export class LessonFormState {
     });
   }
 
-  public patchValuesForm = ( lesson : Lesson , form : FormGroup ) : FormGroup => {
+  public patchValuesForm = ( lesson : LessonPopulated , form : FormGroup ) : FormGroup => {
     form.patchValue({
       title: lesson.title,
       description: lesson.description,
@@ -40,11 +40,14 @@ export class LessonFormState {
   }
 
   createEmptyLesson = ( ) => {
-    const newLesson : Lesson ={
+    const newLesson : LessonPopulated ={
       id_course: '',
       title: '',
       description: '',
-      id_file: '',
+      file: {
+        id_file : '',
+        url : '',
+      },
       unit: 0,
       chapter: 0,
       lesson_number: 0,

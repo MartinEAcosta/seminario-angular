@@ -30,7 +30,13 @@
                             (click)="onSelectLesson( lesson )" 
                             class="card-thumbnail thumbnail-lesson">
                                 <figure class="figure">
-                                    <img class="thumbnail-lesson" src="{{ lesson.file.url }}" alt="">
+                                    @if ( lesson.file.url != null ) {
+                                        <img class="thumbnail-lesson" 
+                                            src="{{lesson.file.url}}" alt="">
+                                    }
+                                    @else {
+                                        <img class="icon" src="/assets/thumbnail-icon.svg" alt="">
+                                    }
                                 </figure>
                             </div>
                         }
@@ -44,11 +50,24 @@
     <div class="container-lesson-expand">
         
         <div class="container-media-preview">
+            <input 
+                type="file" 
+                id="file" 
+                name="file" 
+                class="input-file"
+                accept="image/*,video/*"
+            />
             <figure class="figure-attach">
-                <img
-                    class="attach-icon" 
-                    src="./assets/attach-icon.svg" alt="Attach Icon">
-                <p class="text-simple"> Añade contenido a la lección</p>
+                @if( lessonFormState.lessonSelected() === null || lessonFormState.lessonSelected()?.file?.url === null ){
+                    <img
+                        class="attach-icon" 
+                        src="./assets/attach-icon.svg" alt="Attach Icon">
+                    <p class="text-simple"> Añade contenido a la lección</p>
+                }
+                @else{
+                    <img 
+                        src="{{ lessonFormState.lessonSelected()?.file!.url }}" alt="">
+                }
             </figure>
         </div>
 

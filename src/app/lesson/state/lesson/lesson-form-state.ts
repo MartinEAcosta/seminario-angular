@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Lesson, LessonPopulated } from '../../models/lesson.interfaces';
+import { LessonPopulated } from '../../models/lesson.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,18 @@ export class LessonFormState {
   public lessonSelected = signal<LessonPopulated | null>( null );
   public isLessonFormVisible = signal<boolean>( false ); 
 
+  public mediaFiles = signal<FileList | null>(null);
+  public tempMedia = signal<string[] | null>([]);
+
   constructor() { }
+
+  public onMediaChanged = ( event : Event ) => {
+    
+  }
+
+  public setLessonSelected = ( lesson : LessonPopulated ) => {
+    this.lessonSelected.set( lesson );
+  }
 
   public setIsLessonFormVisible = ( bol : boolean ) => {
     this.isLessonFormVisible.set( bol );
@@ -39,14 +50,14 @@ export class LessonFormState {
     return form;
   }
 
-  createEmptyLesson = ( ) => {
-    const newLesson : LessonPopulated ={
+  public createEmptyLesson = ( ) => {
+    const newLesson : LessonPopulated = {
       id_course: '',
       title: '',
       description: '',
       file: {
-        id_file : '',
-        url : '',
+        id_file : null,
+        url : null,
       },
       unit: 0,
       chapter: 0,

@@ -10,7 +10,7 @@ import { BtnNavigationComponent } from "src/app/shared/components/btn-navigation
   selector: 'app-form-lesson',
   imports: [ReactiveFormsModule, FormErrorLabelComponent, BtnNavigationComponent],
   templateUrl: './form-lesson.component.html',
-  styleUrl: './form-lesson.component.scss'
+  styleUrls:['../../../shared/components/btn-navigation/btn-rounded.scss' ,'./form-lesson.component.scss']
 })
 export class FormLessonComponent {
 

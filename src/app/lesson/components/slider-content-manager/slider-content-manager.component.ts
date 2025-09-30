@@ -6,7 +6,7 @@ import { catchError, of, tap } from 'rxjs';
 
 import { LessonService } from '../../services/lesson.service';
 import { LessonFormState } from '../../state/lesson/lesson-form-state';
-import { Lesson, LessonPopulated } from '../../models/lesson.interfaces';
+import { LessonPopulated } from '../../models/lesson.interfaces';
 import { ThumbnailSelectorComponent } from 'src/app/course/components/thumbnail-selector/thumbnail-selector.component';
 import { LoaderComponent } from "src/app/shared/components/loader/loader.component";
 import { FormLessonComponent } from "../form-lesson/form-lesson.component";
@@ -30,7 +30,7 @@ export class SliderContentManagerComponent {
     request: () => this.courseId()!,
     loader: ({request}) => { 
       return this.lessonService
-                  .getAllLessonFromCourse( request )
+                  .getAllLessonPopulatedFromCourse( request )
                   .pipe(
                     tap( res => this.lessonFormState.lessons.set(res)),
                     catchError( error => {
@@ -47,6 +47,7 @@ export class SliderContentManagerComponent {
         this.lessonFormState.toggleVisibilityOfLessonForm();
     }
     else{
+
       if( this.lessonFormState.lessons().length === 0 ){
         const newLesson = this.lessonFormState.createEmptyLesson();
         this.onSelectLesson( newLesson );
@@ -55,17 +56,22 @@ export class SliderContentManagerComponent {
         const firstLesson = this.lessonFormState.lessons()[0];
         this.onSelectLesson( firstLesson );
       }
+      
     }
   }
 
   onSelectLesson = ( lesson : LessonPopulated ) => {
+    this.lessonFormState.setLessonSelected( lesson );
     this.lessonFormState.patchValuesForm( lesson , this.lessonForm );
     this.lessonFormState.setIsLessonFormVisible( true );
   }
 
   public onAddLesson = ( ) => {
     this.lessonFormState.setIsLessonFormVisible( true );
+
     const emptyLesson = this.lessonFormState.createEmptyLesson();
+    this.lessonFormState.setLessonSelected( emptyLesson );
+
     this.lessonForm = this.lessonFormState.patchValuesForm( emptyLesson , this.lessonForm );
   }
 

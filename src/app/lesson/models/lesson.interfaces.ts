@@ -15,8 +15,8 @@ export interface LessonPopulated {
     title         : string;
     description   : string;
     file          : {
-        id_file : string;
-        url     : string;
+        id_file : string | null;
+        url     : string | null;
     };
     unit          : number;
     chapter       : number;

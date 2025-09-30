@@ -16,7 +16,7 @@ export class LessonService {
   
   constructor() { }
 
-  public getAllLessonFromCourse = ( courseId : string ) : Observable<LessonPopulated[]> => {
+  public getAllLessonPopulatedFromCourse = ( courseId : string ) : Observable<LessonPopulated[]> => {
     return this.http
                     .get<LessonPopulatedListResponse>(`${this.baseURL}/detailed/course/${courseId}`)
                     .pipe(

@@ -71,6 +71,25 @@
     bottom: -2%;
 }
 
+.save{
+    display: flex;
+    position: absolute;
+    align-items: center;
+    right: 0;
+    bottom: 22%;
+}
+
+.btn-save{
+    color: v.$white-custom;
+    gap: 5%;
+    background-color: v.$brand-color;
+}
+
+.save-icon{
+    width: 1.1rem;
+}
+
+
 .start{
     display: flex;
     justify-content: start;

@@ -22,9 +22,19 @@
         <form-error-label [control]="lessonForm.get('description')!" [warningSvg]="true" />
     </div>
 
+    <div class="save">
+        <button
+            class="btn btn-save">
+            <img class="save-icon" src="/assets/save-icon.svg" alt="">
+            Guardar
+        </button>
+    </div>
+
     <div class="container-lesson-bottom">
         <div class="start">
-            <app-btn-navigation [text]="'Anterior lección'"  [isNextButton]="false" />
+            @if( lessonFormState.lessonSelected()?.lesson_number != 0 ){
+                <app-btn-navigation [text]="'Anterior lección'"  [isNextButton]="false" />
+            }
         </div>
         <div class="end">
             <app-btn-navigation [text]="'Siguiente lección'" [isNextButton]="true" />

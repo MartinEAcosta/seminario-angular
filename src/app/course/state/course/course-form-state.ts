@@ -8,29 +8,12 @@ import { Course } from '@interfaces/course.interfaces';
 export class CourseFormState {
 
   public thumbnailFile = signal<File | null>(null);
-  public mediaFiles = signal<FileList | null>(null);
 
-  public tempMedia = signal<string[] | null>([]); 
   public tempThumbnail = signal<string | null>( null );
 
   private fb = inject(FormBuilder);
 
   constructor( ) { }
-
-  public reset () : void  {
-    this.thumbnailFile.set(null);
-    this.mediaFiles.set(null);
-    this.tempThumbnail.set(null);
-    this.tempMedia.set(null);
-  }
-
-  public setTempThumbnail ( thumbnail_url : string ) : void {
-    this.tempThumbnail.set( thumbnail_url );
-  }
-
-  public setFileThumbnail ( file : File ) : void {
-    this.thumbnailFile.set( file );
-  }
 
   public onThumbnailChanged = ( event : Event ) => {
     const thumbnailChanged = ( event.target as HTMLInputElement ).files;
@@ -46,6 +29,19 @@ export class CourseFormState {
 
     this.setTempThumbnail( imageUrl.shift()! );
     this.setFileThumbnail( thumbnailChanged[0] );
+  }
+
+  public reset () : void  {
+    this.thumbnailFile.set(null);
+    this.tempThumbnail.set(null);
+  }
+
+  public setTempThumbnail ( thumbnail_url : string ) : void {
+    this.tempThumbnail.set( thumbnail_url );
+  }
+
+  public setFileThumbnail ( file : File ) : void {
+    this.thumbnailFile.set( file );
   }
 
 // Verificar si es necesario quitar atributos.

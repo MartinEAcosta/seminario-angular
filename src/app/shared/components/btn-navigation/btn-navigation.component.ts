@@ -5,7 +5,7 @@ import { Component, input } from '@angular/core';
   selector: 'app-btn-navigation',
   imports: [NgClass],
   templateUrl: './btn-navigation.component.html',
-  styleUrl: './btn-navigation.component.scss'
+  styleUrls: ['./btn-rounded.scss','./btn-navigation.component.scss']
 })
 export class BtnNavigationComponent {
 

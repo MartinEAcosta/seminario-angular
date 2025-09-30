@@ -1,0 +1,23 @@
+@use '../../../../variables.scss' as v;
+
+.btn {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 10rem;
+    height: 2.5rem;
+    padding: 2%;
+    border-radius: 0.5rem;
+    border: none;
+    font-family: v.$font-primary;
+    font-weight: 600;
+    box-shadow: 5px 5px 5px rgba(0 , 0, 0, 0.4);
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+.btn:hover{
+    transform: scale(1.05);
+    transition: all 0.5s ease;
+}

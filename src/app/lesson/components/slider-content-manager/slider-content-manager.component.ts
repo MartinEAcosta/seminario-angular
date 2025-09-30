@@ -19,7 +19,7 @@ import { FormLessonComponent } from "../form-lesson/form-lesson.component";
 })
 export class SliderContentManagerComponent {
 
-  public courseId = input<string | null>();
+  public courseId = input.required<string>();
 
   public lessonService = inject(LessonService);
   public lessonFormState = inject(LessonFormState);

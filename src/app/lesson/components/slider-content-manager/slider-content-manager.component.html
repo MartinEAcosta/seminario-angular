@@ -1,9 +1,8 @@
 <section 
     [ngClass]="[ lessonFormState.isLessonFormVisible() ? 'expand' : '' ]"
     class="bg-slider-content">
-    @if( lessonsResource.isLoading() ){
-        <app-loader />
-    }
+
+    @if( lessonsResource.isLoading() ){ <app-loader /> }
     @else {
         <div class="container-options">
 

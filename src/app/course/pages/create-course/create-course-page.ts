@@ -18,7 +18,6 @@ import { CourseFormState } from '../../state/course/course-form-state';
 export class CreateCoursePageComponent {
   folder = "courses";
 
-  private router = inject(Router);
   private courseService = inject(CourseService);
   private fileService = inject(FileService);
   private authService = inject(AuthService);

@@ -24,10 +24,18 @@ export interface LessonPopulated {
     uploaded_at   : Date;
 }
 
+export interface CreateLessonDto{
+    title         : string;
+    description    : string;
+    unit         ?: number;
+    chapter      ?: number;
+    lesson_number ?: number;
+}
+
 export interface LessonDto{
     id_course     : string;
     title         : string;
-    desciption    : string;
+    description    : string;
     id_file      ?: string;
     unit         ?: number;
     chapter      ?: number;

@@ -10,7 +10,6 @@ export class LessonFormState {
   private fb = inject(FormBuilder);
 
   public lessons = signal<LessonPopulated[]>([]);
-
   public lessonSelected = signal<LessonPopulated | null>( null );
   public isLessonFormVisible = signal<boolean>( false ); 
 

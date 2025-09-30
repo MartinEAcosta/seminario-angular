@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Lesson, LessonPopulated } from '../models/lesson.interfaces';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { LessonMapper } from '@mappers/lesson.mapper';
-import { LessonListResponse, LessonPopulatedListResponse, LessonResponse } from 'src/app/shared/models/api.interface';
+import { LessonPopulatedListResponse, LessonPopulatedResponse } from 'src/app/shared/models/api.interface';
+import { LessonDto, LessonPopulated } from '../models/lesson.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +29,20 @@ export class LessonService {
                         return throwError(() => new Error(`${error.errorMessage}`));
                       }),
                     )
+  }
+
+  public saveLesson = ( lessonRequest : LessonDto ) => {
+    return this.http
+                .post<LessonPopulatedResponse>(`${this.baseURL}/new` , {...lessonRequest} )
+                .pipe(
+                  map( (lessonResponse) =>{
+                    return LessonMapper.mapResponseToLessonPopulated( lessonResponse.data );
+                  }),
+                  catchError( ({ error }) => {
+                    console.log(error)
+                    return throwError(() => new Error(`${error.errorMessage}`));
+                  }),
+                );
   }
 
   

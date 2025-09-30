@@ -37,6 +37,7 @@ export class FormLoginComponent {
   onLogin = () => {
     this.loginForm.markAllAsTouched();
     if( this.loginForm.valid ){
+      // * ESTANDARIZAR DTOS
       const loginUserDTO : UserDTO = this.loginForm.value;
       this.authService.loginUser( loginUserDTO )
                         .subscribe( (isAuthenticated) => {

@@ -7,12 +7,13 @@ import { Course } from '@interfaces/course.interfaces';
 })
 export class CourseFormState {
 
-  public thumbnailFile = signal<File | null>(null);
-
-  public tempThumbnail = signal<string | null>( null );
-
   private fb = inject(FormBuilder);
 
+  public course = signal<Course | null>( null );
+
+  public thumbnailFile = signal<File | null>( null );
+  public tempThumbnail = signal<string | null>( null );
+  
   constructor( ) { }
 
   public onThumbnailChanged = ( event : Event ) => {

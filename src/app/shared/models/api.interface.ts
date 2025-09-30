@@ -1,3 +1,5 @@
+import { LessonPopulated } from "src/app/lesson/models/lesson.interfaces";
+
 export interface ApiResponse<T> {
   ok        : boolean;
   total?    : number; // Opcional para respuestas de un solo elemento
@@ -112,5 +114,6 @@ export interface LessonPopulatedUniqueResponse {
 }
 
 export type LessonResponse = ApiResponse<LessonUniqueResponse>;
+export type LessonPopulatedResponse = ApiResponse<LessonPopulatedUniqueResponse>
 export type LessonListResponse = ApiResponse<LessonUniqueResponse[]>
 export type LessonPopulatedListResponse = ApiResponse<LessonPopulatedUniqueResponse[]>

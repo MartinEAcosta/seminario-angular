@@ -1,5 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { Course } from '@interfaces/course.interfaces';
 
 @Injectable({
@@ -10,11 +11,13 @@ export class CourseFormState {
   private fb = inject(FormBuilder);
 
   public course = signal<Course | null>( null );
-
+  public courseForm : FormGroup;
   public thumbnailFile = signal<File | null>( null );
   public tempThumbnail = signal<string | null>( null );
   
-  constructor( ) { }
+  constructor( ) {
+    this.courseForm = this.createForm();
+  }
 
   public onThumbnailChanged = ( event : Event ) => {
     const thumbnailChanged = ( event.target as HTMLInputElement ).files;
@@ -33,8 +36,14 @@ export class CourseFormState {
   }
 
   public reset () : void  {
+    this.course.set(null);
+    this.courseForm = this.createForm();
     this.thumbnailFile.set(null);
     this.tempThumbnail.set(null);
+  }
+
+  public setCourse ( course : Course ) : void {
+    this.course.set(course);
   }
 
   public setTempThumbnail ( thumbnail_url : string ) : void {
@@ -50,24 +59,22 @@ export class CourseFormState {
     return this.fb.group({
       title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
       description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
-      id_category : [ '' ],
-      thumbnail_url : [ '' ],
+      id_category : [ '' , [ Validators.required ]],
       price : [ 0 , [ Validators.required , Validators.min(0) ] ],
       wantLimitedCapacity: [ true ],
       capacity : [ { value : 5 , disabled: false } , [ Validators.min(5) ] ], 
     });
   }
 
-  public patchValuesForm = ( course : Course , form : FormGroup ) : FormGroup => {
-    form.patchValue({
+  public patchValuesForm = ( course : Course  ) : FormGroup => {
+    this.courseForm.patchValue({
       title: course.title,
       description: course.description,
       id_category: course.id_category,
-      thumbnail_url: course.thumbnail_url,
       price: course.price,
       capacity: course.capacity
     });
 
-    return form;
+    return this.courseForm;
   }
 }

@@ -1,5 +1,4 @@
 import { FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Component, inject } from '@angular/core';
 
 import { AuthService } from '../../../auth/services/auth.service';
@@ -23,19 +22,17 @@ export class CreateCoursePageComponent {
   private authService = inject(AuthService);
   private courseFormState = inject(CourseFormState);
   
-  public courseForm : FormGroup = this.courseFormState.createForm();
-
   constructor ( ) { }
 
   onCreateCourse = ( ) : void => {
-    this.courseForm.markAllAsTouched();
-
-    if( this.courseForm.valid ){
+    this.courseFormState.courseForm.markAllAsTouched();
+    
+    if( this.courseFormState.courseForm.valid ){
   
       const uid = this.authService.id();
       if( !uid ) return;
         
-      const createCourseDto = CourseMapper.mapToCourseDto( this.courseForm );
+      const createCourseDto = CourseMapper.mapToCourseDto( this.courseFormState.courseForm );
 
       if( this.courseFormState.thumbnailFile() != null ){
         this.fileService.updateFile( this.folder , this.courseFormState.thumbnailFile()! )

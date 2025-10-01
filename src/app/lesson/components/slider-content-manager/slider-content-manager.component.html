@@ -2,8 +2,6 @@
     [ngClass]="[ lessonFormState.isLessonFormVisible() ? 'expand' : '' ]"
     class="bg-slider-content">
 
-    @if( lessonsResource.isLoading() ){ <app-loader /> }
-    @else {
         <div class="container-options">
 
             <div class="container-thumbnail-selector">
@@ -44,7 +42,6 @@
                     
             </div>
         </div>
-    }
         
     <div class="container-lesson-expand">
         
@@ -71,7 +68,7 @@
         </div>
 
         <div class="container-form-lesson">
-            <app-form-lesson [lessonForm]="lessonForm" />
+            <app-form-lesson  />
         </div>
 
     </div>

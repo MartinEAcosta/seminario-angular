@@ -5,7 +5,7 @@
                 <app-thumbnail-selector />
             </div>
 
-            <form class="form-course" [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+            <form class="form-course" [formGroup]="courseFormState.courseForm" (ngSubmit)="onSubmit()">
 
                 <div class="container-form-top">
                     <input 
@@ -15,10 +15,10 @@
                         placeholder="Título del curso"
                     />
                     
-                    <form-error-label [control]="courseForm.get('title')!" [warningSvg]=true />
+                    <form-error-label [control]="courseFormState.courseForm.get('title')!" [warningSvg]=true />
                     
-                    @if( this.course ){
-                        <div class="container-remove" (click)="onDeleteCourse( this.course.id! )">
+                    @if( this.courseFormState.course() ){
+                        <div class="container-remove" (click)="onDeleteCourse( this.courseFormState.course()!.id! )">
                             <img class="svg-remove" src="assets/remove.svg" alt="">
                         </div>
                     }
@@ -32,12 +32,11 @@
                         placeholder="Escribe una breve descripción del curso...">
                     </textarea>
     
-                    <form-error-label [control]="courseForm.get('description')!" [warningSvg]=true />
+                    <form-error-label [control]="courseFormState.courseForm.get('description')!" [warningSvg]=true />
                 </div>
 
                 <app-category-select 
-                    [courseProvided]="course"
-                    (clickCategory)="courseForm.get('id_category')?.setValue($event)"
+                    (clickCategory)="courseFormState.courseForm.get('id_category')?.setValue($event)"
                 />
 
                 <div class="container-form-right">
@@ -50,16 +49,16 @@
                             class="input input-pricing" 
                             type="number" 
                             [ngClass]="{ 
-                                'invalid-border': courseForm.get('price')?.errors && courseForm.get('price')?.touched , 
-                                'valid-border': courseForm.get('price')?.touched && !courseForm.get('price')?.errors 
+                                'invalid-border': courseFormState.courseForm.get('price')?.errors && courseFormState.courseForm.get('price')?.touched , 
+                                'valid-border': courseFormState.courseForm.get('price')?.touched && !courseFormState.courseForm.get('price')?.errors 
                             }" 
                             placeholder="5" 
                         />
-                        <form-error-label [control]="courseForm.get('price')!" />
+                        <form-error-label [control]="courseFormState.courseForm.get('price')!" />
                     </div>
                     <div class="container-capacity">
                         <div class="container-inline">
-                            <label class="label-capacity" [ngClass]="{ 'unlimited-capacity' : !courseForm.get('wantLimitedCapacity')?.value}">
+                            <label class="label-capacity" [ngClass]="{ 'unlimited-capacity' : !courseFormState.courseForm.get('wantLimitedCapacity')?.value}">
                                 Capacidad Limitada
                             </label>
                             <input 
@@ -67,9 +66,9 @@
                             type="number" 
                             class="input input-capacity" 
                             [ngClass]="{ 
-                                    'invalid-border': courseForm.get('capacity')?.errors, 
-                                    'valid-border': courseForm.get('capacity')?.touched && !courseForm.get('capacity')?.errors && courseForm.get('wantLimitedCapacity')?.value ,
-                                    'unlimited-capacity' :!courseForm.get('wantLimitedCapacity')?.value
+                                    'invalid-border': courseFormState.courseForm.get('capacity')?.errors, 
+                                    'valid-border': courseFormState.courseForm.get('capacity')?.touched && !courseFormState.courseForm.get('capacity')?.errors && courseFormState.courseForm.get('wantLimitedCapacity')?.value ,
+                                    'unlimited-capacity' :!courseFormState.courseForm.get('wantLimitedCapacity')?.value
                                 }" 
                                 placeholder="5" 
                                 />
@@ -80,7 +79,7 @@
                                 </div>
                         </div>
                         <div class="container-error">
-                            <form-error-label [control]="courseForm.get('capacity')!" />
+                            <form-error-label [control]="courseFormState.courseForm.get('capacity')!" />
                         </div>
                     </div>
                 </div>
@@ -90,7 +89,7 @@
                         class="btn btn-create" 
                         type="submit"
                         >
-                        {{ this.course?.id  ? 'Editar curso': 'Crear curso'}}
+                        {{ this.courseFormState.course()?.id  ? 'Editar curso': 'Crear curso'}}
                     </button>
                     <button class="btn btn-cancel" type="reset">
                         Cancelar
@@ -125,6 +124,6 @@
             </form>
         </div>
 
-        <app-slider-content-manager [courseId]="this.course!.id"  />
+        <app-slider-content-manager  />
 
     </section> 

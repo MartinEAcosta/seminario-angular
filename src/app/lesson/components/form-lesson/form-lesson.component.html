@@ -1,6 +1,6 @@
 <form 
     (ngSubmit)="onSubmit()"
-    [formGroup]="lessonForm"
+    [formGroup]="lessonFormState.lessonForm"
     class="form-lesson">
     
     <div class="container-lesson-top">
@@ -9,7 +9,7 @@
             class="input-title"
             placeholder="Escribé el titulo de la lección"
             type="text" name="" id="">
-        <form-error-label [control]="lessonForm.get('title')!" [warningSvg]="true" />
+        <form-error-label [control]="lessonFormState.lessonForm.get('title')!" [warningSvg]="true" />
 
     </div>
     <div class="container-lesson-middle">
@@ -20,7 +20,7 @@
             placeholder="Escribe una descripción en caso de que la necesites..."
         ></textarea>
 
-        <form-error-label [control]="lessonForm.get('description')!" [warningSvg]="true" />
+        <form-error-label [control]="lessonFormState.lessonForm.get('description')!" [warningSvg]="true" />
     </div>
 
     <div class="save">

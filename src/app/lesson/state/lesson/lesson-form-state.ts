@@ -10,16 +10,25 @@ export class LessonFormState {
   private fb = inject(FormBuilder);
 
   public lessons = signal<LessonPopulated[]>([]);
+  public lessonForm : FormGroup;
   public lessonSelected = signal<LessonPopulated | null>( null );
   public isLessonFormVisible = signal<boolean>( false ); 
-
-  public mediaFiles = signal<FileList | null>(null);
+  public mediaFile = signal<File | null>(null);
   public tempMedia = signal<string[] | null>([]);
 
-  constructor() { }
+  constructor() { 
+    this.lessonForm = this.createForm();
+  }
 
   public onMediaChanged = ( event : Event ) => {
     
+  }
+
+  public reset () : void  {
+    this.lessons.set([]);
+    this.lessonForm = this.createForm();
+    this.mediaFile.set(null);
+    this.tempMedia.set(null);
   }
 
   public setLessonSelected = ( lesson : LessonPopulated ) => {

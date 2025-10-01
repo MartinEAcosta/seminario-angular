@@ -1,5 +1,5 @@
-import { Component, inject, Input } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { LessonService } from 'src/app/lesson/services/lesson.service';
 import { LessonFormState } from '../../state/lesson/lesson-form-state';
@@ -8,6 +8,8 @@ import { BtnNavigationComponent } from "src/app/shared/components/btn-navigation
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { LessonMapper } from '@mappers/lesson.mapper';
 import { CourseService } from 'src/app/course/services/course.service';
+import { CourseFormState } from 'src/app/course/state/course/course-form-state';
+import { FileService } from 'src/app/shared/services/file/file.service';
 
 @Component({
   selector: 'app-form-lesson',
@@ -16,32 +18,44 @@ import { CourseService } from 'src/app/course/services/course.service';
   styleUrls:['../../../shared/components/btn-navigation/btn-rounded.scss' ,'./form-lesson.component.scss']
 })
 export class FormLessonComponent {
+  folder = 'lessons';
 
+  public authService = inject(AuthService);
+  public courseFormState = inject(CourseFormState);
+  public courseService = inject(CourseService);
   public lessonService = inject(LessonService);
   public lessonFormState = inject(LessonFormState);
-  public courseService = inject(CourseService);
-  public authService = inject(AuthService);
-
-  @Input()
-  public lessonForm! : FormGroup;
+  public fileService = inject(FileService);
 
   constructor() { }
 
   public onSubmit = () => {
     
-    this.lessonForm.markAllAsTouched();
+    this.lessonFormState.lessonForm.markAllAsTouched();
 
-    if( this.lessonForm.valid ){
+    if( this.lessonFormState.lessonForm.valid ){
 
       const uid = this.authService.id();
       if( !uid ) return;
 
 
-      const dto = LessonMapper.mapToCreateLessonDto( this.lessonForm );
+      const dto = LessonMapper.mapToCreateLessonDto( this.lessonFormState.lessonForm );
       const lessonDto = {
         ...dto,
-        
+        id_course : this.courseFormState.course()?.id_owner!,
       };
+      
+      lessonDto.lesson_number = this.lessonFormState.lessons().at(-1)?.lesson_number ?? 0;
+
+      if( this.lessonFormState.mediaFile() != null ){
+        this.fileService.updateFile( this.folder, this.lessonFormState.mediaFile()! )
+                          .subscribe( response => {
+                              console.log(response);
+                              lessonDto.id_file = response.id;
+                          });
+      }
+
+      this.lessonService.saveLesson( lessonDto ).subscribe();
 
     }
   }

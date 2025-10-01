@@ -1,3 +1,4 @@
+import { CourseFormState } from './../state/course/course-form-state';
 import { inject, Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from "@angular/router";
 import { catchError, map, Observable, of } from "rxjs";
@@ -10,6 +11,7 @@ export class CourseResolver implements Resolve<Course> {
 
     router = inject(Router);
     service = inject(CourseService);
+    courseFormState = inject(CourseFormState); 
 
     resolve(
         route: ActivatedRouteSnapshot,
@@ -18,6 +20,7 @@ export class CourseResolver implements Resolve<Course> {
         const courseId = route.paramMap.get('id');
         return this.service.getById(courseId!).pipe(
             map( course =>{
+                this.courseFormState.setCourse(course);
                 return course;
             } ),
             catchError( (error)  => {

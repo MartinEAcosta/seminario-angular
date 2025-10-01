@@ -8,35 +8,38 @@ import { LessonService } from '../../services/lesson.service';
 import { LessonFormState } from '../../state/lesson/lesson-form-state';
 import { LessonPopulated } from '../../models/lesson.interfaces';
 import { ThumbnailSelectorComponent } from 'src/app/course/components/thumbnail-selector/thumbnail-selector.component';
-import { LoaderComponent } from "src/app/shared/components/loader/loader.component";
 import { FormLessonComponent } from "../form-lesson/form-lesson.component";
+import { CourseFormState } from 'src/app/course/state/course/course-form-state';
 
 @Component({
   selector: 'app-slider-content-manager',
-  imports: [ThumbnailSelectorComponent, NgClass, FormLessonComponent, LoaderComponent],
+  imports: [ThumbnailSelectorComponent, NgClass, FormLessonComponent],
   templateUrl: './slider-content-manager.component.html',
   styleUrl: './slider-content-manager.component.scss'
 })
 export class SliderContentManagerComponent {
 
-  public courseId = input.required<string>();
-
   public lessonService = inject(LessonService);
   public lessonFormState = inject(LessonFormState);
+  public courseFormState = inject(CourseFormState);
 
   public lessonForm : FormGroup = this.lessonFormState.createForm();
   
-  public lessonsResource = rxResource<LessonPopulated[],string>({
-    request: () => this.courseId()!,
+  public lessonsResource = rxResource<LessonPopulated[],string | null>({
+    request: () => this.courseFormState.course()?.id ?? null,
     loader: ({request}) => { 
-      return this.lessonService
-                  .getAllLessonPopulatedFromCourse( request )
-                  .pipe(
-                    tap( res => this.lessonFormState.lessons.set(res)),
-                    catchError( error => {
-                      return of([]);
-                    })
-                  )
+      if( request ){
+        return this.lessonService
+        .getAllLessonPopulatedFromCourse( request )
+        .pipe(
+          tap( res => this.lessonFormState.lessons.set(res)),
+          catchError( error => {
+            // * No se han podido cargar...
+            return of([]);
+          })
+        )
+      }
+      return of([]);
     },
   });
 
@@ -47,7 +50,6 @@ export class SliderContentManagerComponent {
         this.lessonFormState.toggleVisibilityOfLessonForm();
     }
     else{
-
       if( this.lessonFormState.lessons().length === 0 ){
         const newLesson = this.lessonFormState.createEmptyLesson();
         this.onSelectLesson( newLesson );
@@ -56,7 +58,6 @@ export class SliderContentManagerComponent {
         const firstLesson = this.lessonFormState.lessons()[0];
         this.onSelectLesson( firstLesson );
       }
-      
     }
   }
 

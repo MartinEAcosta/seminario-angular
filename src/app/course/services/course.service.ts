@@ -55,7 +55,6 @@ export class CourseService {
                                         )
                                         .pipe(
                                           map( ( courseResponse ) => {
-                                            // console.log(courseResponse);
                                             return CourseMapper.mapResponseToCourse( courseResponse.data )
                                           }),
                                           catchError( ({ error }) => {

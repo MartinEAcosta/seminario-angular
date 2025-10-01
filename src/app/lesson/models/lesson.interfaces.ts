@@ -25,17 +25,18 @@ export interface LessonPopulated {
 }
 
 export interface CreateLessonDto{
-    title         : string;
+    id_file       ?: string;
+    title          : string;
     description    : string;
-    unit         ?: number;
-    chapter      ?: number;
+    unit          ?: number;
+    chapter       ?: number;
     lesson_number ?: number;
 }
 
 export interface LessonDto{
     id_course     : string;
     title         : string;
-    description    : string;
+    description   : string;
     id_file      ?: string;
     unit         ?: number;
     chapter      ?: number;

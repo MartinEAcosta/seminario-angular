@@ -29,10 +29,6 @@ export class FormCourseComponent {
   private courseService = inject(CourseService);
   private fileService = inject(FileService);
 
-  @Input()
-  public course : Course | undefined;
-  @Input()
-  public courseForm! : FormGroup;
   @Output() 
   public submitForm = new EventEmitter<void>();
   
@@ -40,8 +36,8 @@ export class FormCourseComponent {
 
   constructor ( ) {
     effect( () => {
-      if( this.course != undefined && this.course.thumbnail_url ){
-        this.courseFormState.setTempThumbnail( this.course?.thumbnail_url );
+      if( this.courseFormState.course() != undefined && this.courseFormState.course()?.thumbnail_url ){
+        this.courseFormState.setTempThumbnail( this.courseFormState.course()!.thumbnail_url! );
       }
     });
   }
@@ -62,15 +58,15 @@ export class FormCourseComponent {
   });
 
   onWantLimitedCapacityChanged = ( ) : Subscription => {
-    return this.courseForm.get('wantLimitedCapacity')!.valueChanges
+    return this.courseFormState.courseForm.get('wantLimitedCapacity')!.valueChanges
                                                     .pipe(
                                                       tap(( limited ) => {
                                                         if( !limited ){
-                                                          this.courseForm.get('capacity')?.setValue(undefined);
-                                                          this.courseForm.get('capacity')?.disable();
+                                                          this.courseFormState.courseForm.get('capacity')?.setValue(undefined);
+                                                          this.courseFormState.courseForm.get('capacity')?.disable();
                                                           return;
                                                         }
-                                                        this.courseForm.get('capacity')?.enable();
+                                                        this.courseFormState.courseForm.get('capacity')?.enable();
                                                         return;
                                                       }),
                                                     ).subscribe();
@@ -79,10 +75,9 @@ export class FormCourseComponent {
 
   onSubmit = ( ) : void => {
 
-    this.courseForm.markAllAsTouched();
-
-    if( this.courseForm.valid ){
-  
+    this.courseFormState.courseForm.markAllAsTouched();
+    if( this.courseFormState.courseForm.valid ){
+      
       const uid = this.authService.id();
       if( !uid ) return;
       
@@ -92,9 +87,9 @@ export class FormCourseComponent {
   }
 
   onDeleteCourse = ( id : string )  => {
-    if( this.course?.id_owner === this.authService.id() ){
-      if( this.course?.file_id ){
-        this.fileService.deleteCourseThumbnail( this.course?.id! ).subscribe()
+    if( this.courseFormState.course()?.id_owner === this.authService.id() ){
+      if( this.courseFormState.course()?.file_id ){
+        this.fileService.deleteCourseThumbnail( this.courseFormState.course()?.id! ).subscribe()
       }
       this.courseService.deleteCourse( id )
                             .subscribe( (isCourseDeleted) => {

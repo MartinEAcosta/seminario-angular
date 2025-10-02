@@ -14,21 +14,35 @@
     padding: 20px 0px 20px 20px;
 }
 
-.content-card figure{
+.container-thumbnail-course{
     display: flex;
     width: 25%;
-    height: 100%;
+}
+
+.content-card figure{
+    display: flex;
+    min-width: 100%;
+    min-height: 100%;
     margin: 0px;
     padding: 0px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    background-color: v.$black-custom;
+
 }
 .content-card .course-img{
     width: 100%;
     height: 100%;
-    border-radius: 10px;
     cursor: pointer;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
 }
 
+.image-icon{
+    display: flex;
+    width: 15%;
+    height: 15%;
+    margin: auto;
+}
 
 .details-course{
     display: flex;

@@ -1,8 +1,10 @@
     <div class="card-course">
         <div class="content-card">
-            <figure>
-                <img class="course-img" [routerLink]="['/course' , course().id]" src={{course().thumbnail_url}} alt="Course Image">
-            </figure>
+            <div class="container-thumbnail-course">
+                <figure>
+                    <img [ngClass]="course().thumbnail_url ? 'course-img' : 'image-icon'" [routerLink]="['/course' , course().id]" [src]="course().thumbnail_url || '/assets/thumbnail-icon.svg'" alt="Course Image"/>
+                </figure>
+            </div>
             <div class="details-course">
                 <a 
                     class="anchor"

@@ -13,15 +13,12 @@ export class LessonFormState {
   public lessonForm : FormGroup;
   public lessonSelected = signal<LessonPopulated | null>( null );
   public isLessonFormVisible = signal<boolean>( false ); 
+  
   public mediaFile = signal<File | null>(null);
-  public tempMedia = signal<string[] | null>([]);
+  public tempMedia = signal<string | null>(null);
 
   constructor() { 
     this.lessonForm = this.createForm();
-  }
-
-  public onMediaChanged = ( event : Event ) => {
-    
   }
 
   public reset () : void  {
@@ -39,6 +36,14 @@ export class LessonFormState {
     this.isLessonFormVisible.set( bol );
   }
 
+  public setTempMedia ( url : string | null ) : void {
+    this.tempMedia.set( url );
+  }
+
+  public setMediaFile ( file : File | null ) : void {
+    this.mediaFile.set( file );
+  }
+  
   public toggleVisibilityOfLessonForm = ( ) : void => {
     this.isLessonFormVisible.set( !this.isLessonFormVisible() );
   }
@@ -50,12 +55,11 @@ export class LessonFormState {
     });
   }
 
-  public patchValuesForm = ( lesson : LessonPopulated , form : FormGroup ) : FormGroup => {
-    form.patchValue({
+  public patchValuesForm = ( lesson : LessonPopulated  ) : void => {
+    this.lessonForm.patchValue({
       title: lesson.title,
       description: lesson.description,
     });
-    return form;
   }
 
   public createEmptyLesson = ( ) => {

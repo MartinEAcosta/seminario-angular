@@ -32,6 +32,7 @@ export class LessonMapper {
 
     static mapResponseToLessonPopulated = ( response : LessonPopulatedUniqueResponse ) : LessonPopulated => {
         return {
+            id : response.id,
             id_course : response.id_course,
             title : response.title,
             description : response.description,

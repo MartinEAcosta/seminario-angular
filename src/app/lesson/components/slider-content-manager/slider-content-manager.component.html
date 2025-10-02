@@ -5,7 +5,7 @@
         <div class="container-options">
 
             <div class="container-thumbnail-selector">
-                <app-thumbnail-selector />
+                <app-thumbnail-selector [folder]="'courses'"/>
             </div>
 
             <div class="container-lessons-thumbnails">
@@ -27,7 +27,11 @@
                             (click)="onSelectLesson( lesson )" 
                             class="card-thumbnail thumbnail-lesson">
                                 <figure class="figure">
-                                    @if ( lesson.file.url != null ) {
+                                    @if( lessonFormState.lessonSelected()?.id === lesson.id && lessonFormState.tempMedia( ) != null ){
+                                        <img class="thumbnail-lesson" 
+                                                src="{{lessonFormState.tempMedia()}}" alt="">
+                                    }
+                                    @else if ( lesson.file.url != null ) {
                                         <img class="thumbnail-lesson" 
                                             src="{{lesson.file.url}}" alt="">
                                     }
@@ -51,10 +55,11 @@
                 id="file" 
                 name="file" 
                 class="input-file"
-                accept="image/*,video/*"
+                accept="image/* , video/*"
+                (change)="this.fileService.onFileChanged($event , 'lessons' )"
             />
             <figure class="figure-attach">
-                @if( lessonFormState.lessonSelected() === null || lessonFormState.lessonSelected()?.file?.url === null ){
+                @if( lessonFormState.lessonSelected() === null || lessonFormState.tempMedia() === null ){
                     <img
                         class="attach-icon" 
                         src="./assets/attach-icon.svg" alt="Attach Icon">
@@ -62,7 +67,8 @@
                 }
                 @else{
                     <img 
-                        src="{{ lessonFormState.lessonSelected()?.file!.url }}" alt="">
+                        class="figure"
+                        src="{{ lessonFormState.tempMedia() }}" alt="">
                 }
             </figure>
         </div>

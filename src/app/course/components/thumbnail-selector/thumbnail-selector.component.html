@@ -5,15 +5,26 @@
         name="file" 
         class="input-file"
         accept="image/*"
-        (change)="this.courseFormState.onThumbnailChanged( $event )"
+        (change)="this.fileService.onFileChanged( $event , folder() )"
     />
     <div class="figure thumbnail-figure">
-        @if( this.courseFormState.tempThumbnail() ){
-            <img [src]="this.courseFormState.tempThumbnail()" alt="" class="thumbnail-image">
+        @if( folder() === 'courses' ){
+            @if( this.courseFormState.tempThumbnail() ){
+                <img [src]="this.courseFormState.tempThumbnail()" alt="" class="thumbnail-image">
+            }
+            @else{
+                <img src="assets/image-icon.svg" alt="" class="not-selected-thumnail">
+                <p class="text-simple">Seleccionar una portada</p>
+            }
         }
-        @else{
-            <img src="assets/image-icon.svg" alt="" class="not-selected-thumnail">
-            <p class="text-simple">Seleccionar una portada</p>
+        @else if( folder() === 'lessons') {
+            @if( this.lessonFormState.tempMedia() ){
+                <img [src]="this.lessonFormState.tempMedia()" alt="" class="thumbnail-image">
+            }
+            @else{
+                <img src="assets/image-icon.svg" alt="" class="not-selected-thumnail">
+                <p class="text-simple">Seleccionar una portada</p>
+            }
         }
     </div>
 </div>

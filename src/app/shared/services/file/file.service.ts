@@ -6,6 +6,8 @@ import { environment } from 'src/environments/environment';
 import { FileMapper } from '@mappers/file.mapper';
 import { FileRemovedResponse, FileResponse } from '../../models/api.interface';
 import { UploadedFile } from '../../models/file.interface';
+import { CourseFormState } from 'src/app/course/state/course/course-form-state';
+import { LessonFormState } from 'src/app/lesson/state/lesson/lesson-form-state';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,8 @@ export class FileService {
 
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}file`;
+  private courseFormState = inject(CourseFormState);
+  private lessonFormState = inject(LessonFormState);
 
   constructor ( ) { }
 
@@ -91,4 +95,26 @@ export class FileService {
                                   )
   }
 
+  public onFileChanged = ( event : Event, type : 'lessons' | 'courses' ) => {
+    const fileChanged = ( event.target as HTMLInputElement ).files;
+    if( !fileChanged ) return;
+
+    // En caso de que el el fileList no sea undefined o vacio, permite generar url para utilizar de forma local
+    const url = Array.from( fileChanged ?? [ ] )
+                                                  .map( 
+                                                        (file) => URL.createObjectURL(file)
+                                                  );
+
+    switch (type) {
+      case 'courses':
+        this.courseFormState.setTempThumbnail(url.shift()!);
+        this.courseFormState.setFileThumbnail(fileChanged[0]);
+        break;
+
+      case 'lessons':
+        this.lessonFormState.setTempMedia(url.shift()!);
+        this.lessonFormState.setMediaFile(fileChanged[0]);
+        break;
+    }
+  }
 }

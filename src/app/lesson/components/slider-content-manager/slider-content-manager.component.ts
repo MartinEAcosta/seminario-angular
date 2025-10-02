@@ -1,4 +1,4 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, effect, inject, input, signal } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { FormGroup } from '@angular/forms';
 import { rxResource } from '@angular/core/rxjs-interop';
@@ -10,6 +10,7 @@ import { LessonPopulated } from '../../models/lesson.interfaces';
 import { ThumbnailSelectorComponent } from 'src/app/course/components/thumbnail-selector/thumbnail-selector.component';
 import { FormLessonComponent } from "../form-lesson/form-lesson.component";
 import { CourseFormState } from 'src/app/course/state/course/course-form-state';
+import { FileService } from 'src/app/shared/services/file/file.service';
 
 @Component({
   selector: 'app-slider-content-manager',
@@ -21,6 +22,7 @@ export class SliderContentManagerComponent {
 
   public lessonService = inject(LessonService);
   public lessonFormState = inject(LessonFormState);
+  public fileService = inject(FileService);
   public courseFormState = inject(CourseFormState);
 
   public lessonForm : FormGroup = this.lessonFormState.createForm();
@@ -43,7 +45,13 @@ export class SliderContentManagerComponent {
     },
   });
 
-  constructor( ) { }
+  constructor( ) { 
+    effect( () => {
+        if( this.lessonFormState.lessonSelected() != undefined && this.lessonFormState.lessonSelected()?.file.url != null ){
+          this.lessonFormState.setTempMedia( this.lessonFormState.lessonSelected()!.file.url! );
+        }
+    })
+   }
 
   onExpandSlider = ( ) => {
     if( this.lessonFormState.isLessonFormVisible() ){
@@ -63,7 +71,8 @@ export class SliderContentManagerComponent {
 
   onSelectLesson = ( lesson : LessonPopulated ) => {
     this.lessonFormState.setLessonSelected( lesson );
-    this.lessonFormState.patchValuesForm( lesson , this.lessonForm );
+    this.lessonFormState.patchValuesForm( lesson );
+    this.lessonFormState.setTempMedia( this.lessonFormState.lessonSelected()!.file.url! );
     this.lessonFormState.setIsLessonFormVisible( true );
   }
 
@@ -72,8 +81,10 @@ export class SliderContentManagerComponent {
 
     const emptyLesson = this.lessonFormState.createEmptyLesson();
     this.lessonFormState.setLessonSelected( emptyLesson );
+    this.lessonFormState.setTempMedia(null);
+    this.lessonFormState.setMediaFile(null);
 
-    this.lessonForm = this.lessonFormState.patchValuesForm( emptyLesson , this.lessonForm );
+    this.lessonFormState.patchValuesForm( emptyLesson );
   }
 
 

@@ -12,27 +12,12 @@ export class CourseFormState {
 
   public course = signal<Course | null>( null );
   public courseForm : FormGroup;
+  
   public thumbnailFile = signal<File | null>( null );
   public tempThumbnail = signal<string | null>( null );
   
   constructor( ) {
     this.courseForm = this.createForm();
-  }
-
-  public onThumbnailChanged = ( event : Event ) => {
-    const thumbnailChanged = ( event.target as HTMLInputElement ).files;
-    if( !thumbnailChanged ) return;
-    
-
-    // En caso de que el el fileList no sea undefined o vacio, permite generar url para utilizar de forma local
-    const imageUrl = Array.from( thumbnailChanged ?? [ ] )
-                                                  .map( 
-                                                        (file) => URL.createObjectURL(file)
-                                                  );
-
-
-    this.setTempThumbnail( imageUrl.shift()! );
-    this.setFileThumbnail( thumbnailChanged[0] );
   }
 
   public reset () : void  {

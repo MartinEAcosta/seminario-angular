@@ -4,7 +4,6 @@ import { NgClass } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subscription, tap } from 'rxjs';
 
-import type { Course } from '../../models/course.interfaces';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { FileService } from 'src/app/shared/services/file/file.service';
 import { CourseService } from '../../services/course.service';
@@ -27,7 +26,7 @@ export class FormCourseComponent {
   private router = inject(Router);
   private authService = inject(AuthService);
   private courseService = inject(CourseService);
-  private fileService = inject(FileService);
+  public fileService = inject(FileService);
 
   @Output() 
   public submitForm = new EventEmitter<void>();

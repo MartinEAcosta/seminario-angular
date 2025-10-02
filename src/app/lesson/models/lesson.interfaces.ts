@@ -11,6 +11,7 @@ export interface Lesson {
 }
 
 export interface LessonPopulated {
+    id           ?: string;
     id_course     : string;
     title         : string;
     description   : string;

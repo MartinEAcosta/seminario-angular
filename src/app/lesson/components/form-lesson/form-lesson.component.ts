@@ -38,26 +38,28 @@ export class FormLessonComponent {
       const uid = this.authService.id();
       if( !uid ) return;
 
-
       const dto = LessonMapper.mapToCreateLessonDto( this.lessonFormState.lessonForm );
       const lessonDto = {
         ...dto,
-        id_course : this.courseFormState.course()?.id_owner!,
+        id_course : this.courseFormState.course()?.id!,
       };
       
       lessonDto.lesson_number = this.lessonFormState.lessons().at(-1)?.lesson_number ?? 0;
 
       if( this.lessonFormState.mediaFile() != null ){
+        console.log('e')
         this.fileService.updateFile( this.folder, this.lessonFormState.mediaFile()! )
                           .subscribe( response => {
                               console.log(response);
                               lessonDto.id_file = response.id;
+                              console.log(lessonDto);
+                              return this.lessonService.saveLesson( lessonDto ).subscribe();
                           });
       }
-
-      this.lessonService.saveLesson( lessonDto ).subscribe();
-
     }
+    return;
   }
+    
+
 
 }

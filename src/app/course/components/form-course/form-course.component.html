@@ -2,7 +2,7 @@
         <div class="container">
 
             <div class="container-thumbnail">
-                <app-thumbnail-selector />
+                <app-thumbnail-selector [folder]="'courses'" />
             </div>
 
             <form class="form-course" [formGroup]="courseFormState.courseForm" (ngSubmit)="onSubmit()">
@@ -114,7 +114,7 @@
                         name="file" 
                         class="input-file"
                         accept="image/*"
-                        (change)="this.courseFormState.onThumbnailChanged( $event )"
+                        (change)="this.fileService.onFileChanged( $event , 'courses' )"
                         />
                     <label for="file" class="custom-file-label">
                         <img src="assets/thumbnail-icon.svg" alt="">

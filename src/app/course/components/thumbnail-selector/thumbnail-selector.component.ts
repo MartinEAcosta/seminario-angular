@@ -1,5 +1,7 @@
 import { Component, EventEmitter, inject, input } from '@angular/core';
 import { CourseFormState } from '../../state/course/course-form-state';
+import { FileService } from 'src/app/shared/services/file/file.service';
+import { LessonFormState } from 'src/app/lesson/state/lesson/lesson-form-state';
 
 @Component({
   selector: 'app-thumbnail-selector',
@@ -9,7 +11,11 @@ import { CourseFormState } from '../../state/course/course-form-state';
 })
 export class ThumbnailSelectorComponent {
 
+  public fileService = inject(FileService);
   public courseFormState = inject(CourseFormState);
+  public lessonFormState = inject(LessonFormState);
+
+  folder = input.required< 'lessons' | 'courses'>();
 
   constructor() { }
 

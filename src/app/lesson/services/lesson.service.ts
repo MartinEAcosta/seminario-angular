@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { LessonMapper } from '@mappers/lesson.mapper';
-import { LessonPopulatedListResponse, LessonPopulatedResponse } from 'src/app/shared/models/api.interface';
+import { LessonPopulatedListResponse, LessonPopulatedResponse, LessonUniqueResponse } from 'src/app/shared/models/api.interface';
 import { LessonDto, LessonPopulated } from '../models/lesson.interfaces';
 
 @Injectable({
@@ -33,10 +33,10 @@ export class LessonService {
 
   public saveLesson = ( lessonRequest : LessonDto ) => {
     return this.http
-                .post<LessonPopulatedResponse>(`${this.baseURL}/new` , {...lessonRequest} )
+                .post<LessonUniqueResponse>(`${this.baseURL}/new` , {...lessonRequest} )
                 .pipe(
                   map( (lessonResponse) =>{
-                    return LessonMapper.mapResponseToLessonPopulated( lessonResponse.data );
+                    return LessonMapper.mapResponseToLesson( lessonResponse );
                   }),
                   catchError( ({ error }) => {
                     console.log(error)

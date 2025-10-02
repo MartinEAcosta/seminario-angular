@@ -59,5 +59,19 @@ export class LessonService {
                 );
   }
 
+  public deleteLesson = ( id : string ) => {
+    return this.http
+            .delete<LessonUniqueResponse>(`${this.baseURL}/delete/:id` )
+            .pipe(
+              map( (response) =>{
+                return response;
+              }),
+              catchError( ({ error }) => {
+                console.log(error)
+                return throwError(() => new Error(`${error.errorMessage}`));
+              }),
+            );
+  }
+
   
 }

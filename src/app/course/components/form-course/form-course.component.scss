@@ -342,23 +342,3 @@ input::-webkit-outer-spin-button {
 .custom-content img{
     object-fit: cover;
 }
-.container-remove{
-    display: flex;
-    position: absolute;
-    cursor: pointer;
-    width: 2.2%;
-    top: 10%;
-    right: 3%;
-}
-
-.svg-remove{
-    width: 100%;
-    filter: drop-shadow( 0px 0px 15px rgba(0,0,0,1) );
-    transition: all 0.3s;
-}
-
-.svg-remove:hover{
-    transform: scale(1.05);
-    transition: all 0.3s;
-}
-

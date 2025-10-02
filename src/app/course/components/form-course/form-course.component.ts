@@ -1,7 +1,7 @@
 import { Component, effect, Input, Output, EventEmitter, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgClass } from '@angular/common';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { Subscription, tap } from 'rxjs';
 
 import { AuthService } from 'src/app/auth/services/auth.service';
@@ -12,14 +12,14 @@ import { CategorySelectComponent } from "src/app/category/components/category-se
 import { ThumbnailSelectorComponent } from "../thumbnail-selector/thumbnail-selector.component";
 import { CourseFormState } from '../../state/course/course-form-state';
 import { SliderContentManagerComponent } from 'src/app/lesson/components/slider-content-manager/slider-content-manager.component';
+import { BtnRemoveComponent } from "src/app/shared/components/btn-remove/btn-remove.component";
 
 @Component({
   selector: 'app-form-course',
   templateUrl: './form-course.component.html',
   styleUrl: './form-course.component.scss',
-  imports: [ReactiveFormsModule, NgClass, FormErrorLabelComponent, 
-            CategorySelectComponent, ThumbnailSelectorComponent, SliderContentManagerComponent
-          ],
+  imports: [ReactiveFormsModule, NgClass, FormErrorLabelComponent,
+    CategorySelectComponent, ThumbnailSelectorComponent, SliderContentManagerComponent, BtnRemoveComponent],
 })
 export class FormCourseComponent {
 
@@ -99,5 +99,4 @@ export class FormCourseComponent {
                             } );
     }
   }
-
 }

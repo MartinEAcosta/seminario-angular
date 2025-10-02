@@ -16,11 +16,9 @@
                     />
                     
                     <form-error-label [control]="courseFormState.courseForm.get('title')!" [warningSvg]=true />
-                    
-                    @if( this.courseFormState.course() ){
-                        <div class="container-remove" (click)="onDeleteCourse( this.courseFormState.course()!.id! )">
-                            <img class="svg-remove" src="assets/remove.svg" alt="">
-                        </div>
+                    <!--- Componente y event emmiter -->
+                    @if( courseFormState.course()){
+                        <app-btn-remove [item]="courseFormState.course()" (onRemove)="onDeleteCourse( this.courseFormState.course()?.id! )" />
                     }
                 </div>
 

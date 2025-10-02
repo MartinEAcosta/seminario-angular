@@ -11,6 +11,9 @@
             type="text" name="" id="">
         <form-error-label [control]="lessonFormState.lessonForm.get('title')!" [warningSvg]="true" />
 
+        @if( lessonFormState.lessonSelected() ){
+            <app-btn-remove [item]="lessonFormState.lessonSelected()" (onRemove)="onDeleteLesson( lessonFormState.lessonSelected()?.id! )" />
+        }
     </div>
     <div class="container-lesson-middle">
         <textarea

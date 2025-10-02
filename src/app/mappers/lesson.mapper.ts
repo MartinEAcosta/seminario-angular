@@ -1,10 +1,10 @@
 import { FormGroup } from "@angular/forms";
-import { CreateLessonDto, Lesson, LessonDto, LessonPopulated } from "../lesson/models/lesson.interfaces";
 import { LessonListResponse, LessonPopulatedListResponse, LessonPopulatedUniqueResponse, LessonUniqueResponse } from "../shared/models/api.interface";
+import { Lesson, LessonPopulated, SaveLessonDto } from "../lesson/models/lesson.interfaces";
 
 export class LessonMapper {
 
-    static mapToCreateLessonDto = ( form : FormGroup ) : CreateLessonDto => {
+    static mapToCreateLessonDto = ( form : FormGroup ) : SaveLessonDto => {
         return {
             title : form.get('title')?.value,
             description : form.get('description')?.value,

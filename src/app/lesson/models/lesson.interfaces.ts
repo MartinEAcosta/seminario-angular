@@ -25,7 +25,8 @@ export interface LessonPopulated {
     uploaded_at   : Date;
 }
 
-export interface CreateLessonDto{
+export interface SaveLessonDto{
+    id            ?: string;
     id_file       ?: string;
     title          : string;
     description    : string;
@@ -35,6 +36,7 @@ export interface CreateLessonDto{
 }
 
 export interface LessonDto{
+    id            : string;
     id_course     : string;
     title         : string;
     description   : string;

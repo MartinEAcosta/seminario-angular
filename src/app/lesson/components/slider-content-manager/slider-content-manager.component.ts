@@ -53,6 +53,10 @@ export class SliderContentManagerComponent {
     })
    }
 
+   ngOnDestroy( ) {
+    this.lessonFormState.reset();
+   }
+
   onExpandSlider = ( ) => {
     if( this.lessonFormState.isLessonFormVisible() ){
         this.lessonFormState.toggleVisibilityOfLessonForm();

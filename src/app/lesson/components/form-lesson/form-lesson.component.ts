@@ -40,14 +40,14 @@ export class FormLessonComponent {
 
       const dto = LessonMapper.mapToCreateLessonDto( this.lessonFormState.lessonForm );
       const lessonDto = {
+        id: this.lessonFormState.lessonSelected()?.id,
         ...dto,
         id_course : this.courseFormState.course()?.id!,
       };
       
       lessonDto.lesson_number = this.lessonFormState.lessons().at(-1)?.lesson_number ?? 0;
-
+      console.log(lessonDto)
       if( this.lessonFormState.mediaFile() != null ){
-        console.log('e')
         this.fileService.updateFile( this.folder, this.lessonFormState.mediaFile()! )
                           .subscribe( response => {
                               console.log(response);
@@ -56,6 +56,7 @@ export class FormLessonComponent {
                               return this.lessonService.saveLesson( lessonDto ).subscribe();
                           });
       }
+      return this.lessonService.saveLesson( lessonDto ).subscribe();
     }
     return;
   }

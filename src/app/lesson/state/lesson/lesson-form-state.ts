@@ -26,6 +26,7 @@ export class LessonFormState {
     this.lessonForm = this.createForm();
     this.mediaFile.set(null);
     this.tempMedia.set(null);
+    this.isLessonFormVisible.set(false);
   }
 
   public setLessonSelected = ( lesson : LessonPopulated ) => {

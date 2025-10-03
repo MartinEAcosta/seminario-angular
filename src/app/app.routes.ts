@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import HomeComponent from './shared/pages/home/home-page';
+import { ExplorePage } from './shared/pages/explore/explore-page';
 
 export const routes: Routes = [
 
@@ -36,6 +37,11 @@ export const routes: Routes = [
     path : 'payment',
     loadChildren: () => 
       import('./payment/payment.routes'),
+  },
+
+  {
+    path : 'explore',
+    component : ExplorePage,
   },
 
   {

@@ -1,0 +1,17 @@
+@use '../../../../variables.scss' as v;
+
+.bg-page{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    justify-content: center;
+}
+
+.container-content{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 4% 5%;
+    height: 100%;
+    top: 0px;
+}

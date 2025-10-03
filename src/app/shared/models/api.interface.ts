@@ -8,6 +8,8 @@ export interface ApiResponse<T> {
   data      : T; 
 }
 
+export type DeleteResponse = ApiResponse<boolean>;
+
 // * Course *
 
 export interface CourseUniqueResponse {
@@ -21,7 +23,6 @@ export interface CourseUniqueResponse {
   price       : number;
   capacity?   : number;
 }
-
 
 export type CourseResponse = ApiResponse<CourseUniqueResponse>;
 export type CourseListResponse = ApiResponse<CourseUniqueResponse[]>;
@@ -43,7 +44,6 @@ export interface FileUniqueResponse {
   resource_type : ResourceValidTypes;
 }
 
-export type FileRemovedResponse = ApiResponse<boolean>;
 export type FileResponse = ApiResponse<FileUniqueResponse>; 
 
 // * Category * 
@@ -87,7 +87,7 @@ export type EnrollmentDetailedListResponse = ApiResponse<EnrollmentDetailedUniqu
 //* Lessons * //
 
 export interface LessonUniqueResponse {
-  id : string;
+  id ?: string;
   id_course : string;
   title : string;
   description : string;

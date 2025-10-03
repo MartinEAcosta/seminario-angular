@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
 import { Course, CourseDTO } from 'src/app/course/models/course.interfaces';
 import { defaultCourses } from '@utils/defaultCourses';
 import { CourseMapper } from '@mappers/course.mapper';
-import { CourseListResponse, CourseResponse } from 'src/app/shared/models/api.interface';
+import { DeleteResponse, CourseListResponse, CourseResponse } from 'src/app/shared/models/api.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -86,7 +86,7 @@ export class CourseService {
 
   public deleteCourse = ( id : string ) : Observable<boolean> => {
     return this.http
-                  .delete<CourseResponse>(
+                  .delete<DeleteResponse>(
                                           `${this.baseURL}/delete/${id}`
                                          )
                                         .pipe(

@@ -3,8 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { LessonMapper } from '@mappers/lesson.mapper';
-import { LessonPopulatedListResponse, LessonPopulatedResponse, LessonUniqueResponse } from 'src/app/shared/models/api.interface';
-import { LessonDto, LessonPopulated, SaveLessonDto } from '../models/lesson.interfaces';
+import { DeleteResponse, LessonPopulatedListResponse, LessonPopulatedResponse, LessonUniqueResponse } from 'src/app/shared/models/api.interface';
+import { Lesson, LessonDto, LessonPopulated, SaveLessonDto } from '../models/lesson.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +31,7 @@ export class LessonService {
                     )
   }
 
-  public saveLesson = ( lessonRequest : SaveLessonDto ) => {
+  public saveLesson = ( lessonRequest : SaveLessonDto ) : Observable<Lesson> => {
     if(lessonRequest.id){
       return this.http
             .post<LessonUniqueResponse>(`${this.baseURL}/update/${lessonRequest.id}` , {...lessonRequest} )
@@ -59,12 +59,12 @@ export class LessonService {
                 );
   }
 
-  public deleteLesson = ( id : string ) => {
+  public deleteLesson = ( id : string ) : Observable<boolean> => {
     return this.http
-            .delete<LessonUniqueResponse>(`${this.baseURL}/delete/:id` )
+            .delete<DeleteResponse>(`${this.baseURL}/delete/${id}` )
             .pipe(
               map( (response) =>{
-                return response;
+                return response.data;
               }),
               catchError( ({ error }) => {
                 console.log(error)

@@ -4,7 +4,7 @@ import { catchError, forkJoin, map, Observable, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { FileMapper } from '@mappers/file.mapper';
-import { FileRemovedResponse, FileResponse } from '../../models/api.interface';
+import { DeleteResponse, FileResponse } from '../../models/api.interface';
 import { UploadedFile } from '../../models/file.interface';
 import { CourseFormState } from 'src/app/course/state/course/course-form-state';
 import { LessonFormState } from 'src/app/lesson/state/lesson/lesson-form-state';
@@ -50,9 +50,9 @@ export class FileService {
                                   );
   }
 
-  deleteFile = ( id : string ) : Observable<FileRemovedResponse> => {
+  deleteFile = ( id : string ) : Observable<DeleteResponse> => {
     return this.http
-                .delete<FileRemovedResponse>(
+                .delete<DeleteResponse>(
                                       `${this.baseURL}/${id}`,
                                     )
                                     .pipe(
@@ -65,9 +65,9 @@ export class FileService {
                                     );
   }
   
-  deleteCourseThumbnail = ( id : string ) : Observable<FileRemovedResponse> => {
+  deleteCourseThumbnail = ( id : string ) : Observable<DeleteResponse> => {
     return this.http
-                .delete<FileRemovedResponse>(
+                .delete<DeleteResponse>(
                                       `${this.baseURL}/course-thumbnail/${id}`,
                                     )
                                     .pipe(

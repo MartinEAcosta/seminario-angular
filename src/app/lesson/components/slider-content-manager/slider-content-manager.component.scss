@@ -42,9 +42,15 @@
 
 .container-thumbnail-selector{
     display: flex;
-    width: 20%;
+    width: 18rem;
     height: 10rem;
     border-right: thin solid rgba(233, 233, 233, 0.15);
+}
+
+.thumbnail-selector{
+    display: flex;
+    width: 100%;
+    padding-right: 1rem;
 }
 
 .container-lessons-thumbnails{
@@ -57,9 +63,9 @@
 
 .container-add-lesson{
     display: flex;
-    width: 25%;
+    width: 17rem;
     height: 100%;
-    padding-left: 3%;
+    padding-left: 1rem;
     margin-right: 2%;
     background: linear-gradient(to right, v.$black-custom 60% , transparent 30% );
 }
@@ -117,8 +123,6 @@
     border-radius: 1rem;
     overflow: hidden;
 }
-
-
 
 .container-lesson-expand{
     display: flex;

@@ -34,12 +34,10 @@ export class EnrollmentService {
                     .get<EnrollmentDetailedListResponse>( `${this.baseURL}/${id_user}` )
                     .pipe(
                       map( ( enrollmentsResponse ) => {
-                        console.log(enrollmentsResponse);
-                        const a = EnrollmentMapper.mapResponseToEnrollmentDetailedArray( enrollmentsResponse );
-                        console.log(a);
-                        return a;
+                        return EnrollmentMapper.mapResponseToEnrollmentDetailedArray( enrollmentsResponse );
                       }),
                       catchError( ({error}) => {
+                        console.log(error);
                         return throwError(() => new Error(`${error.errorMessage}`));
                       }),
                     );

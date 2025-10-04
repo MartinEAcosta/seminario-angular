@@ -46,17 +46,19 @@ export class LessonService {
               }),
             );
     }
-    return this.http
-                .post<LessonUniqueResponse>(`${this.baseURL}/new` , {...lessonRequest} )
-                .pipe(
-                  map( (lessonResponse) =>{
-                    return LessonMapper.mapResponseToLesson( lessonResponse );
-                  }),
-                  catchError( ({ error }) => {
-                    console.log(error)
-                    return throwError(() => new Error(`${error.errorMessage}`));
-                  }),
-                );
+    else{
+      return this.http
+                  .post<LessonUniqueResponse>(`${this.baseURL}/new` , {...lessonRequest} )
+                  .pipe(
+                    map( (lessonResponse) =>{
+                      return LessonMapper.mapResponseToLesson( lessonResponse );
+                    }),
+                    catchError( ({ error }) => {
+                      console.log(error)
+                      return throwError(() => new Error(`${error.errorMessage}`));
+                    }),
+                  );
+    }
   }
 
   public deleteLesson = ( id : string ) : Observable<boolean> => {

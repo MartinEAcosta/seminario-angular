@@ -3,5 +3,17 @@
         <app-page-title [title]="'Explorar'" />
         <app-search-filter-bar />
 
+        <div class="container-courses">
+            @if( courseResource.isLoading() ){
+                <app-loader />
+            }
+            @else {
+                @for( course of courseResource.value(); track course.id){
+                    <app-course-mini-card [course]="course" />
+                }
+            }
+        </div>
+        
+
     </div>
 </div>

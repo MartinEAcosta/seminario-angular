@@ -3,12 +3,12 @@ import { EnrollmentDetailed } from '../../models/enrollment.interfaces';
 import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-enrollment-card',
+  selector: 'app-enrollment-mini-card',
   imports: [ DatePipe ],
-  templateUrl: './enrollment-card.component.html',
-  styleUrl: './enrollment-card.component.scss'
+  templateUrl: './enrollment-mini-card.component.html',
+  styleUrls: [ '../../../shared/styles/mini-card-component.scss' ,'./enrollment-mini-card.component.scss']
 })
-export class EnrollmentCardComponent {
+export class EnrollmentMiniCardComponent {
 
   enrollment = input.required<EnrollmentDetailed>();
 

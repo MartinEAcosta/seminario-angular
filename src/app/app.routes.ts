@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+
 import HomeComponent from './shared/pages/home/home-page';
 import { ExplorePage } from './shared/pages/explore/explore-page';
 

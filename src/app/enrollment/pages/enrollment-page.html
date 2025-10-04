@@ -13,7 +13,7 @@
             }
             @else{
                 @for( enrollment of enrollmentResources.value(); track enrollment.id ){
-                    <app-enrollment-card [enrollment]="enrollment" />
+                    <app-enrollment-mini-card [enrollment]="enrollment" />
                 }
             }
 

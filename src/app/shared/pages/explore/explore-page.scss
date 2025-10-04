@@ -5,6 +5,7 @@
     flex-direction: column;
     margin: auto;
     justify-content: center;
+    overflow: hidden;
 }
 
 .container-content{
@@ -14,4 +15,12 @@
     padding: 4% 5%;
     height: 100%;
     top: 0px;
+}
+
+.container-courses{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5%;
+    margin: 3% 2%;
 }

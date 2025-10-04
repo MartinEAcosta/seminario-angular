@@ -12,6 +12,7 @@ import { CourseFormState } from 'src/app/course/state/course/course-form-state';
 import { FileService } from 'src/app/shared/services/file/file.service';
 import { BtnRemoveComponent } from "src/app/shared/components/btn-remove/btn-remove.component";
 import { Router } from '@angular/router';
+import { LessonPopulated } from '../../models/lesson.interfaces';
 
 @Component({
   selector: 'app-form-lesson',
@@ -66,13 +67,13 @@ export class FormLessonComponent {
     return;
   }
 
-  public onDeleteLesson = ( id : string ) => {
-    if( id ){
+  public onDeleteLesson = ( lesson : LessonPopulated ) => {
+    if( lesson.id ){
         if( this.courseFormState.course()?.id_owner === this.authService.id() ){
           if( this.lessonFormState.lessonSelected()?.file.id_file ){
             this.fileService.deleteCourseThumbnail( this.courseFormState.course()?.id! ).subscribe()
           }
-          this.lessonService.deleteLesson( id )
+          this.lessonService.deleteLesson( lesson.id )
                                 .subscribe( ( isLessonDeleted ) => {
                                     if( isLessonDeleted ) {
                                       this.router.navigateByUrl('/');
@@ -82,7 +83,10 @@ export class FormLessonComponent {
         }
     }
     else{
+      this.lessonFormState.removeLesson( lesson );
     }
+    this.lessonFormState.setLessonSelected(null);
+    this.lessonFormState.setIsLessonFormVisible(false);
   }    
 
 

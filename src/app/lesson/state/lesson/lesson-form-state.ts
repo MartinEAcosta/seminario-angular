@@ -29,7 +29,7 @@ export class LessonFormState {
     this.isLessonFormVisible.set(false);
   }
 
-  public setLessonSelected = ( lesson : LessonPopulated ) => {
+  public setLessonSelected = ( lesson : LessonPopulated | null ) => {
     this.lessonSelected.set( lesson );
   }
 
@@ -74,11 +74,18 @@ export class LessonFormState {
       },
       unit: 0,
       chapter: 0,
-      lesson_number: 0,
+      lesson_number: this.lessons().at(-1) ? this.lessons().at(-1)?.lesson_number! : 0,
       uploaded_at: new Date(),
     };
     this.lessons.set([...this.lessons() , newLesson]);
     return newLesson;
+  }
+
+  public removeLesson = ( lessonToRemove : LessonPopulated ) : void => {
+    const newLessonsArray = this.lessons().filter( (lesson) => {
+      lesson.lesson_number != lessonToRemove.lesson_number 
+    });
+    this.lessons.set( newLessonsArray );
   }
 
 }

@@ -12,7 +12,7 @@
         <form-error-label [control]="lessonFormState.lessonForm.get('title')!" [warningSvg]="true" />
 
         @if( lessonFormState.lessonSelected() ){
-            <app-btn-remove [item]="lessonFormState.lessonSelected()" (onRemove)="onDeleteLesson( lessonFormState.lessonSelected()?.id! )" />
+            <app-btn-remove [item]="lessonFormState.lessonSelected()" (onRemove)="onDeleteLesson( this.lessonFormState.lessonSelected()! )" />
         }
     </div>
     <div class="container-lesson-middle">

@@ -31,8 +31,8 @@ export interface SaveLessonDto{
     id_file       ?: string;
     title          : string;
     description    : string;
-    unit          ?: number;
-    chapter       ?: number;
+    unit           : number;
+    chapter        : number;
     lesson_number ?: number;
 }
 

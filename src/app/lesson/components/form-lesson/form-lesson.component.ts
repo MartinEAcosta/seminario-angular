@@ -52,17 +52,8 @@ export class FormLessonComponent {
       
       lessonDto.lesson_number = this.lessonFormState.lessons().at(-1)?.lesson_number ?? 0;
 
-      if( this.lessonFormState.mediaFile() != null ){
-        return this.fileService.uploadFile( this.folder, this.lessonFormState.mediaFile()! )
-                          .subscribe( response => {
-                              lessonDto.id_file = response.id;
-                              console.log(lessonDto);
-                              return this.lessonService.saveLesson( lessonDto ).subscribe();
-                          });
-      }
-      else{
-        return this.lessonService.saveLesson( lessonDto ).subscribe();
-      }
+    
+      return this.lessonService.saveLesson( lessonDto , this.lessonFormState.mediaFile() ).subscribe();
     }
     return;
   }

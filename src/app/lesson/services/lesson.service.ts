@@ -31,10 +31,22 @@ export class LessonService {
                     )
   }
 
-  public saveLesson = ( lessonRequest : SaveLessonDto ) : Observable<Lesson> => {
-    if(lessonRequest.id){
+  public saveLesson = ( lessonRequest : SaveLessonDto , file ?: File | null ) : Observable<Lesson> => {
+    const formData = new FormData();
+
+    const { id , ...rest } = lessonRequest;
+
+    Object.entries( rest ).forEach(([key , value]) => {
+      formData.append( key , value as any);
+    })
+
+    if(file){
+      formData.append( 'files', file );
+    }
+
+    if( id ){
       return this.http
-            .post<LessonUniqueResponse>(`${this.baseURL}/update/${lessonRequest.id}` , {...lessonRequest} )
+            .post<LessonUniqueResponse>(`${this.baseURL}/update/${id}` , formData )
             .pipe(
               map( (lessonResponse) =>{
                 console.log(lessonResponse);
@@ -48,7 +60,7 @@ export class LessonService {
     }
     else{
       return this.http
-                  .post<LessonUniqueResponse>(`${this.baseURL}/new` , {...lessonRequest} )
+                  .post<LessonUniqueResponse>(`${this.baseURL}/new` , formData )
                   .pipe(
                     map( (lessonResponse) =>{
                       return LessonMapper.mapResponseToLesson( lessonResponse );

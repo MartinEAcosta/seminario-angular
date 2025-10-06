@@ -4,12 +4,13 @@ import { Lesson, LessonPopulated, SaveLessonDto } from "../lesson/models/lesson.
 
 export class LessonMapper {
 
+    // * chequear el unit y chapter la forma en que se manejan
     static mapToCreateLessonDto = ( form : FormGroup ) : SaveLessonDto => {
         return {
             title : form.get('title')?.value,
             description : form.get('description')?.value,
-            unit : form.get('unit')?.value,
-            chapter : form.get('chapter')?.value,
+            unit : form.get('unit')?.value ?? 0,
+            chapter : form.get('chapter')?.value ?? 0,
         };
     };
 

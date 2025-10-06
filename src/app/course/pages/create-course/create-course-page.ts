@@ -34,20 +34,9 @@ export class CreateCoursePageComponent {
         
       const createCourseDto = CourseMapper.mapToCourseDto( this.courseFormState.courseForm );
 
-      if( this.courseFormState.thumbnailFile() != null ){
-        this.fileService.updateFile( this.folder , this.courseFormState.thumbnailFile()! )
-                          .subscribe(
-                            fileUploadedResponse => {
-                              createCourseDto.id_file = fileUploadedResponse.id;
-                              createCourseDto.thumbnail_url = fileUploadedResponse.url!
-                              this.courseService.createCourse( createCourseDto ).subscribe();
-                            }
-                          );
-      }
-      else{
-        this.courseService.createCourse( createCourseDto ).subscribe();
-      }
-      this.courseFormState.reset();
+      this.courseService.createCourse( createCourseDto , this.courseFormState.thumbnailFile() ).subscribe();
+
+      // this.courseFormState.reset();
     }
   } 
 }

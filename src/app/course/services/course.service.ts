@@ -46,11 +46,27 @@ export class CourseService {
                   );
   }
 
-  public createCourse = ( courseRequest : CourseDTO ) : Observable<Course> => {
+  public createCourse = ( courseRequest : CourseDTO , file : File | null = null) : Observable<Course> => {
+    const formData = new FormData();
+
+    const { id , ...rest } = courseRequest;
+
+    Object.entries( rest ).forEach(([key , value]) => {
+      formData.append( key , value as any);
+    })
+
+    if(file){
+      formData.append( 'files', file );
+    }
+
+
     return this.http
                   .post<CourseResponse>(  
                                           `${this.baseURL}/new` , 
-                                          {...courseRequest}
+                                          { 
+                                            ...courseRequest,
+                                            ...formData,
+                                          }
                                         )
                                         .pipe(
                                           map( ( courseResponse ) => {
@@ -64,14 +80,23 @@ export class CourseService {
                                         );
   }
 
-  public updateCourse = ( courseRequest : CourseDTO ) : Observable<Course> => {
+  public updateCourse = ( courseRequest : CourseDTO , file : File | null = null) : Observable<Course> => {
+    const formData = new FormData();
+
     const { id , ...rest } = courseRequest;
+
+    Object.entries( rest ).forEach(([key , value]) => {
+      formData.append( key , value as any);
+    })
+
+    if(file){
+      formData.append( 'files', file );
+    }
+
     return this.http
                   .put<CourseResponse>(
                                         `${this.baseURL}/update/${id}` ,
-                                        { 
-                                          ...rest
-                                        } 
+                                        formData
                                       )
                                         .pipe( 
                                           map( ( courseResponse ) => {

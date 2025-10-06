@@ -41,20 +41,9 @@ export class UpdateCoursePageComponent {
       
     updateCourseDTO.id = this.courseFormState.course()?.id!;
     
-    if( this.courseFormState.thumbnailFile() != null ){
-      this.fileService
-            .updateFile( this.folder , this.courseFormState.thumbnailFile()! )
-              .subscribe( fileResponse => {
-                updateCourseDTO.thumbnail_url = fileResponse.url!;
-                updateCourseDTO.id_file = fileResponse.id;
-                this.courseService.updateCourse( updateCourseDTO ).subscribe();
-              });
-    }
-    else{
-      this.courseService.updateCourse( updateCourseDTO ).subscribe();
-    }
+    this.courseService.updateCourse( updateCourseDTO , this.courseFormState.thumbnailFile() ).subscribe();
 
-    this.courseFormState.reset();    
+    // this.courseFormState.reset();    
   }
 
 }

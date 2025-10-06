@@ -53,7 +53,7 @@ export class FormLessonComponent {
       lessonDto.lesson_number = this.lessonFormState.lessons().at(-1)?.lesson_number ?? 0;
 
       if( this.lessonFormState.mediaFile() != null ){
-        return this.fileService.updateFile( this.folder, this.lessonFormState.mediaFile()! )
+        return this.fileService.uploadFile( this.folder, this.lessonFormState.mediaFile()! )
                           .subscribe( response => {
                               lessonDto.id_file = response.id;
                               console.log(lessonDto);

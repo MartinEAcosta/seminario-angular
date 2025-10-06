@@ -4,9 +4,11 @@
     display: flex;
     width: 22rem;
     height: 26rem;
+    position: relative;
+    overflow: hidden;
     flex-direction: column;
-    border-radius: 0.2rem;
     padding: 2.5%;
+    border-radius: 0.2rem;
     margin-bottom: 10%;
     background-color: rgb(40, 40, 40); 
     box-shadow: 5px 7px 20px rgba(0, 0, 0, 0.8);

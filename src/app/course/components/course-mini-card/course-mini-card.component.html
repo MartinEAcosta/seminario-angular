@@ -1,13 +1,32 @@
 <div class="mini-card">
-    <h1 class="title">{{course().title}}</h1>
+    <div class="container-title">
+        <h1 class="title">{{course().title}}</h1>
+    </div>
     <figure>
         <img 
-            class="thumbnail-course"
-            src="{{ course().thumbnail_url }}" alt="">
+        class="thumbnail-course"
+        src="{{ course().thumbnail_url }}" alt="">
     </figure>
     <div class="container-details">
         <h2 class="text text-details">Descripción</h2>
         <p class="text text-desc">{{ course().description }} </p>
-                
+    </div>
+    <div class="container-pricing">
+        <p class="price">
+            @if( course().price != 0 ){
+                {{ course().price | currency }}
+            }
+            @else {
+                Gratis
+            }
+        </p>
+    </div>
+    <div class="container-hover">
+        <button class="btn" [routerLink]="['/course', id_course()]">
+            Ver curso
+        </button>
+        <button class="btn" (click)="this.cartService.onAddToCart( course() )">
+            Añadir al carrito
+        </button>
     </div>
 </div>

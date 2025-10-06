@@ -46,7 +46,7 @@ export class UpdateCoursePageComponent {
             .updateFile( this.folder , this.courseFormState.thumbnailFile()! )
               .subscribe( fileResponse => {
                 updateCourseDTO.thumbnail_url = fileResponse.url!;
-                updateCourseDTO.file_id = fileResponse.id;
+                updateCourseDTO.id_file = fileResponse.id;
                 this.courseService.updateCourse( updateCourseDTO ).subscribe();
               });
     }

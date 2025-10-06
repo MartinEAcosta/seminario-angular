@@ -1,5 +1,10 @@
 @use '../../../../variables.scss' as v;
 
+.container-title{
+    display: flex;
+    height: 15%;
+}
+
 .text{
     font-family: v.$font-primary;
     color: v.$white-custom;
@@ -14,5 +19,64 @@
 
 .text-desc{
     margin-top: 1%;
+    text-align: center;
     font-size: medium;
+}
+
+.container-pricing{
+    display: flex;
+    font-family: v.$font-primary;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5%;
+    color: v.$green-success;
+}
+
+.price{
+    font-size: large;
+    font-weight: 600;
+}
+
+.container-hover{
+    display: flex;
+    opacity: 0;
+    flex-direction: column;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    inset: 0;
+    gap: 5%;
+    min-width: 100%;
+    min-height: 100%;
+    transition: opacity 0.3s ease;
+    background: radial-gradient(circle at center, rgba(0, 0, 0, 0.338) 0%, rgba(0,0,0,0.9) 100%);
+}
+
+.btn{
+    display: flex;
+    width: 10rem;
+    height: 2.5rem;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5rem;
+    background-color: transparent;
+    border: solid thin v.$white-custom;
+    color: v.$white-custom;
+    font-weight: 400;
+    font-family: v.$font-primary;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    pointer-events: all;
+}
+
+.btn:hover{
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+
+.container-hover:hover{
+    visibility: visible;
+    opacity: 1;
 }

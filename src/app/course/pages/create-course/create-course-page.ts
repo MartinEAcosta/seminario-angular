@@ -38,7 +38,7 @@ export class CreateCoursePageComponent {
         this.fileService.updateFile( this.folder , this.courseFormState.thumbnailFile()! )
                           .subscribe(
                             fileUploadedResponse => {
-                              createCourseDto.file_id = fileUploadedResponse.id;
+                              createCourseDto.id_file = fileUploadedResponse.id;
                               createCourseDto.thumbnail_url = fileUploadedResponse.url!
                               this.courseService.createCourse( createCourseDto ).subscribe();
                             }

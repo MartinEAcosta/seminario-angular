@@ -87,7 +87,7 @@ export class FormCourseComponent {
 
   onDeleteCourse = ( id : string )  => {
     if( this.courseFormState.course()?.id_owner === this.authService.id() ){
-      if( this.courseFormState.course()?.file_id ){
+      if( this.courseFormState.course()?.id_file ){
         this.fileService.deleteCourseThumbnail( this.courseFormState.course()?.id! ).subscribe()
       }
       this.courseService.deleteCourse( id )

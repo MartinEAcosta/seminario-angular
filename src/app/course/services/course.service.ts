@@ -27,7 +27,7 @@ export class CourseService {
                       }
                       ),
                       catchError( ( error ) => {
-                        // Se retorna un arreglo de cursos por defecto.
+                        // Se retorna un arreglo de cursos por ngdefecto.
                         return of(defaultCourses);
                       }),
                   );

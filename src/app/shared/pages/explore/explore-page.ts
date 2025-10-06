@@ -5,10 +5,11 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { CourseService } from 'src/app/course/services/course.service';
 import { LoaderComponent } from "../../components/loader/loader.component";
 import { CourseMiniCardComponent } from "src/app/course/components/course-mini-card/course-mini-card.component";
+import { CartComponent } from "src/app/cart/components/cart/cart.component";
 
 @Component({
   selector: 'app-explore-page',
-  imports: [SearchFilterBarComponent, PageTitleComponent, LoaderComponent, CourseMiniCardComponent],
+  imports: [SearchFilterBarComponent, PageTitleComponent, LoaderComponent, CourseMiniCardComponent, CartComponent],
   templateUrl: './explore-page.html',
   styleUrl: './explore-page.scss'
 })

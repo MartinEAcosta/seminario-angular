@@ -7,11 +7,16 @@
       <div class="header-cart">
         <p>Mi Carrito</p>
       </div>
-      <div class="list-courses">
-        @for ( item of this.cart().values() ; track this.cart().keys() ) {
-          <app-cart-item-card [item]="item" />
-        }
-      </div>
+      @if( this.cart().size != 0 ){
+        <div class="list-courses">
+          @for ( item of this.cart().values() ; track this.cart().keys() ) {
+            <app-cart-item-card [item]="item" />
+          }
+        </div>
+      }
+      @else {
+        <p class="text-notice">¡Todavia no has agregado nada al carrito!</p>
+      }
       <div class="actions">
         <app-discount-code-input />
         <div class="container-btns">

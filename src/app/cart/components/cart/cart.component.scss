@@ -120,6 +120,17 @@ img{
     padding: 1rem;
 }
 
+.text-notice{
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    font-family: v.$font-primary;
+    justify-content: center;
+    align-items: center;
+    color: rgba(0, 0, 0 , 0.6);
+}
+
 .actions{
     height: 25%;
     border-radius: 20px 20px 0 0;

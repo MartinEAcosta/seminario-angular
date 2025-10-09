@@ -21,8 +21,6 @@ export class CourseCardComponent {
   authService = inject(AuthService);
   cartService = inject(CartService);
   
-  readonly user = this.authService.user();
-
   onAddToCart = ( ) : void => {
     if( this.course().capacity === 0 ) return;
     

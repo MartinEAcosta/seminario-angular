@@ -5,7 +5,7 @@ import { CourseService } from '../../services/course.service';
 import { CourseMapper } from '@mappers/course.mapper';
 import { FormCourseComponent } from "../../components/form-course/form-course.component";
 import { CourseFormState } from '../../state/course/course-form-state';
-import { Router } from 'express';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-course-page',

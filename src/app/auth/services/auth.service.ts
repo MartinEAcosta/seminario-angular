@@ -30,7 +30,7 @@ export class AuthService {
     loader: () => this.checkStatus()
   });
   
-  user = computed( () => this._user );
+  user = computed( this._user );
   id = computed( this._id );
   token = computed(this._token);
 

@@ -48,7 +48,7 @@
 
                 </div>
 
-                @if( course().id_owner === user()?.id ) {
+                @if( course().id_owner === authService.user()?.id  ) {
                     <a 
                         class="anchor-icon" 
                         [routerLink]="['/course/update' , course().id ]" >

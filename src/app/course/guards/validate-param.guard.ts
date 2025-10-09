@@ -3,7 +3,6 @@ import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } fr
 
 const idPattern = /^[0-9a-fA-F]{24}$/;
 
-
 export const ValidateParamGuard : CanActivateFn = (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,

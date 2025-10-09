@@ -44,9 +44,11 @@ export class AuthService {
     return 'not-authenticated';
   });
 
+  constructor( ) { }
+
   public registerUser = ( userRequest : UserDTO ) : Observable<User | false> => {
     return this.http
-                  .post<AuthResponse>(`${this.baseURL}/new` , { ...userRequest } )
+                  .post<AuthResponse>(`${this.baseURL}/register` , { ...userRequest } )
                     .pipe( 
                       map( ( authResponse ) =>  this.handleAuthSuccess( authResponse )),
                       // En caso de tener un error se captura y se toman las acciones de "limpieza"
@@ -55,7 +57,7 @@ export class AuthService {
   }
 
   public loginUser = ( userRequest : UserDTO ) : Observable<User | false> => {
-    return this.http.post<AuthResponse>(`${this.baseURL}` , { ...userRequest } )
+    return this.http.post<AuthResponse>(`${this.baseURL}/login` , { ...userRequest } )
                       .pipe(
                         map( ( authResponse ) => this.handleAuthSuccess( authResponse ) ),
                         catchError( ( error : any ) =>  this.handleAuthError( error ) )

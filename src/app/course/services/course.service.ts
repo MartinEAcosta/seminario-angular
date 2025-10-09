@@ -86,7 +86,9 @@ export class CourseService {
     const { id , ...rest } = courseRequest;
 
     Object.entries( rest ).forEach(([key , value]) => {
-      formData.append( key , value as any);
+      if( value != undefined){
+        formData.append( key , value as any);
+      }
     })
 
     if(file){

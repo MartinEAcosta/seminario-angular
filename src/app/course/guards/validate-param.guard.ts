@@ -1,7 +1,5 @@
 import { inject } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from "@angular/router";
-import { CourseService } from "../services/course.service";
-import { catchError, map, of } from "rxjs";
 
 const idPattern = /^[0-9a-fA-F]{24}$/;
 

@@ -5,6 +5,7 @@ import { CourseResolver } from "./resolver/course-resolver";
 import { CoursePage } from "./pages/course-detail/course-page";
 import { UpdateCoursePageComponent } from "./pages/update-course/update-course-page";
 import { CreateCoursePageComponent } from "./pages/create-course/create-course-page";
+import { ValidatePermissionGuard } from "@guards/validate.permission.guard";
 
 export const courseRoutes : Routes = [
     {
@@ -24,7 +25,7 @@ export const courseRoutes : Routes = [
             {
                 path : 'update/:id',
                 component : UpdateCoursePageComponent,
-                canActivate : [ ValidateParamGuard ],
+                canActivate : [ ValidateParamGuard , ValidatePermissionGuard ],
                 canMatch : [ AuthenticatedGuard ],
                 resolve : {
                     resolvedCourse : CourseResolver

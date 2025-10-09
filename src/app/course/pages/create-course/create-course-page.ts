@@ -1,12 +1,11 @@
-import { FormGroup } from '@angular/forms';
 import { Component, inject } from '@angular/core';
 
 import { AuthService } from '../../../auth/services/auth.service';
 import { CourseService } from '../../services/course.service';
-import { FileService } from 'src/app/shared/services/file/file.service';
 import { CourseMapper } from '@mappers/course.mapper';
 import { FormCourseComponent } from "../../components/form-course/form-course.component";
 import { CourseFormState } from '../../state/course/course-form-state';
+import { Router } from 'express';
 
 @Component({
   selector: 'app-create-course-page',
@@ -15,16 +14,15 @@ import { CourseFormState } from '../../state/course/course-form-state';
   styleUrl: './create-course-page.scss',
 })
 export class CreateCoursePageComponent {
-  folder = "courses";
 
+  private router = inject(Router);
   private courseService = inject(CourseService);
-  private fileService = inject(FileService);
   private authService = inject(AuthService);
   private courseFormState = inject(CourseFormState);
   
   constructor ( ) { }
 
-  onCreateCourse = ( ) : void => {
+  public onCreateCourse = ( ) : void => {
     this.courseFormState.courseForm.markAllAsTouched();
     
     if( this.courseFormState.courseForm.valid ){
@@ -34,9 +32,13 @@ export class CreateCoursePageComponent {
         
       const createCourseDto = CourseMapper.mapToCourseDto( this.courseFormState.courseForm );
 
-      this.courseService.createCourse( createCourseDto , this.courseFormState.thumbnailFile() ).subscribe();
-
-      // this.courseFormState.reset();
+      this.courseService.createCourse( createCourseDto , this.courseFormState.thumbnailFile() )
+                          .subscribe(
+                            ( course ) => {
+                                        this.courseFormState.reset( );
+                                        this.router.navigate([`/courses/${ course.id }`]);
+                            },
+                          );
     }
   } 
 }

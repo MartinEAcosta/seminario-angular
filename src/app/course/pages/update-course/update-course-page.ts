@@ -5,7 +5,6 @@ import { CourseService } from 'src/app/course/services/course.service';
 import { FileService } from 'src/app/shared/services/file/file.service';
 import { CourseMapper } from '@mappers/course.mapper';
 import { FormCourseComponent } from "src/app/course/components/form-course/form-course.component";
-import { LoaderComponent } from "src/app/shared/components/loader/loader.component";  
 import { CourseFormState } from '../../state/course/course-form-state';
 
 @Component({
@@ -17,11 +16,9 @@ import { CourseFormState } from '../../state/course/course-form-state';
 
 
 export class UpdateCoursePageComponent {
-  folder = 'courses';
   
-  public router = inject(Router);
-  public courseService = inject(CourseService);
-  public fileService = inject(FileService);
+  private router = inject(Router);
+  private courseService = inject(CourseService);
   private courseFormState = inject(CourseFormState);
   
   constructor ( private activatedRoute : ActivatedRoute ) {  }
@@ -41,9 +38,14 @@ export class UpdateCoursePageComponent {
       
     updateCourseDTO.id = this.courseFormState.course()?.id!;
     
-    this.courseService.updateCourse( updateCourseDTO , this.courseFormState.thumbnailFile() ).subscribe();
-
-    // this.courseFormState.reset();    
+    this.courseService.updateCourse( updateCourseDTO , this.courseFormState.thumbnailFile() )
+                        .subscribe(
+                          ( course ) => {
+                            this.courseFormState.reset( );
+                            this.router.navigate([`/courses/${ course.id }`]);
+                          },
+                        );
   }
+
 
 }

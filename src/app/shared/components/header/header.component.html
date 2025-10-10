@@ -23,9 +23,12 @@
           Biblioteca
         </a>
 
-        <a [routerLink]="['/course/create']">
-          Crea tu curso
-        </a>
+        @if( authService.user()?.role === 'teacher' || authService.user()?.role === 'admin' ) {
+          <a [routerLink]="['/course/create']">
+            Crea tu curso
+          </a>
+        }
+
         <a [routerLink]="['/']" (click)="authService.logoutUser()" class="last-element">
           Cerrar sesión
         </a>

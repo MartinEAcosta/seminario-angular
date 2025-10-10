@@ -25,14 +25,12 @@ export const courseRoutes : Routes = [
             {
                 path : 'update/:id',
                 component : UpdateCoursePageComponent,
-                canActivate : [ ValidateParamGuard , ValidatePermissionGuard ],
-                data : [ { roles : ['teacher'] } ],
+                canActivate : [ ValidateParamGuard ],
                 canMatch : [ AuthenticatedGuard ],
                 resolve : {
                     resolvedCourse : CourseResolver
                 }
             },
-
             {
                 path : ':id',
                 component : CoursePage,

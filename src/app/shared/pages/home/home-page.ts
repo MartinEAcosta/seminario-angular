@@ -1,7 +1,5 @@
-/*
-  Path:PORT/
-*/
 import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 import { CourseService } from '../../../course/services/course.service';
@@ -15,7 +13,7 @@ import { CartComponent } from 'src/app/cart/components/cart/cart.component';
     selector: 'app-home',
     templateUrl: './home-page.html',
     styleUrl: './home-page.scss',
-    imports: [CourseListComponent, ModalErrorMessageComponent, CartComponent]
+    imports: [CourseListComponent, ModalErrorMessageComponent, CartComponent, RouterLink]
 })
 export default class HomeComponent {
   

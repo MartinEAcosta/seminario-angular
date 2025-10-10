@@ -29,3 +29,16 @@
     margin: 3% 2%;
 }
 
+.container-not-found{
+    display: flex;
+    height: 15vh;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+.text{
+    display: flex;
+    color: rgb(40, 40, 40 , 0.8);
+    font-family: v.$font-primary;
+}

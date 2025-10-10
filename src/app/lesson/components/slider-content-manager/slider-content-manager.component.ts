@@ -83,6 +83,8 @@ export class SliderContentManagerComponent {
   public onAddLesson = ( ) => {
     this.lessonFormState.setIsLessonFormVisible( true );
 
+    if( this.lessonFormState.lessonSelected() && !this.lessonFormState.lessonSelected()?.id ) return;
+    
     const emptyLesson = this.lessonFormState.createEmptyLesson();
     this.lessonFormState.setLessonSelected( emptyLesson );
     this.lessonFormState.setTempMedia(null);

@@ -1,0 +1,22 @@
+@use '../../../../variables.scss' as v;
+
+.container-list {
+    display: flex;
+    width: 30rem;
+    background-color: v.$black-custom;
+    margin-left: 3rem;
+    padding: 1rem;
+    border-radius: 1rem 1rem 0 0;
+    color: v.$white-custom;
+}
+
+.container-list-header{
+    display: flex;
+    margin: auto;
+    justify-content: center;
+}
+
+.title-list{
+    font-family: v.$font-primary;
+    font-weight: 400;
+}

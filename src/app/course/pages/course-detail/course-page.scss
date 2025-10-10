@@ -1,1 +1,10 @@
 @use '@variables/variables.scss' as v;
+
+
+.bg-course-detail{
+    background-color: v.$white-custom;
+    background-position: center;
+    background-size: cover;
+    font-family: v.$font-primary;
+    min-height: 100vh;
+}

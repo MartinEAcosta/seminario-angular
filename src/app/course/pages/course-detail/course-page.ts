@@ -8,6 +8,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { catchError, map, of } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoaderComponent } from "../../../shared/components/loader/loader.component";
+import { ListOfLessonsComponent } from "src/app/lesson/components/list-of-lessons/list-of-lessons.component";
 
 @Component({
   selector: 'app-course-page',
@@ -17,6 +18,7 @@ import { LoaderComponent } from "../../../shared/components/loader/loader.compon
     CourseDetailComponent,
     ReactiveFormsModule,
     LoaderComponent,
+    ListOfLessonsComponent
 ]
 })
 export class CoursePage {

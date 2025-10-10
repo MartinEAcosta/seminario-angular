@@ -1,6 +1,9 @@
-@if( this.courseResource.isLoading() ){
-    <app-loader />
-}
-@else if( !this.courseResource.error() ){
-    <app-course-detail [selectedCourse]="courseResource.value()!"/>
-}
+<div class="bg-course-detail">
+    @if( this.courseResource.isLoading() ){
+        <app-loader />
+    }
+    @else if( !this.courseResource.error() ){
+        <app-course-detail [selectedCourse]="courseResource.value()!"/>
+        <app-list-of-lessons />
+    }
+</div>

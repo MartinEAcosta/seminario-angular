@@ -1,24 +1,26 @@
 <div class="bg-course-detail">
     <section class="section-hero">
+
         <div class="container-course-presentation">
             <h1 class="title-course"> {{ selectedCourse().title }} </h1>
-
             <p class="description-course"> {{ selectedCourse().description }} </p>
-            
+
             <div class="container-btns">
                 <button class="btn btn-primary">
                     <img class="svg play-svg" src="/assets/play-white-icon.svg" alt="">
-                    Comenzar Curso
+                    Comenzar curso
                 </button>
                 <button class="btn btn-secondary">
                     <img class="svg book-svg" src="/assets/book-icon.svg" alt="">
-                    Ver Temario
+                    Ver temario
                 </button>
             </div>
-
+            
         </div>
+
         <figure class="thumbnail">
             <img src="{{ selectedCourse().thumbnail_url }}" alt="">
         </figure>
+
     </section>
 </div>

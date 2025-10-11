@@ -5,10 +5,11 @@ import { CourseService } from '../../services/course.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../auth/services/auth.service';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { catchError, map, of } from 'rxjs';
+import { of } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoaderComponent } from "../../../shared/components/loader/loader.component";
 import { ListOfLessonsComponent } from "src/app/lesson/components/list-of-lessons/list-of-lessons.component";
+import { LessonService } from 'src/app/lesson/services/lesson.service';
 
 @Component({
   selector: 'app-course-page',
@@ -27,6 +28,7 @@ export class CoursePage {
   router = inject(Router);
 
   courseService = inject(CourseService);
+  lessonService = inject(LessonService);
   authService = inject(AuthService);
 
   courseId = this.activatedRoute.snapshot.params['id'] || '';
@@ -37,6 +39,13 @@ export class CoursePage {
       if( request.id === '' ) return of();
         
       return this.courseService.getById( request.id );
+    },
+  });
+
+  lessonResource = rxResource({
+    request : ( ) => ( { idCourse : this.courseId } ),
+    loader  : ( { request } ) => {
+      return this.lessonService.getAllLessonPopulatedFromCourse( request.idCourse );
     },
   });
 

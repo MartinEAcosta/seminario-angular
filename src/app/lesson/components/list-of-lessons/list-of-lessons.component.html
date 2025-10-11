@@ -4,7 +4,7 @@
             Contenido
         </h3>
     </div>
-    <div class="container-module-toggle">
-        <h3>Modulo </h3>
-    </div>
+    @for( module of modulesArray; track module.unit ){
+        <app-modules-accordion [unit]="module.unit" [lessons]="module.lessons" />
+    }
 </div>

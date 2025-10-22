@@ -2,11 +2,10 @@
 export interface Lesson {
     id           ?: string;
     id_course     : string;
+    id_module     : string;
+    id_file       : string;
     title         : string;
     description   : string;
-    id_file       : string;
-    unit          : number;
-    chapter       : number;
     lesson_number : number;
     uploaded_at   : Date;
 }
@@ -14,14 +13,13 @@ export interface Lesson {
 export interface LessonPopulated {
     id           ?: string;
     id_course     : string;
+    id_module     : string;
     title         : string;
     description   : string;
     file          : {
         id_file : string | null;
         url     : string | null;
     };
-    unit          : number;
-    chapter       : number;
     lesson_number : number;
     uploaded_at   : Date;
 }

@@ -2,8 +2,8 @@
     @if( this.courseResource.isLoading() ){
         <app-loader />
     }
-    @else if( !this.courseResource.error() && !this.lessonResource.error() ){
+    @else if( this.courseResource.hasValue() ){
         <app-course-detail [selectedCourse]="courseResource.value()!"/>
-        <app-list-of-lessons [lessons]="lessonResource.value()!"/>
+        <app-list-of-content [courseId]="courseResource.value().id" />
     }
 </div>

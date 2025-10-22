@@ -84,16 +84,28 @@ export interface EnrollmentDetailedUniqueResponse {
 export type EnrollmentListResponse = ApiResponse<EnrollmentUniqueResponse[]>;
 export type EnrollmentDetailedListResponse = ApiResponse<EnrollmentDetailedUniqueResponse[]>;
 
+//* Modules * //
+
+export interface ModuleUniqueResponse {
+  id : string;
+  id_course : string;
+  title : string;
+  unit : number;
+  lessons : string[],
+}
+
+export type ModuleListResponse = ApiResponse<ModuleUniqueResponse[]>
+
+
 //* Lessons * //
 
 export interface LessonUniqueResponse {
   id ?: string;
   id_course : string;
+  id_module : string;
+  id_file : string;
   title : string;
   description : string;
-  id_file : string;
-  unit : number;
-  chapter : number;
   lesson_number : number;
   uploaded_at : Date;
 }
@@ -101,14 +113,13 @@ export interface LessonUniqueResponse {
 export interface LessonPopulatedUniqueResponse {
   id : string;
   id_course : string;
+  id_module : string;
   title : string;
   description : string;
   file : {
     id_file : string;
     url     : string;
   };
-  unit : number;
-  chapter : number;
   lesson_number : number;
   uploaded_at : Date;
 }
@@ -117,3 +128,4 @@ export type LessonResponse = ApiResponse<LessonUniqueResponse>;
 export type LessonPopulatedResponse = ApiResponse<LessonPopulatedUniqueResponse>
 export type LessonListResponse = ApiResponse<LessonUniqueResponse[]>
 export type LessonPopulatedListResponse = ApiResponse<LessonPopulatedUniqueResponse[]>
+

@@ -18,11 +18,10 @@ export class LessonMapper {
         return {
             id        : response.id,
             id_course : response.id_course,
+            id_module : response.id_module,
             title : response.title,
             description : response.description,
             id_file : response.id_file,
-            unit : response.unit,
-            chapter : response.chapter,
             lesson_number :  response.lesson_number,
             uploaded_at : new Date(response.uploaded_at),
         };
@@ -36,14 +35,13 @@ export class LessonMapper {
         return {
             id : response.id,
             id_course : response.id_course,
+            id_module : response.id_module,
             title : response.title,
             description : response.description,
             file : {
                 id_file : response.file.id_file,
                 url     : response.file.url,
             },
-            unit : response.unit,
-            chapter : response.chapter,
             lesson_number :  response.lesson_number,
             uploaded_at : new Date(response.uploaded_at),
         }

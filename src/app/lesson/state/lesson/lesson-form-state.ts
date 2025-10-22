@@ -66,14 +66,13 @@ export class LessonFormState {
   public createEmptyLesson = ( ) => {
     const newLesson : LessonPopulated = {
       id_course: '',
+      id_module: '',
       title: '',
       description: '',
       file: {
         id_file : null,
         url : null,
       },
-      unit: 0,
-      chapter: 0,
       lesson_number: this.lessons().at(-1) ? this.lessons().at(-1)?.lesson_number! : 0,
       uploaded_at: new Date(),
     };

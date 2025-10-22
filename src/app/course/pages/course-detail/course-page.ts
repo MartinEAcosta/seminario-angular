@@ -1,15 +1,16 @@
-import { CourseDetailComponent } from '../../components/course-detail/course-detail.component';
 import { Component, computed, effect, inject } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { of } from 'rxjs';
+import { rxResource } from '@angular/core/rxjs-interop';
+
 import { CourseService } from '../../services/course.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../auth/services/auth.service';
-import { rxResource } from '@angular/core/rxjs-interop';
-import { of } from 'rxjs';
-import { ReactiveFormsModule } from '@angular/forms';
+import { CourseDetailComponent } from '../../components/course-detail/course-detail.component';
 import { LoaderComponent } from "../../../shared/components/loader/loader.component";
-import { ListOfLessonsComponent } from "src/app/lesson/components/list-of-lessons/list-of-lessons.component";
 import { LessonService } from 'src/app/lesson/services/lesson.service';
+import { ListOfContentComponent } from "src/app/lesson/components/list-of-content/list-of-content.component";
 
 @Component({
   selector: 'app-course-page',
@@ -19,7 +20,7 @@ import { LessonService } from 'src/app/lesson/services/lesson.service';
     CourseDetailComponent,
     ReactiveFormsModule,
     LoaderComponent,
-    ListOfLessonsComponent
+    ListOfContentComponent
 ]
 })
 export class CoursePage {
@@ -39,13 +40,6 @@ export class CoursePage {
       if( request.id === '' ) return of();
         
       return this.courseService.getById( request.id );
-    },
-  });
-
-  lessonResource = rxResource({
-    request : ( ) => ( { idCourse : this.courseId } ),
-    loader  : ( { request } ) => {
-      return this.lessonService.getAllLessonPopulatedFromCourse( request.idCourse );
     },
   });
 

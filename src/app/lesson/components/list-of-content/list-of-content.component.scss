@@ -4,14 +4,16 @@
     width: 30rem;
     background-color: v.$black-custom;
     margin-left: 3rem;
-    padding: 1rem;
     border-radius: 1rem;
     color: v.$white-custom;
+    overflow: hidden;
 }
 
 .container-list-header{
     display: flex;
+    width: 90%;
     margin: auto;
+    margin-bottom: 0.5rem;
     justify-content: center;
     border-bottom: 1px solid rgba(255, 255, 255 , 0.2);
 }
@@ -19,5 +21,5 @@
 .title-list{
     font-family: v.$font-primary;
     font-weight: 400;
-    margin: 0 0 0.5rem 0;
+    margin: 1rem;
 }

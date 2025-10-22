@@ -1,5 +1,5 @@
-import { Module } from 'src/app/module/models/module.interfaces';
-import { Component, input } from '@angular/core';
+import { Module, ModulePopulated } from 'src/app/module/models/module.interfaces';
+import { Component, input, signal } from '@angular/core';
 
 @Component({
   selector: 'app-modules-accordion',
@@ -9,6 +9,15 @@ import { Component, input } from '@angular/core';
 })
 export class ModulesAccordionComponent {
 
-  module = input.required<Module>();
+  isDeployed = signal<boolean>(false);
+
+  module = input.required<ModulePopulated>();
+
+
+  constructor( ) { }
+
+  public toggleIsDeployed = ( ) => {
+    return this.isDeployed.set( !this.isDeployed() );
+  }
 
 }

@@ -1,4 +1,5 @@
 import { LessonPopulated } from "src/app/lesson/models/lesson.interfaces";
+import { ModulePopulated } from "src/app/module/models/module.interfaces";
 
 export interface ApiResponse<T> {
   ok        : boolean;
@@ -95,8 +96,7 @@ export interface ModuleUniqueResponse {
 }
 
 export type ModuleListResponse = ApiResponse<ModuleUniqueResponse[]>
-
-
+export type ModulePopulatedListResponse = ApiResponse<ModulePopulated[]>;
 //* Lessons * //
 
 export interface LessonUniqueResponse {

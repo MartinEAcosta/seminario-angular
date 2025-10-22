@@ -1,3 +1,11 @@
 <div class="container-module-toggle">
-    <h3 class="title-module"> Modulo  {{ 1 }} </h3>
+    <div class="container-module-header">
+        <h3 class="title-module"> Modulo {{ module().unit }} : {{ module().title }}</h3>
+        <img class="icon-expand" src="assets/expand-icon-white.svg" alt="Icon expand module">
+    </div>
+    <div class="container-lessons-deployed">
+        @for(lesson of module().lessons; track lesson){
+            <h4>{{ lesson.title }}</h4>
+        }
+    </div>
 </div>

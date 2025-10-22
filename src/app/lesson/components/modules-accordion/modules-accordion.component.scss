@@ -1,10 +1,37 @@
 @use '../../../../variables.scss' as v;
 
 .container-module-toggle {
+    flex-direction: column;
     width: 100%;
-    padding: 1rem 0;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.container-module-header:hover{
+    background-color: rgb(20, 20, 20);
+    transition: all 0.3s ease;
+}
+
+.container-module-header{
+    display: flex;
+    padding: 1rem;
+    align-items: center;
+    flex: 1;
+}
+
+.icon-expand{
+    width: 5rem;
+    height: 1rem;
 }
 
 .title-module{
     font-weight: 300;
+    flex: 1;
+}
+
+.container-lessons-deployed{
+    display: flex;
+    width: 10rem;
+    height: 10rem;
+    color: white;
 }

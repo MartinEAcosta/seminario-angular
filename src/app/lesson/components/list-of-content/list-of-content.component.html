@@ -4,4 +4,7 @@
             Contenido
         </h3>
     </div>
+    @for( module of modulesResource.value(); track module.unit ){
+        <app-modules-accordion [module]="module" />
+    }
 </div>

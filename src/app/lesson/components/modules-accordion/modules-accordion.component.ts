@@ -1,4 +1,4 @@
-import { LessonPopulated } from './../../models/lesson.interfaces';
+import { Module } from 'src/app/module/models/module.interfaces';
 import { Component, input } from '@angular/core';
 
 @Component({
@@ -9,7 +9,6 @@ import { Component, input } from '@angular/core';
 })
 export class ModulesAccordionComponent {
 
-  unit = input.required<number>();
-  lessons = input.required<LessonPopulated[]>();
+  module = input.required<Module>();
 
 }

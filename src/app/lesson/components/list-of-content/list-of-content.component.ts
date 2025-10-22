@@ -8,6 +8,7 @@ import { ModuleService } from 'src/app/module/services/module.service';
   selector: 'app-list-of-content',
   templateUrl: './list-of-content.component.html',
   styleUrl: './list-of-content.component.scss',
+  imports: [ModulesAccordionComponent],
 })
 export class ListOfContentComponent {
 

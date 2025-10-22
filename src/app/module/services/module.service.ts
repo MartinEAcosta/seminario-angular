@@ -19,7 +19,7 @@ export class ModuleService {
   public getModulesByCourseId = ( id_course : string ) : Observable<Module[]> => {
 
     return this.http
-                .get<ModuleListResponse>(`${this.baseURL}course/id_course`)
+                .get<ModuleListResponse>(`${this.baseURL}/course/detailed/${id_course}`)
                 .pipe(
                   map(( modulesResponse ) => {
                     return ModuleMapper.mapResponseToModuleArray( modulesResponse );

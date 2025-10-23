@@ -12,13 +12,13 @@ import { Issuer } from '../models/issuer.interface';
 export class PaymentService {
 
   private http = inject(HttpClient);
-  private baseURL : string = `${environment.apiURL}/payments`
+  private baseURL : string = `${environment.apiURL}payments`
 
   constructor() { }
 
   public getAllPaymentMethods = ( ) : Observable<Issuer[]>=> {
     return this.http
-                .get<IssuerListResponse>(`${this.baseURL}`)
+                .get<IssuerListResponse>(`${this.baseURL}/methods`)
                 .pipe(
                     map( ( paymentResponse ) => {
                       return PaymentMapper.mapIssuerArrayResponseToEntityArray(paymentResponse);

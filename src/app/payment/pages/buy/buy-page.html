@@ -32,7 +32,11 @@
     </div>
     <div class="container-payment">
         <div class="container-issuers">
-
+            @if( this.paymentMethods.hasValue() ){
+                @for (item of this.paymentMethods.value(); track item) {
+                    <img src='{{item.thumbnail }}' alt="">
+                }
+            }
         </div>
         
         <form id="form-checkout">

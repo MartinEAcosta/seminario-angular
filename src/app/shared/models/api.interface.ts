@@ -129,3 +129,13 @@ export type LessonPopulatedResponse = ApiResponse<LessonPopulatedUniqueResponse>
 export type LessonListResponse = ApiResponse<LessonUniqueResponse[]>
 export type LessonPopulatedListResponse = ApiResponse<LessonPopulatedUniqueResponse[]>
 
+//* Issuer *//
+
+export interface IssuerUniqueResponse {
+  id : string,
+  name : string,
+  payment_type_id: string,
+  thumbnail : string,
+} 
+export type IssuerResponse = ApiResponse<IssuerUniqueResponse>;
+export type IssuerListResponse = ApiResponse<IssuerUniqueResponse[]>;

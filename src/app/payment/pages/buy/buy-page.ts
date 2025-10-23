@@ -4,13 +4,12 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { CourseService } from 'src/app/course/services/course.service';
 import { PageTitleComponent } from "src/app/shared/components/page-title/page-title.component";
-import { CartItemCardComponent } from "src/app/cart/components/cart-item-card/cart-item-card.component";
+import { CartCheckoutComponent } from "src/app/cart/components/cart-checkout/cart-checkout.component";
 import { CurrencyPipe } from '@angular/common';
-import { DiscountCodeInputComponent } from "src/app/cart/components/discount-code-input/discount-code-input.component";
 
 @Component({
   selector: 'app-buy-page',
-  imports: [PageTitleComponent, CartItemCardComponent, CurrencyPipe, DiscountCodeInputComponent],
+  imports: [PageTitleComponent, CartCheckoutComponent, CurrencyPipe],
   templateUrl: './buy-page.html',
   styleUrl: './buy-page.scss'
 })

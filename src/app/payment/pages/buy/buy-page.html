@@ -1,40 +1,31 @@
 <div class="container-bg">
-    <div class="container-content">
+    <div class="container-header">
         <app-page-title [title]="'Continuar transacción'" />
+    </div>
+    <div class="container-content">
 
-    
-        <div class="container-shopping">
-            <div class="container-shopping-header">
-                <h1 class="header-title">
-                    Carrito de compras
-                </h1>
-            </div>
-            <div class="container-shopping-list">
-                @for( item of shoppingList().values(); track item){
-                    <div class="detailed-card">
-                        <div class="card">
-                            <app-cart-item-card [item]="item" /> 
-                        </div>
-                        <div class="detailed-resume">
-                            <p> <span class="shortened-title">{{ item.course.title }}</span> x {{ item.quantity }} </p>
-                            <p>{{ item.course.price * item.quantity| currency }}</p>
-                        </div>
+        <app-cart-checkout [cart]="shoppingList()" />
+
+        <div class="container-resume">
+            <h2 class="title-resume">Resumen de la compra</h2>
+            <div class="detailed-resume">
+                @for (item of shoppingList().values(); track item) {
+                    <div class="item-reserved">
+                        <small class="course-title"> {{ item.course.title }}</small>
+                        <small> <span class="text-bold"> Cantidad reservada: </span> {{ item.quantity }}</small>
+                        <small> <span class="text-bold"> Precio unitario: </span> {{ item.course.price | currency}}</small>
                     </div>
                 }
-            </div>
-
-            <div class="container-shopping-footer">
-                <div class="container-referral">
-                    <app-discount-code-input />
-                </div>
-                <div class="container-total">
-                    <p class="total-text">Total a pagar: </p>
-                    <span class="price-text"> {{ this.cartService.calculateTotal() | currency }}</span>
+                <!-- 
+                <div class="item-reserved">
+                    <small> Código de descuento: -$0</small>
+                </div> 
+                -->
+                <div>
+                    <small class="text-bold">Total a pagar : {{ this.cartService.calculateTotal() | currency }}</small>
                 </div>
             </div>
-
         </div>
-
         <!-- gestor de pago supongo , hay que ver como implementar -->
          
     </div>

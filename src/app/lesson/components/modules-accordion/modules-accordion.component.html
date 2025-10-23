@@ -1,11 +1,13 @@
 <div class="container-module-toggle">
-    <div class="container-module-header">
+    <div class="container-module-header" (click)="toggleIsDeployed()" [ngClass]="!isDeployed() ? '' : 'open' " >
         <h3 class="title-module"> Modulo {{ module().unit }} : {{ module().title }}</h3>
-        <img class="icon-expand" src="assets/expand-icon-white.svg" alt="Icon expand module">
+        <img class="icon-expand" src="assets/expand-icon-white.svg" alt="Icon expand module" [ngClass]="!isDeployed() ? '' : 'open'">
     </div>
-    <div class="container-lessons-deployed">
+    <div class="container-list-lessons" [ngClass]="!isDeployed() ? 'hidden' : 'deployed' ">
         @for(lesson of module().lessons; track lesson){
-            <h4>{{ lesson.title }}</h4>
+            <div class="container-lesson">
+                <h4 class="title-lesson">{{ lesson.title }}</h4>
+            </div>
         }
     </div>
 </div>

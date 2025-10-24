@@ -17,14 +17,23 @@
             </div>
 
         </div>
-        <div class="container-cardHolderName container-input-label">
-            <label class="text-label">Nombre del titular de la tarjeta</label>
-            <input class="container-input cardHolderName" type="text" id="form-checkout__cardholderName" placeholder="Carlos Baute" />
+        <div class="container-input-label container-cardHolderInfo">
+            <div class="column">
+                <label class="text-label">Nombre del titular de la tarjeta</label>
+                <input class="container-input cardHolderName" type="text" id="form-checkout__cardholderName" placeholder="Carlos Baute" />
+            </div>
+
+            <div class="container-input-label">
+                <label class="text-label">Documento</label>
+                <div class="identificationInfo">
+                    <select class="select-identificationType" id="form-checkout__identificationType"></select>
+                    <input class="container-input identificationNumber" type="text" id="form-checkout__identificationNumber" />
+                </div>
+            </div>
         </div>
-        <select id="form-checkout__issuer"></select>
-        <select id="form-checkout__installments"></select>
-        <select id="form-checkout__identificationType"></select>
-        <input type="text" id="form-checkout__identificationNumber" />
+
+        <select id="form-checkout__issuer" class="hidden" ></select>
+        <select id="form-checkout__installments" class="hidden" ></select>
         <input type="email" id="form-checkout__cardholderEmail" />
         <button type="submit" id="form-checkout__submit">Pagar</button>
         <progress value="0" class="progress-bar">Cargando</progress>

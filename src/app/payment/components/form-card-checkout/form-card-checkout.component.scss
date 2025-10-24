@@ -81,6 +81,43 @@
     width: auto;
 }
 
+.container-cardHolderInfo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .cardHolderName{
     width: 50%;
+}
+
+.identificationNumber{
+    width: 25%;
+}
+
+.column{
+    display: flex;
+    flex-direction: column;
+}
+
+.select-identificationType{
+    display: flex;
+    width: 10%;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: inherit;
+    height: 2rem;
+}
+
+.identificationInfo{
+    display: flex;
+    flex-direction: row;
+}
+
+.hidden{
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    height: 0;
 }

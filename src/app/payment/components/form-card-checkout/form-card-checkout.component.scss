@@ -1,8 +1,8 @@
 @use '../../../../variables.scss' as v;
 
 .container-payment{
-    width: auto;
-    margin: 0% 4%;
+    width: 45%;
+    margin: 2% 5%;
 }
 
 .container-issuers{
@@ -10,14 +10,17 @@
 }
 
 .text-pay{
+    text-align: center;
     font-family: v.$font-primary;
-    font-size: large;
+    color: v.$black-custom;
+    font-size: x-large;
+    font-weight: 600;
 }
 
 .form-checkout{
     display: flex;
     flex-direction: column;
-    width: 45%;
+    width: 100%;
 }
 
 .container-input{
@@ -25,9 +28,59 @@
     width: 100%;
     height: 2rem;
     border-radius: 0.5rem;
+    color: rgba(20,20,20 ,0.3);
+    font-weight: 500;
+    font-family: v.$font-primary;
     border: solid 1.2px rgba(20,20,20 ,0.3);
-    margin: 0.5rem;
+    background-color: inherit;
     padding-left: 0.5rem;
     box-shadow: 2px 4px 15px rgba(20,20,20 ,0.15);
+    z-index: 10;
 }
 
+.top-section{
+    display: flex;
+    margin: 1rem 0;
+}
+
+.container-input-label{
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem;
+}
+
+.container-card-number{
+    width: 50%;
+}
+
+.container-expiration-date{
+    width: 25%;
+}
+
+.container-security-code{
+    width: 25%;
+}
+
+.text-label{
+    display: flex;
+    font-family: v.$font-primary;
+    align-items: center;
+    color: v.$black-custom;
+    margin-bottom: 0.5rem;
+}
+
+.cardNumber{
+    width: auto;
+}
+
+.expirationDate{
+    width: auto;
+}
+
+.securityCode{
+    width: auto;
+}
+
+.cardHolderName{
+    width: 50%;
+}

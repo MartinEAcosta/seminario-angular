@@ -8,10 +8,11 @@ import { CartCheckoutComponent } from "src/app/cart/components/cart-checkout/car
 import { CurrencyPipe } from '@angular/common';
 import { PaymentService } from '../../services/payment.service';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { FormCardCheckoutComponent } from "../../components/form-card-checkout/form-card-checkout.component";
 
 @Component({
   selector: 'app-buy-page',
-  imports: [PageTitleComponent, CartCheckoutComponent, CurrencyPipe],
+  imports: [PageTitleComponent, CartCheckoutComponent, CurrencyPipe, FormCardCheckoutComponent],
   templateUrl: './buy-page.html',
   styleUrl: './buy-page.scss'
 })
@@ -25,10 +26,8 @@ export class BuyPage {
 
   public paymentMethods = rxResource({
     loader: () => { 
-      console.log(this.paymentService
-        .getAllPaymentMethods()
-      )
-      return this.paymentService.getAllPaymentMethods() }
+      return this.paymentService.getAllPaymentMethods(); 
+    }
   });
 
   constructor ( ) { }

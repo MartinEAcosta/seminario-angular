@@ -12,7 +12,7 @@ import { Issuer } from '../models/issuer.interface';
 export class PaymentService {
 
   private http = inject(HttpClient);
-  private baseURL : string = `${environment.apiURL}payments`
+  private baseURL : string = `${environment.apiURL}payments`;
 
   constructor() { }
 
@@ -26,4 +26,5 @@ export class PaymentService {
                     catchError((error) => { throw error; })
     )
   }
+  
 }

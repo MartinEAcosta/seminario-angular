@@ -136,6 +136,7 @@ export interface IssuerUniqueResponse {
   name : string,
   payment_type_id: string,
   thumbnail : string,
+  secure_thumbnail : string,
 } 
 export type IssuerResponse = ApiResponse<IssuerUniqueResponse>;
 export type IssuerListResponse = ApiResponse<IssuerUniqueResponse[]>;

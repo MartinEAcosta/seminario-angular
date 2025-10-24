@@ -12,7 +12,8 @@ export class PaymentMapper {
             id : response.id,
             name: response.name,
             payment_type_id: response.payment_type_id,
-            thumbnail: response.thumbnail
+            thumbnail: response.thumbnail,
+            secure_thumbnail: response.thumbnail,
         }
     }
 

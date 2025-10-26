@@ -1,8 +1,10 @@
 @use '../../../../variables.scss' as v;
 
 .container-payment{
-    width: 45%;
-    padding: 2% 5%;
+    width: 50%;
+    justify-content: center;
+    margin: 0% 5%;
+    padding: 2% 0;
 }
 
 .container-issuers{
@@ -19,8 +21,8 @@
 
 .form-checkout{
     display: flex;
-    flex-direction: column;
     width: 100%;
+    flex-direction: column;
 }
 
 .container-input{
@@ -40,6 +42,7 @@
 
 .top-section{
     display: flex;
+    width: 100%;
     margin: 1rem 0;
 }
 
@@ -85,7 +88,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 5%;
+    gap: 3%;
 }
 
 .cardHolderName{
@@ -99,8 +102,8 @@
 
 .select-identificationType{
     display: flex;
-    width: 10%;
-    padding-left: 1rem;
+    width: 35%;
+    padding: 0rem 1rem;
     border: none;
     outline: none;
     background-color: inherit;
@@ -121,6 +124,15 @@
     width: 100%;
 }
 
+.container-select-input .text-label{
+    display: flex;
+    margin: auto;
+    padding-left: 0.5rem;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
 .container-select-input input{
     width: 100%;
     background-color: inherit;
@@ -136,4 +148,32 @@
     pointer-events: none;
     width: 0;
     height: 0;
+}
+
+.input-email{
+    display: flex;
+    width: 50%;
+}
+
+.btn-pay{
+    display: flex;
+    width: 75%;
+    cursor: pointer;
+    margin: 1.5rem auto;
+    padding: 0.7rem;
+    border-radius: 1.5rem;
+    border: solid thin transparent;
+    color: v.$white-custom;
+    font-family: v.$font-primary;
+    font-weight: 600;
+    background-color: v.$green-success;
+    justify-content: center;
+    box-shadow: 5px 10px 12px rgba(20,20,20 ,0.30);
+    transition: all 0.5s ease;
+}
+
+.btn-pay:hover{
+    transform: scale(1.01);
+    transition: all 0.5s ease;
+    box-shadow: 5px 10px 12px rgba(20,20,20 ,0.20);
 }

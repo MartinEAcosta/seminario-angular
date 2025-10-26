@@ -26,16 +26,26 @@
             <div class="container-input-label">
                 <label class="text-label">Documento</label>
                 <div class="identificationInfo container-select-input">
-                    <select class="select-identificationType" id="form-checkout__identificationType"></select>
-                    <input class="" type="text" id="form-checkout__identificationNumber" placeholder="33285734" />
+                    <select class="select-identificationType" id="form-checkout__identificationType">
+                        @if( identificationTypeResource.hasValue() ){
+                            @for ( item of identificationTypeResource.value(); track item) {
+                                <option value="{{ item.type }}"> {{ item.name | uppercase }} </option>
+                            }
+                        }
+                    </select>
+                    <input class="input-number" type="text" id="form-checkout__identificationNumber" placeholder="33285734" />
                 </div>
             </div>
         </div>
 
         <select id="form-checkout__issuer" class="hidden" ></select>
         <select id="form-checkout__installments" class="hidden" ></select>
-        <input type="email" id="form-checkout__cardholderEmail" />
-        <button type="submit" id="form-checkout__submit">Pagar</button>
-        <progress value="0" class="progress-bar">Cargando</progress>
+
+        <div class="container-email">
+            <label for="" class="text-label">Correo electronico</label>
+            <input type="email" id="form-checkout__cardholderEmail" class="container-input input-email" placeholder="carlosbaute@gmail.com"/>
+        </div>
+        <button class="btn-pay" type="submit" id="form-checkout__submit">Pagar</button>
+        <!-- <progress value="0" class="progress-bar hidden">Cargando</progress> -->
     </form>
 </div>

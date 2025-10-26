@@ -1,4 +1,3 @@
-import { LessonPopulated } from "src/app/lesson/models/lesson.interfaces";
 import { ModulePopulated } from "src/app/module/models/module.interfaces";
 
 export interface ApiResponse<T> {
@@ -129,7 +128,7 @@ export type LessonPopulatedResponse = ApiResponse<LessonPopulatedUniqueResponse>
 export type LessonListResponse = ApiResponse<LessonUniqueResponse[]>
 export type LessonPopulatedListResponse = ApiResponse<LessonPopulatedUniqueResponse[]>
 
-//* Issuer *//
+//* Payment *//
 
 export interface IssuerUniqueResponse {
   id : string,
@@ -138,5 +137,16 @@ export interface IssuerUniqueResponse {
   thumbnail : string,
   secure_thumbnail : string,
 } 
+
 export type IssuerResponse = ApiResponse<IssuerUniqueResponse>;
 export type IssuerListResponse = ApiResponse<IssuerUniqueResponse[]>;
+
+export interface IndentificationTypeUniqueResponse {
+  id : string,
+  name : string,
+  type : string,
+  min_length : string,
+  max_length : string,
+}
+
+export type IdentificationTypeListResponse = ApiResponse<IndentificationTypeUniqueResponse[]>

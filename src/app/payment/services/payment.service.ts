@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { PaymentMapper } from '@mappers/payment.mapper';
 import { catchError, map, Observable } from 'rxjs';
-import { IssuerListResponse } from 'src/app/shared/models/api.interface';
+import { IdentificationTypeListResponse, IssuerListResponse } from 'src/app/shared/models/api.interface';
 import { environment } from 'src/environments/environment';
-import { Issuer } from '../models/issuer.interface';
+import { IdentificationType, Issuer } from '../models/payment.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +20,22 @@ export class PaymentService {
     return this.http
                 .get<IssuerListResponse>(`${this.baseURL}/methods`)
                 .pipe(
-                    map( ( paymentResponse ) => {
-                      return PaymentMapper.mapIssuerArrayResponseToEntityArray(paymentResponse);
-                    }),
-                    catchError((error) => { throw error; })
-    )
+                  map( ( paymentResponse ) => {
+                    return PaymentMapper.mapIssuerListResponseToEntityArray(paymentResponse);
+                  }),
+                  catchError((error) => { throw error; })
+                )
   }
   
+  public getAllIdentificationTypes = ( ) : Observable<IdentificationType[]> => {
+    return this.http
+                .get<IdentificationTypeListResponse>(`${this.baseURL}/identification-types`)
+                .pipe(
+                  map( ( paymentResponse ) => {
+                    return PaymentMapper.mapIdentificationTypeListResponseToEntityArray( paymentResponse )
+                  }),
+                  catchError((error) => { throw error;})
+                )
+  }
+
 }

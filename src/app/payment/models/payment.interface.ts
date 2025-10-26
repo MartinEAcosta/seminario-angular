@@ -6,3 +6,11 @@ export interface Issuer {
     thumbnail: string,
     secure_thumbnail : string,
 }
+
+export interface IdentificationType {
+    id : string,
+    name : string,
+    type : string,
+    min_length : string,
+    max_length : string,
+}

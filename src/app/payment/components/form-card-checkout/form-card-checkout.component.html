@@ -27,9 +27,9 @@
                 <label class="text-label">Documento</label>
                 <div class="identificationInfo container-select-input">
                     <select class="select-identificationType" id="form-checkout__identificationType">
-                        @if( identificationTypeResource.hasValue() ){
-                            @for ( item of identificationTypeResource.value(); track item) {
-                                <option value="{{ item.type }}"> {{ item.name | uppercase }} </option>
+                        @if( checkoutFormState.identificationTypeResource.hasValue() ){
+                            @for ( item of checkoutFormState.identificationTypeResource.value() ; track item) {
+                                <option value="{{ item.id }}"> {{ item.name | uppercase }} </option>
                             }
                         }
                     </select>
@@ -45,7 +45,7 @@
             <label for="" class="text-label">Correo electronico</label>
             <input type="email" id="form-checkout__cardholderEmail" class="container-input input-email" placeholder="carlosbaute@gmail.com"/>
         </div>
-        <button class="btn-pay" type="submit" id="form-checkout__submit">Pagar</button>
+        <button class="btn-pay" id="form-checkout__submit">Pagar</button>
         <!-- <progress value="0" class="progress-bar hidden">Cargando</progress> -->
     </form>
 </div>

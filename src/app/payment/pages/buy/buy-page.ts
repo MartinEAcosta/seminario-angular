@@ -32,6 +32,4 @@ export class BuyPage {
 
   constructor ( ) { }
 
-
-
 }

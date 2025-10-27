@@ -76,7 +76,7 @@ export class CheckoutFormState {
         installments: {
           id: "form-checkout__installments",
         },
-        email : {
+        cardholderEmail : {
           id: "form-checkout__cardholderEmail",
           placeholder: "carlosbaute@gmail.com",
         },
@@ -89,9 +89,30 @@ export class CheckoutFormState {
 
         console.log('montado bien')
       },
-      onSubmit : ( event : Event ) => {
+      onSubmit : async( event : Event ) => {
         event.preventDefault();
-        console.log('enviado')
+        const {
+             paymentMethodId: payment_method_id,
+             issuerId: issuer_id,
+             cardholderEmail: email,
+             amount,
+             token,
+             installments,
+             identificationNumber,
+             identificationType,
+           } = this.cardForm.getCardFormData();
+          
+        await this.paymentService.createPayment({
+          payment_method_id,
+          issuer_id,
+          email,
+          amount,
+          token,
+          installments,
+          identificationNumber,
+          identificationType
+        }).subscribe();
+        
       },
     }
   },); 

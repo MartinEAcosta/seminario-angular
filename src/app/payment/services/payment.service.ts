@@ -38,4 +38,17 @@ export class PaymentService {
                 )
   }
 
+  public createPayment = ( paymentRequest : any ) : Observable<any> => {
+    console.log('e')
+    return this.http
+                .post<any>(`${this.baseURL}/`, {...paymentRequest})
+                             .pipe(
+                  map( ( paymentResponse ) => {
+                    console.log(paymentResponse)
+                    return paymentResponse ;
+                  }),
+                  catchError((error) => { throw error;})
+                )
+  }
+
 }

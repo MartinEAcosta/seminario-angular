@@ -1,8 +1,10 @@
-import { computed, effect, Injectable, signal } from '@angular/core';
+import { Router } from '@angular/router';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { Course } from '../../course/models/course.interfaces';
-import { throwError } from 'rxjs';
+import { map, throwError } from 'rxjs';
 import { CartItem } from '../models/cart.interface';
 import { Cart } from '../models/cart.model';
+import { PaymentService } from 'src/app/payment/services/payment.service';
 
 const CART_KEY = 'cart';
 
@@ -38,8 +40,29 @@ const loadFromLocalStorage = ( ) : Cart => {
 export class CartService {
 
   // Pensado como un map en donde el Curso es la key y el number la quantity reservada por el usuario
-  cart = signal<Cart>( loadFromLocalStorage() );
-  cartFromLocalStorage = computed ( () => this.cart() );
+  public cart = signal<Cart>( loadFromLocalStorage() );
+  public cartFromLocalStorage = computed ( () => this.cart() );
+  public total = signal<number>( 0 );
+  private paymentService = inject(PaymentService);
+
+  constructor() { 
+    effect(() => {
+      const items = this.getItemsArray();
+      const code = this.cart().code;
+
+      if (items.length === 0) {
+        this.total.set(0);
+        return;
+      }
+
+      this.paymentService
+        .calculateTotal(items, code)
+        .subscribe({
+          next: total => this.total.set(total),
+          error: err => console.error('Error calculando total:', err),
+        });
+    });
+  }
 
   private saveToLocalStorage = effect( ( ) => {
     const cartArrayValues = Array.from( this.cartFromLocalStorage().items.values() )
@@ -47,6 +70,10 @@ export class CartService {
 
     localStorage.setItem( CART_KEY , cartSearilized );
   });
+
+  public getItemsArray = () : CartItem[] => {
+    return Array.from(this.cart().items.values())
+  }
 
   public onAddToCart = ( course : Course ) : Cart => {
     this.cart().upQuantity( course )
@@ -64,8 +91,10 @@ export class CartService {
     return this.cart();
   }
 
-  public calculateTotal = ( ) => {
-    
+  public calculateTotal = ( ) : number => {
+    const items = Array.from(this.cart().items.values());
+    this.paymentService.calculateTotal( items , this.cart().code ).subscribe( value => { this.total.set(value) });
+    return this.total();
   }
   
 

@@ -95,7 +95,7 @@ export class CheckoutFormState {
              paymentMethodId: payment_method_id,
              issuerId: issuer_id,
              cardholderEmail: email,
-             amount,
+             amount ,
              token,
              installments,
              identificationNumber,
@@ -103,6 +103,7 @@ export class CheckoutFormState {
            } = this.cardForm.getCardFormData();
           
         await this.paymentService.createPayment({
+          items : this.cartService.getItemsArray(),
           payment_method_id,
           issuer_id,
           email,

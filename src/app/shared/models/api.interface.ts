@@ -149,4 +149,7 @@ export interface IndentificationTypeUniqueResponse {
   max_length : string,
 }
 
-export type IdentificationTypeListResponse = ApiResponse<IndentificationTypeUniqueResponse[]>
+export type IdentificationTypeListResponse = ApiResponse<IndentificationTypeUniqueResponse[]>;
+
+
+export type TotalResponse = ApiResponse<number>;

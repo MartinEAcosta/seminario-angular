@@ -9,7 +9,7 @@
         <div class="container-resume">
             <h2 class="title-resume">Resumen de la compra</h2>
             <div class="detailed-resume">
-                @for (item of shoppingList().values(); track item) {
+                @for (item of shoppingList().items.values(); track item) {
                     <div class="item-reserved">
                         <small class="course-title"> {{ item.course.title }}</small>
                         <small> <span class="text-bold"> Cantidad reservada: </span> {{ item.quantity }}</small>
@@ -22,7 +22,7 @@
                 </div> 
                 -->
                 <div>
-                    <small class="text-bold">Total a pagar : {{ this.cartService.calculateTotal() | currency }}</small>
+                    <small class="text-bold">Total a pagar : {{ this.cartService.total() | currency }}</small>
                 </div>
             </div>
         </div>
@@ -31,6 +31,6 @@
         
     </div>
 
-    <app-form-card-checkout [amount]="this.cartService.calculateTotal()"/>
+    <app-form-card-checkout [amount]="this.cartService.total()"/>
 
 </div>

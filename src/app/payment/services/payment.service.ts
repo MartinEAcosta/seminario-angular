@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { PaymentMapper } from '@mappers/payment.mapper';
 import { catchError, map, Observable } from 'rxjs';
-import { IdentificationTypeListResponse, IssuerListResponse } from 'src/app/shared/models/api.interface';
+import { IdentificationTypeListResponse, IssuerListResponse, TotalResponse } from 'src/app/shared/models/api.interface';
 import { environment } from 'src/environments/environment';
 import { IdentificationType, Issuer } from '../models/payment.interface';
+import { CartItem } from 'src/app/cart/models/cart.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +43,7 @@ export class PaymentService {
     console.log('e')
     return this.http
                 .post<any>(`${this.baseURL}/`, {...paymentRequest})
-                             .pipe(
+                .pipe(
                   map( ( paymentResponse ) => {
                     console.log(paymentResponse)
                     return paymentResponse ;
@@ -51,4 +52,15 @@ export class PaymentService {
                 )
   }
 
+  public calculateTotal = ( items : CartItem[] , code ?: string ) : Observable<number> => {
+    
+    return this.http
+                .post<TotalResponse>(`${this.baseURL}/total` , { items , code } )
+                .pipe(
+                  map( ( paymentResponse ) => {
+                    return paymentResponse.data;
+                  }),
+                  catchError((error) => { throw error;})
+                )
+  }
 }

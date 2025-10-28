@@ -5,7 +5,7 @@
         </h1>
     </div>
     <div class="container-shopping-list">
-        @for( item of cart().values(); track item){
+        @for( item of cart().items.values(); track item){
         <div class="detailed-card">
             <div class="card">
                 <app-cart-item-card [item]="item" />
@@ -24,7 +24,7 @@
         </div>
         <div class="container-total">
             <p class="total-text">Total a pagar: </p>
-            <span class="price-text"> {{ this.cartService.calculateTotal() | currency }}</span>
+            <span class="price-text"> {{ this.cartService.total() | currency }}</span>
         </div>
     </div>
 

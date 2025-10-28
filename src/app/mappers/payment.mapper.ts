@@ -1,3 +1,4 @@
+import { TotalResponse } from './../shared/models/api.interface';
 import { Issuer , IdentificationType } from "../payment/models/payment.interface";
 import { IdentificationTypeListResponse, IndentificationTypeUniqueResponse, IssuerListResponse, IssuerUniqueResponse } from "../shared/models/api.interface";
 
@@ -30,4 +31,8 @@ export class PaymentMapper {
     static mapIdentificationTypeListResponseToEntityArray = ( response : IdentificationTypeListResponse ) : IdentificationType[] => {
         return response.data.map( PaymentMapper.mapIdentificationTypeResponseToEntity );
     };
+
+    static mapTotalResponseToNumber = ( response : TotalResponse ) : number => {
+        return response.total!;
+    }
 }

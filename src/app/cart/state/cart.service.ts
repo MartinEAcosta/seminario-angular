@@ -45,12 +45,10 @@ export class CartService {
   private paymentService = inject(PaymentService);
 
   constructor() { 
-    this.saveToLocalStorage;
-    this.obtainTotalOnChange;
+ 
   }
   
   private saveToLocalStorage = effect( ( ) => {
-    console.log('b')
     const cartArrayValues = Array.from( this.cartFromLocalStorage().items.values() )
     const cartSearilized = JSON.stringify( cartArrayValues );
 
@@ -58,7 +56,6 @@ export class CartService {
   });
 
   private obtainTotalOnChange = effect(() => {
-    console.log('a')
       const items = this.getItemsArray();
       const code = this.cart().code;
 
@@ -73,7 +70,7 @@ export class CartService {
           next: total => this.total.set(total),
           error: err => console.error('Error calculando total:', err),
         });
-    });
+  });
 
   public getItemsArray = () : CartItem[] => {
     return Array.from(this.cart().items.values())

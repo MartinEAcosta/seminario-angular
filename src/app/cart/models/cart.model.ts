@@ -31,7 +31,7 @@ export class Cart {
             this.items.set( course.id , 
                         {
                             course: course ,
-                            quantity: Number(+this.items.get(course.id)?.quantity!) +1 
+                            quantity: !this.items.get(course.id) ? 1 : +this.items.get(course.id)?.quantity! +1 
                         } 
                       );
         }

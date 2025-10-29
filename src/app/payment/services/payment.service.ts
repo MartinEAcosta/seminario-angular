@@ -39,7 +39,7 @@ export class PaymentService {
                 )
   }
 
-  public createPayment = ( paymentRequest : any ) : Observable<any> => {
+  public createPayment = ( paymentRequest : PaymentDTO ) : Observable<any> => {
     return this.http
                 .post<any>(`${this.baseURL}/`, {...paymentRequest})
                 .pipe(

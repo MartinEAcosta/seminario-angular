@@ -5,7 +5,7 @@ import { catchError, map, Observable } from 'rxjs';
 import { IdentificationTypeListResponse, IssuerListResponse, TotalResponse } from 'src/app/shared/models/api.interface';
 import { environment } from 'src/environments/environment';
 import { IdentificationType, Issuer, PaymentDTO } from '../models/payment.interface';
-import { CartItem } from 'src/app/cart/models/cart.interface';
+import { CartItem, ItemQuantity } from 'src/app/cart/models/cart.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -51,8 +51,7 @@ export class PaymentService {
                 )
   }
 
-  public calculateTotal = ( items : CartItem[] , code ?: string ) : Observable<number> => {
-    
+  public calculateTotal = ( items : ItemQuantity[] , code ?: string ) : Observable<number> => {
     return this.http
                 .post<TotalResponse>(`${this.baseURL}/total` , { items , code } )
                 .pipe(

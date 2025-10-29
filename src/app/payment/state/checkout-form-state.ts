@@ -101,7 +101,6 @@ export class CheckoutFormState {
             paymentMethodId: payment_method_id,
             issuerId: issuer_id,
             cardholderEmail: email,
-            amount,
             token,
             installments,
             identificationNumber,
@@ -114,11 +113,11 @@ export class CheckoutFormState {
               payment_method_id,
               issuer_id,
               email,
-              amount,
               token,
               installments,
               identificationNumber,
               identificationType,
+              code : this.cartService.cart().code,
             })
             .subscribe();
         },

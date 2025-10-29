@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { Course } from '../../course/models/course.interfaces';
 import { map, throwError } from 'rxjs';
-import { CartItem } from '../models/cart.interface';
+import { CartItem, ItemQuantity } from '../models/cart.interface';
 import { Cart } from '../models/cart.model';
 import { PaymentService } from 'src/app/payment/services/payment.service';
 
@@ -72,8 +72,11 @@ export class CartService {
         });
   });
 
-  public getItemsArray = () : CartItem[] => {
-    return Array.from(this.cart().items.values())
+  public getItemsArray = () : ItemQuantity[] => {
+    return Array.from(this.cart().items.values()).map(item => ({
+      id_course: item.course.id,
+      quantity: item.quantity
+    }));
   }
 
   public onAddToCart = ( course : Course ) : Cart => {
@@ -92,8 +95,7 @@ export class CartService {
   }
 
   public calculateTotal = ( ) : number => {
-    const items = Array.from(this.cart().items.values());
-    this.paymentService.calculateTotal( items , this.cart().code ).subscribe( value => { this.total.set(value) });
+    this.paymentService.calculateTotal( this.getItemsArray() , this.cart().code ).subscribe( value => { this.total.set(value) });
     return this.total();
   }
   

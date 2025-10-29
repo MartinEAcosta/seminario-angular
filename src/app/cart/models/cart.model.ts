@@ -4,10 +4,10 @@ import { CartItem } from "./cart.interface";
 
 export class Cart {
 
-    public items : Map<string, CartItem> = new Map();
+    public items : Map<string, CartItem> = new Map<string,CartItem>();
     public code ?: string;
 
-    constructor( items : Map<string,CartItem> = new Map() , code ?: string ) {
+    constructor( items : Map<string,CartItem> = new Map<string,CartItem>() , code ?: string ) {
         items.forEach( item => this.items.set( item.course.id , item ) );
     }
 
@@ -31,7 +31,7 @@ export class Cart {
             this.items.set( course.id , 
                         {
                             course: course ,
-                            quantity: +this.items.get(course.id)?.quantity! +1 | 1
+                            quantity: Number(+this.items.get(course.id)?.quantity!) +1 
                         } 
                       );
         }

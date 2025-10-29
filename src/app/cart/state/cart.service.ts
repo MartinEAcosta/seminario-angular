@@ -14,7 +14,6 @@ const CART_KEY = 'cart';
 // aunque si se quiere se podria reemplazar el localStorage.clear() por el .removeItem('item').
 const loadFromLocalStorage = ( ) : Cart => {
   const cartStrigify = localStorage.getItem( CART_KEY );
-
   try{
 
     if( cartStrigify ){
@@ -46,7 +45,20 @@ export class CartService {
   private paymentService = inject(PaymentService);
 
   constructor() { 
-    effect(() => {
+    this.saveToLocalStorage;
+    this.obtainTotalOnChange;
+  }
+  
+  private saveToLocalStorage = effect( ( ) => {
+    console.log('b')
+    const cartArrayValues = Array.from( this.cartFromLocalStorage().items.values() )
+    const cartSearilized = JSON.stringify( cartArrayValues );
+
+    localStorage.setItem( CART_KEY , cartSearilized );
+  });
+
+  private obtainTotalOnChange = effect(() => {
+    console.log('a')
       const items = this.getItemsArray();
       const code = this.cart().code;
 
@@ -62,22 +74,13 @@ export class CartService {
           error: err => console.error('Error calculando total:', err),
         });
     });
-  }
-
-  private saveToLocalStorage = effect( ( ) => {
-    const cartArrayValues = Array.from( this.cartFromLocalStorage().items.values() )
-    const cartSearilized = JSON.stringify( cartArrayValues );
-
-    localStorage.setItem( CART_KEY , cartSearilized );
-  });
 
   public getItemsArray = () : CartItem[] => {
     return Array.from(this.cart().items.values())
   }
 
   public onAddToCart = ( course : Course ) : Cart => {
-    this.cart().upQuantity( course )
-
+    this.cart.set( new Cart( this.cart().addToCart( course ) , this.cart().code ) );
     return this.cart();
   }
 

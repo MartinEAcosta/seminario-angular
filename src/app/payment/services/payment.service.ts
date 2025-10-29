@@ -1,10 +1,10 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { PaymentMapper } from '@mappers/payment.mapper';
 import { catchError, map, Observable } from 'rxjs';
 import { IdentificationTypeListResponse, IssuerListResponse, TotalResponse } from 'src/app/shared/models/api.interface';
 import { environment } from 'src/environments/environment';
-import { IdentificationType, Issuer } from '../models/payment.interface';
+import { IdentificationType, Issuer, PaymentDTO } from '../models/payment.interface';
 import { CartItem } from 'src/app/cart/models/cart.interface';
 
 @Injectable({
@@ -40,7 +40,6 @@ export class PaymentService {
   }
 
   public createPayment = ( paymentRequest : any ) : Observable<any> => {
-    console.log('e')
     return this.http
                 .post<any>(`${this.baseURL}/`, {...paymentRequest})
                 .pipe(

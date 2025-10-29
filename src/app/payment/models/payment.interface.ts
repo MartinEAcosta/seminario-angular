@@ -1,3 +1,4 @@
+import { CartItem } from "src/app/cart/models/cart.interface"
 
 export interface Issuer {
     id: string,
@@ -13,4 +14,16 @@ export interface IdentificationType {
     type : string,
     min_length : string,
     max_length : string,
+}
+
+export interface PaymentDTO {
+    items : CartItem[],
+    payment_method_id : number,
+    issuer_id : string,
+    email : string,
+    amount : number,
+    token : string,
+    installments : number,
+    identificationNumber : number,
+    identificationType : string,
 }

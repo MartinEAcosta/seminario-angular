@@ -47,7 +47,7 @@ export class PaymentService {
                     console.log(paymentResponse)
                     return paymentResponse ;
                   }),
-                  catchError((error) => { throw error;})
+                  catchError((error) => { console.log(error); throw error;})
                 )
   }
 

@@ -19,7 +19,7 @@ export interface IdentificationType {
 export interface PaymentDTO {
     items : ItemQuantity[],
     payment_method_id : number,
-    issuer_id : string,
+    issuer_id : number,
     email : string,
     token : string,
     installments : number,

@@ -6,6 +6,7 @@ import { FileService } from 'src/app/shared/services/file/file.service';
 import { CourseMapper } from '@mappers/course.mapper';
 import { FormCourseComponent } from "src/app/course/components/form-course/form-course.component";
 import { CourseFormState } from '../../state/course/course-form-state';
+import { UserState } from 'src/app/auth/state/user-state';
 
 @Component({
   selector: 'app-update-course-page',
@@ -20,12 +21,13 @@ export class UpdateCoursePageComponent {
   private router = inject(Router);
   private courseService = inject(CourseService);
   private courseFormState = inject(CourseFormState);
+  private userState = inject(UserState);
   
   constructor ( private activatedRoute : ActivatedRoute ) {  }
 
   ngOnInit( ) {
     this.activatedRoute.data.subscribe(({ resolvedCourse }) => {
-      if( resolvedCourse ) this.courseFormState.patchValuesForm( this.courseFormState.course()! );
+      if( resolvedCourse ) this.courseFormState.patchValuesForm( this.userState.courseSelected()! );
     });
   }
 
@@ -36,7 +38,7 @@ export class UpdateCoursePageComponent {
     // Si el curso seleccionado no le corresponde al usuario registrado no permite el update.
     // if( this.course()?.id_owner === uid ){
       
-    updateCourseDTO.id = this.courseFormState.course()?.id!;
+    updateCourseDTO.id = this.userState.courseSelected()?.id!;
     
     this.courseService.updateCourse( updateCourseDTO , this.courseFormState.thumbnailFile() )
                         .subscribe(

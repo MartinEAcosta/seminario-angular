@@ -3,16 +3,16 @@ import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } fr
 
 const idPattern = /^[0-9a-fA-F]{24}$/;
 
-export const ValidateParamGuard : CanActivateFn = (
+export const ValidateParamIdGuard : CanActivateFn = (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
 ) => {
     
     const router = inject(Router);
 
-    const courseId = route.paramMap?.get('id');
+    const paramId = route.paramMap?.get('id');
     
-    if( !courseId ||  !idPattern.test( courseId ) ) {
+    if( !paramId ||  !idPattern.test( paramId ) ) {
         router.navigateByUrl('/');
         return false;
     }

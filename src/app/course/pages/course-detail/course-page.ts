@@ -1,7 +1,7 @@
 import { Component, computed, effect, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 import { CourseService } from '../../services/course.service';
@@ -11,6 +11,7 @@ import { CourseDetailComponent } from '../../components/course-detail/course-det
 import { LoaderComponent } from "../../../shared/components/loader/loader.component";
 import { LessonService } from 'src/app/lesson/services/lesson.service';
 import { ListOfContentComponent } from "src/app/lesson/components/list-of-content/list-of-content.component";
+import { UserState } from 'src/app/auth/state/user-state';
 
 @Component({
   selector: 'app-course-page',
@@ -27,6 +28,7 @@ export class CoursePage {
 
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
+  userState = inject(UserState);
 
   courseService = inject(CourseService);
   lessonService = inject(LessonService);
@@ -38,17 +40,20 @@ export class CoursePage {
     request : ( ) => ( { id : this.courseId } ),
     loader : ( { request  } ) => {
       if( request.id === '' ) return of();
-        
-      return this.courseService.getById( request.id );
+      
+      return this.courseService.getById( request.id )
+                                .pipe(
+                                  map( (courseResponse) => {
+                                    this.userState.setCourse(courseResponse);
+                                    return courseResponse;
+                                  }),
+                                  catchError( (error) => {
+                                    this.router.navigateByUrl('/');
+                                    this.userState.setCourse(null);
+                                    throw error;
+                                  })
+                                );
     },
-  });
-
-  // TODO : Manejo de excepción realizado, verificar si se puede optimizar via un Guard.
-  errorResource = computed( () => this.courseResource.value() === undefined && !this.courseResource.isLoading() );
-  hasErrorResource = effect( () => {
-    if( this.errorResource() ){
-      this.router.navigateByUrl('/');
-    }
   });
 
 

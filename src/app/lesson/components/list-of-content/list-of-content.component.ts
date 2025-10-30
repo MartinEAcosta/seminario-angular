@@ -1,7 +1,6 @@
 import { Component, inject, input, signal } from '@angular/core';
 import { ModulesAccordionComponent } from "../modules-accordion/modules-accordion.component";
 import { rxResource } from '@angular/core/rxjs-interop';
-import { of } from 'rxjs';
 import { ModuleService } from 'src/app/module/services/module.service';
 
 @Component({

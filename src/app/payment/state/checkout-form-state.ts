@@ -48,7 +48,7 @@ export class CheckoutFormState {
     }
 
     this.cardForm = this.mp.cardForm({
-      amount: `${this.cartService.calculateTotal()}`,
+      amount: `${this.cartService.calculateTotal() | 0}`,
       iframe: true,
       form: {
         id: 'form-checkout',
@@ -106,7 +106,7 @@ export class CheckoutFormState {
             identificationNumber,
             identificationType,
           } = this.cardForm.getCardFormData();
-
+          
           await this.paymentService
             .createPayment({
               items: this.cartService.getItemsArray(),
@@ -117,9 +117,12 @@ export class CheckoutFormState {
               installments,
               identificationNumber,
               identificationType,
-              code : this.cartService.cart().code,
+              code : this.cartService.cart().code
             })
             .subscribe();
+        },
+        onError: (error: any) => {
+          console.error('Error del SDK de Mercado Pago:', error);
         },
       },
     });

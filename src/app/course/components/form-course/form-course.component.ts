@@ -13,6 +13,7 @@ import { ThumbnailSelectorComponent } from "../thumbnail-selector/thumbnail-sele
 import { CourseFormState } from '../../state/course/course-form-state';
 import { SliderContentManagerComponent } from 'src/app/lesson/components/slider-content-manager/slider-content-manager.component';
 import { BtnRemoveComponent } from "src/app/shared/components/btn-remove/btn-remove.component";
+import { UserState } from 'src/app/auth/state/user-state';
 
 @Component({
   selector: 'app-form-course',
@@ -32,11 +33,12 @@ export class FormCourseComponent {
   public submitForm = new EventEmitter<void>();
   
   public courseFormState = inject(CourseFormState);
+  public userState = inject(UserState);
 
   constructor ( ) {
     effect( () => {
-      if( this.courseFormState.course() != undefined && this.courseFormState.course()?.thumbnail_url ){
-        this.courseFormState.setTempThumbnail( this.courseFormState.course()!.thumbnail_url! );
+      if( this.userState.courseSelected() != undefined && this.userState.courseSelected()?.thumbnail_url ){
+        this.courseFormState.setTempThumbnail( this.userState.courseSelected()!.thumbnail_url! );
       }
     });
   }
@@ -86,9 +88,9 @@ export class FormCourseComponent {
   }
 
   onDeleteCourse = ( id : string )  => {
-    if( this.courseFormState.course()?.id_owner === this.authService.id() ){
-      if( this.courseFormState.course()?.id_file ){
-        this.fileService.deleteCourseThumbnail( this.courseFormState.course()?.id! ).subscribe()
+    if( this.userState.courseSelected()?.id_owner === this.authService.id() ){
+      if( this.userState.courseSelected()?.id_file ){
+        this.fileService.deleteCourseThumbnail( this.userState.courseSelected()?.id! ).subscribe()
       }
       this.courseService.deleteCourse( id )
                             .subscribe( (isCourseDeleted) => {

@@ -2,6 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Course } from '@interfaces/course.interfaces';
+import { UserState } from 'src/app/auth/state/user-state';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +10,8 @@ import { Course } from '@interfaces/course.interfaces';
 export class CourseFormState {
 
   private fb = inject(FormBuilder);
+  private userState = inject(UserState);
 
-  public course = signal<Course | null>( null );
   public courseForm : FormGroup;
   
   public thumbnailFile = signal<File | null>( null );
@@ -21,14 +22,10 @@ export class CourseFormState {
   }
 
   public reset () : void  {
-    this.course.set(null);
+    this.userState.setCourse(null);
     this.courseForm = this.createForm();
     this.thumbnailFile.set(null);
     this.tempThumbnail.set(null);
-  }
-
-  public setCourse ( course : Course ) : void {
-    this.course.set(course);
   }
 
   public setTempThumbnail ( thumbnail_url : string ) : void {
@@ -51,7 +48,7 @@ export class CourseFormState {
     });
   }
 
-  public patchValuesForm = ( course : Course  ) : FormGroup => {
+  public patchValuesForm = ( course : Course ) : FormGroup => {
     this.courseForm.patchValue({
       title: course.title,
       description: course.description,

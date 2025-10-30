@@ -13,6 +13,7 @@ import { FileService } from 'src/app/shared/services/file/file.service';
 import { BtnRemoveComponent } from "src/app/shared/components/btn-remove/btn-remove.component";
 import { Router } from '@angular/router';
 import { LessonPopulated } from '../../models/lesson.interfaces';
+import { UserState } from 'src/app/auth/state/user-state';
 
 @Component({
   selector: 'app-form-lesson',
@@ -27,6 +28,7 @@ export class FormLessonComponent {
 
   public authService = inject(AuthService);
   public courseFormState = inject(CourseFormState);
+  public userState = inject(UserState);
   public courseService = inject(CourseService);
   public lessonService = inject(LessonService);
   public lessonFormState = inject(LessonFormState);
@@ -47,7 +49,7 @@ export class FormLessonComponent {
       const lessonDto = {
         id: this.lessonFormState.lessonSelected()?.id,
         ...dto,
-        id_course : this.courseFormState.course()?.id!,
+        id_course : this.userState.courseSelected()?.id!,
       };
       
       lessonDto.lesson_number = this.lessonFormState.lessons().at(-1)?.lesson_number ?? 0;
@@ -60,9 +62,9 @@ export class FormLessonComponent {
 
   public onDeleteLesson = ( lesson : LessonPopulated ) => {
     if( lesson.id ){
-        if( this.courseFormState.course()?.id_owner === this.authService.id() ){
+        if( this.userState.courseSelected()?.id_owner === this.authService.id() ){
           if( this.lessonFormState.lessonSelected()?.file.id_file ){
-            this.fileService.deleteCourseThumbnail( this.courseFormState.course()?.id! ).subscribe()
+            this.fileService.deleteCourseThumbnail( this.userState.courseSelected()?.id! ).subscribe()
           }
           this.lessonService.deleteLesson( lesson.id )
                                 .subscribe( ( isLessonDeleted ) => {

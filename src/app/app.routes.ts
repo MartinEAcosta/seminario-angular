@@ -15,7 +15,7 @@ export const routes: Routes = [
     loadChildren : () => 
       import('./course/course.routes'),
   },
-  
+    
   { 
     path : 'auth' ,
     loadChildren: () =>

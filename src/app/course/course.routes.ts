@@ -1,11 +1,12 @@
 import { Routes } from "@angular/router";
 import { AuthenticatedGuard } from "@guards/authenticated.guard";
-import { ValidateParamGuard } from "./guards/validate-param.guard";
+import { ValidateParamIdGuard } from "./guards/validate-param.guard";
 import { CourseResolver } from "./resolver/course-resolver";
 import { CoursePage } from "./pages/course-detail/course-page";
 import { UpdateCoursePageComponent } from "./pages/update-course/update-course-page";
 import { CreateCoursePageComponent } from "./pages/create-course/create-course-page";
-import { ValidatePermissionGuard } from "@guards/validate.permission.guard";
+import { LessonViewerPageComponent } from "../lesson/pages/lesson-viewer-page/lesson-viewer-page.component";
+import { LessonResolver } from "../lesson/resolver/lesson-resolver";
 
 export const courseRoutes : Routes = [
     {
@@ -19,14 +20,13 @@ export const courseRoutes : Routes = [
             {
                 path : 'update',
                 component : UpdateCoursePageComponent,
-                canActivate : [ ValidateParamGuard ],
+                canActivate : [ ValidateParamIdGuard ],
                 canMatch : [ AuthenticatedGuard ],
             },
             {
                 path : 'update/:id',
                 component : UpdateCoursePageComponent,
-                canActivate : [ ValidateParamGuard ],
-                canMatch : [ AuthenticatedGuard ],
+                canActivate : [ ValidateParamIdGuard ],
                 resolve : {
                     resolvedCourse : CourseResolver
                 }
@@ -34,6 +34,16 @@ export const courseRoutes : Routes = [
             {
                 path : ':id',
                 component : CoursePage,
+            },
+            {
+                path : ':id/lesson/:id_lesson',
+                canMatch : [ AuthenticatedGuard ],
+                canActivate : [ ValidateParamIdGuard ],
+                resolve : {
+                    resolvedCourse : CourseResolver,
+                    resolvedLesson : LessonResolver,
+                },
+                component : LessonViewerPageComponent
             },
             {
                 path : '**',

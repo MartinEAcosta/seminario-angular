@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { FormGroup } from '@angular/forms';
 import { rxResource } from '@angular/core/rxjs-interop';
@@ -11,6 +11,7 @@ import { ThumbnailSelectorComponent } from 'src/app/course/components/thumbnail-
 import { FormLessonComponent } from "../form-lesson/form-lesson.component";
 import { CourseFormState } from 'src/app/course/state/course/course-form-state';
 import { FileService } from 'src/app/shared/services/file/file.service';
+import { UserState } from 'src/app/auth/state/user-state';
 
 @Component({
   selector: 'app-slider-content-manager',
@@ -24,11 +25,12 @@ export class SliderContentManagerComponent {
   public lessonFormState = inject(LessonFormState);
   public fileService = inject(FileService);
   public courseFormState = inject(CourseFormState);
+  public userState = inject(UserState);
 
   public lessonForm : FormGroup = this.lessonFormState.createForm();
   
   public lessonsResource = rxResource<LessonPopulated[],string | null>({
-    request: () => this.courseFormState.course()?.id ?? null,
+    request: () => this.userState.courseSelected()?.id ?? null,
     loader: ({request}) => { 
       if( request ){
         return this.lessonService

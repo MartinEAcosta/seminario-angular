@@ -28,7 +28,20 @@ export class LessonService {
                         console.log(error)
                         return throwError(() => new Error(`${error.errorMessage}`));
                       }),
-                    )
+                    );
+  }
+
+  public getLessonById = ( lessonId : string ) : Observable<Lesson> => {
+    return this.http.get<any>(`${this.baseURL}/${lessonId}`)
+                    .pipe(
+                      map( (lessonResponse) => {
+                        return LessonMapper.mapResponseToLesson( lessonResponse );
+                      }),
+                      catchError( ({ error }) => {
+                        console.log(error)
+                        return throwError(() => new Error(`${error.errorMessage}`));
+                      })
+                    );
   }
 
   public saveLesson = ( lessonRequest : SaveLessonDto , file ?: File | null ) : Observable<Lesson> => {

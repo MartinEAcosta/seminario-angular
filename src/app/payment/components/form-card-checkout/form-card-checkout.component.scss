@@ -93,6 +93,8 @@
 
 .cardHolderName{
     width: 100%;
+    color: v.$black-custom;
+    outline: none;
 }
 
 .column{
@@ -152,6 +154,8 @@
 
 .input-email{
     display: flex;
+    color: v.$black-custom;
+    outline: none;
     width: 50%;
 }
 
@@ -175,5 +179,6 @@
 .btn-pay:hover{
     transform: scale(1.01);
     transition: all 0.5s ease;
+    background-color: rgba(0, 165, 65);
     box-shadow: 5px 10px 12px rgba(20,20,20 ,0.20);
 }

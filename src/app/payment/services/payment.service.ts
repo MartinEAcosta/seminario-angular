@@ -44,7 +44,7 @@ export class PaymentService {
                 .post<any>(`${this.baseURL}/`, {...paymentRequest})
                 .pipe(
                   map( ( paymentResponse ) => {
-                    console.log(paymentResponse)
+                    // console.log(paymentResponse)
                     return paymentResponse ;
                   }),
                   catchError((error) => { console.log(error); throw error;})

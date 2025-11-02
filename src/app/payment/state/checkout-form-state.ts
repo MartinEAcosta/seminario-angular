@@ -48,7 +48,7 @@ export class CheckoutFormState {
     }
 
     this.cardForm = this.mp.cardForm({
-      amount: `${this.cartService.calculateTotal() | 0}`,
+      amount: `${this.cartService.calculateTotal()}`,
       iframe: true,
       form: {
         id: 'form-checkout',
@@ -106,7 +106,8 @@ export class CheckoutFormState {
             identificationNumber,
             identificationType,
           } = this.cardForm.getCardFormData();
-          
+          // const data = this.cardForm.getCardFormData();
+          // console.log('Datos del formulario:', data);
           await this.paymentService
             .createPayment({
               items: this.cartService.getItemsArray(),

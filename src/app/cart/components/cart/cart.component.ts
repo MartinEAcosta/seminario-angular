@@ -3,8 +3,8 @@ import { RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 
 import { CartService } from '../../state/cart.service';
-import { CartItemCardComponent } from "../cart-item-card/cart-item-card.component";
-import { DiscountCodeInputComponent } from "../discount-code-input/discount-code-input.component";
+import { CartItemCardComponent } from '../cart-item-card/cart-item-card.component';
+import { DiscountCodeInputComponent } from '../discount-code-input/discount-code-input.component';
 
 @Component({
     selector: 'app-cart',
@@ -21,14 +21,14 @@ export class CartComponent {
 
   constructor( ) { }
   
-  onOpenCart = ( ) : void => {
+  public onOpenCart = ( ) : void => {
     if( this.isCartOpen() ) {
       return;
     }
     this.isCartOpen.set(!this.isCartOpen());
   }
 
-  onCloseCart = ( ) : void => {
+  public onCloseCart = ( ) : void => {
     const clickedContainer = event?.target as HTMLElement;
     if( clickedContainer.classList.contains('overlay') || clickedContainer.classList.contains('btn-continue') ){
       this.isCartOpen.set(false);

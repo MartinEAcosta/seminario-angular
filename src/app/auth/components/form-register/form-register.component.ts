@@ -1,10 +1,11 @@
-import { Component, computed, EventEmitter, inject, Output } from '@angular/core';
-import { Validators, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+import { Component, computed, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
 import { NgClass } from '@angular/common';
+import { Validators, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+
 import { FormUtils } from '@utils/form-utils';
+import { AuthService } from '@auth/services/auth.service';
+import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
 
 @Component({
     selector: 'app-form-register',

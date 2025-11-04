@@ -2,25 +2,25 @@
     <div class="details">
         <div class="container-imgCourse">
             <img
-                src={{item.course.thumbnail_url}}
-                alt="{{item.course.title}} image">
+                src={{item().course.thumbnail_url}}
+                alt="{{item().course.title}} image">
         </div>
         
         <div class="rightSection">
 
             <p class="title-course">
-                {{item.course.title}}
+                {{item().course.title}}
             </p>
             
             <p class="desc-course">
-                {{item.course.description}}
+                {{item().course.description}}
             </p>
 
             <div class="quantity-selector">
                 <p class="text-quota">Cupos a reservar:</p>
-                <button class="leftBtn" (click)="this.cartService.downQuantity( item.course )" type="button"> - </button>
-                <input class="inputNumber" type="number" name="" id="" value="{{ cart().items.get( item.course.id )?.quantity }}" readonly >
-                <button class="rightBtn" (click)="this.cartService.upQuantity( item.course )" type="button"> + </button>
+                <button class="leftBtn" (click)="this.cartService.downQuantity( item().course )" type="button"> - </button>
+                <input class="inputNumber" type="number" name="" id="" value="{{ cart().items.get( item().course.id )?.quantity }}" readonly >
+                <button class="rightBtn" (click)="this.cartService.upQuantity( item().course )" type="button"> + </button>
             </div>
 
         </div>

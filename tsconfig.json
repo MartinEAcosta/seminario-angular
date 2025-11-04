@@ -5,7 +5,13 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths" : {
-      // "@courseinterfaces/*" : ["src/app/course/interfaces/*"]
+      "@auth/*" : ["src/app/auth/*"],
+      "@course/*" : ["src/app/course/*"],
+      "@cart/*" : ["src/app/cart/*"],
+      "enrollment/*" : ["src/app/enrollment/*"],
+      "lesson/*" : ["src/app/lesson/*"],
+      "module/*" : ["src/app/module/*"],
+      "@payment/*" : ["./src/app/utils/*"],
       "@utils/*" : ["./src/app/utils/*"],
       "@mappers/*" : ["./src/app/mappers/*"],
       "@interfaces/*" : ["src/app/course/models/*" , "src/app/auth/models/*"],

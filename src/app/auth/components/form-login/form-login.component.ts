@@ -2,9 +2,10 @@ import { Router, RouterLink } from '@angular/router';
 import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NgClass } from '@angular/common';
-import { AuthService } from './../../services/auth.service';
+
+import { AuthService } from '@auth/services/auth.service';
 import { FormErrorLabelComponent } from '../../../shared/components/form-error-label/form-error-label.component';
-import { UserDTO } from 'src/app/auth/models/auth.interfaces';
+import { UserDTO } from '@auth/models/auth.interfaces';
 import { FormUtils } from '@utils/form-utils';
 
 @Component({
@@ -15,8 +16,7 @@ import { FormUtils } from '@utils/form-utils';
 })
 export class FormLoginComponent {
   
-  
-  router = inject(Router);
+  private router = inject(Router);
   authService = inject(AuthService);
 
   fb = inject(FormBuilder);

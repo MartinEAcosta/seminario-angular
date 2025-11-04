@@ -66,10 +66,7 @@ export class CourseService {
     } 
     else {
       return this.http
-        .post<CourseResponse>(`${this.baseURL}/new`, {
-          ...courseRequest,
-          ...formData,
-        })
+        .post<CourseResponse>(`${this.baseURL}/new`, formData)
         .pipe(
           map((courseResponse) => {
             return CourseMapper.mapResponseToCourse(courseResponse.data);

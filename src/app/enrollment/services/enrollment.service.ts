@@ -34,6 +34,7 @@ export class EnrollmentService {
                     .get<EnrollmentDetailedListResponse>( `${this.baseURL}/${id_user}` )
                     .pipe(
                       map( ( enrollmentsResponse ) => {
+                        
                         return EnrollmentMapper.mapResponseToEnrollmentDetailedArray( enrollmentsResponse );
                       }),
                       catchError( ({error}) => {

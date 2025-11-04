@@ -21,7 +21,7 @@ export class CourseFormState {
     this.courseForm = this.createForm();
   }
 
-  public reset () : void  {
+  public reset () : void {
     this.userState.setCourse(null);
     this.courseForm = this.createForm();
     this.thumbnailFile.set(null);

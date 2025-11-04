@@ -15,5 +15,5 @@ export class CourseListComponent {
   isLoading = input<boolean>(false);
   errorMessage = input<string | unknown | null>();
 
-
+  constructor() { }
 }

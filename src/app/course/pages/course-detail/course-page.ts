@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, map, of } from 'rxjs';
@@ -6,10 +6,8 @@ import { rxResource } from '@angular/core/rxjs-interop';
 
 import { CourseService } from '../../services/course.service';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../../auth/services/auth.service';
-import { CourseDetailComponent } from '../../components/course-detail/course-detail.component';
+import { CourseDetailComponent } from '../../components';
 import { LoaderComponent } from "../../../shared/components/loader/loader.component";
-import { LessonService } from 'src/app/lesson/services/lesson.service';
 import { ListOfContentComponent } from "src/app/lesson/components/list-of-content/list-of-content.component";
 import { UserState } from 'src/app/auth/state/user-state';
 
@@ -26,15 +24,13 @@ import { UserState } from 'src/app/auth/state/user-state';
 })
 export class CoursePage {
 
-  activatedRoute = inject(ActivatedRoute);
-  router = inject(Router);
-  userState = inject(UserState);
+  private activatedRoute = inject(ActivatedRoute);
+  private router = inject(Router);
+  private userState = inject(UserState);
 
-  courseService = inject(CourseService);
-  lessonService = inject(LessonService);
-  authService = inject(AuthService);
+  private courseService = inject(CourseService);
 
-  courseId = this.activatedRoute.snapshot.params['id'] || '';
+  private courseId = this.activatedRoute.snapshot.params['id'] || '';
   
   courseResource = rxResource({
     request : ( ) => ( { id : this.courseId } ),
@@ -56,5 +52,6 @@ export class CoursePage {
     },
   });
 
+  constructor() { }
 
 }

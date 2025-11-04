@@ -40,7 +40,7 @@ export class UpdateCoursePageComponent {
       
     updateCourseDTO.id = this.userState.courseSelected()?.id!;
     
-    this.courseService.updateCourse( updateCourseDTO , this.courseFormState.thumbnailFile() )
+    this.courseService.saveCourse( updateCourseDTO , this.courseFormState.thumbnailFile() )
                         .subscribe(
                           ( course ) => {
                             this.courseFormState.reset( );

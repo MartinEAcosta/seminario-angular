@@ -12,7 +12,6 @@ import { ModuleService } from 'src/app/module/services/module.service';
 export class ListOfContentComponent {
 
   private moduleService = inject(ModuleService);
-
   courseId = input.required<string>();
 
   modulesResource = rxResource({
@@ -21,8 +20,6 @@ export class ListOfContentComponent {
     },
   });
  
-  constructor( ) {
-  }
-
+  constructor( ) { }
 
 }

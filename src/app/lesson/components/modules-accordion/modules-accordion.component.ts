@@ -9,9 +9,8 @@ import { NgClass } from '@angular/common';
   styleUrl: './modules-accordion.component.scss'
 })
 export class ModulesAccordionComponent {
-
+  
   isDeployed = signal<boolean>(false);
-
   module = input.required<ModulePopulated>();
 
   constructor( ) { }

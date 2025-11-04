@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { UserState } from 'src/app/auth/state/user-state';
 
 

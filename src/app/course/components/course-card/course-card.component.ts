@@ -1,4 +1,4 @@
-import { Component, inject, input , output } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 
 import { AuthService } from '../../../auth/services/auth.service';
 import { BtnPrimaryComponent } from '../../../shared/components/btn-primary/btn-primary.component';
@@ -18,13 +18,10 @@ export class CourseCardComponent {
   
   readonly course = input.required<Course>();
   
-  authService = inject(AuthService);
   cartService = inject(CartService);
+  authService = inject(AuthService);
+
+  constructor () { }
   
-  onAddToCart = ( ) : void => {
-    if( this.course().capacity === 0 ) return;
-    
-    this.cartService.onAddToCart( this.course() );
-  }
 
 }

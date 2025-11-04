@@ -38,12 +38,10 @@
                     </div>
 
                     <div class="buttons">
-                        <app-btn-primary
-                            (click)="onAddToCart()"
-                            [routerLink]="['/payment/buy']">
+                        <app-btn-primary [routerLink]="['/payment/buy']">
                                 Comprar 
                         </app-btn-primary>
-                        <btn-border-thin (click)="onAddToCart()" />
+                        <btn-border-thin (click)="this.cartService.onAddToCart( course() )" />
                     </div>
 
                 </div>

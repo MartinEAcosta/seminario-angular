@@ -32,7 +32,7 @@ export class CreateCoursePageComponent {
         
       const createCourseDto = CourseMapper.mapToCourseDto( this.courseFormState.courseForm );
 
-      this.courseService.createCourse( createCourseDto , this.courseFormState.thumbnailFile() )
+      this.courseService.saveCourse( createCourseDto , this.courseFormState.thumbnailFile() )
                           .subscribe(
                             ( course ) => {
                                         this.courseFormState.reset( );

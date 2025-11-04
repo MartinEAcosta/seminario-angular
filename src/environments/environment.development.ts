@@ -1,5 +1,5 @@
 export const environment = {
     production: false,
     apiURL: 'http://localhost:4201/api/',
-    MERCADOPAGO_PUBLIC_KEY: 'TEST-5aa47bb6-e47b-4348-a458-ee659df2ce3d',
+    MERCADOPAGO_PUBLIC_KEY: 'TEST-d5c81085-8e54-4e47-b171-3673ddcc49c9',
 };

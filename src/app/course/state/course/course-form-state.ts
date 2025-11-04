@@ -36,7 +36,6 @@ export class CourseFormState {
     this.thumbnailFile.set( file );
   }
 
-// Verificar si es necesario quitar atributos.
   public createForm = ( ) : FormGroup => {
     return this.fb.group({
       title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],

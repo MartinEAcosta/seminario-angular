@@ -2,9 +2,6 @@
     <app-loader />
 }
 @else{
-    <!-- @if( this.errorMessage() ){
-        <p>{{ this.errorMessage() }}</p>
-    } -->
     <div class="container-card">
         @for ( course of this.courses() ; track course) {
             <course-card [course]="course" />

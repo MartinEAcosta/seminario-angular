@@ -2,7 +2,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, inject } from '@angular/core';
 
 import { CourseService } from 'src/app/course/services/course.service';
-import { FileService } from 'src/app/shared/services/file/file.service';
 import { CourseMapper } from '@mappers/course.mapper';
 import { FormCourseComponent } from "src/app/course/components/form-course/form-course.component";
 import { CourseFormState } from '../../state/course/course-form-state';
@@ -26,6 +25,7 @@ export class UpdateCoursePageComponent {
   constructor ( private activatedRoute : ActivatedRoute ) {  }
 
   ngOnInit( ) {
+    // Arreglar debido a que si se vuelve atras se pierde el estado
     this.activatedRoute.data.subscribe(({ resolvedCourse }) => {
       if( resolvedCourse ) this.courseFormState.patchValuesForm( this.userState.courseSelected()! );
     });
@@ -33,12 +33,14 @@ export class UpdateCoursePageComponent {
 
   public onUpdateCourse = ( ) : void => {
 
-    const updateCourseDTO = CourseMapper.mapToCourseDto( this.courseFormState.courseForm );
-    
-    // Si el curso seleccionado no le corresponde al usuario registrado no permite el update.
-    // if( this.course()?.id_owner === uid ){
-      
+    const updateCourseDTO = CourseMapper.mapToCourseDto( this.courseFormState.courseForm , this.courseFormState.limitedCapacity() );
+
     updateCourseDTO.id = this.userState.courseSelected()?.id!;
+
+    if( !this.courseFormState.thumbnailFile() ){
+      updateCourseDTO.id_file = this.userState.courseSelected()?.id_file!;
+      updateCourseDTO.thumbnail_url = this.userState.courseSelected()?.thumbnail_url!;
+    }
     
     this.courseService.saveCourse( updateCourseDTO , this.courseFormState.thumbnailFile() )
                         .subscribe(

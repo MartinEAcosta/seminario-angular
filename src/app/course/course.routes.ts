@@ -18,6 +18,7 @@ export const courseRoutes : Routes = [
                 canMatch : [ AuthenticatedGuard ],
             },
             {
+                //Guard de propiedad 
                 path : 'update',
                 component : UpdateCoursePageComponent,
                 canActivate : [ ValidateParamIdGuard ],

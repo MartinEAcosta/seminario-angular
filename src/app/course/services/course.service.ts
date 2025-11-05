@@ -7,11 +7,14 @@ import { Course, CourseDTO } from 'src/app/course/models/course.interfaces';
 import { defaultCourses } from '@utils/defaultCourses';
 import { CourseMapper } from '@mappers/course.mapper';
 import { DeleteResponse, CourseListResponse, CourseResponse } from 'src/app/shared/models/api.interface';
+import { FileService } from 'src/app/shared/services/file/file.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CourseService {
+
+  private fileService = inject(FileService);
   private http = inject(HttpClient);
   private baseURL: string = `${environment.apiURL}courses`;
 
@@ -39,24 +42,19 @@ export class CourseService {
   };
 
   public saveCourse = ( courseRequest: CourseDTO, file: File | null = null ): Observable<Course> => {
-    const formData = new FormData();
-
     const { id, ...rest } = courseRequest;
 
-    Object.entries(rest).forEach(([key, value]) => {
-      formData.append(key, value as any);
-    });
-
-    if (file) {
-      formData.append('files', file);
-    }
-
+    let course;
     if (id) {
-      return this.http
-        .put<CourseResponse>(`${this.baseURL}/update/${id}`, formData)
+      course = this.http
+        .put<CourseResponse>(`${this.baseURL}/update/${id}`, rest)
         .pipe(
           map((courseResponse) => {
-            return CourseMapper.mapResponseToCourse(courseResponse.data);
+            course = CourseMapper.mapResponseToCourse(courseResponse.data);
+            if( file ){
+              this.fileService.uploadFile( 'courses' , course.id , file ).subscribe()
+            }
+            return course;
           }),
           catchError(({ error }) => {
             console.log(error);
@@ -65,11 +63,15 @@ export class CourseService {
         );
     } 
     else {
-      return this.http
-        .post<CourseResponse>(`${this.baseURL}/new`, formData)
+      course = this.http
+        .post<CourseResponse>(`${this.baseURL}/new`, rest)
         .pipe(
           map((courseResponse) => {
-            return CourseMapper.mapResponseToCourse(courseResponse.data);
+            course = CourseMapper.mapResponseToCourse(courseResponse.data);
+            if( file ){
+              this.fileService.uploadFile( 'courses' , course.id , file ).subscribe()
+            }
+            return course;
           }),
           catchError(({ error }) => {
             console.log(error);
@@ -77,7 +79,9 @@ export class CourseService {
             return throwError(() => new Error(`${error.errorMessage}`));
           })
         );
-    }
+
+      }
+    return course;
   };
 
   public deleteCourse = (id: string): Observable<boolean> => {

@@ -6,16 +6,14 @@ import { FormGroup } from '@angular/forms';
 
 export class CourseMapper {
 
-    static mapToCourseDto ( form : FormGroup ) : CourseDTO {
+    static mapToCourseDto ( form : FormGroup , limitedCapacity ?: boolean ) : CourseDTO {
       const formValues = form.getRawValue();
       return {
         title         : formValues.title,
         description   : formValues.description,
         id_category   : formValues.id_category,
-        thumbnail_url : formValues.thumbnail_url,
-        id_file       : formValues.id_file,
         price         : formValues.price ? formValues.price : 0,
-        capacity      : formValues.wantLimitedCapacity ? formValues.capacity : undefined,
+        capacity      : limitedCapacity ? formValues.capacity : null,
       }
     }
     
@@ -29,7 +27,7 @@ export class CourseMapper {
             id_file: response.id_file ?? "",
             id_owner: response.id_owner,
             price: response.price ?? 0, // Si no existe, se asigna 0 por defecto
-            capacity: response.capacity ?? undefined,   
+            capacity: response.capacity ?? null,   
         };
     } 
 

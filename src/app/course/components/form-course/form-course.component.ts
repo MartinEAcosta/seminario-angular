@@ -40,42 +40,16 @@ export class FormCourseComponent {
       if( this.userState.courseSelected() != undefined && this.userState.courseSelected()?.thumbnail_url ){
         this.courseFormState.setTempThumbnail( this.userState.courseSelected()!.thumbnail_url! );
       }
+      else {
+        this.courseFormState.setTempThumbnail( null );
+      }
     });
   }
-
   ngOnDestroy() {
     this.courseFormState.reset();
   }
 
-  // TODO: Buscar alternativa, no estoy seguro si es lo mejor trabajar con subscripciones,
-  // *buscar alternativa en signals.
-  onFormChanged = effect ( (onCleanup) => {
-    const limitedCapacitySubscription = this.onWantLimitedCapacityChanged();
-    
-    // Es necesario una función de limpieza debido a que sino queda la referencia por algun lado
-    onCleanup ( ( ) => {
-      limitedCapacitySubscription?.unsubscribe();
-    })
-  });
-
-  onWantLimitedCapacityChanged = ( ) : Subscription => {
-    return this.courseFormState.courseForm.get('wantLimitedCapacity')!.valueChanges
-                                                    .pipe(
-                                                      tap(( limited ) => {
-                                                        if( !limited ){
-                                                          this.courseFormState.courseForm.get('capacity')?.setValue(undefined);
-                                                          this.courseFormState.courseForm.get('capacity')?.disable();
-                                                          return;
-                                                        }
-                                                        this.courseFormState.courseForm.get('capacity')?.enable();
-                                                        return;
-                                                      }),
-                                                    ).subscribe();
-  }
-
-
   onSubmit = ( ) : void => {
-
     this.courseFormState.courseForm.markAllAsTouched();
     if( this.courseFormState.courseForm.valid ){
       
@@ -83,7 +57,6 @@ export class FormCourseComponent {
       if( !uid ) return;
       
       this.submitForm.emit();
-
     }
   }
 

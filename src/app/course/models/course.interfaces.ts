@@ -7,7 +7,7 @@ export interface Course {
     id_file         : string | null;
     id_owner        : string;
     price           : number;
-    capacity?       : number;
+    capacity?       : number | null;
 }
 
 export interface CourseDTO {
@@ -15,10 +15,10 @@ export interface CourseDTO {
     title         : string;
     description   : string;
     id_category   : string;
-    thumbnail_url : string | null;
-    id_file       : string | null;
+    thumbnail_url ?: string;
+    id_file       ?: string;
     id_owner     ?: string;
     price?        : number;
-    capacity?     : number;
+    capacity?     : number | null;
 }
 

@@ -13,7 +13,7 @@ export class EnrollmentService {
 
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}enrollments`;
-  
+
   constructor() { }
 
   public getAllEnrollments = ( ) : Observable<Enrollment[]> => {

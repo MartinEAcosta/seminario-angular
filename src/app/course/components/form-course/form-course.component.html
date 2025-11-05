@@ -62,16 +62,16 @@
                             <input 
                             formControlName="capacity" 
                             type="number" 
-                            class="input input-capacity" 
+                            class="input input-capacity"
                             [ngClass]="{ 
                                     'invalid-border': courseFormState.courseForm.get('capacity')?.errors, 
-                                    'valid-border': courseFormState.courseForm.get('capacity')?.touched && !courseFormState.courseForm.get('capacity')?.errors && courseFormState.courseForm.get('wantLimitedCapacity')?.value ,
+                                    'valid-border': courseFormState.courseForm.get('capacity')?.touched && !courseFormState.courseForm.get('capacity')?.errors ,
                                     'unlimited-capacity' :!courseFormState.courseForm.get('wantLimitedCapacity')?.value
                                 }" 
                                 placeholder="5" 
                                 />
                                 <div class="switch-container">
-                                    <input type="checkbox" id="switch-label" class="switch-checkbox" formControlName="wantLimitedCapacity" >
+                                    <input type="checkbox" id="switch-label" class="switch-checkbox" (click)="courseFormState.toggleLimitedCapacity()">
                                     <label for="switch-label" class="switch-label" >
                                     </label>
                                 </div>

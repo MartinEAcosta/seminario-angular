@@ -9,17 +9,7 @@ import { Enrollment } from 'enrollment/models/enrollment.interfaces';
 export class UserState {
 
   public user = signal<User | null>(null);
-  public courseSelected = signal<Course | null>(null);
-  public enrollments = signal<Enrollment[] | null>(null); 
 
   constructor() { }
-
-  public setCourse ( course : Course | null ) : void {
-    this.courseSelected.set(course);
-  }
-
-  public setEnrollments ( enrolllments : Enrollment[] ) : void {
-    this.enrollments.set( enrolllments );
-  }
 
 }

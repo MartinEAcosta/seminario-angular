@@ -1,29 +1,31 @@
 import { inject, Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from "@angular/router";
+import { ActivatedRouteSnapshot, Resolve, Router } from "@angular/router";
 import { catchError, map, Observable, of } from "rxjs";
 
 import { Course } from "@interfaces/course.interfaces";
 import { CourseService } from "../services/course.service";
 import { UserState } from 'src/app/auth/state/user-state';
+import { CourseFormState } from "@course/state/course/course-form-state";
 
 @Injectable({ providedIn: 'root' })
 export class CourseResolver implements Resolve<Course> {
 
     router = inject(Router);
     service = inject(CourseService);
-    userState = inject(UserState); 
+    courseFormState = inject(CourseFormState); 
 
     resolve(
         route: ActivatedRouteSnapshot,
     ): Observable<Course> {
         const courseId = route.paramMap.get('id');
+
         if( !courseId ){
             // Setear error en el servicio de ui 
             this.router.navigateByUrl('/');
         }
         return this.service.getById( courseId! ).pipe(
-            map( course =>{
-                this.userState.setCourse(course);
+            map( course => {
+                this.courseFormState.selectedCourse.set( course );
                 return course;
             } ),
             catchError( (error)  => {

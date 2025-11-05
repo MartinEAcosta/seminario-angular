@@ -1,4 +1,4 @@
-import { Component, effect, Input, Output, EventEmitter, inject } from '@angular/core';
+import { Component, effect, Input, Output, EventEmitter, inject, input } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -14,6 +14,7 @@ import { CourseFormState } from '../../state/course/course-form-state';
 import { SliderContentManagerComponent } from 'src/app/lesson/components/slider-content-manager/slider-content-manager.component';
 import { BtnRemoveComponent } from "src/app/shared/components/btn-remove/btn-remove.component";
 import { UserState } from 'src/app/auth/state/user-state';
+import { Course } from '@course/models/course.interfaces';
 
 @Component({
   selector: 'app-form-course',
@@ -27,24 +28,26 @@ export class FormCourseComponent {
   private router = inject(Router);
   private authService = inject(AuthService);
   private courseService = inject(CourseService);
+
   public fileService = inject(FileService);
+  public courseFormState = inject(CourseFormState);
+
+  course = input.required<Course | null>();
 
   @Output() 
   public submitForm = new EventEmitter<void>();
   
-  public courseFormState = inject(CourseFormState);
-  public userState = inject(UserState);
+  constructor ( ) { }
 
-  constructor ( ) {
-    effect( () => {
-      if( this.userState.courseSelected() != undefined && this.userState.courseSelected()?.thumbnail_url ){
-        this.courseFormState.setTempThumbnail( this.userState.courseSelected()!.thumbnail_url! );
-      }
-      else {
-        this.courseFormState.setTempThumbnail( null );
-      }
-    });
+  ngOnInit(): void {
+    this.courseFormState.createForm();
+    const course = this.course();
+    console.log(course);
+    if (course) {
+      this.courseFormState.patchValuesForm(course);
+    }
   }
+
   ngOnDestroy() {
     this.courseFormState.reset();
   }
@@ -61,17 +64,19 @@ export class FormCourseComponent {
   }
 
   onDeleteCourse = ( id : string )  => {
-    if( this.userState.courseSelected()?.id_owner === this.authService.id() ){
-      if( this.userState.courseSelected()?.id_file ){
-        this.fileService.deleteCourseThumbnail( this.userState.courseSelected()?.id! ).subscribe()
+    if( this.courseFormState.selectedCourse()?.id_owner === this.authService.id() ){
+      if( this.courseFormState.selectedCourse()?.id_file ){
+        this.fileService.deleteCourseThumbnail( this.courseFormState.selectedCourse()?.id! ).subscribe()
       }
       this.courseService.deleteCourse( id )
                             .subscribe( (isCourseDeleted) => {
                                 if( isCourseDeleted ) {
+                                  this.courseFormState.reset();
                                   this.router.navigateByUrl('/');
                                   return;
                                 }     
                             } );
     }
   }
+
 }

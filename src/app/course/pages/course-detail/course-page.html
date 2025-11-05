@@ -3,7 +3,7 @@
         <app-loader />
     }
     @else if( this.courseResource.hasValue() ){
-        <app-course-detail />
+        <app-course-detail [course]="this.courseResource.value()" />
         <app-list-of-content [courseId]="courseResource.value().id" />
     }
 </div>

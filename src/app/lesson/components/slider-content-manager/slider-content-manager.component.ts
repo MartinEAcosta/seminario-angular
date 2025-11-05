@@ -30,7 +30,7 @@ export class SliderContentManagerComponent {
   public lessonForm : FormGroup = this.lessonFormState.createForm();
   
   public lessonsResource = rxResource<LessonPopulated[],string | null>({
-    request: () => this.userState.courseSelected()?.id ?? null,
+    request: () => this.courseFormState.selectedCourse()?.id ?? null,
     loader: ({request}) => { 
       if( request ){
         return this.lessonService

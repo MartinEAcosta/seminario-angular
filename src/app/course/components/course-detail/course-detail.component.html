@@ -2,8 +2,8 @@
     <section class="section-hero">
 
         <div class="container-course-presentation">
-            <h1 class="title-course"> {{ userState.courseSelected()?.title }} </h1>
-            <p class="description-course"> {{ userState.courseSelected()?.description }} </p>
+            <h1 class="title-course"> {{ course().title }} </h1>
+            <p class="description-course"> {{ course().description }} </p>
 
             <div class="container-btns">
                 <button class="btn btn-primary">
@@ -19,7 +19,7 @@
         </div>
 
         <figure class="thumbnail">
-            <img src="{{ userState.courseSelected()?.thumbnail_url }}" alt="">
+            <img src="{{ course().thumbnail_url }}" alt="">
         </figure>
 
     </section>

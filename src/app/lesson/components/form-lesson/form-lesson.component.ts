@@ -49,7 +49,7 @@ export class FormLessonComponent {
       const lessonDto = {
         id: this.lessonFormState.lessonSelected()?.id,
         ...dto,
-        id_course : this.userState.courseSelected()?.id!,
+        id_course : this.courseFormState.selectedCourse()?.id!,
       };
       
       lessonDto.lesson_number = this.lessonFormState.lessons().at(-1)?.lesson_number ?? 0;
@@ -62,9 +62,9 @@ export class FormLessonComponent {
 
   public onDeleteLesson = ( lesson : LessonPopulated ) => {
     if( lesson.id ){
-        if( this.userState.courseSelected()?.id_owner === this.authService.id() ){
+        if( this.courseFormState.selectedCourse()?.id_owner === this.authService.id() ){
           if( this.lessonFormState.lessonSelected()?.file.id_file ){
-            this.fileService.deleteCourseThumbnail( this.userState.courseSelected()?.id! ).subscribe()
+            this.fileService.deleteCourseThumbnail( this.courseFormState.selectedCourse()?.id! ).subscribe()
           }
           this.lessonService.deleteLesson( lesson.id )
                                 .subscribe( ( isLessonDeleted ) => {

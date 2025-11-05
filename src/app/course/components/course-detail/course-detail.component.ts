@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
+import { Course } from '@course/models/course.interfaces';
 import { UserState } from 'src/app/auth/state/user-state';
 
 
@@ -9,7 +10,8 @@ import { UserState } from 'src/app/auth/state/user-state';
 })
 export class CourseDetailComponent {
 
-  userState = inject(UserState);
+  course = input.required<Course>();
 
   constructor(){ }
+
 }

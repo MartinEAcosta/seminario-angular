@@ -12,10 +12,10 @@ export class CourseFormState {
   private fb = inject(FormBuilder);
   private userState = inject(UserState);
 
-  public courseForm : FormGroup;
-  
+  public courseForm : FormGroup;  
   public limitedCapacity = signal<boolean>( true );
 
+  public selectedCourse = signal<Course |null>(null);
   public thumbnailFile = signal<File | null>( null );
   public tempThumbnail = signal<string | null>( null );
   
@@ -30,13 +30,14 @@ export class CourseFormState {
   });
 
   public reset () : void {
-    this.userState.setCourse(null);
     this.courseForm = this.createForm();
+    this.selectedCourse.set(null);
     this.thumbnailFile.set(null);
     this.tempThumbnail.set(null);
   }
   
   public createForm = ( ) : FormGroup => {
+    console.log('esee')
     const form = this.fb.group({
       title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
       description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
@@ -49,6 +50,9 @@ export class CourseFormState {
   }
 
   public patchValuesForm = ( course : Course ) : FormGroup => {
+    console.log('esee')
+    console.log(course);
+    this.selectedCourse.set( course );
     this.courseForm.patchValue({
       title: course.title,
       description: course.description,

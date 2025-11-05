@@ -4,6 +4,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { Category } from '../../models/category.interfaces';
 import { NgClass } from '@angular/common';
 import { UserState } from 'src/app/auth/state/user-state';
+import { CourseFormState } from '@course/state/course/course-form-state';
 
 @Component({
   selector: 'app-category-select',
@@ -16,7 +17,7 @@ export class CategorySelectComponent {
 
   @Output() 
   public clickCategory = new EventEmitter<string>();
-  private userState = inject(UserState);
+  private courseFormState = inject(CourseFormState);
   private categoryService = inject(CategoryService);
   
   public categoriesResource = rxResource({ 
@@ -31,7 +32,7 @@ export class CategorySelectComponent {
         const initialCategory = this.categoriesResource.value()
                                                         ?.find( 
                                                                 category => 
-                                                                        category.id === this.userState.courseSelected()?.id_category 
+                                                                        category.id === this.courseFormState.selectedCourse()?.id_category 
                                                               )
 
         this.categorySelected.set(initialCategory)

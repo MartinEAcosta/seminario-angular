@@ -18,7 +18,7 @@
                     <form-error-label [control]="courseFormState.courseForm.get('title')!" [warningSvg]=true />
                     <!--- Componente y event emmiter -->
                     @if( this.course() ){
-                        <app-btn-remove [item]="this.course()" (onRemove)="this.courseFormState.onDeleteCourse( course()! )" />
+                        <app-btn-remove [item]="this.course()" (click)="this.onRemoveCourse( this.course()! )" />
                     }
                 </div>
 

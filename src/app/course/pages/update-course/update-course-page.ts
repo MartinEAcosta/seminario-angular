@@ -61,7 +61,7 @@ export class UpdateCoursePageComponent {
                         );
   }
 
-  public onDeleteCourse = ( course : Course )  => {
+  public onRemoveCourse = ( course : Course )  => {
     if( course.id_owner === this.authService.id() ){
       this.courseService.deleteCourse( course.id )
                             .subscribe( (isCourseDeleted) => {

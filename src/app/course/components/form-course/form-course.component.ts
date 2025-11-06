@@ -1,11 +1,9 @@
 import { Component, Output, EventEmitter, inject, input } from '@angular/core';
-import { Router } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { FileService } from 'src/app/shared/services/file/file.service';
-import { CourseService } from '../../services/course.service';
 import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
 import { CategorySelectComponent } from "src/app/category/components/category-select/category-select.component";
 import { ThumbnailSelectorComponent } from "../thumbnail-selector/thumbnail-selector.component";
@@ -32,7 +30,9 @@ export class FormCourseComponent {
 
   @Output() 
   public submitForm = new EventEmitter<Course | null>();
-  
+  @Output()
+  public removeCourse = new EventEmitter();
+
   constructor ( ) { }
 
   ngOnInit(): void {
@@ -60,5 +60,10 @@ export class FormCourseComponent {
     }
   }
 
+  onRemoveCourse = ( course : Course ) : void  => {
+    if( course?.id_owner === this.authService.id() ){
+      this.removeCourse.emit( course );
+    }
+  }
 
 }

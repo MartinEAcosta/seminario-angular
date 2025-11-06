@@ -3,6 +3,7 @@
         <app-form-course 
             [course]="course()"
             (submitForm)="this.onUpdateCourse( course()! )"
+            (removeCourse)="this.onRemoveCourse( course()! )"
         />
     }
 </div>

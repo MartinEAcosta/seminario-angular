@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { LessonPopulated } from '../../models/lesson.interfaces';
 
 @Injectable({
@@ -8,29 +8,35 @@ import { LessonPopulated } from '../../models/lesson.interfaces';
 export class LessonFormState {
 
   private fb = inject(FormBuilder);
+  public lessonForm = this.fb.nonNullable.group({
+      title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
+      description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
+  });
 
   public lessons = signal<LessonPopulated[]>([]);
-  public lessonForm : FormGroup;
   public lessonSelected = signal<LessonPopulated | null>( null );
-  public isLessonFormVisible = signal<boolean>( false ); 
-  
+
   public mediaFile = signal<File | null>(null);
   public tempMedia = signal<string | null>(null);
-
-  constructor() { 
-    this.lessonForm = this.createForm();
-  }
-
+  public isLessonFormVisible = signal<boolean>( false ); 
+  
   public reset () : void  {
     this.lessons.set([]);
-    this.lessonForm = this.createForm();
+    this.lessonForm.reset();
     this.mediaFile.set(null);
     this.tempMedia.set(null);
     this.isLessonFormVisible.set(false);
   }
 
+  public setLessons = ( lessons : LessonPopulated[] ) => {
+    this.lessons.set(lessons);
+  }
+
   public setLessonSelected = ( lesson : LessonPopulated | null ) => {
     this.lessonSelected.set( lesson );
+    if( lesson ){
+     this.patchValuesForm( lesson );
+    }
   }
 
   public setIsLessonFormVisible = ( bol : boolean ) => {
@@ -47,13 +53,7 @@ export class LessonFormState {
   
   public toggleVisibilityOfLessonForm = ( ) : void => {
     this.isLessonFormVisible.set( !this.isLessonFormVisible() );
-  }
-
-  public createForm = () : FormGroup => {
-    return this.fb.group({
-      title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
-      description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
-    });
+    this.updateLesson( this.lessonSelected()! , this.lessonForm.value )
   }
 
   public patchValuesForm = ( lesson : LessonPopulated  ) : void => {
@@ -61,6 +61,11 @@ export class LessonFormState {
       title: lesson.title,
       description: lesson.description,
     });
+  }
+
+  public updateLesson = ( searched : LessonPopulated , value : Partial<{ title : string , description : string }> ) => {
+      const lessonsCopy = this.lessons().map( lesson => lesson.id === searched.id ? { ...lesson , ...value } : {...lesson });
+      this.setLessons( lessonsCopy )
   }
 
   public createEmptyLesson = ( ) => {
@@ -73,9 +78,12 @@ export class LessonFormState {
         id_file : null,
         url : null,
       },
-      lesson_number: this.lessons().at(-1) ? this.lessons().at(-1)?.lesson_number! : 0,
+      lesson_number: this.lessons().at(-1) ? +this.lessons().at(-1)!.lesson_number!+1 : 0,
       uploaded_at: new Date(),
     };
+    this.setTempMedia(null);
+    this.setMediaFile(null);
+    this.setLessonSelected(newLesson);
     this.lessons.set([...this.lessons() , newLesson]);
     return newLesson;
   }

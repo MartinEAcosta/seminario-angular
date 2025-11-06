@@ -3,16 +3,19 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { LessonMapper } from '@mappers/lesson.mapper';
-import { DeleteResponse, LessonPopulatedListResponse, LessonPopulatedResponse, LessonUniqueResponse } from 'src/app/shared/models/api.interface';
-import { Lesson, LessonDto, LessonPopulated, SaveLessonDto } from '../models/lesson.interfaces';
+import { DeleteResponse, LessonPopulatedListResponse, LessonUniqueResponse } from 'src/app/shared/models/api.interface';
+import { Lesson, LessonPopulated, SaveLessonDto } from '../models/lesson.interfaces';
+import { FileService } from 'src/app/shared/services/file/file.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LessonService {
+  folder = 'lessons';
 
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}lessons`;
+  private fileService = inject(FileService);
   
   constructor() { }
 
@@ -45,25 +48,18 @@ export class LessonService {
   }
 
   public saveLesson = ( lessonRequest : SaveLessonDto , file ?: File | null ) : Observable<Lesson> => {
-    const formData = new FormData();
-
     const { id , ...rest } = lessonRequest;
-
-    Object.entries( rest ).forEach(([key , value]) => {
-      formData.append( key , value as any);
-    })
-
-    if(file){
-      formData.append( 'files', file );
-    }
 
     if( id ){
       return this.http
-            .post<LessonUniqueResponse>(`${this.baseURL}/update/${id}` , formData )
+            .put<LessonUniqueResponse>(`${this.baseURL}/update/${id}` , lessonRequest )
             .pipe(
               map( (lessonResponse) =>{
-                console.log(lessonResponse);
-                return LessonMapper.mapResponseToLesson( lessonResponse );
+                const lesson = LessonMapper.mapResponseToLesson( lessonResponse );
+                if( file ){
+                  this.fileService.uploadFile( this.folder , lessonResponse.id! , file );
+                }
+                return lesson;
               }),
               catchError( ({ error }) => {
                 console.log(error)
@@ -73,10 +69,14 @@ export class LessonService {
     }
     else{
       return this.http
-                  .post<LessonUniqueResponse>(`${this.baseURL}/new` , formData )
+                  .post<LessonUniqueResponse>(`${this.baseURL}/new` , rest )
                   .pipe(
                     map( (lessonResponse) =>{
-                      return LessonMapper.mapResponseToLesson( lessonResponse );
+                        const lesson = LessonMapper.mapResponseToLesson( lessonResponse );
+                        if( file ){
+                          this.fileService.uploadFile( this.folder , lessonResponse.id! , file );
+                        }
+                      return lesson;
                     }),
                     catchError( ({ error }) => {
                       console.log(error)

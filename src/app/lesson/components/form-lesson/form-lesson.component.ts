@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, effect, inject, input } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { LessonService } from 'src/app/lesson/services/lesson.service';
@@ -12,8 +12,9 @@ import { FileService } from 'src/app/shared/services/file/file.service';
 import { BtnRemoveComponent } from "src/app/shared/components/btn-remove/btn-remove.component";
 import { Router } from '@angular/router';
 import { LessonPopulated } from '../../models/lesson.interfaces';
-import { UserState } from 'src/app/auth/state/user-state';
 import { Course } from '@course/models/course.interfaces';
+import { debounce, debounceTime, map } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-form-lesson',
@@ -27,15 +28,28 @@ export class FormLessonComponent {
   private router = inject(Router);
 
   public authService = inject(AuthService);
-  public userState = inject(UserState);
   public courseService = inject(CourseService);
   public lessonService = inject(LessonService);
   public lessonFormState = inject(LessonFormState);
   public fileService = inject(FileService);
 
   course = input.required<Course | null>();
-
+  formChanges = toSignal(
+    this.lessonFormState.lessonForm.valueChanges.pipe(debounceTime(1000)),
+    { initialValue : this.lessonFormState.lessonForm.value }
+  );
+  
   constructor() { }
+  
+  // onFormChanged = effect(() => {
+  //   const form = this.lessonFormState.lessonForm;
+  //   const value = this.formChanges();
+
+  //   if( !this.lessonFormState.lessonSelected() ) return
+  //   if (form.dirty && form.valid) {
+  //     this.lessonFormState.updateLesson( this.lessonFormState.lessonSelected()! , value );
+  //   }
+  // });
 
   public onSaveLesson = () => {
     

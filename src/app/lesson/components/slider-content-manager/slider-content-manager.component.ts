@@ -1,8 +1,7 @@
 import { Component, effect, inject, input } from '@angular/core';
 import { NgClass } from '@angular/common';
-import { FormGroup } from '@angular/forms';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { catchError, of, tap } from 'rxjs';
+import { catchError, debounceTime, of, tap } from 'rxjs';
 
 import { LessonService } from '../../services/lesson.service';
 import { LessonFormState } from '../../state/lesson/lesson-form-state';
@@ -24,7 +23,6 @@ export class SliderContentManagerComponent {
   public fileService = inject(FileService);
   
   public lessonFormState = inject(LessonFormState);
-  public lessonForm : FormGroup = this.lessonFormState.createForm();
 
   course = input.required<Course | null>();
   
@@ -54,9 +52,9 @@ export class SliderContentManagerComponent {
     })
    }
 
-   ngOnDestroy( ) {
+  ngOnDestroy( ) {
     this.lessonFormState.reset();
-   }
+  }
 
   onExpandSlider = ( ) => {
     if( this.lessonFormState.isLessonFormVisible() ){
@@ -86,12 +84,7 @@ export class SliderContentManagerComponent {
 
     if( this.lessonFormState.lessonSelected() && !this.lessonFormState.lessonSelected()?.id ) return;
     
-    const emptyLesson = this.lessonFormState.createEmptyLesson();
-    this.lessonFormState.setLessonSelected( emptyLesson );
-    this.lessonFormState.setTempMedia(null);
-    this.lessonFormState.setMediaFile(null);
-
-    this.lessonFormState.patchValuesForm( emptyLesson );
+    this.lessonFormState.createEmptyLesson();
   }
 
 

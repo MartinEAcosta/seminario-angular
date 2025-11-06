@@ -8,7 +8,8 @@
             formControlName="title"
             class="input-title"
             placeholder="Escribé el titulo de la lección"
-            type="text" name="" id="">
+            type="text" name="" id=""
+            >
         <form-error-label [control]="lessonFormState.lessonForm.get('title')!" [warningSvg]="true" />
 
         @if( lessonFormState.lessonSelected() ){

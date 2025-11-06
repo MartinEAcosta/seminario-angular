@@ -17,8 +17,8 @@
                     
                     <form-error-label [control]="courseFormState.courseForm.get('title')!" [warningSvg]=true />
                     <!--- Componente y event emmiter -->
-                    @if( this.courseFormState.selectedCourse() ){
-                        <app-btn-remove [item]="this.courseFormState.selectedCourse()" (onRemove)="onDeleteCourse( this.courseFormState.selectedCourse()?.id! )" />
+                    @if( this.course() ){
+                        <app-btn-remove [item]="this.course()" (onRemove)="this.courseFormState.onDeleteCourse( course()! )" />
                     }
                 </div>
 
@@ -34,6 +34,7 @@
                 </div>
 
                 <app-category-select 
+                    [course]="course()"
                     (clickCategory)="courseFormState.courseForm.get('id_category')?.setValue($event)"
                 />
 
@@ -87,7 +88,7 @@
                         class="btn btn-create" 
                         type="submit"
                         >
-                        {{ this.courseFormState.selectedCourse()?.id  ? 'Editar curso': 'Crear curso'}}
+                        {{ this.course()?.id  ? 'Editar curso': 'Crear curso'}}
                     </button>
                     <button class="btn btn-cancel" type="reset">
                         Cancelar
@@ -122,6 +123,6 @@
             </form>
         </div>
 
-        <app-slider-content-manager  />
+        <app-slider-content-manager [course]="course()" />
 
     </section> 

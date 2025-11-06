@@ -1,6 +1,8 @@
 <div class="bg-page">
-    <app-form-course 
-        [course]="courseFormState.selectedCourse()"
-        (submitForm)="onUpdateCourse()"
-    />
+    @if( course() ){
+        <app-form-course 
+            [course]="course()"
+            (submitForm)="this.onUpdateCourse( course()! )"
+        />
+    }
 </div>

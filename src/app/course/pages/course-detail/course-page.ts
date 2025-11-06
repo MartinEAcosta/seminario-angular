@@ -9,7 +9,6 @@ import { CourseService } from '../../services/course.service';
 import { CourseDetailComponent } from '../../components';
 import { LoaderComponent } from "../../../shared/components/loader/loader.component";
 import { ListOfContentComponent } from "src/app/lesson/components/list-of-content/list-of-content.component";
-import { UserState } from 'src/app/auth/state/user-state';
 
 @Component({
   selector: 'app-course-page',

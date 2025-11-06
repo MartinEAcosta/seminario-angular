@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, inject, input } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { FormGroup } from '@angular/forms';
 import { rxResource } from '@angular/core/rxjs-interop';
@@ -9,9 +9,8 @@ import { LessonFormState } from '../../state/lesson/lesson-form-state';
 import { LessonPopulated } from '../../models/lesson.interfaces';
 import { ThumbnailSelectorComponent } from 'src/app/course/components/thumbnail-selector/thumbnail-selector.component';
 import { FormLessonComponent } from "../form-lesson/form-lesson.component";
-import { CourseFormState } from 'src/app/course/state/course/course-form-state';
 import { FileService } from 'src/app/shared/services/file/file.service';
-import { UserState } from 'src/app/auth/state/user-state';
+import { Course } from '@course/models/course.interfaces';
 
 @Component({
   selector: 'app-slider-content-manager',
@@ -22,15 +21,15 @@ import { UserState } from 'src/app/auth/state/user-state';
 export class SliderContentManagerComponent {
 
   public lessonService = inject(LessonService);
-  public lessonFormState = inject(LessonFormState);
   public fileService = inject(FileService);
-  public courseFormState = inject(CourseFormState);
-  public userState = inject(UserState);
-
+  
+  public lessonFormState = inject(LessonFormState);
   public lessonForm : FormGroup = this.lessonFormState.createForm();
+
+  course = input.required<Course | null>();
   
   public lessonsResource = rxResource<LessonPopulated[],string | null>({
-    request: () => this.courseFormState.selectedCourse()?.id ?? null,
+    request: () => this.course()?.id ?? null,
     loader: ({request}) => { 
       if( request ){
         return this.lessonService

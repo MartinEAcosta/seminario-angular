@@ -17,11 +17,11 @@ import { FormUtils } from '@utils/form-utils';
 export class FormLoginComponent {
   
   private router = inject(Router);
-  authService = inject(AuthService);
+  private authService = inject(AuthService);
 
-  fb = inject(FormBuilder);
+  private fb = inject(FormBuilder);
     
-  loginForm : FormGroup = this.fb.group({
+  public loginForm : FormGroup = this.fb.group({
     email : [ 
               '' ,[ 
                     Validators.required , Validators.pattern( FormUtils.emailPattern )  
@@ -33,6 +33,8 @@ export class FormLoginComponent {
                     ]
               ],
   });
+  
+  constructor( ) { }
 
   onLogin = () => {
     this.loginForm.markAllAsTouched();

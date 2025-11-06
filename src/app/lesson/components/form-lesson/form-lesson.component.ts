@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { LessonService } from 'src/app/lesson/services/lesson.service';
@@ -8,12 +8,12 @@ import { BtnNavigationComponent } from "src/app/shared/components/btn-navigation
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { LessonMapper } from '@mappers/lesson.mapper';
 import { CourseService } from 'src/app/course/services/course.service';
-import { CourseFormState } from 'src/app/course/state/course/course-form-state';
 import { FileService } from 'src/app/shared/services/file/file.service';
 import { BtnRemoveComponent } from "src/app/shared/components/btn-remove/btn-remove.component";
 import { Router } from '@angular/router';
 import { LessonPopulated } from '../../models/lesson.interfaces';
 import { UserState } from 'src/app/auth/state/user-state';
+import { Course } from '@course/models/course.interfaces';
 
 @Component({
   selector: 'app-form-lesson',
@@ -27,12 +27,13 @@ export class FormLessonComponent {
   private router = inject(Router);
 
   public authService = inject(AuthService);
-  public courseFormState = inject(CourseFormState);
   public userState = inject(UserState);
   public courseService = inject(CourseService);
   public lessonService = inject(LessonService);
   public lessonFormState = inject(LessonFormState);
   public fileService = inject(FileService);
+
+  course = input.required<Course | null>();
 
   constructor() { }
 
@@ -49,7 +50,7 @@ export class FormLessonComponent {
       const lessonDto = {
         id: this.lessonFormState.lessonSelected()?.id,
         ...dto,
-        id_course : this.courseFormState.selectedCourse()?.id!,
+        id_course : this.course()?.id!,
       };
       
       lessonDto.lesson_number = this.lessonFormState.lessons().at(-1)?.lesson_number ?? 0;
@@ -62,9 +63,9 @@ export class FormLessonComponent {
 
   public onDeleteLesson = ( lesson : LessonPopulated ) => {
     if( lesson.id ){
-        if( this.courseFormState.selectedCourse()?.id_owner === this.authService.id() ){
+        if( this.course()?.id_owner === this.authService.id() ){
           if( this.lessonFormState.lessonSelected()?.file.id_file ){
-            this.fileService.deleteCourseThumbnail( this.courseFormState.selectedCourse()?.id! ).subscribe()
+            this.fileService.deleteCourseThumbnail( this.course()?.id! ).subscribe()
           }
           this.lessonService.deleteLesson( lesson.id )
                                 .subscribe( ( isLessonDeleted ) => {

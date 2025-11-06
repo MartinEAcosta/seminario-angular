@@ -2,7 +2,7 @@ import { effect, inject, Injectable, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Course } from '@interfaces/course.interfaces';
-import { UserState } from 'src/app/auth/state/user-state';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +10,19 @@ import { UserState } from 'src/app/auth/state/user-state';
 export class CourseFormState {
 
   private fb = inject(FormBuilder);
-  private userState = inject(UserState);
 
-  public courseForm : FormGroup;  
+  public courseForm : FormGroup = this.fb.group({
+      title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
+      description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
+      id_category : [ '' , [ Validators.required ]],
+      price : [ 0 , [ Validators.required , Validators.min(0) ] ],
+      capacity : [ { value : 5 } , [ Validators.min(5) ] ], 
+  });
+
   public limitedCapacity = signal<boolean>( true );
-
-  public selectedCourse = signal<Course |null>(null);
   public thumbnailFile = signal<File | null>( null );
   public tempThumbnail = signal<string | null>( null );
   
-  constructor( ) {
-    this.courseForm = this.createForm();
-  }
-
   onLimitedCapacityChange = effect(() => {
     const limited = this.limitedCapacity();
 
@@ -30,29 +30,12 @@ export class CourseFormState {
   });
 
   public reset () : void {
-    this.courseForm = this.createForm();
-    this.selectedCourse.set(null);
+    this.courseForm.reset();
     this.thumbnailFile.set(null);
     this.tempThumbnail.set(null);
   }
   
-  public createForm = ( ) : FormGroup => {
-    console.log('esee')
-    const form = this.fb.group({
-      title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
-      description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
-      id_category : [ '' , [ Validators.required ]],
-      price : [ 0 , [ Validators.required , Validators.min(0) ] ],
-      capacity : [ { value : 5 } , [ Validators.min(5) ] ], 
-    });
-
-    return form;
-  }
-
   public patchValuesForm = ( course : Course ) : FormGroup => {
-    console.log('esee')
-    console.log(course);
-    this.selectedCourse.set( course );
     this.courseForm.patchValue({
       title: course.title,
       description: course.description,
@@ -61,6 +44,7 @@ export class CourseFormState {
       capacity: course.capacity
     });
 
+    course.thumbnail_url ? this.tempThumbnail.set( course.thumbnail_url ) : this.tempThumbnail.set( null ); 
     course.capacity ? this.limitedCapacity.set(true) : this.limitedCapacity.set(false);
 
     return this.courseForm;

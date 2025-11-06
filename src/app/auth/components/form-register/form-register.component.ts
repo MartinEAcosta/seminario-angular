@@ -15,14 +15,13 @@ import { FormErrorLabelComponent } from "../../../shared/components/form-error-l
 })
 export class FormRegisterComponent {
 
-  router = inject(Router);
-  authService = inject(AuthService);
-  isLoading = computed( () => this.authService.authStatus() );
+  private router = inject(Router);
+  private authService = inject(AuthService);
+  public isLoading = computed( () => this.authService.authStatus() );
 
-  
   private fb = inject(FormBuilder);
 
-  registerForm : FormGroup = this.fb.group({
+  public registerForm : FormGroup = this.fb.group({
     username : [
                 '', 
                 [Validators.required, Validators.minLength(3) , Validators.pattern( FormUtils.notOnlySpacesPattern ) ] 
@@ -40,6 +39,7 @@ export class FormRegisterComponent {
               ],
   });
 
+  constructor( ) { }
 
   onRegister = () : void => {
     this.registerForm.markAllAsTouched();
@@ -51,7 +51,7 @@ export class FormRegisterComponent {
                             this.router.navigateByUrl('/');
                             return;
                           }
-                        });
+                        } );
     };
   }
     

@@ -51,33 +51,32 @@
                                 'valid-border': courseFormState.courseForm.get('price')?.touched && !courseFormState.courseForm.get('price')?.errors 
                             }" 
                             placeholder="5" 
-                        />
-                        <form-error-label [control]="courseFormState.courseForm.get('price')!" />
-                    </div>
+                            />
+                            <form-error-label [control]="courseFormState.courseForm.get('price')!" />
+                        </div>
                     <div class="container-capacity">
+                        <div class="container-error">
+                            <form-error-label [control]="courseFormState.courseForm.get('capacity')!" />
+                        </div>
                         <div class="container-inline">
-                            <label class="label-capacity" [ngClass]="{ 'unlimited-capacity' : !courseFormState.courseForm.get('wantLimitedCapacity')?.value}">
+                            <label class="label-capacity" [ngClass]="{ 'unlimited-capacity' : !courseFormState.limitedCapacity()}">
                                 Capacidad Limitada
                             </label>
                             <input 
-                            formControlName="capacity" 
-                            type="number" 
-                            class="input input-capacity"
-                            [ngClass]="{ 
-                                    'invalid-border': courseFormState.courseForm.get('capacity')?.errors, 
-                                    'valid-border': courseFormState.courseForm.get('capacity')?.touched && !courseFormState.courseForm.get('capacity')?.errors ,
-                                    'unlimited-capacity' :!courseFormState.courseForm.get('wantLimitedCapacity')?.value
-                                }" 
-                                placeholder="5" 
-                                />
-                                <div class="switch-container">
-                                    <input type="checkbox" id="switch-label" class="switch-checkbox" (click)="courseFormState.toggleLimitedCapacity()">
-                                    <label for="switch-label" class="switch-label" >
-                                    </label>
-                                </div>
-                        </div>
-                        <div class="container-error">
-                            <form-error-label [control]="courseFormState.courseForm.get('capacity')!" />
+                                formControlName="capacity" 
+                                type="number" 
+                                class="input input-capacity"
+                                [ngClass]="{ 
+                                        'invalid-border': courseFormState.courseForm.get('capacity')?.errors, 
+                                        'valid-border': courseFormState.courseForm.get('capacity')?.valid && !courseFormState.courseForm.get('capacity')?.errors && courseFormState.limitedCapacity() ,
+                                        'unlimited-capacity' : !courseFormState.limitedCapacity()
+                                    }" 
+                                    placeholder="5" 
+                            />
+                            <div class="switch-container">
+                                <input type="checkbox" id="switch-label" class="switch-checkbox" [checked]="courseFormState.limitedCapacity()" (click)="courseFormState.toggleLimitedCapacity()">
+                                <label for="switch-label" class="switch-label" ></label>
+                            </div>
                         </div>
                     </div>
                 </div>

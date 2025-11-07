@@ -1,7 +1,7 @@
 import { Component, effect, inject, input } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { catchError, debounceTime, of, tap } from 'rxjs';
+import { catchError, of, tap } from 'rxjs';
 
 import { LessonService } from '../../services/lesson.service';
 import { LessonFormState } from '../../state/lesson/lesson-form-state';
@@ -10,6 +10,7 @@ import { ThumbnailSelectorComponent } from 'src/app/course/components/thumbnail-
 import { FormLessonComponent } from "../form-lesson/form-lesson.component";
 import { FileService } from 'src/app/shared/services/file/file.service';
 import { Course } from '@course/models/course.interfaces';
+import { ModuleService } from 'module/services/module.service';
 
 @Component({
   selector: 'app-slider-content-manager',
@@ -20,15 +21,16 @@ import { Course } from '@course/models/course.interfaces';
 export class SliderContentManagerComponent {
 
   public lessonService = inject(LessonService);
+  public moduleService = inject(ModuleService);
   public fileService = inject(FileService);
   
   public lessonFormState = inject(LessonFormState);
 
   course = input.required<Course | null>();
   
-  public lessonsResource = rxResource<LessonPopulated[],string | null>({
-    request: () => this.course()?.id ?? null,
-    loader: ({request}) => { 
+  lessonsResource = rxResource<LessonPopulated[],string | null>({
+    request : () => this.course()?.id ?? null,
+    loader  : ({request}) => { 
       if( request ){
         return this.lessonService
         .getAllLessonPopulatedFromCourse( request )
@@ -42,6 +44,16 @@ export class SliderContentManagerComponent {
       }
       return of([]);
     },
+  });
+
+  modulesResource = rxResource({
+    request : () => this.course()?.id ?? null,
+    loader  : ({ request }) => {
+      if( request ) {
+        return this.moduleService.getModulesByCourseId( request )
+      }
+      return of([]);
+    }
   });
 
   constructor( ) { 
@@ -79,7 +91,7 @@ export class SliderContentManagerComponent {
     this.lessonFormState.setIsLessonFormVisible( true );
   }
 
-  public onAddLesson = ( ) => {
+  onAddLesson = ( ) => {
     this.lessonFormState.setIsLessonFormVisible( true );
 
     if( this.lessonFormState.lessonSelected() && !this.lessonFormState.lessonSelected()?.id ) return;
@@ -87,6 +99,9 @@ export class SliderContentManagerComponent {
     this.lessonFormState.createEmptyLesson();
   }
 
+  onAddModule = ( ) => {
+    
+  }
 
 
 }

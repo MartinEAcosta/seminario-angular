@@ -1,4 +1,4 @@
-import { Component, effect, inject, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { LessonService } from 'src/app/lesson/services/lesson.service';
@@ -13,8 +13,6 @@ import { BtnRemoveComponent } from "src/app/shared/components/btn-remove/btn-rem
 import { Router } from '@angular/router';
 import { LessonPopulated } from '../../models/lesson.interfaces';
 import { Course } from '@course/models/course.interfaces';
-import { debounce, debounceTime, map } from 'rxjs';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-form-lesson',
@@ -34,13 +32,13 @@ export class FormLessonComponent {
   public fileService = inject(FileService);
 
   course = input.required<Course | null>();
-  formChanges = toSignal(
-    this.lessonFormState.lessonForm.valueChanges.pipe(debounceTime(1000)),
-    { initialValue : this.lessonFormState.lessonForm.value }
-  );
-  
+
   constructor() { }
   
+  // formChanges = toSignal(
+  //   this.lessonFormState.lessonForm.valueChanges.pipe(debounceTime(1000)),
+  //   { initialValue : this.lessonFormState.lessonForm.value }
+  // );
   // onFormChanged = effect(() => {
   //   const form = this.lessonFormState.lessonForm;
   //   const value = this.formChanges();
@@ -66,9 +64,7 @@ export class FormLessonComponent {
         ...dto,
         id_course : this.course()?.id!,
       };
-      
       lessonDto.lesson_number = this.lessonFormState.lessons().at(-1)?.lesson_number ?? 0;
-
     
       return this.lessonService.saveLesson( lessonDto , this.lessonFormState.mediaFile() ).subscribe();
     }

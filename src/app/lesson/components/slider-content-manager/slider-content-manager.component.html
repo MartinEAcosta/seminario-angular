@@ -10,7 +10,14 @@
 
             <div class="container-lessons-thumbnails">
                 <div class="container-add-lesson">
-                    <div class="card-thumbnail add-lesson">
+                    <div class="card-thumbnail card-action">
+                        <figure (click)="onAddModule()" class="figure figure-module">
+                            <img src="./assets/bracket-curly-left.svg" alt="Bracket Curyl Left Icon" class="icon icon-bracket">
+                            <p class="text-simple"> Crear nuevo módulo</p>
+                            <img src="./assets/bracket-curly-right.svg" alt="Bracket Curyl Right Icon" class="icon icon-bracket">
+                        </figure>
+                    </div>
+                    <div class="card-thumbnail card-action">
                         <figure (click)="onAddLesson()" class="figure">
                             <img 
                             class="icon"
@@ -48,7 +55,7 @@
         </div>
         
     <div class="container-lesson-expand">
-        
+
         <div class="container-media-preview">
             <input 
                 type="file" 

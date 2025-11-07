@@ -26,7 +26,7 @@ export class CourseFormState {
   onLimitedCapacityChange = effect(() => {
     const limited = this.limitedCapacity();
 
-    limited ? this.courseForm.get('capacity')?.disable() : this.courseForm.get('capacity')?.enable();
+    limited ? this.courseForm.get('capacity')?.enable() : this.courseForm.get('capacity')?.disable();
   });
 
   public reset () : void {

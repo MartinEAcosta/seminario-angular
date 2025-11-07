@@ -18,7 +18,7 @@ export class LessonFormState {
 
   public mediaFile = signal<File | null>(null);
   public tempMedia = signal<string | null>(null);
-  public isLessonFormVisible = signal<boolean>( false ); 
+  public isLessonFormVisible = signal<boolean>( true ); 
   
   public reset () : void  {
     this.lessons.set([]);

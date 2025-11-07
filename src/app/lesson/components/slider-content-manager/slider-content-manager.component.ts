@@ -11,10 +11,11 @@ import { FormLessonComponent } from "../form-lesson/form-lesson.component";
 import { FileService } from 'src/app/shared/services/file/file.service';
 import { Course } from '@course/models/course.interfaces';
 import { ModuleService } from 'module/services/module.service';
+import { CardActionComponent } from "src/app/shared/components/card-action/card-action.component";
 
 @Component({
   selector: 'app-slider-content-manager',
-  imports: [ThumbnailSelectorComponent, NgClass, FormLessonComponent],
+  imports: [ThumbnailSelectorComponent, NgClass, FormLessonComponent, CardActionComponent],
   templateUrl: './slider-content-manager.component.html',
   styleUrl: './slider-content-manager.component.scss'
 })
@@ -100,7 +101,7 @@ export class SliderContentManagerComponent {
   }
 
   onAddModule = ( ) => {
-    
+
   }
 
 

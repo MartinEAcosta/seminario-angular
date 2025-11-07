@@ -1,0 +1,15 @@
+<div class="card-thumbnail card-action">
+    <figure (click)="onClickCard()" class="figure">
+        @if( svgPath1() != null ){
+            <img 
+            class="icon"
+            src={{svgPath1()}} alt="Icon">
+        }
+        <p class="text-simple">{{ textAction() }}</p>
+        @if( svgPath2() != null ){
+            <img 
+                class="icon"
+                src={{svgPath2()}} alt="Icon">
+        }
+    </figure>
+</div>

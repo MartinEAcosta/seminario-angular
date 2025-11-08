@@ -18,7 +18,8 @@ export class LessonFormState {
 
   public mediaFile = signal<File | null>(null);
   public tempMedia = signal<string | null>(null);
-  public isLessonFormVisible = signal<boolean>( true ); 
+  public isLessonFormVisible = signal<boolean>( false ); 
+  public isModulePopUpVisible = signal<boolean>( false );
   
   public reset () : void  {
     this.lessons.set([]);
@@ -54,6 +55,10 @@ export class LessonFormState {
   public toggleVisibilityOfLessonForm = ( ) : void => {
     this.isLessonFormVisible.set( !this.isLessonFormVisible() );
     this.updateLesson( this.lessonSelected()! , this.lessonForm.value )
+  }
+
+  public toggleVisibilityOfModulePopUp = ( ) : void => {
+    this.isModulePopUpVisible.set( !this.isModulePopUpVisible() );
   }
 
   public patchValuesForm = ( lesson : LessonPopulated  ) : void => {

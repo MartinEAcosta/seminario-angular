@@ -1,14 +1,17 @@
 <div class="card-thumbnail card-action">
-    <figure (click)="onClickCard()" class="figure">
+    <figure (click)="onClickCard()" 
+        [ngClass]="svgPath1() && svgPath2() ? 'figure-module' : 'figure'"
+        class="figure">
         @if( svgPath1() != null ){
             <img 
+            [ngClass]="svgPath1() && svgPath2() ? 'icon-bracket' : 'icon'"
             class="icon"
             src={{svgPath1()}} alt="Icon">
         }
         <p class="text-simple">{{ textAction() }}</p>
         @if( svgPath2() != null ){
             <img 
-                class="icon"
+                class="icon icon-bracket"
                 src={{svgPath2()}} alt="Icon">
         }
     </figure>

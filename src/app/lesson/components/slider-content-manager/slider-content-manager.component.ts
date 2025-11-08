@@ -101,7 +101,7 @@ export class SliderContentManagerComponent {
   }
 
   onAddModule = ( ) => {
-
+    this.lessonFormState.toggleVisibilityOfModulePopUp( );
   }
 
 

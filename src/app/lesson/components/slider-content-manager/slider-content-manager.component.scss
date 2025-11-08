@@ -2,41 +2,48 @@
 
 .bg-slider-content{
     display: flex;
+    position: relative;
     flex-direction: column;
     border-radius: 1rem;
     width: 94%;
     margin: auto;
     margin-bottom: 1%;
-    height: 30vh;
+    height: 14rem;
     background-color: v.$black-custom;
-    overflow: hidden;
     transition: all 1s ease;
+
 }
 
 .bg-slider-content.expand{
     height: 36rem;
     transition: all 1s ease;
 
-
     & .icon-expand {
         display: flex;
         margin-top: auto;
-        bottom: 0px;
+        border-radius: 0 0 1rem 1rem;
 
         & img {
             transform: rotate(-180deg);
             transition: all 1s ease;
         }
     }
+
+    & .container-media-preview{
+        width: 42%;
+        height: 45vh;
+        transition: all 1.5s ease;
+    }
+
 }
 
 .container-options{
     display: flex;
-    width: 100%;
+    width: 94%;
     padding: 1% auto;
     // si .expand es 30%
     padding: 2%;
-    height: 100%;
+    height: 14rem;
     align-items: center;
 }
 
@@ -63,6 +70,7 @@
 
 .container-add-lesson{
     display: flex;
+    position: relative;
     align-items: center;
     width: 33rem;
     height: 100%;
@@ -70,6 +78,19 @@
     margin-right: 2%;
     gap: 2%;
     background: linear-gradient(to right, v.$black-custom 60% , transparent 30% );
+}
+
+.container-popup{
+    display: flex;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    top: 110%;
+    z-index: 10000;
+    width: 15rem;
+    height: 10rem;
+    background-color: red;
 }
 
 .card-action{
@@ -92,11 +113,19 @@
 
 .slider-content{
     display: flex;
-    width: 100%;
+    width: auto;
     height: 100%;
     overflow-x: scroll;
     scrollbar-width: none;
     gap: 2%;
+}
+
+.loading-lessons{
+    display: flex;
+    font-family: v.$font-primary;
+    justify-content: center;
+    align-items: center;
+    color: rgba(233, 233, 233, 0.7);
 }
 
 .card-thumbnail{
@@ -145,8 +174,16 @@
     width: 100%;
 }
 
-.container-lesson-expand{
+.container-lesson{
     display: flex;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.container-lesson.expand{
+    display: flex;
+    position: relative;
     width: 96%;
     height: 100%;
     border-top: solid thin rgba(233, 233, 233, 0.15);
@@ -159,8 +196,9 @@
 .container-media-preview{
     display: flex;
     position: relative;
+    z-index: 0;
     width: 42%;
-    height: 45vh;
+    height: 0;
     border-radius: 1rem;
     background-color: rgb(53, 53, 53);
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
@@ -176,7 +214,7 @@
 }
 
 .container-form-lesson{
-    width: 65%;
+    width: 60%;
 }
 
 .figure-attach{
@@ -206,11 +244,13 @@
 }
 
 .icon-expand{
-    position: sticky;
+    display: flex;
+    position: absolute;
+    bottom: 0%;
     width: 100%;
     height: 20px;
     background-color: rgb(71, 71, 71);
-    bottom: -2%;
+    border-radius: 0 0 1rem 1rem;
 }
 
 .icon-expand figure{

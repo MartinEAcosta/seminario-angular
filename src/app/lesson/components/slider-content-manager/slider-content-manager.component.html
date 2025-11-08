@@ -10,44 +10,41 @@
 
             <div class="container-lessons-thumbnails">
                 <div class="container-add-lesson">
-                    <div class="card-thumbnail card-action">
-                        <figure (click)="onAddModule()" class="figure figure-module">
-                            <img src="./assets/bracket-curly-left.svg" alt="Bracket Curyl Left Icon" class="icon icon-bracket">
-                            <p class="text-simple"> Crear nuevo módulo</p>
-                            <img src="./assets/bracket-curly-right.svg" alt="Bracket Curyl Right Icon" class="icon icon-bracket">
-                        </figure>
-                    </div>
-                    <app-card-action svgPath1="./assets/bracket-curly-left.svg" svgPath2="./assets/bracket-curly-right.svg" textAction="Crear nuevo módulo"/>
-                    <div class="card-thumbnail card-action">
-                        <figure (click)="onAddLesson()" class="figure">
-                            <img 
-                            class="icon"
-                            src="./assets/add-icon.svg" alt="Add Icon">
-                            <p class="text-simple"> Añade una nueva lección</p>
-                        </figure>
-                    </div>
+                    <app-card-action (action)="lessonFormState.toggleVisibilityOfModulePopUp()" svgPath1="./assets/bracket-curly-left.svg" svgPath2="./assets/bracket-curly-right.svg" textAction="Crear nuevo módulo"/>
+                    @if( lessonFormState.isModulePopUpVisible() ){
+                        <div class="container-popup">
+                            <h1> FUTURO POPUP </h1>
+                        </div>
+                    }
+                    <app-card-action (action)="onAddLesson()" svgPath1="./assets/add-icon.svg" textAction="Añade una nueva lección"/>
                 </div>
 
                 <div class="container-slider">
                     <div class="slider-content">
-                        @for( lesson of this.lessonFormState.lessons() ; track lesson ){
-                            <div 
-                            (click)="onSelectLesson( lesson )" 
-                            class="card-thumbnail thumbnail-lesson">
-                                <figure class="figure">
-                                    @if( lessonFormState.lessonSelected()?.id === lesson.id && lessonFormState.tempMedia( ) != null ){
-                                        <img class="thumbnail-lesson" 
-                                                src="{{lessonFormState.tempMedia()}}" alt="">
-                                    }
-                                    @else if ( lesson.file.url != null ) {
-                                        <img class="thumbnail-lesson" 
-                                            src="{{lesson.file.url}}" alt="">
-                                    }
-                                    @else {
-                                        <img class="icon" src="/assets/thumbnail-icon.svg" alt="">
-                                    }
-                                </figure>
-                            </div>
+                        @if( lessonsResource.isLoading() ){
+                            <h2 class="loading-lessons">Cargando lecciones...</h2>
+                        }
+                        @else {
+                            @for( lesson of this.lessonFormState.lessons() ; track lesson ){
+                                <div 
+                                    (click)="onSelectLesson( lesson )" 
+                                    class="card-thumbnail thumbnail-lesson"
+                                    >
+                                    <figure class="figure">
+                                        @if( lessonFormState.lessonSelected()?.id === lesson.id && lessonFormState.tempMedia( ) != null ){
+                                            <img class="thumbnail-lesson" 
+                                                    src="{{lessonFormState.tempMedia()}}" alt="">
+                                        }
+                                        @else if ( lesson.file.url != null ) {
+                                            <img class="thumbnail-lesson" 
+                                                src="{{lesson.file.url}}" alt="">
+                                        }
+                                        @else {
+                                            <img class="icon" src="/assets/thumbnail-icon.svg" alt="">
+                                        }
+                                    </figure>
+                                </div>
+                            }
                         }
                     </div>
                 </div>
@@ -55,7 +52,9 @@
             </div>
         </div>
         
-    <div class="container-lesson-expand">
+    <div 
+        [ngClass]="[ lessonFormState.isLessonFormVisible() ? 'expand' : '' ]"
+        class="container-lesson">
 
         <div class="container-media-preview">
             <input 

@@ -1,8 +1,9 @@
+import { NgClass } from '@angular/common';
 import { Component, EventEmitter, input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-card-action',
-  imports: [],
+  imports: [NgClass],
   templateUrl: './card-action.component.html',
   styleUrl: './card-action.component.scss'
 })

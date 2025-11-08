@@ -13,7 +13,7 @@
                     <app-card-action (action)="lessonFormState.toggleVisibilityOfModulePopUp()" svgPath1="./assets/bracket-curly-left.svg" svgPath2="./assets/bracket-curly-right.svg" textAction="Crear nuevo módulo"/>
                     @if( lessonFormState.isModulePopUpVisible() ){
                         <div class="container-popup">
-                            <h1> FUTURO POPUP </h1>
+                            <app-save-module />
                         </div>
                     }
                     <app-card-action (action)="onAddLesson()" svgPath1="./assets/add-icon.svg" textAction="Añade una nueva lección"/>

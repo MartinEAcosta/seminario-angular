@@ -42,7 +42,6 @@ export class UpdateCoursePageComponent {
   constructor (  ) {  }
 
   public onUpdateCourse = ( course : Course ) : void => {
-
     const updateCourseDTO = CourseMapper.mapToCourseDto( this.courseFormState.courseForm , this.courseFormState.limitedCapacity() );
 
     updateCourseDTO.id = course?.id!;

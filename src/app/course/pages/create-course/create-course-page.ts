@@ -23,10 +23,6 @@ export class CreateCoursePageComponent {
   constructor ( ) { }
 
   public onCreateCourse = ( ) : void => {
-    this.courseFormState.courseForm.markAllAsTouched();
-    
-    if( this.courseFormState.courseForm.valid ){
-  
       const uid = this.authService.id();
       if( !uid ) return;
         
@@ -39,6 +35,6 @@ export class CreateCoursePageComponent {
                                         this.router.navigate([`/courses/${ course.id }`]);
                             },
                           );
-    }
   } 
+  
 }

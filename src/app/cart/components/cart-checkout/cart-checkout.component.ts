@@ -14,9 +14,9 @@ import { Cart } from '@cart/models/cart.model';
 })
 export class CartCheckoutComponent {
   
-  public cartService = inject(CartService);
-
+  cartService = inject(CartService);
   cart = input.required<Cart>();
+
   constructor() { }
   
 }

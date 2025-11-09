@@ -11,10 +11,10 @@ import { CartService } from '../../state/cart.service';
 export class CartItemCardComponent {
 
   
-  public cartService = inject(CartService);
+  cartService = inject(CartService);
 
-  public item = input.required<CartItem>();
-  public cart = computed( () => this.cartService.cart());
+  cart = computed( () => this.cartService.cart());
+  item = input.required<CartItem>();
 
   constructor () { }
 

@@ -15,9 +15,8 @@ import { DiscountCodeInputComponent } from '../discount-code-input/discount-code
 export class CartComponent {
   
   private cartService = inject(CartService);
-  public cart = computed( () => this.cartService.cart());
-  
-  public isCartOpen = signal<boolean>(false);
+  cart = computed( () => this.cartService.cart());
+  isCartOpen = signal<boolean>(false);
 
   constructor( ) { }
   

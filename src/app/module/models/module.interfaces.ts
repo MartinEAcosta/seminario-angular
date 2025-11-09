@@ -1,10 +1,17 @@
 
 export interface Module {
-    id : string;
-    id_course : string;
-    title : string;
-    unit : number;
-    lessons : string[],
+  id : string;
+  id_course : string;
+  title : string;
+  unit : number;
+  lessons : string[],
+}
+
+export interface ModuleDTO {
+  id ?: string,
+  id_course : string,
+  title ?: string,
+  unit ?: number,
 }
 
 export interface ModulePopulated {

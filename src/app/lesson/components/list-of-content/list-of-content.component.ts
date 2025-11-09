@@ -1,8 +1,8 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { ModulesAccordionComponent } from "../modules-accordion/modules-accordion.component";
 import { rxResource } from '@angular/core/rxjs-interop';
 import { ModuleService } from 'src/app/module/services/module.service';
-import { UserState } from '@auth/state/user-state';
+import { AuthService } from '@auth/services/auth.service';
 
 @Component({
   selector: 'app-list-of-content',
@@ -13,9 +13,9 @@ import { UserState } from '@auth/state/user-state';
 export class ListOfContentComponent {
 
   private moduleService = inject(ModuleService);
-  private userState = inject(UserState);
+  private authService = inject(AuthService);
   courseId = input.required<string>();
-  user = this.userState.user();
+  user = computed( () => this.authService.user() );
 
   modulesResource = rxResource({
     loader : ( ) => {

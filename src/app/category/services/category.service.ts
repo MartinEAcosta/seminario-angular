@@ -16,7 +16,6 @@ export class CategoryService {
 
   constructor() { }
 
-
   public getAllCategories = ( ) : Observable<Category[]> => {
     return this.http
                   .get<CategoryListResponse>(`${this.baseURL}`)

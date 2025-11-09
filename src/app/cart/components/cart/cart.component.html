@@ -1,8 +1,10 @@
 <div class="" [ngClass]="{'overlay' : this.isCartOpen()}" (click)="this.onCloseCart()">
   <div class="bg-cart" (click)="this.onOpenCart()" [ngClass]="{'open' : this.isCartOpen()}">
+
     <div class="container-icon">
       <img class="imgIconCart" [ngClass]="{'imgVisibility' : this.isCartOpen()}" src="assets/cart-icon.svg" alt="Carrito de compras">
     </div>
+
     <div class="content-open" [ngClass]="{'hidden' : !this.isCartOpen()}">
       <div class="header-cart">
         <p>Mi Carrito</p>
@@ -33,5 +35,7 @@
     <small>
       {{ this.cart().items.size }} 
     </small> 
+
   </div>
+  
 </div>

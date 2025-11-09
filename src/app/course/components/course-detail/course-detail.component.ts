@@ -1,6 +1,5 @@
 import { Component, inject, input } from '@angular/core';
 import { Course } from '@course/models/course.interfaces';
-import { UserState } from 'src/app/auth/state/user-state';
 
 
 @Component({

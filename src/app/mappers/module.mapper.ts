@@ -1,9 +1,8 @@
 import { FormGroup } from "@angular/forms";
 import { ModuleListResponse , ModulePopulatedListResponse, ModuleUniqueResponse } from "../shared/models/api.interface";
-import { Module, ModulePopulated } from "../module/models/module.interfaces";
+import { Module, ModuleDTO, ModulePopulated } from "../module/models/module.interfaces";
 
 export class ModuleMapper {
-
 
     static mapResponseToModule = ( response : ModuleUniqueResponse ) : Module => {
         return {
@@ -15,10 +14,19 @@ export class ModuleMapper {
         };
     }
 
+    static mapToModuleDto = ( formValues : ModuleDTO ) : ModuleDTO => {
+        return {
+            id : formValues.id ?? undefined,
+            // Tecnicamente no es del formulario pero es injectada a el.
+            id_course : formValues.id_course,
+            title : formValues.title,
+            unit : formValues.unit,
+        }
+    }
+
     static mapResponseToModuleArray = ( response : ModuleListResponse ) : Module[] => {
         return response.data.map( this.mapResponseToModule );
     }
-
 
     static mapResponseToModulePopulated = ( response : ModulePopulated ) : ModulePopulated  => {
         return {

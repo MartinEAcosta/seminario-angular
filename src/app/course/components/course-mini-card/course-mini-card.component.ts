@@ -12,7 +12,7 @@ import { CartService } from 'src/app/cart/state/cart.service';
 })
 export class CourseMiniCardComponent {
 
-  public cartService = inject(CartService);
+  cartService = inject(CartService);
 
   course = input.required<Course>();
   id_course = computed( () => {

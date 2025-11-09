@@ -1,11 +1,11 @@
-import { CartService } from '../../../cart/state/cart.service';
 import { Component, computed, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { CurrencyPipe } from '@angular/common';
+import { rxResource } from '@angular/core/rxjs-interop';
+
 import { PageTitleComponent } from "src/app/shared/components/page-title/page-title.component";
 import { CartCheckoutComponent } from "src/app/cart/components/cart-checkout/cart-checkout.component";
-import { CurrencyPipe } from '@angular/common';
 import { PaymentService } from '../../services/payment.service';
-import { rxResource } from '@angular/core/rxjs-interop';
+import { CartService } from '../../../cart/state/cart.service';
 import { FormCardCheckoutComponent } from "../../components/form-card-checkout/form-card-checkout.component";
 
 @Component({
@@ -16,13 +16,12 @@ import { FormCardCheckoutComponent } from "../../components/form-card-checkout/f
 })
 export class BuyPage {
 
-  private router = inject(Router);
-  public cartService = inject(CartService);
-  public paymentService = inject(PaymentService);
+  cartService = inject(CartService);
+  paymentService = inject(PaymentService);
 
-  public shoppingList = computed( () => this.cartService.cart()); 
+  shoppingList = computed( () => this.cartService.cart()); 
 
-  public paymentMethods = rxResource({
+  paymentMethodsResource = rxResource({
     loader: () => { 
       return this.paymentService.getAllPaymentMethods(); 
     }

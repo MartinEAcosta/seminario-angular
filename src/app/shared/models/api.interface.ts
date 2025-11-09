@@ -94,6 +94,7 @@ export interface ModuleUniqueResponse {
   lessons : string[],
 }
 
+export type ModuleResponse = ApiResponse<ModuleUniqueResponse>;
 export type ModuleListResponse = ApiResponse<ModuleUniqueResponse[]>
 export type ModulePopulatedListResponse = ApiResponse<ModulePopulated[]>;
 //* Lessons * //

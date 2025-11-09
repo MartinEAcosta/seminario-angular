@@ -24,7 +24,5 @@ export class ListOfContentComponent {
   });
 
   constructor( ) { }
-  
-  
 
 }

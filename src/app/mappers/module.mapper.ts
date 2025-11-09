@@ -1,15 +1,15 @@
-import { FormGroup } from "@angular/forms";
 import { ModuleListResponse , ModulePopulatedListResponse, ModuleUniqueResponse } from "../shared/models/api.interface";
 import { Module, ModuleDTO, ModulePopulated } from "../module/models/module.interfaces";
 
 export class ModuleMapper {
 
     static mapResponseToModule = ( response : ModuleUniqueResponse ) : Module => {
+        console.log( response )
         return {
             id        : response.id,
             id_course : response.id_course,
             title : response.title,
-            lessons : response.lessons,
+            lessons : response.lessons ?? [],
             unit : response.unit,
         };
     }

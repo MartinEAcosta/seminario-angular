@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { ModuleMapper } from '@mappers/module.mapper';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { ModulePopulatedListResponse } from 'src/app/shared/models/api.interface';
+
 import { environment } from 'src/environments/environment';
+import { ModulePopulatedListResponse, ModuleResponse } from 'src/app/shared/models/api.interface';
 import { Module, ModuleDTO, ModulePopulated } from '../models/module.interfaces';
 
 @Injectable({
@@ -18,11 +19,11 @@ export class ModuleService {
 
   public saveModule = ( moduleRequest : ModuleDTO ) : Observable<Module> => {
     return this.http
-                  .post<any>(`${this.baseURL}/new` , moduleRequest )
+                  .post<ModuleResponse>(`${this.baseURL}/new` , moduleRequest )
                   .pipe(
                   map(( modulesResponse ) => {
                     console.log(modulesResponse);
-                    return ModuleMapper.mapResponseToModule(modulesResponse);
+                    return ModuleMapper.mapResponseToModule(modulesResponse.data);
                   }),
                   catchError( error => {
                     return throwError(() => new Error(`${error.errorMessage}`));

@@ -1,11 +1,11 @@
-<form class="form-module" [formGroup]="moduleForm" (ngSumbit)="onSaveModule()" >
+<form class="form-module" [formGroup]="moduleForm" (ngSubmit)="this.onSaveModule()" >
     <div class="container-input">
-        <input type="text" placeholder="Modulo 1 : El inicio.">
+        <input type="text" formControlName="title" placeholder="Modulo 1 : El inicio.">
         <label for="">Título del módulo</label>
     </div>
     <div class="container-input">
-        <input type="text" placeholder="1">
+        <input type="number" formControlName="unit" placeholder="1">
         <label for="">Nro de Módulo</label>
     </div>
-    <button class="btn-submit"> Guardar Módulo </button>
+    <button class="btn-submit" type="submit" (submit)="onSaveModule()"> Guardar Módulo </button>
 </form>

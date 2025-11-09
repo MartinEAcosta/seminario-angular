@@ -17,7 +17,7 @@ export class SaveModuleComponent {
 
   course = input.required<Course | null >();
 
-  public moduleForm = this.fb.nonNullable.group({
+  moduleForm = this.fb.nonNullable.group({
     title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
     unit  : [ 1  , [ Validators.required, Validators.min(1) ] ],
   });
@@ -31,11 +31,12 @@ export class SaveModuleComponent {
       const id_course = this.course()?.id;
       if( !id_course ) return;
       // Mensaje error se podria lanzar
-
+      
       const formValues = {
         ...this.moduleForm.value,
         id_course,
       }
+      console.log( this.moduleForm.value );
 
       const moduleDto = ModuleMapper.mapToModuleDto( formValues );
       this.moduleService.saveModule( moduleDto )

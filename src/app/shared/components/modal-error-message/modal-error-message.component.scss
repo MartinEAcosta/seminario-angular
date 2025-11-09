@@ -26,11 +26,11 @@
 .warning-svg{
     display: flex;
     max-width: 8%;
-    margin: 2%;
+    margin: 1.5%;
 }
 
 .warning-svg img{
-    width: 100%;
+    width: 70%;
     height: 100%;
 }
 
@@ -42,5 +42,5 @@
     align-items: center;
     color: v.$white-custom;
     font-family: v.$font-primary;
-    font-size: large;
+    font-size: medium;
 }

@@ -1,4 +1,4 @@
-import { Component, effect, inject, input } from '@angular/core';
+import { Component, effect, inject, input, OnDestroy } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { catchError, of, tap } from 'rxjs';
@@ -27,13 +27,13 @@ import { UIService } from 'src/app/shared/services/ui/ui.service';
   templateUrl: './slider-content-manager.component.html',
   styleUrl: './slider-content-manager.component.scss',
 })
-export class SliderContentManagerComponent {
+export class SliderContentManagerComponent implements OnDestroy {
+
   uiService = inject(UIService);
   lessonService = inject(LessonService);
   moduleService = inject(ModuleService);
   fileService = inject(FileService);
-
-  public lessonFormState = inject(LessonFormState);
+  lessonFormState = inject(LessonFormState);
 
   course = input.required<Course | null>();
 
@@ -80,8 +80,19 @@ export class SliderContentManagerComponent {
     this.lessonFormState.reset();
   }
 
-  onExpandSlider = () => {
+  validateCourseContainModules = ( ) : boolean => {
     if (this.modulesResource.value.length > 0) {
+      return true;
+    }
+    else{
+      this.lessonFormState.setIsModulePopUpVisible(true);
+      this.uiService.setErrorMessage('Debes crear un modulo antes de crear una lección')
+      return false;
+    }
+  }
+
+  onExpandSlider = () => {
+    if( this.validateCourseContainModules() ){
       if (this.lessonFormState.isLessonFormVisible()) {
         this.lessonFormState.toggleVisibilityOfLessonForm();
       } else {
@@ -93,9 +104,6 @@ export class SliderContentManagerComponent {
           this.onSelectLesson(firstLesson);
         }
       }
-    }
-    else{
-      this.uiService.setErrorMessage('Debes crear un modulo antes de crear una lección')
     }
   };
 
@@ -109,15 +117,17 @@ export class SliderContentManagerComponent {
   };
 
   onAddLesson = () => {
-    this.lessonFormState.setIsLessonFormVisible(true);
-
-    if (
-      this.lessonFormState.lessonSelected() &&
-      !this.lessonFormState.lessonSelected()?.id
-    )
+    if( this.validateCourseContainModules() ) {
+      this.lessonFormState.setIsLessonFormVisible(true);
+      
+      if (
+        this.lessonFormState.lessonSelected() &&
+        !this.lessonFormState.lessonSelected()?.id
+      )
       return;
-
-    this.lessonFormState.createEmptyLesson();
+      
+      this.lessonFormState.createEmptyLesson();
+    }
   };
 
   onAddModule = () => {

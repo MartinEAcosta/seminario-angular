@@ -11,11 +11,11 @@
             <div class="container-lessons-thumbnails">
                 <div class="container-add-lesson">
                     <app-card-action (action)="lessonFormState.toggleVisibilityOfModulePopUp()" svgPath1="./assets/bracket-curly-left.svg" svgPath2="./assets/bracket-curly-right.svg" textAction="Crear nuevo módulo"/>
-                    @if( lessonFormState.isModulePopUpVisible() ){
-                        <div class="container-popup">
+                        <div 
+                            [ngClass]="this.lessonFormState.isModulePopUpVisible() ? 'visible' : 'hidden'"
+                            class="container-popup">
                             <app-save-module [course]="course()" />
                         </div>
-                    }
                     <app-card-action (action)="onAddLesson()" svgPath1="./assets/add-icon.svg" textAction="Añade una nueva lección"/>
                 </div>
 

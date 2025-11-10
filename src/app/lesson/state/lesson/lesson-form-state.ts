@@ -44,6 +44,10 @@ export class LessonFormState {
     this.isLessonFormVisible.set( bol );
   }
 
+  public setIsModulePopUpVisible = ( bol : boolean ) => {
+    this.isModulePopUpVisible.set( bol );
+  }
+
   public setTempMedia ( url : string | null ) : void {
     this.tempMedia.set( url );
   }

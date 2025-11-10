@@ -40,13 +40,14 @@ export class Cart {
 
     public downQuantity = ( course : Course ) : Map<string,CartItem> => {
         // Modifico el mapa
-        this.items.set( course.id , 
-                        {
-                            course: course ,
-                            quantity: +this.items.get( course.id )?.quantity! -1 
-                        } 
-                    );
-
+        if( this.items.get(course.id)!.quantity > 0  ){
+            this.items.set( course.id , 
+                {
+                    course: course ,
+                    quantity: +this.items.get( course.id )?.quantity! -1 
+                } 
+            );
+        }
         return this.items;
     }
 

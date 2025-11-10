@@ -81,7 +81,8 @@ export class SliderContentManagerComponent implements OnDestroy {
   }
 
   validateCourseContainModules = ( ) : boolean => {
-    if (this.modulesResource.value.length > 0) {
+    const modules = this.modulesResource.value();
+    if ( modules && modules.length > 0) {
       return true;
     }
     else{

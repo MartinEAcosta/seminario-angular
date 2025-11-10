@@ -50,11 +50,9 @@ export class FormLessonComponent {
   // });
 
   public onSaveLesson = () => {
-    
     this.lessonFormState.lessonForm.markAllAsTouched();
 
     if( this.lessonFormState.lessonForm.valid ){
-
       const uid = this.authService.id();
       if( !uid ) return;
 
@@ -68,6 +66,7 @@ export class FormLessonComponent {
     
       return this.lessonService.saveLesson( lessonDto , this.lessonFormState.mediaFile() ).subscribe();
     }
+    
     return;
   }
 

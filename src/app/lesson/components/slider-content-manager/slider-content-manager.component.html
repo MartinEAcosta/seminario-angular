@@ -25,7 +25,7 @@
                             <h2 class="loading-lessons">Cargando lecciones...</h2>
                         }
                         @else {
-                            @for( lesson of this.lessonFormState.lessons() ; track lesson ){
+                            @for( lesson of this.lessonFormState.lessons() ; track lesson.id ){
                                 <div 
                                     (click)="onSelectLesson( lesson )" 
                                     class="card-thumbnail thumbnail-lesson"

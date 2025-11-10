@@ -28,7 +28,7 @@ export class CategorySelectComponent {
     effect( () => {
       if( this.categoriesResource.hasValue() ) {
         const initialCategory = this.categoriesResource.value()
-                                                        ?.find( 
+                                                        .find( 
                                                                 category => 
                                                                         category.id === this.course()?.id_category 
                                                               )

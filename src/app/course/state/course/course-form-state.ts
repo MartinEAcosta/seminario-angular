@@ -11,7 +11,7 @@ export class CourseFormState {
 
   private fb = inject(FormBuilder);
 
-  public courseForm : FormGroup = this.fb.group({
+  courseForm : FormGroup = this.fb.group({
       title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
       description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
       id_category : [ '' , [ Validators.required ]],
@@ -19,9 +19,9 @@ export class CourseFormState {
       capacity : [ { value : 5 } , [ Validators.min(5) ] ], 
   });
 
-  public limitedCapacity = signal<boolean>( true );
-  public thumbnailFile = signal<File | null>( null );
-  public tempThumbnail = signal<string | null>( null );
+  limitedCapacity = signal<boolean>( true );
+  thumbnailFile = signal<File | null>( null );
+  tempThumbnail = signal<string | null>( null );
   
   onLimitedCapacityChange = effect(() => {
     const limited = this.limitedCapacity();

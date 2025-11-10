@@ -21,7 +21,7 @@ export class CategoryService {
                   .get<CategoryListResponse>(`${this.baseURL}`)
                     .pipe(
                       map( ( categoryResponse ) => {
-                          console.log(categoryResponse);
+                          // console.log(categoryResponse);
                           return CategoryMapper.mapResponseToCategoriesArray( categoryResponse );
                       }),
                     );

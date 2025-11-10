@@ -16,8 +16,11 @@ import { Course } from '@course/models/course.interfaces';
   selector: 'app-form-course',
   templateUrl: './form-course.component.html',
   styleUrl: './form-course.component.scss',
-  imports: [ReactiveFormsModule, NgClass, FormErrorLabelComponent,
-    CategorySelectComponent, ThumbnailSelectorComponent, SliderContentManagerComponent, BtnRemoveComponent],
+  imports: [
+            ReactiveFormsModule, NgClass, FormErrorLabelComponent,
+            CategorySelectComponent, ThumbnailSelectorComponent, 
+            SliderContentManagerComponent, BtnRemoveComponent
+          ],
 })
 export class FormCourseComponent {
 

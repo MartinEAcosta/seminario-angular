@@ -24,7 +24,7 @@ export class LessonService {
                     .get<LessonPopulatedListResponse>(`${this.baseURL}/detailed/course/${courseId}`)
                     .pipe(
                       map( (lessonResponse) => {
-                        console.log(lessonResponse)
+                        // console.log(lessonResponse)
                         return LessonMapper.mapResponseToLessonPopulatedArray( lessonResponse );
                       }),
                       catchError( ({ error }) => {

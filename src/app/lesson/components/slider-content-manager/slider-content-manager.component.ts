@@ -14,6 +14,7 @@ import { ModuleService } from 'module/services/module.service';
 import { CardActionComponent } from "src/app/shared/components/card-action/card-action.component";
 import { SaveModuleComponent } from "module/components/save-module/save-module.component";
 import { UIService } from 'src/app/shared/services/ui/ui.service';
+import { LoaderComponent } from "src/app/shared/components/loader/loader.component";
 
 @Component({
   selector: 'app-slider-content-manager',
@@ -23,7 +24,8 @@ import { UIService } from 'src/app/shared/services/ui/ui.service';
     FormLessonComponent,
     CardActionComponent,
     SaveModuleComponent,
-  ],
+    LoaderComponent
+],
   templateUrl: './slider-content-manager.component.html',
   styleUrl: './slider-content-manager.component.scss',
 })

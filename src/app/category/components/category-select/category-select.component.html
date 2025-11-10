@@ -1,4 +1,4 @@
-<div class="container-form-category">
+<div class="container-form-item">
     <div class="container-form-select">
         @if( categoriesResource.hasValue() ){
             <div class="option-default"> 
@@ -17,16 +17,16 @@
             <ul class="options">
                 @for (category of categoriesResource.value(); track category) {
                     <li 
-                        [ngClass]="{ 'selected-category' : this.categorySelected() === category }"
+                        [ngClass]="{ 'selected-item' : this.categorySelected() === category }"
                         (click)="onSelectCategory( category )" 
-                        class="option-category">
+                        class="option-item">
                         {{ category.name }}
                     </li>
                 }
                 @if( this.categorySelected() != undefined ){
                     <li 
                         (click)="categorySelected.set(undefined)"
-                        class="option-category option-clear">
+                        class="option-item option-clear">
                         Limpiar categoria
                         <img 
                             class="icon"

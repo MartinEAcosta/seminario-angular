@@ -27,10 +27,9 @@ export interface LessonPopulated {
 export interface SaveLessonDto{
     id            ?: string;
     id_file       ?: string;
+    id_module      : string;
     title          : string;
     description    : string;
-    unit           : number;
-    chapter        : number;
     lesson_number ?: number;
 }
 

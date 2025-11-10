@@ -1,4 +1,5 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
+import { NgClass } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { LessonService } from 'src/app/lesson/services/lesson.service';
@@ -13,12 +14,17 @@ import { BtnRemoveComponent } from "src/app/shared/components/btn-remove/btn-rem
 import { Router } from '@angular/router';
 import { LessonPopulated } from '../../models/lesson.interfaces';
 import { Course } from '@course/models/course.interfaces';
+import { ModulePopulated } from 'module/models/module.interfaces';
 
 @Component({
   selector: 'app-form-lesson',
-  imports: [ReactiveFormsModule, FormErrorLabelComponent, BtnNavigationComponent, BtnRemoveComponent],
+  imports: [ReactiveFormsModule, FormErrorLabelComponent, BtnNavigationComponent, BtnRemoveComponent, NgClass],
   templateUrl: './form-lesson.component.html',
-  styleUrls:['../../../shared/components/btn-navigation/btn-rounded.scss' ,'./form-lesson.component.scss']
+  styleUrls:[ 
+              '../../../shared/components/btn-navigation/btn-rounded.scss', 
+              '../../../category/components/category-select/item-select.component.scss' ,
+              './form-lesson.component.scss'
+            ]
 })
 export class FormLessonComponent {
   folder = 'lessons';
@@ -31,7 +37,10 @@ export class FormLessonComponent {
   public lessonFormState = inject(LessonFormState);
   public fileService = inject(FileService);
 
+  moduleSelected = signal<ModulePopulated | undefined>(undefined);
+
   course = input.required<Course | null>();
+  modules = input.required<ModulePopulated[]>();
 
   constructor() { }
   
@@ -51,7 +60,7 @@ export class FormLessonComponent {
 
   public onSaveLesson = () => {
     this.lessonFormState.lessonForm.markAllAsTouched();
-
+    console.log(this.lessonFormState.lessonForm.value)
     if( this.lessonFormState.lessonForm.valid ){
       const uid = this.authService.id();
       if( !uid ) return;
@@ -91,6 +100,11 @@ export class FormLessonComponent {
     this.lessonFormState.setLessonSelected(null);
     this.lessonFormState.setIsLessonFormVisible(false);
   }    
+
+  onSelectModule = ( module : ModulePopulated ) : void => {
+    this.moduleSelected.set( module );
+    this.lessonFormState.lessonForm.get('id_module')?.setValue( module.id );
+  }
 
 
 }

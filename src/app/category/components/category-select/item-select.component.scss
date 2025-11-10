@@ -1,6 +1,6 @@
 @use '../../../../variables.scss' as v;
 
-.container-form-category{
+.container-form-item{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -11,7 +11,11 @@
     color: v.$white-custom;
 }
 
-.container-form-category:hover{
+.module{
+    width: 30%;
+}
+
+.container-form-item:hover{
     & .option-down-icon{
         transform: rotate(0deg);
         transition: all 0.5s ease;    
@@ -25,7 +29,7 @@
     max-height: 100%;
 }
 
-.container-form-category:hover{
+.container-form-item:hover{
     & .options {
         visibility: visible;
     }
@@ -79,7 +83,7 @@
     visibility: hidden;
 }
 
-.option-category{
+.option-item{
     position: relative;
     border: none;
     z-index: 1000;
@@ -89,16 +93,16 @@
     background-color: rgb(2, 15, 30);
 }
 
-.option-category:hover{
+.option-item:hover{
     background-color: rgb(15, 25, 35); 
     cursor: pointer;
 }
 
-.option-category:first-child{
+.option-item:first-child{
     border-radius: 0.5rem 0.5rem 0 0;
 }
 
-.option-category:last-child{
+.option-item:last-child{
     border-radius: 0 0 0.5rem 0.5rem;
 }
 
@@ -107,6 +111,6 @@
     justify-content: space-evenly;
 }
 
-.selected-category{
+.selected-item{
     display: none;
 }

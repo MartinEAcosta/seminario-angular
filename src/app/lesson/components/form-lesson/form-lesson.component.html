@@ -25,6 +25,44 @@
         ></textarea>
 
         <form-error-label [control]="lessonFormState.lessonForm.get('description')!" [warningSvg]="true" />
+
+        <div class="module-selector">
+            <div class="container-form-item module">
+                <div class="container-form-select">
+                    <div class="option-default">
+                        <p class="option-default-selected">
+                            @if( !this.moduleSelected() ){
+                                Asignar módulo
+                            }
+                            @else{
+                                {{ moduleSelected()?.title }}
+                            }
+
+                        </p>
+                        <div class="container-icon">
+                            <img class="icon option-down-icon" src="assets/down-icon.svg" alt="">
+                        </div>
+                    </div>
+                    <ul class="options">
+                        @for (module of modules(); track module.id) {
+                            <li 
+                                [ngClass]="{ 'selected-item' : this.moduleSelected() === module }"
+                                (click)="onSelectModule( module )"
+                                class="option-item">
+                                {{ module.title }}
+                            </li>
+                        }
+                        @if( this.moduleSelected() != undefined ){
+                            <li (click)="moduleSelected.set(undefined)" class="option-item option-clear">
+                                Quitar módulo
+                                <img class="icon" src="assets/clean-icon.svg" alt="">
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div class="save">

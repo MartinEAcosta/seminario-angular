@@ -11,9 +11,9 @@ import { LessonFormState } from 'src/app/lesson/state/lesson/lesson-form-state';
 })
 export class ThumbnailSelectorComponent {
 
-  public fileService = inject(FileService);
-  public courseFormState = inject(CourseFormState);
-  public lessonFormState = inject(LessonFormState);
+  fileService = inject(FileService);
+  courseFormState = inject(CourseFormState);
+  lessonFormState = inject(LessonFormState);
 
   folder = input.required< 'lessons' | 'courses'>();
 

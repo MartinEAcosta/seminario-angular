@@ -9,7 +9,7 @@ import { Course } from '@course/models/course.interfaces';
   selector: 'app-category-select',
   imports: [NgClass],
   templateUrl: './category-select.component.html',
-  styleUrl: './category-select.component.scss'
+  styleUrl: './item-select.component.scss'
 })
 export class CategorySelectComponent {
   

@@ -81,7 +81,14 @@
         </div>
 
         <div class="container-form-lesson">
-            <app-form-lesson [course]="this.course()"  />
+            @if( modulesResource.isLoading() ){
+                <app-loader />
+            }
+            @else{
+                <app-form-lesson 
+                    [modules]="this.modulesResource.value()!"
+                    [course]="this.course()"  />
+            }
         </div>
 
     </div>

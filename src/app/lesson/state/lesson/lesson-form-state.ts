@@ -11,6 +11,7 @@ export class LessonFormState {
   public lessonForm = this.fb.nonNullable.group({
       title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
       description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
+      id_module : [ '' , [ Validators.required ] ],
   });
 
   public lessons = signal<LessonPopulated[]>([]);

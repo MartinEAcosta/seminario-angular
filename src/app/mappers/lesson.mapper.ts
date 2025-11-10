@@ -8,9 +8,8 @@ export class LessonMapper {
     static mapToCreateLessonDto = ( form : FormGroup ) : SaveLessonDto => {
         return {
             title : form.get('title')?.value,
+            id_module : form.get('id_module')?.value,
             description : form.get('description')?.value,
-            unit : form.get('unit')?.value ?? 0,
-            chapter : form.get('chapter')?.value ?? 0,
         };
     };
 

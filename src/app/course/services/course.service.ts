@@ -18,8 +18,9 @@ export class CourseService {
   private http = inject(HttpClient);
   private baseURL: string = `${environment.apiURL}courses`;
 
-  public getAll = (): Observable<Course[]> => {
-    return this.http.get<CourseListResponse>(`${this.baseURL}`).pipe(
+  public getAll = ( query ?: string ): Observable<Course[]> => {
+    query = query?.toLowerCase()
+    return this.http.get<CourseListResponse>(`${this.baseURL}`, { params : { title : `${query}` }} ).pipe(
       map((courseResponse) => {
         return CourseMapper.mapResponseToCourseArray(courseResponse);
       }),

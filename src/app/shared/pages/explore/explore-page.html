@@ -1,14 +1,17 @@
 <div class="bg-page">
     <div class="container-content">
         <app-page-title [title]="'Explorar'" />
-        <app-search-filter-bar />
+        <app-search-filter-bar 
+            [initialValue]="query()"
+            (value)="query.set($event)"
+            />
 
         <div class="container-courses">
-            @if( courseResource.isLoading() ){
+            @if( coursesResource.isLoading() ){
                 <app-loader />
             }
             @else {
-                @for( course of courseResource.value(); track course.id){
+                @for( course of coursesResource.value(); track course.id){
                     <app-course-mini-card [course]="course" />
                 }
             }

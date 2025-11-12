@@ -7,7 +7,7 @@ export interface ApiResponse<T> {
 
 export interface PaginationResponseDto<T> {
   pages : number,
-  page  : number,
+  current_page  : number,
   limit : number,
   total : number,
   next  : string | null,

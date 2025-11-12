@@ -5,6 +5,10 @@
     height: 15%;
 }
 
+.title{
+    overflow: hidden;
+}
+
 .text{
     font-family: v.$font-primary;
     color: v.$white-custom;
@@ -18,7 +22,15 @@
 }
 
 .text-desc{
-    margin-top: 1%;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    margin: 1% 2%;
     text-align: center;
     font-size: medium;
 }

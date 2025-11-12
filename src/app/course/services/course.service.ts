@@ -4,9 +4,8 @@ import { catchError, map, Observable, of, throwError } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 import { Course, CourseDTO } from 'src/app/course/models/course.interfaces';
-import { defaultCourses } from '@utils/defaultCourses';
 import { CourseMapper } from '@mappers/course.mapper';
-import { DeleteResponse, CourseListResponse, CourseResponse, PaginationResponseDto, PaginationResponse } from 'src/app/shared/models/api.interface';
+import { DeleteResponse, CourseResponse, PaginationResponseDto, PaginationResponse } from 'src/app/shared/models/api.interface';
 import { FileService } from 'src/app/shared/services/file/file.service';
 import { PaginationMapper } from '@mappers/pagination.mapper';
 
@@ -19,17 +18,22 @@ export class CourseService {
   private http = inject(HttpClient);
   private baseURL: string = `${environment.apiURL}courses`;
 
-  public getAll = ( query ?: string ): Observable<Course[]> => {
-    query = query?.toLowerCase()
-    // , { params : { title : `${query}` } }
-    return this.http.get<CourseListResponse>(`${this.baseURL}`).pipe(
+  public getAll = ( query ?: string , page ?: number, limit ?: number ): Observable<PaginationResponseDto<Course[]>> => {
+    const params : any = {
+      current_page : page ?? 1,
+      limit : limit ?? 10,
+      title : 'express'
+    }
+
+    return this.http.get<PaginationResponse<Course[]>>(`${this.baseURL}`, { params } ).pipe(
       map((courseResponse) => {
         console.log(courseResponse)
-        return CourseMapper.mapResponseToCourseArray(courseResponse);
+        return PaginationMapper.mapToPaginationDto<Course[]>( courseResponse );
       }),
       catchError((error) => {
         // Se retorna un arreglo de cursos por ngdefecto.
-        return of(defaultCourses);
+        // return of(defaultCourses);
+        return of();
       })
     );
   };
@@ -40,13 +44,13 @@ export class CourseService {
         params : 
           { 
             page : page ,
-            limit : limit = 2
+            limit : limit ?? 2,
           }
       }
     ).pipe(
-      map((courseReponse) => {
-        console.log(courseReponse)
-        return PaginationMapper.mapToPaginationDto<Course[]>( courseReponse );
+      map((courseResponse) => {
+        console.log(courseResponse)
+        return PaginationMapper.mapToPaginationDto<Course[]>( courseResponse );
       }),
       catchError(({error}) => {
         return throwError(() => new Error(`${error.errorMessage}`));
@@ -56,8 +60,8 @@ export class CourseService {
 
   public getById = (id: string): Observable<Course> => {
     return this.http.get<CourseResponse>(`${this.baseURL}/${id}`).pipe(
-      map((courseReponse) =>
-        CourseMapper.mapResponseToCourse(courseReponse.data)
+      map((courseResponse) =>
+        CourseMapper.mapResponseToCourse(courseResponse.data)
       ),
       catchError(({ error }) => {
         return throwError(() => new Error(`${error.errorMessage}`));

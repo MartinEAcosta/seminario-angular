@@ -27,7 +27,6 @@ export class Cart {
     public upQuantity = ( course : Course ) : Map<string,CartItem> => {
         
         if( this.items.get( course.id )?.course.capacity === undefined || this.items.get( course.id )?.quantity! < this.items.get( course.id )!.course.capacity! ){
-            // Modifico el mapa
             this.items.set( course.id , 
                         {
                             course: course ,
@@ -39,14 +38,16 @@ export class Cart {
     }
 
     public downQuantity = ( course : Course ) : Map<string,CartItem> => {
-        // Modifico el mapa
-        if( this.items.get(course.id)!.quantity > 0  ){
+        if( this.items.get(course.id)!.quantity > 1  ){
             this.items.set( course.id , 
                 {
                     course: course ,
                     quantity: +this.items.get( course.id )?.quantity! -1 
                 } 
             );
+        }
+        else{
+            this.items.delete( course.id );
         }
         return this.items;
     }

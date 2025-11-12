@@ -19,7 +19,7 @@
 
 <div class="container-course-list">
     <app-course-list 
-        [courses]='this.coursesResource.value()!' 
+        [courses]='this.coursesResource.value().items' 
         [isLoading]='this.coursesResource.isLoading()'
         [errorMessage]='this.coursesResource.error()'
     />

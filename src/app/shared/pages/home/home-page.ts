@@ -8,6 +8,7 @@ import { UIService } from '../../services/ui/ui.service';
 import { CourseListComponent } from "../../../course/components/course-list/course-list.component";
 import { ModalErrorMessageComponent } from '../../components/modal-error-message/modal-error-message.component';
 import { CartComponent } from 'src/app/cart/components/cart/cart.component';
+import { defaultCourses } from '@payment/defaultCourses';
 
 @Component({
     selector: 'app-home',
@@ -22,7 +23,16 @@ export default class HomeComponent {
   uiService = inject(UIService);
   
   coursesResource = rxResource({
-    loader: () => { return this.courseService.getAll() },
+    loader: () => this.courseService.getAll(),
+    defaultValue: {
+      items: [ ...defaultCourses ],
+      pages: 1,
+      current_page: 1,
+      limit: defaultCourses.length,
+      total: defaultCourses.length,
+      next : null,
+      prev : null,
+    }
   });
 
 }

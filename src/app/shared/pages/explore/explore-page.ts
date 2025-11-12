@@ -32,21 +32,24 @@ export class ExplorePage {
   query = linkedSignal(() => this.queryParam);
 
   coursesResource = rxResource({
-    request : () => ({ currentPage : this.paginationService.currentPage() - 1 }),
+    request : () => ({ 
+      query : this.query(),      
+      currentPage : this.paginationService.currentPage() - 1,
+     }),
     loader : ({request}) => { 
 
-      return this.courseService.getCoursesPaginated( this.paginationService.currentPage() );
+      return this.courseService.getAll( this.query() , this.paginationService.currentPage() );
     }
   });
 
   // coursesResource = rxResource({
   //   request : () => ({ query : this.query() }),
   //   loader : ({request}) => { 
-  //     // this.router.navigate(['/explore'] , {
-  //     //   queryParams : { 
-  //     //     title : request.query,
-  //     //   }
-  //     // });
+  //     this.router.navigate(['/explore'] , {
+  //       queryParams : { 
+  //         title : request.query,
+  //       }
+  //     });
 
   //     return this.courseService.getAll( );
   //   }

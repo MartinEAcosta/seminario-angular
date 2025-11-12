@@ -6,8 +6,9 @@ import { environment } from '../../../environments/environment';
 import { Course, CourseDTO } from 'src/app/course/models/course.interfaces';
 import { defaultCourses } from '@utils/defaultCourses';
 import { CourseMapper } from '@mappers/course.mapper';
-import { DeleteResponse, CourseListResponse, CourseResponse } from 'src/app/shared/models/api.interface';
+import { DeleteResponse, CourseListResponse, CourseResponse, PaginationResponseDto, PaginationResponse } from 'src/app/shared/models/api.interface';
 import { FileService } from 'src/app/shared/services/file/file.service';
+import { PaginationMapper } from '@mappers/pagination.mapper';
 
 @Injectable({
   providedIn: 'root',
@@ -20,8 +21,10 @@ export class CourseService {
 
   public getAll = ( query ?: string ): Observable<Course[]> => {
     query = query?.toLowerCase()
-    return this.http.get<CourseListResponse>(`${this.baseURL}`, { params : { title : `${query}` }} ).pipe(
+    // , { params : { title : `${query}` } }
+    return this.http.get<CourseListResponse>(`${this.baseURL}`).pipe(
       map((courseResponse) => {
+        console.log(courseResponse)
         return CourseMapper.mapResponseToCourseArray(courseResponse);
       }),
       catchError((error) => {
@@ -30,6 +33,26 @@ export class CourseService {
       })
     );
   };
+
+  public getCoursesPaginated = ( page : number , limit ?: number) : Observable<PaginationResponseDto<Course[]>> => {
+    return this.http.get<PaginationResponse<Course[]>>(`${this.baseURL}/paginated` , 
+      { 
+        params : 
+          { 
+            page : page ,
+            limit : limit = 2
+          }
+      }
+    ).pipe(
+      map((courseReponse) => {
+        console.log(courseReponse)
+        return PaginationMapper.mapToPaginationDto<Course[]>( courseReponse );
+      }),
+      catchError(({error}) => {
+        return throwError(() => new Error(`${error.errorMessage}`));
+      })
+    )
+  }
 
   public getById = (id: string): Observable<Course> => {
     return this.http.get<CourseResponse>(`${this.baseURL}/${id}`).pipe(

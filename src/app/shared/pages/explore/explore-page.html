@@ -11,12 +11,15 @@
                 <app-loader />
             }
             @else {
-                @for( course of coursesResource.value(); track course.id){
+                @for( course of coursesResource.value()?.items; track course.id){
                     <app-course-mini-card [course]="course" />
                 }
             }
         </div>
-        
+        <app-pagination 
+            [pages]="coursesResource.value()?.pages ?? 0" 
+            [currentPage]="this.paginationService.currentPage()"
+            />
     </div>
     <app-cart />
 </div>

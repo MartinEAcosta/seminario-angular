@@ -2,11 +2,20 @@ import { ModulePopulated } from "src/app/module/models/module.interfaces";
 
 export interface ApiResponse<T> {
   ok        : boolean;
-  total?    : number; // Opcional para respuestas de un solo elemento
-  page?     : number;  // Opcional para respuestas de un solo elemento
-  limit?    : number; // Opcional para respuestas de un solo elemento
   data      : T; 
 }
+
+export interface PaginationResponseDto<T> {
+  pages : number,
+  page  : number,
+  limit : number,
+  total : number,
+  next  : string | null,
+  prev  : string | null,
+  items : T,
+}
+
+export type PaginationResponse<T> = ApiResponse<PaginationResponseDto<T>>;
 
 export type DeleteResponse = ApiResponse<boolean>;
 

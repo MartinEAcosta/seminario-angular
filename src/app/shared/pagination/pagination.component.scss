@@ -1,0 +1,30 @@
+@use '../../../variables.scss' as v;
+
+.container-number-pages{
+    display: flex;
+    justify-content: center;
+    gap: 1%;
+}
+
+.btn-number{
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.4rem;
+    border: none;
+    background-color: v.$green-success;
+    color: v.$white-custom;
+    box-shadow: 3px 5px 8px rgba(0 , 0 , 0, 0.3);
+    transition: all 0.2s ease;
+}
+
+.btn-number:hover{
+    transform: scale(1.05);
+    transform: translateY(-5px);
+    transition: all 0.2s ease;
+    box-shadow: 3px 5px 8px rgba(0 , 0 , 0, 0.2);
+}
+
+.selected{
+    background-color: v.$brand-color;
+}

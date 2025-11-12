@@ -33,6 +33,6 @@ export class PaymentMapper {
     };
 
     static mapTotalResponseToNumber = ( response : TotalResponse ) : number => {
-        return response.total!;
+        return response.data!;
     }
 }

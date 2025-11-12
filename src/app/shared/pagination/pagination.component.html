@@ -1,0 +1,12 @@
+<div class="container-number-pages">
+    @for (page of getPagesList(); track page) {
+        <button 
+            [routerLink]=[]
+            [queryParams]="{ page : page }"
+            class="btn-number"
+            [ngClass]="currentPage() === page ? 'selected' : '' "
+            >
+            {{ page }}
+        </button>
+    }
+</div>

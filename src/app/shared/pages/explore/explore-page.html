@@ -1,10 +1,22 @@
 <div class="bg-page">
     <div class="container-content">
         <app-page-title [title]="'Explorar'" />
-        <app-search-filter-bar 
+        <app-search-filter-bar
+            [filters]="filterOptions" 
             [initialValue]="query()"
             (value)="query.set($event)"
-            />
+        >
+            <div class="container-compound-filter">
+                <div class="input-label">
+                    <label class="label-text">Precio minimo</label>
+                    <input #priceMin class="input-filter" type="number" placeholder="0">
+                </div>
+                <div class="input-label">
+                    <label class="label-text">Precio máximo</label>
+                    <input #priceMax class="input-filter" type="number" placeholder="100000">
+                </div>
+            </div>
+        </app-search-filter-bar>
 
         <div class="container-courses">
             @if( coursesResource.isLoading() ){
@@ -19,7 +31,7 @@
         <app-pagination 
             [pages]="coursesResource.value()?.pages ?? 0" 
             [currentPage]="this.paginationService.currentPage()"
-            />
+        />
     </div>
     <app-cart />
 </div>

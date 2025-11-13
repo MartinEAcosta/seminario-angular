@@ -1,4 +1,4 @@
-import { Component, computed, inject, linkedSignal } from '@angular/core';
+import { Component, inject, linkedSignal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 
@@ -10,6 +10,7 @@ import { CourseMiniCardComponent } from "src/app/course/components/course-mini-c
 import { CartComponent } from "src/app/cart/components/cart/cart.component";
 import { PaginationComponent } from "../../pagination/pagination.component";
 import { PaginationService } from '../../services/pagination/pagination.service';
+import { FilterMaps } from '@payment/filter-options';
 
 @Component({
   selector: 'app-explore-page',
@@ -22,9 +23,9 @@ export class ExplorePage {
   private router = inject(Router);
   private courseService = inject(CourseService);
   paginationService = inject(PaginationService);
-
   activatedRoute = inject(ActivatedRoute);
 
+  filterOptions = FilterMaps['courses'];
   queryParam = this.activatedRoute.snapshot.queryParamMap.get('title') ?? '';
 
   // LinkedSignal es utilizado para crear una señal que esta vinculada exactamente a otro estado.
@@ -37,22 +38,8 @@ export class ExplorePage {
       currentPage : this.paginationService.currentPage() - 1,
      }),
     loader : ({request}) => { 
-
       return this.courseService.getAll( this.query() , this.paginationService.currentPage() );
     }
   });
-
-  // coursesResource = rxResource({
-  //   request : () => ({ query : this.query() }),
-  //   loader : ({request}) => { 
-  //     this.router.navigate(['/explore'] , {
-  //       queryParams : { 
-  //         title : request.query,
-  //       }
-  //     });
-
-  //     return this.courseService.getAll( );
-  //   }
-  // });
 
 }

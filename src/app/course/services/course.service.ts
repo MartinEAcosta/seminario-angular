@@ -9,6 +9,13 @@ import { DeleteResponse, CourseResponse, PaginationResponseDto, PaginationRespon
 import { FileService } from 'src/app/shared/services/file/file.service';
 import { PaginationMapper } from '@mappers/pagination.mapper';
 
+interface Options {
+  current_page ?: number,
+  limit ?: number,
+  title ?: string,
+}
+
+
 @Injectable({
   providedIn: 'root',
 })
@@ -19,13 +26,19 @@ export class CourseService {
   private baseURL: string = `${environment.apiURL}courses`;
 
   public getAll = ( query ?: string , page ?: number, limit ?: number ): Observable<PaginationResponseDto<Course[]>> => {
-    const params : any = {
+    const params : Options = {
       current_page : page ?? 1,
       limit : limit ?? 10,
-      title : 'express'
     }
 
-    return this.http.get<PaginationResponse<Course[]>>(`${this.baseURL}`, { params } ).pipe(
+    if( query ) {
+      params.title = query.toLowerCase();
+    }
+
+    return this.http.get<PaginationResponse<Course[]>>(`${this.baseURL}`, { 
+      params : { ...params }
+    })
+    .pipe(
       map((courseResponse) => {
         console.log(courseResponse)
         return PaginationMapper.mapToPaginationDto<Course[]>( courseResponse );
@@ -38,25 +51,26 @@ export class CourseService {
     );
   };
 
-  public getCoursesPaginated = ( page : number , limit ?: number) : Observable<PaginationResponseDto<Course[]>> => {
-    return this.http.get<PaginationResponse<Course[]>>(`${this.baseURL}/paginated` , 
-      { 
-        params : 
-          { 
-            page : page ,
-            limit : limit ?? 2,
-          }
-      }
-    ).pipe(
-      map((courseResponse) => {
-        console.log(courseResponse)
-        return PaginationMapper.mapToPaginationDto<Course[]>( courseResponse );
-      }),
-      catchError(({error}) => {
-        return throwError(() => new Error(`${error.errorMessage}`));
-      })
-    )
-  }
+  //* Deja de ser tan necesario debido a los filtros implementados en el getAll
+  // public getCoursesPaginated = ( page : number , limit ?: number) : Observable<PaginationResponseDto<Course[]>> => {
+  //   return this.http.get<PaginationResponse<Course[]>>(`${this.baseURL}/paginated` , 
+  //     { 
+  //       params : 
+  //         { 
+  //           page : page ,
+  //           limit : limit ?? 2,
+  //         }
+  //     }
+  //   ).pipe(
+  //     map((courseResponse) => {
+  //       console.log(courseResponse)
+  //       return PaginationMapper.mapToPaginationDto<Course[]>( courseResponse );
+  //     }),
+  //     catchError(({error}) => {
+  //       return throwError(() => new Error(`${error.errorMessage}`));
+  //     })
+  //   )
+  // }
 
   public getById = (id: string): Observable<Course> => {
     return this.http.get<CourseResponse>(`${this.baseURL}/${id}`).pipe(

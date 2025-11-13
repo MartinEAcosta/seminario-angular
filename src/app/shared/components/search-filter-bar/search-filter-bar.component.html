@@ -14,14 +14,21 @@
                     </div>
                 </div>
                 <ul class="options">
-                    <li class="option-filter"> Fecha de adquisición </li>
-                    <li class="option-filter"> Progreso </li>
-                    <li class="option-filter"> Completados </li>
+                @for( filter of filters(); track filter) {
+                    <li 
+                        [routerLink]=[]
+                        class="option-filter">
+                        {{ filter.label }} 
+                    </li>
+                }
                 </ul>
             </div>
         </div>
-    </div>
 
+        <ng-content>
+        </ng-content>
+        
+    </div>
     <div class="container-search">
         <div 
             class="container-search-icon" 

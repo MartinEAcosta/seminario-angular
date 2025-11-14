@@ -1,0 +1,24 @@
+@use '../../../../variables.scss' as v;
+
+.option-filter{
+    border: none;
+    height: 25%;
+    z-index: 1000;
+    padding: 3% 4%;
+    color: v.$white-custom;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.7);        
+    background-color: v.$black-custom;
+}
+
+.option-filter:hover{
+    background-color: v.$brand-color; 
+    cursor: pointer;
+}
+
+.option-filter:first-child{
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.option-filter:last-child{
+    border-radius: 0 0 0.5rem 0.5rem;
+}

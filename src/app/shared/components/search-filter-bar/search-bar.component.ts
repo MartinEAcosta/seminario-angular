@@ -1,14 +1,14 @@
 import { Component, input, linkedSignal, output } from '@angular/core';
-import { RouterLink } from "@angular/router";
 import { FilterOption } from '@payment/filter-options';
+import { FilterSelectorComponent } from "../filter-selector/filter-selector/filter-selector.component";
 
 @Component({
-  selector: 'app-search-filter-bar',
-  imports: [RouterLink],
-  templateUrl: './search-filter-bar.component.html',
-  styleUrl: './search-filter-bar.component.scss'
+  selector: 'app-search-bar',
+  templateUrl: './search-bar.component.html',
+  styleUrl: './search-bar.component.scss',
+  imports: [FilterSelectorComponent]
 })
-export class SearchFilterBarComponent {
+export class SearchBarComponent {
 
   filters = input<FilterOption[]>();
   initialValue = input<string>();

@@ -1,0 +1,22 @@
+<div class="container-bar">
+    <app-filter-selector [filters]="filters()" />
+
+    <div class="container-search">
+        <div 
+            class="container-search-icon" 
+            (click)="value.emit(txtSearch.value)"
+            >
+            <img class="search-icon" src="/assets/search-icon-white.svg" alt="">
+        </div>
+        <input
+            #txtSearch
+            (keyup.enter)="value.emit( txtSearch.value )"
+            (keyup)="inputValue.set( txtSearch.value )"
+            [value]="inputValue()"
+            class="input-search" 
+            placeholder="Escribe algo de tu interes..." 
+            type="text" 
+            name="" 
+            id="">
+    </div>
+</div>

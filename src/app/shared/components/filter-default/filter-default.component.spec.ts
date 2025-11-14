@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SearchFilterBarComponent } from './search-filter-bar.component';
+import { FilterDefaultComponent } from './filter-default.component';
 
-describe('SearchFilterBarComponent', () => {
-  let component: SearchFilterBarComponent;
-  let fixture: ComponentFixture<SearchFilterBarComponent>;
+describe('FilterDefaultComponent', () => {
+  let component: FilterDefaultComponent;
+  let fixture: ComponentFixture<FilterDefaultComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SearchFilterBarComponent]
+      imports: [FilterDefaultComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SearchFilterBarComponent);
+    fixture = TestBed.createComponent(FilterDefaultComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -5,7 +5,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { EnrollmentService } from '../services/enrollment.service';
 import { EnrollmentMiniCardComponent } from "../components/enrollment-card/enrollment-mini-card.component";
-import { SearchFilterBarComponent } from "src/app/shared/components/search-filter-bar/search-filter-bar.component";
+import { SearchBarComponent } from "src/app/shared/components/search-filter-bar/search-bar.component";
 import { LoaderComponent } from "src/app/shared/components/loader/loader.component";
 import { PageTitleComponent } from "src/app/shared/components/page-title/page-title.component";
 
@@ -13,7 +13,7 @@ import { PageTitleComponent } from "src/app/shared/components/page-title/page-ti
   selector: 'app-enrollment-page',
   templateUrl: './enrollment-page.html',
   styleUrl: './enrollment-page.scss',
-  imports: [EnrollmentMiniCardComponent, SearchFilterBarComponent, LoaderComponent, PageTitleComponent]
+  imports: [EnrollmentMiniCardComponent, SearchBarComponent, LoaderComponent, PageTitleComponent]
 })
 export default class EnrollmentsPage {
 

@@ -1,10 +1,10 @@
 <div class="bg-page">
     <div class="container-content">
         <app-page-title [title]="'Explorar'" />
-        <app-search-filter-bar
-            [filters]="filterOptions" 
-            [initialValue]="query()"
-            (value)="query.set($event)"
+        <app-search-bar
+            [filters]="filterMaps['courses']"
+            [initialValue]="this.searchService.textSearch()"
+            (value)="this.searchService.textSearch.set($event)"
         >
             <div class="container-compound-filter">
                 <div class="input-label">
@@ -16,7 +16,7 @@
                     <input #priceMax class="input-filter" type="number" placeholder="$10000">
                 </div>
             </div>
-        </app-search-filter-bar>
+        </app-search-bar>
 
         <div class="container-courses">
             @if( coursesResource.isLoading() ){

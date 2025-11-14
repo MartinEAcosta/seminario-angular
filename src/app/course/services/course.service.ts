@@ -9,13 +9,6 @@ import { DeleteResponse, CourseResponse, PaginationResponseDto, PaginationRespon
 import { FileService } from 'src/app/shared/services/file/file.service';
 import { PaginationMapper } from '@mappers/pagination.mapper';
 
-interface Options {
-  page ?: number,
-  limit ?: number,
-  title ?: string,
-}
-
-
 @Injectable({
   providedIn: 'root',
 })
@@ -32,9 +25,9 @@ export class CourseService {
     }
 
     if( query ) {
-      params.title = query.toLowerCase();
+      params.title = query.toLowerCase().trim();
     }
-  
+
     return this.http.get<PaginationResponse<Course[]>>(`${this.baseURL}`, { 
       params : params,
     })

@@ -1,8 +1,7 @@
-import { Component, effect, inject, linkedSignal, signal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, inject, linkedSignal } from '@angular/core';
+import { Router } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 
-import { SearchFilterBarComponent } from "../../components/search-filter-bar/search-filter-bar.component";
 import { PageTitleComponent } from "../../components/page-title/page-title.component";
 import { CourseService } from 'src/app/course/services/course.service';
 import { LoaderComponent } from "../../components/loader/loader.component";
@@ -10,13 +9,13 @@ import { CourseMiniCardComponent } from "src/app/course/components/course-mini-c
 import { CartComponent } from "src/app/cart/components/cart/cart.component";
 import { PaginationComponent } from "../../pagination/pagination.component";
 import { PaginationService } from '../../pagination/services/pagination.service';
+import { SearchService } from '../../search/search.service';
+import { SearchBarComponent } from "../../components/search-filter-bar/search-bar.component";
 import { FilterMaps } from '@payment/filter-options';
-import { PaginationResponseDto } from '../../models/api.interface';
-import { Course } from '@course/models/course.interfaces';
 
 @Component({
   selector: 'app-explore-page',
-  imports: [SearchFilterBarComponent, PageTitleComponent, LoaderComponent, CourseMiniCardComponent, CartComponent, PaginationComponent],
+  imports: [SearchBarComponent, PageTitleComponent, LoaderComponent, CourseMiniCardComponent, CartComponent, PaginationComponent ],
   templateUrl: './explore-page.html',
   styleUrl: './explore-page.scss'
 })
@@ -25,31 +24,27 @@ export class ExplorePage {
   private router = inject(Router);
   private courseService = inject(CourseService);
   paginationService = inject(PaginationService);
-  activatedRoute = inject(ActivatedRoute);
+  searchService = inject(SearchService)
+  filterMaps = FilterMaps;
 
   courses = linkedSignal(() => this.coursesResource.value());
-
-  filterOptions = FilterMaps['courses'];
-  // Le pido al servició que tome de la activated route los query params actuales
-  queryParam = this.activatedRoute.snapshot.queryParamMap.get('query') ?? '';
-
-  // LinkedSignal es utilizado para crear una señal que esta vinculada exactamente a otro estado.
-  // En vez de pasar un valor por default se toma el mismo de una función computada.
-  query = linkedSignal(() => this.queryParam);
-
+  
   coursesResource = rxResource({
     request : () => ({ 
-      query : this.query(),      
+      query : this.searchService.query(),
+      textSearch : this.searchService.textSearch(),      
       currentPage : this.paginationService.currentPage(),
      }),
     loader : ({request}) => { 
+      console.log(request.query);
       this.router.navigate(['/explore'] , {
           queryParams : { 
             query : request.query || undefined,
+            textSearch : request.textSearch || undefined,
             page : request.currentPage,
           }
       });
-      return this.courseService.getAll( request.query , request.currentPage );
+      return this.courseService.getAll( request.textSearch , request.currentPage );
     }
   });
 

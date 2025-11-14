@@ -1,0 +1,29 @@
+<div class="container-filter">
+    <p class="text-searchbar">Filtrar por:</p>
+
+    <div class="container-filter-select">
+        <div class="container-select">
+            <div class="option-default">
+                <p class="option-default-selected">
+                    Selecciona un filtro
+                </p>
+                <div class="container-down-icon">
+                    <img class="down-icon" src="assets/down-icon.svg" alt="">
+                </div>
+            </div>
+            <ul class="options">
+                @for( filter of filters(); track filter) {
+                    <!-- <li 
+                        [routerLink]=[]
+                        class="option-filter">
+                        {{ filter.label }} 
+                    </li> -->
+                    <app-filter-default [filter]="filter" />
+                }
+            </ul>
+        </div>
+    </div>
+
+    <ng-content>
+    </ng-content>
+</div>

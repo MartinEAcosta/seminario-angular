@@ -10,7 +10,7 @@ import { FileService } from 'src/app/shared/services/file/file.service';
 import { PaginationMapper } from '@mappers/pagination.mapper';
 
 interface Options {
-  current_page ?: number,
+  page ?: number,
   limit ?: number,
   title ?: string,
 }
@@ -26,7 +26,7 @@ export class CourseService {
   private baseURL: string = `${environment.apiURL}courses`;
 
   public getAll = ( query ?: string , page ?: number, limit ?: number ): Observable<PaginationResponseDto<Course[]>> => {
-    const params : Options = {
+    const params : any = {
       current_page : page ?? 1,
       limit : limit ?? 10,
     }
@@ -34,13 +34,14 @@ export class CourseService {
     if( query ) {
       params.title = query.toLowerCase();
     }
+    console.log(params);
 
     return this.http.get<PaginationResponse<Course[]>>(`${this.baseURL}`, { 
-      params : { ...params }
+      params : params
     })
     .pipe(
       map((courseResponse) => {
-        console.log(courseResponse)
+        console.log(courseResponse);
         return PaginationMapper.mapToPaginationDto<Course[]>( courseResponse );
       }),
       catchError((error) => {

@@ -34,10 +34,9 @@ export class CourseService {
     if( query ) {
       params.title = query.toLowerCase();
     }
-    console.log(params);
-
+  
     return this.http.get<PaginationResponse<Course[]>>(`${this.baseURL}`, { 
-      params : params
+      params : params,
     })
     .pipe(
       map((courseResponse) => {

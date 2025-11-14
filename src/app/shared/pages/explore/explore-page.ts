@@ -31,7 +31,7 @@ export class ExplorePage {
 
   filterOptions = FilterMaps['courses'];
   // Le pido al servició que tome de la activated route los query params actuales
-  queryParam = this.activatedRoute.snapshot.queryParamMap.get('title') ?? '';
+  queryParam = this.activatedRoute.snapshot.queryParamMap.get('query') ?? '';
 
   // LinkedSignal es utilizado para crear una señal que esta vinculada exactamente a otro estado.
   // En vez de pasar un valor por default se toma el mismo de una función computada.
@@ -43,27 +43,14 @@ export class ExplorePage {
       currentPage : this.paginationService.currentPage(),
      }),
     loader : ({request}) => { 
-      // this.router.navigate(['/explore'] , {
-      //     queryParams : { 
-      //       query : request.query || null,
-      //       page : request.currentPage,
-      //     }
-      // });
+      this.router.navigate(['/explore'] , {
+          queryParams : { 
+            query : request.query || undefined,
+            page : request.currentPage,
+          }
+      });
       return this.courseService.getAll( request.query , request.currentPage );
     }
-  });
-
-  onQueryChange = effect(() => {
-    const query = this.query();
-    this.router.navigate(['/explore'] , {
-        queryParams : { 
-          query : query || undefined,
-          page : 1,
-        }
-    });
-    this.courseService.getAll( query , 1 ).subscribe( ( res ) => {
-      this.courses.set( res );
-    });
   });
 
 }

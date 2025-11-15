@@ -1,15 +1,14 @@
-import { inject, Injectable, linkedSignal } from '@angular/core';
+import { inject, Injectable, linkedSignal, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
 
 export interface QueryParams {
   // Los nombres de los parametros los saco del contrato con el back.
-  title: string | undefined;
-  id_category: string | undefined;
-  minPrice: string | undefined;
-  maxPrice: string | undefined;
-  notFullyEnrolled: string | null | undefined;
+  id_category?: string;
+  minPrice?: string;
+  maxPrice?: string;
+  notFullyEnrolled?: string;
 };
 
 @Injectable({
@@ -19,10 +18,11 @@ export class SearchService {
   private activatedRoute = inject(ActivatedRoute);
 
   textParam = this.activatedRoute.snapshot.queryParamMap.get('textParam') ?? '';
-
   // LinkedSignal es utilizado para crear una señal que esta vinculada exactamente a otro estado.
   // En vez de pasar un valor por default se toma el mismo de una función computada.
-  query = toSignal(
+  textSearch = linkedSignal(() => this.textParam);
+
+  query : Signal<QueryParams | undefined> = toSignal(
     this.activatedRoute.queryParamMap.pipe(
       map((params) => {
         return {
@@ -44,10 +44,10 @@ export class SearchService {
         if ( !params.id_category && !params.maxPrice && !params.minPrice && !params.notFullyEnrolled ) {
           return undefined;
         }
+        return params;
       })
     )
   );
-  textSearch = linkedSignal(() => this.textParam);
 
   constructor() {}
 

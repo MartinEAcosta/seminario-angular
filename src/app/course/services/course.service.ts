@@ -8,6 +8,17 @@ import { CourseMapper } from '@mappers/course.mapper';
 import { DeleteResponse, CourseResponse, PaginationResponseDto, PaginationResponse } from 'src/app/shared/models/api.interface';
 import { FileService } from 'src/app/shared/services/file/file.service';
 import { PaginationMapper } from '@mappers/pagination.mapper';
+import { obtainOptionsParams } from '@course/utils/obtainOptionsParams';
+
+export interface Options extends Record<string, any> {
+  page ?: number,
+  limit ?: number,
+  title ?: string;
+  id_category?: string;
+  minPrice?: string;
+  maxPrice?: string;
+  notFullyEnrolled?: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -18,15 +29,9 @@ export class CourseService {
   private http = inject(HttpClient);
   private baseURL: string = `${environment.apiURL}courses`;
 
-  public getAll = ( query ?: string , page ?: number, limit ?: number ): Observable<PaginationResponseDto<Course[]>> => {
-    const params : any = {
-      current_page : page ?? 1,
-      limit : limit ?? 10,
-    }
-
-    if( query ) {
-      params.title = query.toLowerCase().trim();
-    }
+  // query ?: string , page ?: number, limit ?: number
+  public getAll = ( options ?: Options ): Observable<PaginationResponseDto<Course[]>> => {
+    const params = obtainOptionsParams( options || {});
 
     return this.http.get<PaginationResponse<Course[]>>(`${this.baseURL}`, { 
       params : params,

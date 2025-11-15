@@ -15,7 +15,7 @@ export class FilterDefaultComponent {
   constructor( ) { }
 
   getQueryParam = (  )  => {
-    return {[this.filter().key] : this.filter().value};
+    return { [ this.filter().key ] : this.filter().value };
   }
 
 }

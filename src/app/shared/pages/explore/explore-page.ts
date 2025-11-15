@@ -30,21 +30,24 @@ export class ExplorePage {
   courses = linkedSignal(() => this.coursesResource.value());
   
   coursesResource = rxResource({
-    request : () => ({ 
-      query : this.searchService.query(),
-      textSearch : this.searchService.textSearch(),      
-      currentPage : this.paginationService.currentPage(),
-     }),
+    request : () => ({
+      textSearch : this.searchService.textSearch(), 
+      filters : {...this.searchService.query()},
+      page : this.paginationService.currentPage(),
+    }),
     loader : ({request}) => { 
-      console.log(request.query);
       this.router.navigate(['/explore'] , {
           queryParams : { 
-            query : request.query || undefined,
-            textSearch : request.textSearch || undefined,
-            page : request.currentPage,
+            title : request.textSearch || undefined,
+            ...request.filters,
+            page : request.page,
           }
       });
-      return this.courseService.getAll( request.textSearch , request.currentPage );
+      return this.courseService.getAll( { 
+        ...request.filters,
+        title: request.textSearch || undefined,
+        page : request.page
+       } );
     }
   });
 

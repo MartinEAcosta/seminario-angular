@@ -1,5 +1,8 @@
 <div class="container-bar">
-    <app-filter-selector [filters]="filters()" />
+    <div class="selector">
+        <app-filter-selector [filters]="filters()" />
+        <ng-content select="[compound-filters]"></ng-content>
+    </div>
 
     <div class="container-search">
         <div 

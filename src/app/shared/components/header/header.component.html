@@ -15,7 +15,7 @@
       <a [routerLink]="['/']">
         Inicio
       </a>
-      <a [routerLink]="['/explore']">
+      <a [routerLink]="['/explore']" (click)="searchService.reset()">
           Explorar
       </a>
       @if ( authService.authStatus() === "authenticated") {

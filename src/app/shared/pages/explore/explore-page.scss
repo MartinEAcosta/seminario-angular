@@ -26,45 +26,16 @@
     margin: 3% 2%;
 }
 
-.container-compound-filter{
+.container-not-found{
     display: flex;
+    height: 15vh;
     align-items: center;
-    width: 40%;
-    margin-left: 1rem;
+    justify-content: center;
+    margin: auto;
 }
 
-.input-label{
+.text{
     display: flex;
-}
-
-.label-text{
-    display: flex;
-    align-items: center;
-    font-size: small;
-    width: auto;
-    margin-right: 0.5rem;
-}
-
-.input-filter{
+    color: rgb(40, 40, 40 , 0.8);
     font-family: v.$font-primary;
-    display: flex;
-    width: 30%;
-    padding: 2.5% 0;
-    outline: none;
-    color: v.$white-custom;
-    background-color: inherit;
-    align-items: center;
-    text-align: center;
-    border: none;
-    border-bottom: solid thin v.$white-custom;
-        
-    -webkit-appearance: none;
-    -moz-appearance: textfield;
-    appearance: textfield;
-}
-
-.input-filter::-webkit-inner-spin-button,
-.input-filter::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
 }

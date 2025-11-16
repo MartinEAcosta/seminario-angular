@@ -1,5 +1,5 @@
 import { Component, input, linkedSignal, output } from '@angular/core';
-import { FilterOption } from '@payment/filter-options';
+import { FilterOption } from '@utils/filter-options';
 import { FilterSelectorComponent } from "../filter-selector/filter-selector/filter-selector.component";
 
 @Component({

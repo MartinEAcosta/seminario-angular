@@ -1,4 +1,4 @@
-import { Component, inject, linkedSignal } from '@angular/core';
+import { Component, inject, linkedSignal, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 
@@ -12,10 +12,11 @@ import { PaginationService } from '../../pagination/services/pagination.service'
 import { SearchService } from '../../search/search.service';
 import { SearchBarComponent } from "../../components/search-filter-bar/search-bar.component";
 import { FilterMaps } from '@payment/filter-options';
+import { CompoundFilterPriceComponent } from "../../components/compound-filter-price/compound-filter-price.component";
 
 @Component({
   selector: 'app-explore-page',
-  imports: [SearchBarComponent, PageTitleComponent, LoaderComponent, CourseMiniCardComponent, CartComponent, PaginationComponent ],
+  imports: [SearchBarComponent, PageTitleComponent, LoaderComponent, CourseMiniCardComponent, CartComponent, PaginationComponent, CompoundFilterPriceComponent],
   templateUrl: './explore-page.html',
   styleUrl: './explore-page.scss'
 })
@@ -26,6 +27,8 @@ export class ExplorePage {
   paginationService = inject(PaginationService);
   searchService = inject(SearchService)
   filterMaps = FilterMaps;
+  
+  compoundFilterVisible = signal<boolean>(false);
 
   courses = linkedSignal(() => this.coursesResource.value());
   
@@ -51,5 +54,7 @@ export class ExplorePage {
        } );
     }
   });
+
+  constructor() { }
 
 }

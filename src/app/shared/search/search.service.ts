@@ -51,8 +51,9 @@ export class SearchService {
 
   constructor() {}
 
-  // obtainQueryParams = () => {
-  //   const queryParams =
-  //   return queryParams;
-  // };
+  reset() {
+    this.textSearch.set('');
+    this.textParam = '';
+  }
+  
 }

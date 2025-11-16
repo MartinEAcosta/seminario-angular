@@ -1,21 +1,16 @@
 <div class="bg-page">
     <div class="container-content">
         <app-page-title [title]="'Explorar'" />
-        <app-search-bar
-            [filters]="filterMaps['courses']"
+        <app-search-bar 
+            [filters]="filterMaps['courses']" 
             [initialValue]="this.searchService.textSearch()"
-            (value)="this.searchService.textSearch.set($event)"
-        >
-            <div class="container-compound-filter">
-                <div class="input-label">
-                    <label class="label-text">Precio minimo</label>
-                    <input #priceMin class="input-filter" type="number" placeholder="$0">
+            (value)="this.searchService.textSearch.set($event)">
+            
+            @if(compoundFilterVisible()){
+                <div class="compound-filters" compound-filters>
+                    <app-compound-filter-price />
                 </div>
-                <div class="input-label">
-                    <label class="label-text">Precio máximo</label>
-                    <input #priceMax class="input-filter" type="number" placeholder="$10000">
-                </div>
-            </div>
+            }
         </app-search-bar>
 
         <div class="container-courses">
@@ -25,6 +20,11 @@
             @else {
                 @for( course of courses()?.items; track course.id){
                     <app-course-mini-card [course]="course" />
+                }
+                @empty {
+                    <div class="container-not-found">
+                        <h1 class="text">¡No se han encontrado cursos!</h1>
+                    </div>
                 }
             }
         </div>

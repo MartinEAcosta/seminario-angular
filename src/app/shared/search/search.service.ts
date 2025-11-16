@@ -17,7 +17,7 @@ export interface QueryParams {
 export class SearchService {
   private activatedRoute = inject(ActivatedRoute);
 
-  textParam = this.activatedRoute.snapshot.queryParamMap.get('textParam') ?? '';
+  textParam = this.activatedRoute.snapshot.queryParamMap.get('title') ?? '';
   // LinkedSignal es utilizado para crear una señal que esta vinculada exactamente a otro estado.
   // En vez de pasar un valor por default se toma el mismo de una función computada.
   textSearch = linkedSignal(() => this.textParam);

@@ -32,14 +32,15 @@ export class ExplorePage {
   coursesResource = rxResource({
     request : () => ({
       textSearch : this.searchService.textSearch(), 
-      filters : {...this.searchService.query()},
+      filters : { ...this.searchService.query() },
       page : this.paginationService.currentPage(),
     }),
     loader : ({request}) => { 
+      console.log(request.textSearch)
       this.router.navigate(['/explore'] , {
           queryParams : { 
-            title : request.textSearch || undefined,
             ...request.filters,
+            title : request.textSearch || undefined,
             page : request.page,
           }
       });

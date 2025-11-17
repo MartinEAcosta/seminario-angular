@@ -1,13 +1,11 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 
 import { CourseService } from 'src/app/course/services/course.service';
 import { CourseMapper } from '@mappers/course.mapper';
 import { FormCourseComponent } from "src/app/course/components/form-course/form-course.component";
 import { CourseFormState } from '../../state/course/course-form-state';
 import { Course } from '@course/models/course.interfaces';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { catchError, map, of } from 'rxjs';
 import { AuthService } from '@auth/services/auth.service';
 
 @Component({
@@ -20,24 +18,11 @@ import { AuthService } from '@auth/services/auth.service';
 export class UpdateCoursePageComponent {
   
   private router = inject(Router);
-  private activatedRoute = inject(ActivatedRoute);
   private courseService = inject(CourseService);
   private authService = inject(AuthService);
   public courseFormState = inject(CourseFormState);
 
-  course = toSignal<Course | null>( this.activatedRoute.data
-                                          .pipe(
-                                            map( data => {
-                                              const resolvedCourse =  data['resolvedCourse'];
-                                              if( !resolvedCourse ) {
-                                                throw new Error('Error al obtener el curso')
-                                              }
-                                              return resolvedCourse;
-                                            }),
-                                            catchError( (error) => {
-                                              return of(null);
-                                            })
-                                          ), { initialValue : null  });
+  resolvedCourse = input<Course>();
   
   constructor (  ) {  }
 

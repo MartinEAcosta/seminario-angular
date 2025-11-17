@@ -11,7 +11,7 @@ export class EnrollmentMapper {
             id_course : response.id_course,
             purchaseDate : response.purchaseDate,
             progress : response.progress,
-            completionDate : response.completionDate, 
+            completed_lessons : response.completed_lessons, 
         };
     }
 
@@ -31,7 +31,7 @@ export class EnrollmentMapper {
             },
             purchaseDate : response.purchaseDate,
             progress : response.progress,
-            completionDate : response.completionDate, 
+            completed_lessons : response.completed_lessons, 
         };
     }
 

@@ -2,6 +2,7 @@
 
 .container-compound-filter{
     display: flex;
+    width: 100%;
     align-items: center;
     margin-left: 1rem;
     gap: 5%;
@@ -9,21 +10,21 @@
 
 .input-label{
     display: flex;
-    width: 35%;
+    width: 100%;
 }
 
 .label-text{
     display: flex;
     align-items: center;
     font-size: small;
-    width: 60%;
+    width: 100%;
     margin-right: 0.5rem;
 }
 
 .input-filter{
     font-family: v.$font-primary;
     display: flex;
-    width: 30%;
+    width: 100%;
     padding: 2.5% 0;
     outline: none;
     color: v.$white-custom;

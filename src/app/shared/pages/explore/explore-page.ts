@@ -11,12 +11,12 @@ import { PaginationComponent } from "../../pagination/pagination.component";
 import { PaginationService } from '../../pagination/services/pagination.service';
 import { SearchService } from '../../search/search.service';
 import { SearchBarComponent } from "../../components/search-filter-bar/search-bar.component";
-import { FilterMaps } from '@payment/filter-options';
-import { CompoundFilterPriceComponent } from "../../components/compound-filter-price/compound-filter-price.component";
+import { FilterMaps } from '@utils/filter-options';
+import { FilterSelectorComponent } from "../../components/filter-selector/filter-selector/filter-selector.component";
 
 @Component({
   selector: 'app-explore-page',
-  imports: [SearchBarComponent, PageTitleComponent, LoaderComponent, CourseMiniCardComponent, CartComponent, PaginationComponent, CompoundFilterPriceComponent],
+  imports: [SearchBarComponent, PageTitleComponent, LoaderComponent, CourseMiniCardComponent, CartComponent, PaginationComponent, FilterSelectorComponent],
   templateUrl: './explore-page.html',
   styleUrl: './explore-page.scss'
 })

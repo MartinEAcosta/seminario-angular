@@ -9,9 +9,9 @@
         <h2 class="text-progress">Progreso</h2>
         
         <div class="progress-container">
-            <div class="progress-fill" style="width: 40%"></div>
+            <div class="progress-fill" [style.width]="enrollment().progress + '%'"></div>
         </div>
-        <span class="progress-text">40%</span>
+        <span class="progress-text">{{ enrollment().progress }}%</span>
         
         <p class="text-details"> Fecha de adquisición: {{enrollment().purchaseDate | date}}</p>
     </div>

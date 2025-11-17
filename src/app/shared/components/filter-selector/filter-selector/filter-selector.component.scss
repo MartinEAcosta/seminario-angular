@@ -2,14 +2,17 @@
 
 .container-filter{
     display: flex;
-    width: auto;
-    max-width: 17rem;
+    width: 100%;
+    max-width: 18rem;
     justify-content: left;
     align-items: center;
 }
 
 .text-searchbar{
-    width: 60%;
+    text-align: center;
+    text-wrap: nowrap;
+    margin-right: 1rem;
+    width: auto;
 }
 
 .container-filter-select{

@@ -5,7 +5,7 @@ export interface Enrollment {
   id_course      : string;
   purchaseDate   : Date;
   progress       : number;
-  completionDate : Date;
+  completed_lessons : string[];
 }
 
 export interface EnrollmentDetailed {
@@ -19,5 +19,5 @@ export interface EnrollmentDetailed {
   }
   purchaseDate   : Date;
   progress       : number;
-  completionDate : Date;
+  completed_lessons : string[];
 }

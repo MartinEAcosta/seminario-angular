@@ -8,9 +8,9 @@ export interface FilterOption{
 
 export const FilterMaps : Record<string, FilterOption[]> = {
     courses : [
-        { key : 'notFullyEnrolled', label : 'Cupos disponibles' , value : 'true' },
-        { key : 'id_category', label : 'Categoria'},
-        { key : 'price', label : 'Precio'},
+        { key : 'notFullyEnrolled', label : 'Cupos disponibles' , options : 'default' , value : 'true' },
+        { key : 'id_category', label : 'Categoria' , options : 'hover' },
+        { key : 'price', label : 'Precio' , options : 'clickable' },
     ],
     // enrollments : [
     //     { key : '' , label : 'Finalizados'},  

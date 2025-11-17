@@ -73,7 +73,7 @@ export interface EnrollmentUniqueResponse {
   id_course      : string;
   purchaseDate   : Date;
   progress       : number;
-  completionDate : Date;
+  completed_lessons : string[];
 }
 
 export interface EnrollmentDetailedUniqueResponse {
@@ -87,7 +87,7 @@ export interface EnrollmentDetailedUniqueResponse {
   }
   purchaseDate : Date;
   progress : number;
-  completionDate : Date;
+  completed_lessons : string[];
 }
 
 export type EnrollmentListResponse = ApiResponse<EnrollmentUniqueResponse[]>;

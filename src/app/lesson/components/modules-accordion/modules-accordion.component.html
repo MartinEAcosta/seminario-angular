@@ -5,9 +5,16 @@
     </div>
     <div class="container-list-lessons" [ngClass]="!isDeployed() ? 'hidden' : 'deployed' ">
         @for(lesson of module().lessons; track lesson){
-            <div class="container-lesson">
-                <h4 class="title-lesson">{{ lesson.title }}</h4>
-            </div>
+            @if( isClickable() ){
+                <div class="container-lesson" [routerLink]="['/course' , module().id_course , 'take' , 'lesson' , lesson.id]">
+                    <h4 class="title-lesson">{{ lesson.title }}</h4>
+                </div>
+            }
+            @else {
+                <div class="container-lesson">
+                    <h4 class="title-lesson">{{ lesson.title }}</h4>
+                </div>
+            }
         }
     </div>
 </div>

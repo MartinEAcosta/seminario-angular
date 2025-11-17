@@ -14,6 +14,8 @@ export class ListOfContentComponent {
 
   private moduleService = inject(ModuleService);
   private authService = inject(AuthService);
+
+  isClickable = input<boolean>(false);
   courseId = input.required<string>();
   user = computed( () => this.authService.user() );
 

@@ -37,7 +37,17 @@ export const courseRoutes : Routes = [
                 component : CoursePage,
             },
             {
-                path : ':id/lesson/:id_lesson',
+                path : ':id/take',
+                canMatch : [ AuthenticatedGuard ],
+                canActivate : [ ValidateParamIdGuard ],
+                resolve : {
+                    resolvedCourse : CourseResolver,
+
+                },
+                component : LessonViewerPageComponent
+            },
+            {
+                path : ':id/take/lesson/:id_lesson',
                 canMatch : [ AuthenticatedGuard ],
                 canActivate : [ ValidateParamIdGuard ],
                 resolve : {

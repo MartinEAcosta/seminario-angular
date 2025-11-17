@@ -5,6 +5,6 @@
         </h3>
     </div>
     @for( module of modulesResource.value(); track module.unit ){
-        <app-modules-accordion [module]="module" />
+        <app-modules-accordion [module]="module" [isClickable]="isClickable()" />
     }
 </div>

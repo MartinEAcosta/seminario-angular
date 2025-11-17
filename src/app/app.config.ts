@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { provideRouter, withInMemoryScrolling, withRouterConfig } from '@angular/router';
+import { provideRouter, withComponentInputBinding, withInMemoryScrolling, withRouterConfig } from '@angular/router';
 
 import { routes } from './app.routes';
 import {
@@ -20,6 +20,7 @@ export const appConfig: ApplicationConfig = {
                   withInMemoryScrolling({
                     scrollPositionRestoration: 'enabled',
                   }),
+                  withComponentInputBinding()
                   ),
     provideHttpClient(
       withFetch(),

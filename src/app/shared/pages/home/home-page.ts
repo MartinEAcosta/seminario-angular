@@ -16,7 +16,7 @@ import { defaultCourses } from '@payment/defaultCourses';
     styleUrl: './home-page.scss',
     imports: [CourseListComponent, ModalErrorMessageComponent, CartComponent, RouterLink]
 })
-export default class HomeComponent {
+export class HomeComponent {
   
   courseService = inject(CourseService);
   cartService = inject(CartService);

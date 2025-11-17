@@ -10,9 +10,9 @@ import { ThumbnailSelectorComponent } from 'src/app/course/components/thumbnail-
 import { FormLessonComponent } from "../form-lesson/form-lesson.component";
 import { FileService } from 'src/app/shared/services/file/file.service';
 import { Course } from '@course/models/course.interfaces';
-import { ModuleService } from 'module/services/module.service';
+import { ModuleService } from '@module/services/module.service';
 import { CardActionComponent } from "src/app/shared/components/card-action/card-action.component";
-import { SaveModuleComponent } from "module/components/save-module/save-module.component";
+import { SaveModuleComponent } from "@module/components/save-module/save-module.component";
 import { UIService } from 'src/app/shared/services/ui/ui.service';
 import { LoaderComponent } from "src/app/shared/components/loader/loader.component";
 

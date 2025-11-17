@@ -2,7 +2,7 @@ import { Component, inject, input } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Course } from '@course/models/course.interfaces';
 import { ModuleMapper } from '@mappers/module.mapper';
-import { ModuleService } from 'module/services/module.service';
+import { ModuleService } from '@module/services/module.service';
 
 @Component({
   selector: 'app-save-module',

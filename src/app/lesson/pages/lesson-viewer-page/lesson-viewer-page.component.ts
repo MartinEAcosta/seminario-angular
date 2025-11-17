@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { Course } from '@course/models/course.interfaces';
-import { ListOfContentComponent } from "lesson/components/list-of-content/list-of-content.component";
+import { ListOfContentComponent } from "@lesson/components/list-of-content/list-of-content.component";
 
 @Component({
   selector: 'app-lesson-viewer-page',

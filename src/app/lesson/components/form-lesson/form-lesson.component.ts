@@ -14,7 +14,7 @@ import { BtnRemoveComponent } from "src/app/shared/components/btn-remove/btn-rem
 import { Router } from '@angular/router';
 import { LessonPopulated } from '../../models/lesson.interfaces';
 import { Course } from '@course/models/course.interfaces';
-import { ModulePopulated } from 'module/models/module.interfaces';
+import { ModulePopulated } from '@module/models/module.interfaces';
 
 @Component({
   selector: 'app-form-lesson',

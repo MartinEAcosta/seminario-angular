@@ -104,7 +104,9 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/video.js/dist/video-js.css", 
+              "node_modules/@videojs/themes/dist/fantasy/index.css"
             ],
             "scripts": []
           }

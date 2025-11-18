@@ -1,6 +1,9 @@
-<div>
+<div class="container-content">
     <app-list-of-content 
         [courseId]="resolvedCourse().id" 
         [isClickable]="true"
-        />
+    />
+    <div class="container-media-player">
+        <app-vjs-player />
+    </div>
 </div>

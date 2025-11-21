@@ -28,7 +28,7 @@ export class ExplorePage {
   searchService = inject(SearchService)
   filterMaps = FilterMaps;
   
-  compoundFilterVisible = signal<boolean>(false);
+  // compoundFilterVisible = signal<boolean>(false);
 
   courses = linkedSignal(() => this.coursesResource.value());
   
@@ -51,7 +51,7 @@ export class ExplorePage {
         ...request.filters,
         title: request.textSearch || undefined,
         page : request.page
-       } );
+      } );
     }
   });
 

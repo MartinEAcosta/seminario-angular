@@ -12,6 +12,7 @@ export class LessonFormState {
       title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
       description : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
       id_module : [ '' , [ Validators.required ] ],
+      lesson_number : [ 0 , [ Validators.required , Validators.min(0) ] ],
   });
 
   public lessons = signal<LessonPopulated[]>([]);
@@ -70,6 +71,8 @@ export class LessonFormState {
     this.lessonForm.patchValue({
       title: lesson.title,
       description: lesson.description,
+      id_module: lesson.id_module,
+      lesson_number: lesson.lesson_number,
     });
   }
 

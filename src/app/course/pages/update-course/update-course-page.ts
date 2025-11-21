@@ -40,7 +40,7 @@ export class UpdateCoursePageComponent {
                         .subscribe(
                           ( course ) => {
                             this.courseFormState.reset();
-                            this.router.navigate([`/courses/${ course.id }`]);
+                            this.router.navigate([`/course/${ course.id }`]);
                           },
                         );
   }

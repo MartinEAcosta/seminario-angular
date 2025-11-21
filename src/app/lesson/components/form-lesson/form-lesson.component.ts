@@ -1,4 +1,4 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input, linkedSignal, signal } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -37,10 +37,13 @@ export class FormLessonComponent {
   public lessonFormState = inject(LessonFormState);
   public fileService = inject(FileService);
 
-  moduleSelected = signal<ModulePopulated | undefined>(undefined);
-
   course = input.required<Course | null>();
   modules = input.required<ModulePopulated[]>();
+  moduleSelected = linkedSignal<ModulePopulated | null>( () => {
+    const idModule = this.lessonFormState.lessonForm.get('id_module')?.value;
+    console.log(idModule)
+    return this.modules().find( m => m.id === idModule ) || null;
+  });
 
   constructor() { }
   
@@ -60,22 +63,32 @@ export class FormLessonComponent {
 
   public onSaveLesson = () => {
     this.lessonFormState.lessonForm.markAllAsTouched();
-    console.log(this.lessonFormState.lessonForm.value)
+
     if( this.lessonFormState.lessonForm.valid ){
       const uid = this.authService.id();
       if( !uid ) return;
 
       const dto = LessonMapper.mapToCreateLessonDto( this.lessonFormState.lessonForm );
-      const lessonDto = {
-        id: this.lessonFormState.lessonSelected()?.id,
+      let lessonDto = {
         ...dto,
+        id : this.lessonFormState.lessonSelected()?.id,
         id_course : this.course()?.id!,
       };
-      lessonDto.lesson_number = this.lessonFormState.lessons().at(-1)?.lesson_number ?? 0;
-    
+      if( dto.lesson_number ){
+        lessonDto = {
+          ...lessonDto,
+          id: this.lessonFormState.lessonSelected()?.id,
+        };
+      }
+      else{
+        lessonDto = {
+          ...lessonDto,
+          lesson_number : this.lessonFormState.lessons().at(-1)?.lesson_number ?? 0,
+        }
+      }
+
       return this.lessonService.saveLesson( lessonDto , this.lessonFormState.mediaFile() ).subscribe();
     }
-    
     return;
   }
 
@@ -88,15 +101,14 @@ export class FormLessonComponent {
           this.lessonService.deleteLesson( lesson.id )
                                 .subscribe( ( isLessonDeleted ) => {
                                     if( isLessonDeleted ) {
-                                      this.router.navigateByUrl('/');
+                                      // this.router.navigateByUrl('/');
                                       return;
                                     }     
                                 } );
         }
     }
-    else{
-      this.lessonFormState.removeLesson( lesson );
-    }
+    
+    this.lessonFormState.removeLesson( lesson );
     this.lessonFormState.setLessonSelected(null);
     this.lessonFormState.setIsLessonFormVisible(false);
   }    

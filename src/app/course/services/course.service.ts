@@ -49,27 +49,6 @@ export class CourseService {
     );
   };
 
-  //* Deja de ser tan necesario debido a los filtros implementados en el getAll
-  // public getCoursesPaginated = ( page : number , limit ?: number) : Observable<PaginationResponseDto<Course[]>> => {
-  //   return this.http.get<PaginationResponse<Course[]>>(`${this.baseURL}/paginated` , 
-  //     { 
-  //       params : 
-  //         { 
-  //           page : page ,
-  //           limit : limit ?? 2,
-  //         }
-  //     }
-  //   ).pipe(
-  //     map((courseResponse) => {
-  //       console.log(courseResponse)
-  //       return PaginationMapper.mapToPaginationDto<Course[]>( courseResponse );
-  //     }),
-  //     catchError(({error}) => {
-  //       return throwError(() => new Error(`${error.errorMessage}`));
-  //     })
-  //   )
-  // }
-
   public getById = (id: string): Observable<Course> => {
     return this.http.get<CourseResponse>(`${this.baseURL}/${id}`).pipe(
       map((courseResponse) =>

@@ -36,7 +36,6 @@ export class FileService {
   uploadFile = ( folder : string , id_entity : string, file : File ) : Observable<UploadedFile> => {
     const formData = new FormData( );
     formData.append( 'files', file );
-    console.log(formData)
     return this.http
                 .post<FileResponse>(
                                     `${this.baseURL}/upload/single/${folder}/${id_entity}`, 
@@ -44,7 +43,6 @@ export class FileService {
                                   )
                                   .pipe(
                                     map( fileResponse => {
-                                      this.courseFormState.reset();
                                       return FileMapper.mapResponseToFile( fileResponse.data );
                                     }),
                                     catchError( ({ error }) => {

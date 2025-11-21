@@ -10,6 +10,7 @@ export class LessonMapper {
             title : form.get('title')?.value,
             id_module : form.get('id_module')?.value,
             description : form.get('description')?.value,
+            lesson_number : form.get('lesson_number')?.value,
         };
     };
 

@@ -60,6 +60,7 @@ export class FormCourseComponent {
       if( !uid ) return;
       
       this.submitForm.emit( this.course() );
+      this.courseFormState.reset();
     }
   }
 

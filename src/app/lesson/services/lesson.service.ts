@@ -47,17 +47,18 @@ export class LessonService {
                     );
   }
 
-  public saveLesson = ( lessonRequest : SaveLessonDto , file ?: File | null ) : Observable<Lesson> => {
+  public saveLesson = ( lessonRequest : SaveLessonDto , file : File | null = null ) : Observable<Lesson> => {
     const { id , ...rest } = lessonRequest;
 
     if( id ){
+      console.log( id , file )
       return this.http
             .put<LessonUniqueResponse>(`${this.baseURL}/update/${id}` , lessonRequest )
             .pipe(
               map( (lessonResponse) =>{
                 const lesson = LessonMapper.mapResponseToLesson( lessonResponse );
                 if( file ){
-                  this.fileService.uploadFile( this.folder , lessonResponse.id! , file );
+                  this.fileService.uploadFile( this.folder , id , file ).subscribe();
                 }
                 return lesson;
               }),
@@ -74,7 +75,7 @@ export class LessonService {
                     map( (lessonResponse) =>{
                         const lesson = LessonMapper.mapResponseToLesson( lessonResponse );
                         if( file ){
-                          this.fileService.uploadFile( this.folder , lessonResponse.id! , file );
+                          this.fileService.uploadFile( this.folder , lessonResponse.id! , file ).subscribe();
                         }
                       return lesson;
                     }),
@@ -100,5 +101,4 @@ export class LessonService {
             );
   }
 
-  
 }

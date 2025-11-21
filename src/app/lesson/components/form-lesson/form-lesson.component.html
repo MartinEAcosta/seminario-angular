@@ -52,8 +52,8 @@
                                 {{ module.title }}
                             </li>
                         }
-                        @if( this.moduleSelected() != undefined ){
-                            <li (click)="moduleSelected.set(undefined)" class="option-item option-clear">
+                        @if( this.moduleSelected() != null ){
+                            <li (click)="moduleSelected.set(null)" class="option-item option-clear">
                                 Quitar módulo
                                 <img class="icon" src="assets/clean-icon.svg" alt="">
                             </li>

@@ -34,6 +34,7 @@ export class FileService {
   }
   
   uploadFile = ( folder : string , id_entity : string, file : File ) : Observable<UploadedFile> => {
+    console.log(id_entity);
     const formData = new FormData( );
     formData.append( 'files', file );
     return this.http

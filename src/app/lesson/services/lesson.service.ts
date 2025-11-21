@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { LessonMapper } from '@mappers/lesson.mapper';
-import { DeleteResponse, LessonPopulatedListResponse, LessonUniqueResponse } from 'src/app/shared/models/api.interface';
+import { DeleteResponse, LessonPopulatedListResponse, LessonResponse, LessonUniqueResponse } from 'src/app/shared/models/api.interface';
 import { Lesson, LessonPopulated, SaveLessonDto } from '../models/lesson.interfaces';
 import { FileService } from 'src/app/shared/services/file/file.service';
 
@@ -51,12 +51,11 @@ export class LessonService {
     const { id , ...rest } = lessonRequest;
 
     if( id ){
-      console.log( id , file )
       return this.http
-            .put<LessonUniqueResponse>(`${this.baseURL}/update/${id}` , lessonRequest )
+            .put<LessonResponse>(`${this.baseURL}/update/${id}` , lessonRequest )
             .pipe(
               map( (lessonResponse) =>{
-                const lesson = LessonMapper.mapResponseToLesson( lessonResponse );
+                const lesson = LessonMapper.mapResponseToLesson( lessonResponse.data );
                 if( file ){
                   this.fileService.uploadFile( this.folder , id , file ).subscribe();
                 }
@@ -70,13 +69,13 @@ export class LessonService {
     }
     else{
       return this.http
-                  .post<LessonUniqueResponse>(`${this.baseURL}/new` , rest )
+                  .post<LessonResponse>(`${this.baseURL}/new` , rest )
                   .pipe(
                     map( (lessonResponse) =>{
-                        const lesson = LessonMapper.mapResponseToLesson( lessonResponse );
-                        if( file ){
-                          this.fileService.uploadFile( this.folder , lessonResponse.id! , file ).subscribe();
-                        }
+                      const lesson = LessonMapper.mapResponseToLesson( lessonResponse.data );
+                      if( file ){
+                        this.fileService.uploadFile( this.folder , lesson.id! , file ).subscribe();
+                      }
                       return lesson;
                     }),
                     catchError( ({ error }) => {

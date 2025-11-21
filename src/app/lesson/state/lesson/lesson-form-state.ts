@@ -102,9 +102,10 @@ export class LessonFormState {
   }
 
   public removeLesson = ( lessonToRemove : LessonPopulated ) : void => {
-    const newLessonsArray = this.lessons().filter( (lesson) => {
-      lesson.lesson_number != lessonToRemove.lesson_number 
-    });
+    const newLessonsArray = this.lessons().filter( lesson => 
+      lesson.lesson_number !== lessonToRemove.lesson_number 
+    );
+    console.log(newLessonsArray)
     this.lessons.set( newLessonsArray );
   }
 

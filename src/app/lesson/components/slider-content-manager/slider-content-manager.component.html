@@ -73,10 +73,14 @@
                     <p class="text-simple"> Añade contenido a la lección</p>
                 }
                 @else{
-                    <img 
+                    @if( this.lessonFormState.typeMedia() === 'image' ){
+                        <img 
                         class="figure"
-                        src="{{ lessonFormState.tempMedia() }}" alt="">
-                        <!-- TODO :Verificar la forma de tomar un preview del video para utilizarlo como portada. -->
+                        src="{{ lessonFormState.tempMedia() }}" alt=""> 
+                    }
+                    @else{
+                        <video class="figure" src="{{ lessonFormState.tempMedia() }}"></video>
+                    }
                 }
             </figure>
         </div>

@@ -1,4 +1,4 @@
-import { Component, inject, input, InputSignal } from '@angular/core';
+import { Component } from '@angular/core';
 @Component({
     selector: 'btn-border-thin',
     templateUrl: './btn-border-thin.component.html',

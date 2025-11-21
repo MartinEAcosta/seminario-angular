@@ -36,7 +36,6 @@ export class ModuleService {
                 .get<ModulePopulatedListResponse>(`${this.baseURL}/course/detailed/${id_course}`)
                 .pipe(
                   map(( modulesResponse ) => {
-                    console.log(modulesResponse);
                     return ModuleMapper.mapResponseToModulePopulatedArray(modulesResponse);
                   }),
                   catchError( error => {

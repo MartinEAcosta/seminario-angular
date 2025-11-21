@@ -100,7 +100,6 @@ export class FileService {
   public onFileChanged = ( event : Event, type : 'lessons' | 'courses' ) => {
     const fileChanged = ( event.target as HTMLInputElement ).files;
     if( !fileChanged ) return;
-
     // En caso de que el el fileList no sea undefined o vacio, permite generar url para utilizar de forma local
     const url = Array.from( fileChanged ?? [ ] )
                                                   .map( 
@@ -116,6 +115,10 @@ export class FileService {
       case 'lessons':
         this.lessonFormState.setTempMedia(url.shift()!);
         this.lessonFormState.setMediaFile(fileChanged[0]);
+        const type = fileChanged.item(0)?.type.split('/').at(0) as 'image' | 'video' | undefined;
+        this.lessonFormState.setTypeMedia(
+          type === 'image' || type === 'video' ? type : null
+        );
         break;
     }
   }

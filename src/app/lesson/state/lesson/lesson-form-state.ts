@@ -20,6 +20,7 @@ export class LessonFormState {
 
   public mediaFile = signal<File | null>(null);
   public tempMedia = signal<string | null>(null);
+  public typeMedia = signal<'image' | 'video' | null>(null);
   public isLessonFormVisible = signal<boolean>( false ); 
   public isModulePopUpVisible = signal<boolean>( false );
   
@@ -56,6 +57,10 @@ export class LessonFormState {
 
   public setMediaFile ( file : File | null ) : void {
     this.mediaFile.set( file );
+  }
+
+  public setTypeMedia( type : 'image' | 'video' | null ) : void {
+    this.typeMedia.set( type );
   }
   
   public toggleVisibilityOfLessonForm = ( ) : void => {
@@ -105,7 +110,6 @@ export class LessonFormState {
     const newLessonsArray = this.lessons().filter( lesson => 
       lesson.lesson_number !== lessonToRemove.lesson_number 
     );
-    console.log(newLessonsArray)
     this.lessons.set( newLessonsArray );
   }
 

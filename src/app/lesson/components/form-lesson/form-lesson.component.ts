@@ -1,18 +1,18 @@
 import { Component, inject, input, linkedSignal, signal } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { LessonService } from 'src/app/lesson/services/lesson.service';
 import { LessonFormState } from '../../state/lesson/lesson-form-state';
 import { FormErrorLabelComponent } from "src/app/shared/components/form-error-label/form-error-label.component";
-import { BtnNavigationComponent } from "src/app/shared/components/btn-navigation/btn-navigation.component";
+import { BtnNavigationComponent } from "@shared/components/btns/btn-navigation/btn-navigation.component";
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { LessonMapper } from '@mappers/lesson.mapper';
 import { CourseService } from 'src/app/course/services/course.service';
 import { FileService } from 'src/app/shared/services/file/file.service';
-import { BtnRemoveComponent } from "src/app/shared/components/btn-remove/btn-remove.component";
-import { Router } from '@angular/router';
-import { LessonPopulated } from '../../models/lesson.interfaces';
+import { BtnRemoveComponent } from "@shared/components/btns/btn-remove/btn-remove.component";
+import { LessonPopulated } from '@lesson/models/lesson.interfaces';
 import { Course } from '@course/models/course.interfaces';
 import { ModulePopulated } from '@module/models/module.interfaces';
 
@@ -21,7 +21,7 @@ import { ModulePopulated } from '@module/models/module.interfaces';
   imports: [ReactiveFormsModule, FormErrorLabelComponent, BtnNavigationComponent, BtnRemoveComponent, NgClass],
   templateUrl: './form-lesson.component.html',
   styleUrls:[ 
-              '../../../shared/components/btn-navigation/btn-rounded.scss', 
+              '../../../shared/components/btns/btn-navigation/btn-rounded.scss', 
               '../../../category/components/category-select/item-select.component.scss' ,
               './form-lesson.component.scss'
             ]
@@ -107,7 +107,7 @@ export class FormLessonComponent {
                                 } );
         }
     }
-    
+
     this.lessonFormState.removeLesson( lesson );
     this.lessonFormState.setLessonSelected(null);
     this.lessonFormState.setIsLessonFormVisible(false);

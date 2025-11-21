@@ -17,7 +17,7 @@
       "@mappers/*" : ["./src/app/mappers/*"],
       "@interfaces/*" : ["src/app/course/models/*" , "src/app/auth/models/*"],
       "@guards/*" : ["./src/app/auth/guards/*"],
-      "@variables/variables.scss" : ["./src/variables.scss"],
+      "@variables" : ["src/variables.scss"],
     },
     "outDir": "./dist/out-tsc",
     "strict": true,

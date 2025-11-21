@@ -9,7 +9,7 @@ import { CategorySelectComponent } from "src/app/category/components/category-se
 import { ThumbnailSelectorComponent } from "../thumbnail-selector/thumbnail-selector.component";
 import { CourseFormState } from '../../state/course/course-form-state';
 import { SliderContentManagerComponent } from 'src/app/lesson/components/slider-content-manager/slider-content-manager.component';
-import { BtnRemoveComponent } from "src/app/shared/components/btn-remove/btn-remove.component";
+import { BtnRemoveComponent } from "@shared/components/btns/btn-remove/btn-remove.component";
 import { Course } from '@course/models/course.interfaces';
 
 @Component({

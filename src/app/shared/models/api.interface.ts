@@ -128,6 +128,7 @@ export interface LessonPopulatedUniqueResponse {
   file : {
     id_file : string;
     url     : string;
+    resource_type : 'image' | 'video',
   };
   lesson_number : number;
   uploaded_at : Date;

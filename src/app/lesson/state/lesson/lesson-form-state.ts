@@ -79,6 +79,7 @@ export class LessonFormState {
       id_module: lesson.id_module,
       lesson_number: lesson.lesson_number,
     });
+    this.setTypeMedia( lesson.file.resource_type );
   }
 
   public updateLesson = ( searched : LessonPopulated , value : Partial<{ title : string , description : string }> ) => {
@@ -95,6 +96,7 @@ export class LessonFormState {
       file: {
         id_file : null,
         url : null,
+        resource_type : null,
       },
       lesson_number: this.lessons().at(-1) ? +this.lessons().at(-1)!.lesson_number!+1 : 0,
       uploaded_at: new Date(),

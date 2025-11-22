@@ -41,6 +41,7 @@ export class LessonMapper {
             file : {
                 id_file : response.file.id_file,
                 url     : response.file.url,
+                resource_type : response.file.resource_type ?? 'image',
             },
             lesson_number :  response.lesson_number,
             uploaded_at : new Date(response.uploaded_at),

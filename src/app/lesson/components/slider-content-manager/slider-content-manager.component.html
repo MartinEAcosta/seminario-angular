@@ -32,12 +32,22 @@
                                     >
                                     <figure class="figure">
                                         @if( lessonFormState.lessonSelected()?.id === lesson.id && lessonFormState.tempMedia( ) != null ){
-                                            <img class="thumbnail-lesson" 
-                                                    src="{{lessonFormState.tempMedia()}}" alt="">
+                                            @if( lessonFormState.lessonSelected()?.file?.resource_type === 'image'){
+                                                <img class="thumbnail-lesson" 
+                                                        src="{{lessonFormState.tempMedia()}}" alt="">
+                                            }
+                                            @else {
+                                                <video src="{{lessonFormState.tempMedia()}}"></video>"
+                                            }
                                         }
                                         @else if ( lesson.file.url != null ) {
-                                            <img class="thumbnail-lesson" 
+                                            @if( lesson.file.resource_type === 'image'){
+                                                <img class="thumbnail-lesson" 
                                                 src="{{lesson.file.url}}" alt="">
+                                            }
+                                            @else {
+                                                <video src="{{lesson.file.url}}"></video>
+                                            }
                                         }
                                         @else {
                                             <img class="icon" src="/assets/thumbnail-icon.svg" alt="">

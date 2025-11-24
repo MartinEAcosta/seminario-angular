@@ -11,7 +11,7 @@
       "@enrollment/*" : ["src/app/enrollment/*"],
       "@lesson/*" : ["src/app/lesson/*"],
       "@module/*" : ["src/app/module/*"],
-      "@payment/*" : ["./src/app/utils/*"],
+      "@payment/*" : ["./src/app/payment/*"],
       "@utils/*" : ["./src/app/utils/*"],
       "@shared/*" : ["./src/app/shared/*"],
       "@mappers/*" : ["./src/app/mappers/*"],

@@ -12,31 +12,31 @@ export const routes: Routes = [
   {
     path: 'course',
     loadChildren : () => 
-      import('./course/course.routes'),
+      import('@course/course.routes'),
   },
     
   { 
     path : 'auth' ,
     loadChildren: () =>
-      import('./auth/auth.routes'),
+      import('@auth/auth.routes'),
   },  
   
   { 
     path : 'about' , 
     loadComponent: () =>
-      import('./shared/pages/about/about-page'),
+      import('@shared/pages/about/about-page'),
   },
   
   {
     path : 'enrollments',
     loadChildren: () => 
-      import('./enrollment/enrollment.routes'),
+      import('@enrollment/enrollment.routes'),
   },
 
   {
     path : 'payment',
     loadChildren: () => 
-      import('./payment/payment.routes'),
+      import('@payment/payment.routes'),
   },
 
   {

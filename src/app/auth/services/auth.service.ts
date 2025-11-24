@@ -60,7 +60,9 @@ export class AuthService {
     return this.http.post<AuthResponse>(`${this.baseURL}/login` , { ...userRequest } )
                       .pipe(
                         map( ( authResponse ) => this.handleAuthSuccess( authResponse ) ),
-                        catchError( ( error : any ) =>  this.handleAuthError( error ) )
+                        catchError( ( { error } ) => {
+                          return this.handleAuthError( error )
+                        } )
               );
   }
 
@@ -102,7 +104,7 @@ export class AuthService {
   private handleAuthError = ( error: any ) : Observable<false>  => {
     console.log(error);
     this.logoutUser();
-    this.uiService.setErrorMessage( error.errorMessage );
+    this.uiService.setErrorMessage( error.error );
     console.log(this.uiService.errorMessage());
     
     return of(false);

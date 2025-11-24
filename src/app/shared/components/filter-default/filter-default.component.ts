@@ -1,6 +1,7 @@
-import { FilterOption } from '@payment/filter-options';
 import { Component, input } from '@angular/core';
+
 import { RouterLink } from "@angular/router";
+import { FilterOption } from '@utils/filter-options';
 
 @Component({
   selector: 'app-filter-default',

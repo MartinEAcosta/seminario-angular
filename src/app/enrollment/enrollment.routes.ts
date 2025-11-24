@@ -1,7 +1,7 @@
 import { Routes } from "@angular/router";
 
 import { AuthenticatedGuard } from "@guards/authenticated.guard";
-import EnrollmentsPage from "./pages/enrollment-page";
+import EnrollmentsPage from "@enrollment/pages/enrollment-page";
 
 export const enrollmentRoutes : Routes = [
     {

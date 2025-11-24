@@ -1,6 +1,7 @@
 import { Component, input } from '@angular/core';
-import { FilterOption } from '@payment/filter-options';
-import { FilterDefaultComponent } from "../../filter-default/filter-default.component";
+
+import { FilterOption } from '@utils/filter-options';
+import { FilterDefaultComponent } from "@shared/components/filter-default/filter-default.component";
 
 @Component({
   selector: 'app-filter-selector',

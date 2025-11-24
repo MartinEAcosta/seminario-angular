@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { EnrollmentDetailedListResponse, EnrollmentListResponse } from 'src/app/shared/models/api.interface';
 import { environment } from 'src/environments/environment';
-import { Enrollment, EnrollmentDetailed } from '../models/enrollment.interfaces';
+
+import { EnrollmentDetailedListResponse, EnrollmentListResponse, EnrollmentResponse } from '@shared/models/api.interface';
+import { Enrollment, EnrollmentDetailed } from '@enrollment/models/enrollment.interfaces';
 import { EnrollmentMapper } from '@mappers/enrollment.mapper';
 
 @Injectable({
@@ -44,6 +45,9 @@ export class EnrollmentService {
                     );
   }
 
-
+  public getEnrollmentByUserIdAndCourseId = ( id_user : string , id_course : string ) => {
+    return this.http
+                    .get<EnrollmentResponse>( `${this.baseURL}/` )
+  }
   
 }

@@ -1,5 +1,4 @@
 
-
 import { inject, Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { catchError, map, Observable, of } from 'rxjs';

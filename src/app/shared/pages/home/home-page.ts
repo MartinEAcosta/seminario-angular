@@ -2,13 +2,13 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 
-import { CourseService } from '../../../course/services/course.service';
-import { CartService } from '../../../cart/state/cart.service';
+import { CourseService } from '@course/services/course.service';
+import { CartService } from '@cart/state/cart.service';
 import { UIService } from '../../services/ui/ui.service';
 import { CourseListComponent } from "../../../course/components/course-list/course-list.component";
 import { ModalErrorMessageComponent } from '../../components/modal-error-message/modal-error-message.component';
-import { CartComponent } from 'src/app/cart/components/cart/cart.component';
-import { defaultCourses } from '@payment/defaultCourses';
+import { CartComponent } from '@cart/components/cart/cart.component';
+import { defaultCourses } from '@utils/defaultCourses';
 
 @Component({
     selector: 'app-home',

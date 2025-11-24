@@ -1,6 +1,9 @@
 import { Component, inject, input } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
+import { AuthService } from '@auth/services/auth.service';
 import { Course } from '@course/models/course.interfaces';
+import { EnrollmentService } from '@enrollment/services/enrollment.service';
 import { ListOfContentComponent } from "@lesson/components/list-of-content/list-of-content.component";
 import { ModuleService } from '@module/services/module.service';
 import { VjsPlayerComponent } from "@shared/components/vjs-player/vjs-player.component";
@@ -13,7 +16,11 @@ import { VjsPlayerComponent } from "@shared/components/vjs-player/vjs-player.com
 })
 export class LessonViewerPageComponent {
   
+  router = inject(Router);
+
+  authService = inject(AuthService);
   moduleService = inject(ModuleService);
+  enrollmentService = inject(EnrollmentService);
   resolvedCourse = input.required<Course>();
 
   modulesResource = rxResource({
@@ -21,6 +28,18 @@ export class LessonViewerPageComponent {
     loader  : ( {request} ) => {
       return this.moduleService.getModulesByCourseId( request.courseId );
     },
+  });
+
+  enrollmentResource = rxResource({
+    request : () => ({ 
+      id_user : this.authService.id(),
+      id_course : this.resolvedCourse().id,
+     }),
+    loader : ( { request } ) => {
+      if( !request.id_user ) throw this.router.navigateByUrl('/')
+
+      return this.enrollmentService.getEnrollmentByUserIdAndCourseId( request.id_user , request.id_course )
+    }
   });
 
 }

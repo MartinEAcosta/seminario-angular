@@ -36,7 +36,7 @@ export interface CourseUniqueResponse {
 export type CourseResponse = ApiResponse<CourseUniqueResponse>;
 export type CourseListResponse = ApiResponse<CourseUniqueResponse[]>;
 
-// * Auth *|
+// * Auth *
 
 // * File * 
 
@@ -90,6 +90,7 @@ export interface EnrollmentDetailedUniqueResponse {
   completed_lessons : string[];
 }
 
+export type EnrollmentResponse = ApiResponse<EnrollmentUniqueResponse>;
 export type EnrollmentListResponse = ApiResponse<EnrollmentUniqueResponse[]>;
 export type EnrollmentDetailedListResponse = ApiResponse<EnrollmentDetailedUniqueResponse[]>;
 

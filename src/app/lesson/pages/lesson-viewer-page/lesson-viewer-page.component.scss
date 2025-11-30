@@ -1,11 +1,19 @@
-@use '../../../../variables.scss' as v;
+@use '@variables' as v;
 
 .container-content {
     display: flex;
-    margin: 1.5rem 0;
+    background-color: v.$white-custom;
+    padding: 1.5rem 0;
 }
 
 .container-media-player{
-    width: 100%;
+    display: flex;
+    width: 850px;
+    height: 480px;
+    border-radius: 0.5rem;
+    background-color: rgba(40, 40 , 40 , 0.1);
+    box-shadow: 6px 8px 15px rgba(40, 40 , 40 , 0.3);
+    align-items: center;
+    justify-content: center;
     margin-left: 1.5rem;
 }

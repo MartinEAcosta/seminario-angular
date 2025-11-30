@@ -73,20 +73,8 @@ export class FormLessonComponent {
         ...dto,
         id : this.lessonFormState.lessonSelected()?.id,
         id_course : this.course()?.id!,
-      };
-      if( dto.lesson_number ){
-        lessonDto = {
-          ...lessonDto,
-          id: this.lessonFormState.lessonSelected()?.id,
-        };
-      }
-      else{
-        lessonDto = {
-          ...lessonDto,
-          lesson_number : this.lessonFormState.lessons().at(-1)?.lesson_number ?? 0,
-        }
-      }
-
+      }; 
+      console.log(lessonDto)
       return this.lessonService.saveLesson( lessonDto , this.lessonFormState.mediaFile() ).subscribe();
     }
     return;

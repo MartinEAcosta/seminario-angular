@@ -41,6 +41,7 @@ export class LessonFormState {
     if( lesson ){
      this.patchValuesForm( lesson );
     }
+    console.log(this.lessonSelected())
   }
 
   public setIsLessonFormVisible = ( bol : boolean ) => {

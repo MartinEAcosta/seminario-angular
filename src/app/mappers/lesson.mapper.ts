@@ -39,8 +39,8 @@ export class LessonMapper {
             title : response.title,
             description : response.description,
             file : {
-                id_file : response.file.id_file,
-                url     : response.file.url,
+                id_file : response.file.id_file ?? null,
+                url     : response.file.url ?? null,
                 resource_type : response.file.resource_type ?? 'image',
             },
             lesson_number :  response.lesson_number,

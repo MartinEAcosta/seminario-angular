@@ -4,6 +4,11 @@
         [isClickable]="true"
     />
     <div class="container-media-player">
-        <app-vjs-player />
+        @if( isLessonLoading() ){
+            <app-loader />
+        }
+        @else {
+            <app-vjs-player />
+        }
     </div>
 </div>

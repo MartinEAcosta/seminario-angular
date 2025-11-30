@@ -90,7 +90,18 @@ export interface EnrollmentDetailedUniqueResponse {
   completed_lessons : string[];
 }
 
+export interface NextEnrollmentUniqueResponse {
+  id             : string;
+  id_user        : string;
+  id_course      : string;
+  purchaseDate   : Date;
+  progress       : number;
+  completed_lessons : string[];
+  next_lesson    : string;
+}
+
 export type EnrollmentResponse = ApiResponse<EnrollmentUniqueResponse>;
+export type NextEnrollmentResponse = ApiResponse<NextEnrollmentUniqueResponse>;
 export type EnrollmentListResponse = ApiResponse<EnrollmentUniqueResponse[]>;
 export type EnrollmentDetailedListResponse = ApiResponse<EnrollmentDetailedUniqueResponse[]>;
 

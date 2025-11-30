@@ -5,8 +5,8 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../auth/services/auth.service';
 import { BtnPrimaryComponent } from '../../../shared/components/btns/btn-primary/btn-primary.component';
 import { BtnBorderThinComponent } from '../../../shared/components/btns/btn-border-thin/btn-border-thin.component';
-import { Course } from '../../models/course.interfaces';
-import { CartService } from '../../../cart/state/cart.service';
+import { Course } from '@course/models/course.interfaces';
+import { CartService } from '@cart/state/cart.service';
 
 @Component({
     selector: 'course-card',
@@ -23,5 +23,4 @@ export class CourseCardComponent {
 
   constructor () { }
   
-
 }

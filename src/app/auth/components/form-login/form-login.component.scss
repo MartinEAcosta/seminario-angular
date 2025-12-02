@@ -16,16 +16,8 @@
     margin: 3% 0% 0% 0%;
 }
 
-.error{
-    position: absolute;
-}
-
-.error-email{
-    top: 13%;
-}
-
-.error-password{
-    top: 25%
+.error .error-email , .error-password{
+    position: relative;
 }
 
 .btn-sumbit{
@@ -33,7 +25,7 @@
 }
 
 .label-text{
-    top: -5%;
+    top: -6%;
 }
 
 .text-forgot-pass{

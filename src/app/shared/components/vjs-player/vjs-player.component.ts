@@ -5,7 +5,7 @@ import Player from 'video.js/dist/types/player';
 @Component({
   selector: 'app-vjs-player',
   templateUrl: './vjs-player.component.html',
-  styleUrls: [  ],
+  styleUrls: [ './vjs-player.component.scss' ],
   encapsulation: ViewEncapsulation.None,
 })
 
@@ -21,6 +21,7 @@ export class VjsPlayerComponent implements OnInit, OnDestroy {
           src: string,
           type: string,
       }[],
+      language: string,
   };
 
   player!: Player;
@@ -33,6 +34,8 @@ export class VjsPlayerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.player = videojs(this.target.nativeElement, this.options, function onPlayerReady() {
       console.log('onPlayerReady', this);
+      console.log(this.currentSource());
+      console.log(this.techName_); // puede ser 'Html5' o 'Flash'
     });
   }
 

@@ -4,6 +4,7 @@
 
     <form [formGroup]="loginForm" (submit)="onLogin()" class="form-auth">
 
+        <form-error-label class="error error-email" [control]="loginForm.get('email')!"  />
         <input 
             type="text" 
             placeholder="example@gmail.com" 
@@ -13,14 +14,13 @@
             formControlName="email"
             required 
             [ngClass]="{'hasError': ( loginForm.get('email')?.errors && loginForm.get('email')?.touched ) ?? false }">
-        <label class="label-text label-email">Correo Electronico</label>
-        <form-error-label class="error error-email" [control]="loginForm.get('email')!"  />
+        <label class="label-text">Correo Electronico</label>
 
+        <form-error-label class="error error-password" [control]="loginForm.get('password')!" />
         <input type="password" placeholder="unaContraseñaSegur@123" class="input-password" required name="password"
             formControlName="password"
             [ngClass]="{'hasError': ( loginForm.get('password')?.errors  && loginForm.get('password')?.touched ) ?? false }">
         <label class="label-text">Contraseña</label>
-        <form-error-label class="error error-password" [control]="loginForm.get('password')!" />
 
         <button class="btn-sumbit" type="submit" (submit)="onLogin()">
             Ingresar

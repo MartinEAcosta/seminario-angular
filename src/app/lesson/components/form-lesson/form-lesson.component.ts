@@ -74,7 +74,6 @@ export class FormLessonComponent {
         id : this.lessonFormState.lessonSelected()?.id,
         id_course : this.course()?.id!,
       }; 
-      console.log(lessonDto)
       return this.lessonService.saveLesson( lessonDto , this.lessonFormState.mediaFile() ).subscribe();
     }
     return;

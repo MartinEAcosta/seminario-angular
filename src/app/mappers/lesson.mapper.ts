@@ -4,7 +4,6 @@ import { Lesson, LessonPopulated, SaveLessonDto } from "../lesson/models/lesson.
 
 export class LessonMapper {
 
-    // * chequear el unit y chapter la forma en que se manejan
     static mapToCreateLessonDto = ( form : FormGroup ) : SaveLessonDto => {
         return {
             title : form.get('title')?.value,
@@ -39,9 +38,10 @@ export class LessonMapper {
             title : response.title,
             description : response.description,
             file : {
-                id_file : response.file.id_file ?? null,
+                id_file : response.file.id ?? null,
                 url     : response.file.url ?? null,
                 resource_type : response.file.resource_type ?? 'image',
+                extension : response.file.extension ?? null,
             },
             lesson_number :  response.lesson_number,
             uploaded_at : new Date(response.uploaded_at),

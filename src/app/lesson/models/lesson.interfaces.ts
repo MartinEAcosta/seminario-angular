@@ -20,6 +20,7 @@ export interface LessonPopulated {
         id_file : string | null;
         url     : string | null;
         resource_type : 'image' | 'video' | null;
+        extension : string | null;
     };
     lesson_number : number;
     uploaded_at   : Date;

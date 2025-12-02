@@ -98,6 +98,7 @@ export class LessonFormState {
         id_file : null,
         url : null,
         resource_type : null,
+        extension : null,
       },
       lesson_number: this.lessons().at(-1) ? +this.lessons().at(-1)!.lesson_number!+1 : 0,
       uploaded_at: new Date(),

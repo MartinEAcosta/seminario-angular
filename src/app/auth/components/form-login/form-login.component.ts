@@ -7,7 +7,6 @@ import { AuthService } from '@auth/services/auth.service';
 import { FormErrorLabelComponent } from '../../../shared/components/form-error-label/form-error-label.component';
 import { UserDTO } from '@auth/models/auth.interfaces';
 import { FormUtils } from '@utils/form-utils';
-import { UIService } from '@shared/services/ui/ui.service';
 
 @Component({
     selector: 'app-form-login',
@@ -19,7 +18,6 @@ export class FormLoginComponent {
   
   private router = inject(Router);
   private authService = inject(AuthService);
-  private uiService = inject(UIService);
 
   private fb = inject(FormBuilder);
     

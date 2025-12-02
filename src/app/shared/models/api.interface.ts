@@ -138,9 +138,10 @@ export interface LessonPopulatedUniqueResponse {
   title : string;
   description : string;
   file : {
-    id_file : string;
+    id      : string;
     url     : string;
-    resource_type : 'image' | 'video',
+    resource_type : 'image' | 'video';
+    extension : string;
   };
   lesson_number : number;
   uploaded_at : Date;

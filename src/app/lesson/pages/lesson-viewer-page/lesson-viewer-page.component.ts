@@ -10,11 +10,10 @@ import { LessonPopulated } from '@lesson/models/lesson.interfaces';
 import { ModuleService } from '@module/services/module.service';
 import { VjsPlayerComponent } from "@shared/components/vjs-player/vjs-player.component";
 import { LoaderComponent } from "@shared/components/loader/loader.component";
-import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-lesson-viewer-page',
-  imports: [ListOfContentComponent, VjsPlayerComponent, LoaderComponent],
+  imports: [ListOfContentComponent, VjsPlayerComponent, LoaderComponent, ],
   templateUrl: './lesson-viewer-page.component.html',
   styleUrl: './lesson-viewer-page.component.scss'
 })
@@ -50,17 +49,18 @@ export class LessonViewerPageComponent {
 
   constructor () {
     effect( () => {
-      if( this.enrollmentResource.hasValue() ) {
+      if( this.enrollmentResource.hasValue() && this.isLessonLoading()) {
         const enrollment = this.enrollmentResource.value();
         
-        this.isLessonLoading.set(false);
         this.enrollmentService
-          .getNextLesson(enrollment.id)
-          .subscribe(( lessonPopulated  => {
-            this.lessonSelected.set(lessonPopulated);
-            return lessonPopulated;
-          }))
+        .getNextLesson(enrollment.id)
+        .subscribe(( lessonPopulated  => {
+          this.lessonSelected.set(lessonPopulated);
+          this.isLessonLoading.set(false);
+          return lessonPopulated;
+        }))
       };
+      console.log(this.lessonSelected())
       return;
     });
   }

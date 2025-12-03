@@ -1,4 +1,5 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
+import { LessonService } from 'src/app/lesson/services/lesson.service';
+import { Component, effect, inject, input, linkedSignal, signal } from '@angular/core';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 
@@ -10,23 +11,25 @@ import { LessonPopulated } from '@lesson/models/lesson.interfaces';
 import { ModuleService } from '@module/services/module.service';
 import { VjsPlayerComponent } from "@shared/components/vjs-player/vjs-player.component";
 import { LoaderComponent } from "@shared/components/loader/loader.component";
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-lesson-viewer-page',
-  imports: [ListOfContentComponent, VjsPlayerComponent, LoaderComponent, ],
+  imports: [ListOfContentComponent, VjsPlayerComponent, LoaderComponent, NgClass],
   templateUrl: './lesson-viewer-page.component.html',
   styleUrl: './lesson-viewer-page.component.scss'
 })
 export class LessonViewerPageComponent {
   
+  resolvedCourse = input.required<Course>();
+  
   router = inject(Router);
-
   authService = inject(AuthService);
   moduleService = inject(ModuleService);
   enrollmentService = inject(EnrollmentService);
-  resolvedCourse = input.required<Course>();
+  lessonService = inject(LessonService);
 
-  lessonSelected = signal<LessonPopulated | null>(null);
+  lessonSelected = signal<LessonPopulated | null>( null );
   isLessonLoading = signal<boolean>(true);
 
   modulesResource = rxResource({
@@ -49,20 +52,24 @@ export class LessonViewerPageComponent {
 
   constructor () {
     effect( () => {
-      if( this.enrollmentResource.hasValue() && this.isLessonLoading()) {
-        const enrollment = this.enrollmentResource.value();
-        
-        this.enrollmentService
-        .getNextLesson(enrollment.id)
-        .subscribe(( lessonPopulated  => {
-          this.lessonSelected.set(lessonPopulated);
-          this.isLessonLoading.set(false);
-          return lessonPopulated;
-        }))
-      };
-      console.log(this.lessonSelected())
-      return;
+      const lesson = this.lessonSelected();
+      if( !lesson ){
+        if( this.enrollmentResource.hasValue() && this.isLessonLoading()) {
+          const enrollment = this.enrollmentResource.value();
+          this.lessonService
+          .getNextLesson(enrollment.id)
+          .subscribe(( nextLesson => {
+            this.lessonSelected.set(nextLesson);
+            this.isLessonLoading.set(false);
+            return nextLesson;
+          }));
+        };
+      }
     });
+  }
+
+  setLessonSelected = (  ) => {
+
   }
 
 }

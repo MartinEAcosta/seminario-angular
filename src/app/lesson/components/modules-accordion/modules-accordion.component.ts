@@ -1,7 +1,8 @@
-import { ModulePopulated } from 'src/app/module/models/module.interfaces';
 import { Component, input, signal } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { RouterLink } from "@angular/router";
+
+import { ModulePopulated } from '@module/models/module.interfaces';
 
 @Component({
   selector: 'app-modules-accordion',

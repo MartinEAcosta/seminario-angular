@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { LessonMapper } from '@mappers/lesson.mapper';
-import { DeleteResponse, LessonPopulatedListResponse, LessonResponse, LessonUniqueResponse } from 'src/app/shared/models/api.interface';
+import { DeleteResponse, LessonPopulatedListResponse, LessonPopulatedResponse, LessonResponse, LessonUniqueResponse } from 'src/app/shared/models/api.interface';
 import { Lesson, LessonPopulated, SaveLessonDto } from '../models/lesson.interfaces';
 import { FileService } from 'src/app/shared/services/file/file.service';
 
@@ -44,6 +44,21 @@ export class LessonService {
                         console.log(error)
                         return throwError(() => new Error(`${error.errorMessage}`));
                       })
+                    );
+  }
+
+    public getNextLesson = ( id_enrollment : string ) : Observable<LessonPopulated> => {
+    return this.http
+                    .get<LessonPopulatedResponse>( `${this.baseURL}/next/${id_enrollment}` )
+                    .pipe(
+                      map( ( enrollmentResponse ) => {
+                          console.log(enrollmentResponse);
+                          return LessonMapper.mapResponseToLessonPopulated( enrollmentResponse.data );
+                      }),
+                      catchError( (error) => {
+                        console.log(error);
+                        return throwError(() => new Error(`${error.errorMessage}`));
+                      }),
                     );
   }
 

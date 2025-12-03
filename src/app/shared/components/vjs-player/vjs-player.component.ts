@@ -34,8 +34,6 @@ export class VjsPlayerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.player = videojs(this.target.nativeElement, this.options, function onPlayerReady() {
       console.log('onPlayerReady', this);
-      console.log(this.currentSource());
-      console.log(this.techName_); // puede ser 'Html5' o 'Flash'
     });
   }
 

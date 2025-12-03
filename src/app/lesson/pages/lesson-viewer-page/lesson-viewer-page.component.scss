@@ -6,13 +6,49 @@
     padding: 1.5rem 0;
 }
 
-.container-reserved-space{
+.container-media{
+    display: flex;
+    flex-direction: column;
     width: 55%;
     height: auto;
+    margin-left: 1.5rem;
+}
+
+.container-title-lesson{
+    width: 100%;
+    content: '';
+    margin-bottom: 0.3rem;
+}
+
+.skeleton-box {
+    height: 3rem;
+    margin-bottom: 0.3rem;
+    border-radius: 0.5rem;
+    background: linear-gradient(90deg,
+            rgba(40, 40, 40, 0.10) 0%,
+            rgba(40, 40, 40, 0.15) 50%,
+            rgba(40, 40, 40, 0.10) 100%);
+    background-size: 200% 100%;
+    animation: gradientFade 1.6s ease-in-out infinite;
+}
+
+@keyframes gradientFade {
+    0%   { background-position: 0%; }
+    50%  { background-position: 100%; }
+    100% { background-position: 0%; }
+}
+
+.container-title-lesson h1{
+    font-family: v.$font-primary;
+    color: v.$black-custom;
+}
+
+.container-reserved-space{
+    width: 100%;
+    margin: auto;
     border-radius: 0.5rem;
     background-color: rgba(40, 40 , 40 , 0.1);
     box-shadow: 6px 8px 15px rgba(40, 40 , 40 , 0.3);
-    margin-left: 1.5rem;
 }
 
 .container-loader{

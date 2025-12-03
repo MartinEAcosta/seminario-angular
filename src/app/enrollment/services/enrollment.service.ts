@@ -3,11 +3,9 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-import { EnrollmentDetailedListResponse, EnrollmentListResponse, EnrollmentResponse, LessonPopulatedResponse } from '@shared/models/api.interface';
+import { EnrollmentDetailedListResponse, EnrollmentListResponse, EnrollmentResponse } from '@shared/models/api.interface';
 import { Enrollment, EnrollmentDetailed } from '@enrollment/models/enrollment.interfaces';
 import { EnrollmentMapper } from '@mappers/enrollment.mapper';
-import { LessonPopulated } from '@lesson/models/lesson.interfaces';
-import { LessonMapper } from '@mappers/lesson.mapper';
 
 @Injectable({
   providedIn: 'root'
@@ -60,20 +58,7 @@ export class EnrollmentService {
                     );
   }
   
-  public getNextLesson = ( id_enrollment : string ) : Observable<LessonPopulated> => {
-    return this.http
-                    .get<LessonPopulatedResponse>( `${this.baseURL}/next/${id_enrollment}` )
-                    .pipe(
-                      map( ( enrollmentResponse ) => {
-                          console.log(enrollmentResponse);
-                          return LessonMapper.mapResponseToLessonPopulated( enrollmentResponse.data );
-                      }),
-                      catchError( (error) => {
-                        console.log(error);
-                        return throwError(() => new Error(`${error.errorMessage}`));
-                      }),
-                    );
-  }
+
 
 }
   

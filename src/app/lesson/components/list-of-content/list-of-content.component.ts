@@ -3,22 +3,21 @@ import { ModulesAccordionComponent } from "../modules-accordion/modules-accordio
 import { rxResource } from '@angular/core/rxjs-interop';
 import { ModuleService } from 'src/app/module/services/module.service';
 import { AuthService } from '@auth/services/auth.service';
+import { LoaderComponent } from "@shared/components/loader/loader.component";
 
 @Component({
   selector: 'app-list-of-content',
   templateUrl: './list-of-content.component.html',
   styleUrl: './list-of-content.component.scss',
-  imports: [ModulesAccordionComponent],
+  imports: [ModulesAccordionComponent, LoaderComponent],
 })
 export class ListOfContentComponent {
 
   private moduleService = inject(ModuleService);
   private authService = inject(AuthService);
 
-  // Reemplazar el isClickable directamente por un output con un EventEmmiter que se encargue de declararlo el componene padre que lo utilicé
-  // en el caso de que sea de la ruta /course/id seria 
-  isClickable = input<boolean>(false);
   courseId = input.required<string>();
+  userHasEnrollment = input<boolean>(false);
   user = computed( () => this.authService.user() );
 
   modulesResource = rxResource({
@@ -27,6 +26,6 @@ export class ListOfContentComponent {
     },
   });
 
-  constructor( ) { }
+  constructor( ) {  }
 
 }

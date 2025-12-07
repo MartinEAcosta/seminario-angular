@@ -4,7 +4,12 @@
             Contenido
         </h3>
     </div>
+    @if( modulesResource.isLoading() ) {
+        <div class="container-loader-modules">
+            <app-loader /> 
+        </div>
+    }
     @for( module of modulesResource.value(); track module.unit ){
-        <app-modules-accordion [module]="module" [isClickable]="isClickable()" />
+        <app-modules-accordion [module]="module" [isClickable]="!!user() && userHasEnrollment()" [courseId]="courseId()" />
     }
 </div>

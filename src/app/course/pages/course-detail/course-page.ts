@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { catchError, map, of } from 'rxjs';
+import { of } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 import { CourseService } from '../../services/course.service';
@@ -24,7 +23,6 @@ import { ListOfContentComponent } from "src/app/lesson/components/list-of-conten
 export class CoursePage {
 
   private activatedRoute = inject(ActivatedRoute);
-
   private courseService = inject(CourseService);
 
   private courseId = this.activatedRoute.snapshot.params['id'] || '';

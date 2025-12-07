@@ -1,6 +1,6 @@
 import { LessonService } from 'src/app/lesson/services/lesson.service';
-import { Component, effect, inject, input, linkedSignal, signal } from '@angular/core';
-import { rxResource, toSignal } from '@angular/core/rxjs-interop';
+import { Component, effect, inject, input, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 
 import { AuthService } from '@auth/services/auth.service';
@@ -67,9 +67,4 @@ export class LessonViewerPageComponent {
       }
     });
   }
-
-  setLessonSelected = (  ) => {
-
-  }
-
 }

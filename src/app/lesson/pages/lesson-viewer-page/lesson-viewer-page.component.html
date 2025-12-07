@@ -1,36 +1,38 @@
 <div class="container-content">
-    <app-list-of-content [courseId]="resolvedCourse().id" [isClickable]="true" />
-    <div class="container-media">
-        <div class="container-title-lesson" [ngClass]="{ 'skeleton-box': !lessonSelected() }">
-            @if( lessonSelected() ){
-                <h1> {{ lessonSelected()?.title }}</h1>
-            }
+    @if( enrollmentResource.isLoading() ){
+        <div class="container-loader">
+            <app-loader />
         </div>
-        <div class="container-reserved-space">
-            @if( enrollmentResource.isLoading() ){
-                <div class="container-loader">
-                    <app-loader />
-                </div>
-            }
-            @else {
+    }
+    @else {
+        <app-list-of-content [courseId]="resolvedCourse().id" [courseId]="resolvedCourse().id"
+            [userHasEnrollment]="!!lessonSelected()" />
+
+        <div class="container-media">
+            <div class="container-title-lesson box-shadow" [ngClass]="{ 'skeleton-box': !lessonSelected() }">
+                @if( lessonSelected() ){
+                    <h1> {{ lessonSelected()?.title }}</h1>
+                }
+            </div>
+            <div class="container-reserved-space box-shadow">
                 @if( lessonSelected()?.file?.resource_type === "video" ) {
                     <app-vjs-player [options]="{ 
-                        fluid : true,
-                        aspectRatio : '16:9',
-                        autoplay: false, 
-                        sources:[
-                            {
-                                src : lessonSelected()?.file?.url!,
-                                type: lessonSelected()?.file?.resource_type + '/' + lessonSelected()?.file?.extension!
-                            }
-                        ],
-                        language: 'es', 
-                    }" />
+                            fluid : true,
+                            aspectRatio : '16:9',
+                            autoplay: false, 
+                            sources:[
+                                {
+                                    src : lessonSelected()?.file?.url!,
+                                    type: lessonSelected()?.file?.resource_type + '/' + lessonSelected()?.file?.extension!
+                                }
+                            ],
+                            language: 'es', 
+                        }" />
                 }
                 @else if( lessonSelected()?.file?.resource_type === "image" ) {
                     <img src="{{lessonSelected()?.file?.url}}" alt="">
                 }
-            }
-        </div>
-    </div>
+            </div>
+        </div>  
+    }
 </div>

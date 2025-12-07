@@ -4,17 +4,10 @@
         <img class="icon-expand" src="assets/expand-icon-white.svg" alt="Icon expand module" [ngClass]="!isDeployed() ? '' : 'open'">
     </div>
     <div class="container-list-lessons" [ngClass]="!isDeployed() ? 'hidden' : 'deployed' ">
-        @for(lesson of module().lessons; track lesson){
-            @if( isClickable() ){
-                <div class="container-lesson" [routerLink]="['/course' , module().id_course , 'take' , 'lesson' , lesson.id]">
-                    <p class="title-lesson">{{ lesson.title }}</p>
-                </div>
-            }
-            @else {
-                <div class="container-lesson">
-                    <p class="title-lesson">{{ lesson.title }}</p>
-                </div>
-            }
+        @for(lesson of module().lessons; track lesson.id){
+            <div class="container-lesson" (click)="isClickable() ? goToLesson( lesson.id ) : null">
+                <p class="title-lesson">{{ lesson.title }}</p>
+            </div>
         }
     </div>
 </div>

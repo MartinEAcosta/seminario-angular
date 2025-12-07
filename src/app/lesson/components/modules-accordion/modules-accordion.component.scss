@@ -86,6 +86,8 @@
 .title-lesson{
     font-size: 1rem;
     width: 90%;
+    pointer-events: none;
+
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;

@@ -1,7 +1,7 @@
 // Practica vista en el curso de Fernando Herrera, similar a patrón DTO ( Data Transfer Object ),
 // utilizado previamente en Java.
 import type { Course, CourseDTO } from 'src/app/course/models/course.interfaces';
-import { CourseListResponse, CourseUniqueResponse } from '../shared/models/api.interface';
+import { CourseListResponse, CourseUniqueResponse } from '../shared/models/api.interfaces';
 import { FormGroup } from '@angular/forms';
 
 export class CourseMapper {

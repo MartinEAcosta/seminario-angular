@@ -5,8 +5,8 @@ import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Course, CourseDTO } from 'src/app/course/models/course.interfaces';
 import { CourseMapper } from '@mappers/course.mapper';
-import { DeleteResponse, CourseResponse, PaginationResponseDto, PaginationResponse } from 'src/app/shared/models/api.interface';
-import { FileService } from 'src/app/shared/services/file/file.service';
+import { DeleteResponse, CourseResponse, PaginationResponseDto, PaginationResponse } from '@shared/models/api.interfaces';
+import { FileService } from 'src/app/file/services/file.service';
 import { PaginationMapper } from '@mappers/pagination.mapper';
 import { obtainOptionsParams } from '@course/utils/obtainOptionsParams';
 

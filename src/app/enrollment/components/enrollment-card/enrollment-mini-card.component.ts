@@ -1,7 +1,8 @@
 import { Component, input } from '@angular/core';
-import { EnrollmentDetailed } from '../../models/enrollment.interfaces';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from "@angular/router";
+
+import { EnrollmentDetailed } from '@enrollment/models/enrollment.interfaces';
 
 @Component({
   selector: 'app-enrollment-mini-card',
@@ -16,13 +17,5 @@ export class EnrollmentMiniCardComponent {
   constructor() { 
     
   }
-
-  ngAfterViewInit(){
-    setTimeout( () =>
-      console.log(this.enrollment().course.id_course)
-      , 1
-    );
-  }
-
 
 }

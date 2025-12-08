@@ -1,4 +1,4 @@
-import { CategoryListResponse, CategoryUniqueResponse } from "../shared/models/api.interface";
+import { CategoryListResponse, CategoryUniqueResponse } from "../shared/models/api.interfaces";
 
 
 export class CategoryMapper {

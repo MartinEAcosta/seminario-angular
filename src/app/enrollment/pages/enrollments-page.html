@@ -1,0 +1,19 @@
+<div class="container-bg">
+    <div class="container-content">
+
+        <app-page-title [title]="'Tu biblioteca'" />
+
+        <app-search-bar />
+        
+        <div class="container-enrollments">
+            @for( enrollment of resolvedEnrollments(); track enrollment.id ){
+                <app-enrollment-mini-card [enrollment]="enrollment" />
+            }
+            @empty {
+                <div class="container-not-found">
+                    <h1 class="text">¡No hemos encontrado inscripciones!</h1>
+                </div>
+            }
+        </div>
+    </div>
+</div>

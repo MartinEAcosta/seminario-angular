@@ -1,5 +1,5 @@
-import { FileResponse, FileUniqueResponse } from "../shared/models/api.interface";
-import { UploadedFile } from "../shared/models/file.interface";
+import { FileResponse, FileUniqueResponse } from "../shared/models/api.interfaces";
+import { UploadedFile } from "../file/models/file.interfaces";
 
 
 export class FileMapper {

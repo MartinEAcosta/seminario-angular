@@ -1,6 +1,6 @@
 import { Component, EventEmitter, inject, input } from '@angular/core';
 import { CourseFormState } from '../../state/course/course-form-state';
-import { FileService } from 'src/app/shared/services/file/file.service';
+import { FileService } from 'src/app/file/services/file.service';
 import { LessonFormState } from 'src/app/lesson/state/lesson/lesson-form-state';
 
 @Component({

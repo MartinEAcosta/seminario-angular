@@ -3,9 +3,9 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { LessonMapper } from '@mappers/lesson.mapper';
-import { DeleteResponse, LessonPopulatedListResponse, LessonPopulatedResponse, LessonResponse, LessonUniqueResponse } from 'src/app/shared/models/api.interface';
+import { DeleteResponse, LessonPopulatedListResponse, LessonPopulatedResponse, LessonResponse, LessonUniqueResponse } from '@shared/models/api.interfaces';
 import { Lesson, LessonPopulated, SaveLessonDto } from '../models/lesson.interfaces';
-import { FileService } from 'src/app/shared/services/file/file.service';
+import { FileService } from 'src/app/file/services/file.service';
 
 @Injectable({
   providedIn: 'root'

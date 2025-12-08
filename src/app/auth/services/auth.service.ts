@@ -104,7 +104,7 @@ export class AuthService {
   private handleAuthError = ( error: any ) : Observable<false>  => {
     console.log(error);
     this.logoutUser();
-    this.uiService.setErrorMessage( error.error );
+    this.uiService.showToastMessage( error.error );
     console.log(this.uiService.errorMessage());
     
     return of(false);

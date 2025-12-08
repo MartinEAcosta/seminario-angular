@@ -28,7 +28,7 @@ export const routes: Routes = [
   },
   
   {
-    path : 'enrollments',
+    path : 'enrollment',
     loadChildren: () => 
       import('@enrollment/enrollment.routes'),
   },

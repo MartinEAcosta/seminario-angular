@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, input, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { UIService } from '../../services/ui/ui.service';
 import { NgClass } from '@angular/common';
 

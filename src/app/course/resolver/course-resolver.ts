@@ -11,7 +11,7 @@ import { AuthService } from "@auth/services/auth.service";
 export class CourseResolver implements Resolve<Course | null> {
 
     router = inject(Router);
-    service = inject(CourseService);
+    courseService = inject(CourseService);
     authService = inject(AuthService)
     courseFormState = inject(CourseFormState); 
 
@@ -24,7 +24,7 @@ export class CourseResolver implements Resolve<Course | null> {
             return of(null);
         }
 
-        return this.service.getById( courseId! ).pipe(
+        return this.courseService.getById( courseId! ).pipe(
             map( course => {
                 if( course.id_owner === this.authService.id() ){
                     return course;

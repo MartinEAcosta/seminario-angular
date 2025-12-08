@@ -1,4 +1,4 @@
-import { CategoryListResponse } from './../../shared/models/api.interface';
+import { CategoryListResponse } from '../../shared/models/api.interfaces';
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';

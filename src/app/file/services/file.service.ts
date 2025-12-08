@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { catchError, forkJoin, map, Observable, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { FileMapper } from '@mappers/file.mapper';
-import { DeleteResponse, FileResponse } from '../../models/api.interface';
-import { UploadedFile } from '../../models/file.interface';
+import { DeleteResponse, FileResponse } from '../../shared/models/api.interfaces';
+import { UploadedFile } from '../models/file.interfaces';
 import { CourseFormState } from 'src/app/course/state/course/course-form-state';
 import { LessonFormState } from 'src/app/lesson/state/lesson/lesson-form-state';
 
@@ -34,7 +34,7 @@ export class FileService {
   }
   
   uploadFile = ( folder : string , id_entity : string, file : File ) : Observable<UploadedFile> => {
-    console.log(id_entity);
+    
     const formData = new FormData( );
     formData.append( 'files', file );
     return this.http

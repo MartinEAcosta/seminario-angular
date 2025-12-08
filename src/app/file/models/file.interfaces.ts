@@ -1,4 +1,4 @@
-import { ResourceValidTypes } from "./api.interface";
+import { ResourceValidTypes } from "../../shared/models/api.interfaces";
 
 export interface UploadedFile {
     id            : string,

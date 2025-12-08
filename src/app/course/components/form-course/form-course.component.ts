@@ -3,7 +3,7 @@ import { NgClass } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { FileService } from 'src/app/shared/services/file/file.service';
+import { FileService } from 'src/app/file/services/file.service';
 import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
 import { CategorySelectComponent } from "src/app/category/components/category-select/category-select.component";
 import { ThumbnailSelectorComponent } from "../thumbnail-selector/thumbnail-selector.component";

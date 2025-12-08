@@ -1,4 +1,4 @@
-import { PaginationResponse, PaginationResponseDto } from "../shared/models/api.interface";
+import { PaginationResponse, PaginationResponseDto } from "../shared/models/api.interfaces";
 
 export class PaginationMapper {
  

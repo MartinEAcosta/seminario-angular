@@ -1,12 +1,10 @@
 import { Routes } from "@angular/router";
-import { AuthenticatedGuard } from "@guards/authenticated.guard";
-import { ValidateParamIdGuard } from "./guards/validate-param.guard";
-import { CourseResolver } from "./resolver/course-resolver";
-import { CoursePage } from "./pages/course-detail/course-page";
-import { UpdateCoursePageComponent } from "./pages/update-course/update-course-page";
-import { CreateCoursePageComponent } from "./pages/create-course/create-course-page";
-import { LessonViewerPageComponent } from "../lesson/pages/lesson-viewer-page/lesson-viewer-page.component";
-import { LessonResolver } from "../lesson/resolver/lesson-resolver";
+
+import { AuthenticatedGuard } from "@auth/guards/authenticated.guard";
+import { ValidateParamIdGuard } from "@course/guards/validate-param.guard";
+import { CourseResolver } from "@course/resolver/course-resolver";
+import { CoursePage , CreateCoursePageComponent , UpdateCoursePageComponent } from "@course/pages/";
+import { LessonViewerPageComponent } from "@lesson/pages/lesson-viewer-page/lesson-viewer-page.component";
 
 export const courseRoutes : Routes = [
     {
@@ -35,26 +33,6 @@ export const courseRoutes : Routes = [
             {
                 path : ':id',
                 component : CoursePage,
-            },
-            {
-                path : ':id/take',
-                canMatch : [ AuthenticatedGuard ],
-                canActivate : [ ValidateParamIdGuard ],
-                resolve : {
-                    resolvedCourse : CourseResolver,
-
-                },
-                component : LessonViewerPageComponent
-            },
-            {
-                path : ':id/take/lesson/:id_lesson',
-                canMatch : [ AuthenticatedGuard ],
-                canActivate : [ ValidateParamIdGuard ],
-                resolve : {
-                    resolvedCourse : CourseResolver,
-                    resolvedLesson : LessonResolver,
-                },
-                component : LessonViewerPageComponent
             },
             {
                 path : '**',

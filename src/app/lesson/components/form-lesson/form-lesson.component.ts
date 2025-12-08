@@ -10,7 +10,7 @@ import { BtnNavigationComponent } from "@shared/components/btns/btn-navigation/b
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { LessonMapper } from '@mappers/lesson.mapper';
 import { CourseService } from 'src/app/course/services/course.service';
-import { FileService } from 'src/app/shared/services/file/file.service';
+import { FileService } from 'src/app/file/services/file.service';
 import { BtnRemoveComponent } from "@shared/components/btns/btn-remove/btn-remove.component";
 import { LessonPopulated } from '@lesson/models/lesson.interfaces';
 import { Course } from '@course/models/course.interfaces';

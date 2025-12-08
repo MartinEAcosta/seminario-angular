@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '@auth/services/auth.service';
 import { RouterLink } from '@angular/router';
-import { SearchService } from '../../../search/search.service';
+import { SearchService } from '../../../services/search/search.service';
 
 @Component({
     selector: 'app-header',

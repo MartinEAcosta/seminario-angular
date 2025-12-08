@@ -1,6 +1,6 @@
-import { TotalResponse } from './../shared/models/api.interface';
+import { TotalResponse } from '../shared/models/api.interfaces';
 import { Issuer , IdentificationType } from "../payment/models/payment.interface";
-import { IdentificationTypeListResponse, IndentificationTypeUniqueResponse, IssuerListResponse, IssuerUniqueResponse } from "../shared/models/api.interface";
+import { IdentificationTypeListResponse, IndentificationTypeUniqueResponse, IssuerListResponse, IssuerUniqueResponse } from "../shared/models/api.interfaces";
 
 export class PaymentMapper {
 

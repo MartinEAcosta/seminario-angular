@@ -9,7 +9,7 @@ import { CourseMiniCardComponent } from "src/app/course/components/course-mini-c
 import { CartComponent } from "src/app/cart/components/cart/cart.component";
 import { PaginationComponent } from "../../pagination/pagination.component";
 import { PaginationService } from '../../pagination/services/pagination.service';
-import { SearchService } from '../../search/search.service';
+import { SearchService } from '../../services/search/search.service';
 import { SearchBarComponent } from "../../components/search-filter-bar/search-bar.component";
 import { FilterMaps } from '@utils/filter-options';
 import { FilterSelectorComponent } from "../../components/filter-selector/filter-selector/filter-selector.component";

@@ -8,7 +8,7 @@ import { LessonFormState } from '../../state/lesson/lesson-form-state';
 import { LessonPopulated } from '../../models/lesson.interfaces';
 import { ThumbnailSelectorComponent } from 'src/app/course/components/thumbnail-selector/thumbnail-selector.component';
 import { FormLessonComponent } from "../form-lesson/form-lesson.component";
-import { FileService } from 'src/app/shared/services/file/file.service';
+import { FileService } from 'src/app/file/services/file.service';
 import { Course } from '@course/models/course.interfaces';
 import { ModuleService } from '@module/services/module.service';
 import { CardActionComponent } from "src/app/shared/components/card-action/card-action.component";
@@ -89,7 +89,7 @@ export class SliderContentManagerComponent implements OnDestroy {
     }
     else{
       this.lessonFormState.setIsModulePopUpVisible(true);
-      this.uiService.setErrorMessage('Debes crear un modulo antes de crear una lección')
+      this.uiService.showToastMessage('Debes crear un modulo antes de crear una lección')
       return false;
     }
   }

@@ -11,10 +11,9 @@ export class UIService {
 
   private timer : any ;
 
-  setErrorMessage = ( message : string , duration : number = 3500 ) : void => {
+  showToastMessage = ( message : string , duration : number = 3500 ) : void => {
 
     if( this.errorMessage() ) return;
-
 
     this._errorMessage.set( message );
 

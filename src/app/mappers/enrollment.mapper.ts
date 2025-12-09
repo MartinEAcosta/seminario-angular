@@ -1,5 +1,5 @@
 import { Enrollment, EnrollmentDetailed } from '../enrollment/models/enrollment.interfaces';
-import { EnrollmentDetailedListResponse, EnrollmentDetailedUniqueResponse, EnrollmentListResponse, EnrollmentUniqueResponse, NextEnrollmentUniqueResponse } from '../shared/models/api.interfaces';
+import { EnrollmentDetailedListResponse, EnrollmentDetailedUniqueResponse, EnrollmentListResponse, EnrollmentUniqueResponse } from '../shared/models/api.interfaces';
 
 
 export class EnrollmentMapper {

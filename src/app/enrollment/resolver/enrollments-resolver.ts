@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Observable} from 'rxjs';
 
-import { EnrollmentService } from '@enrollment/services/enrollment.service';
 import { AuthService } from '@auth/services/auth.service';
 import { LessonService } from '@lesson/services/lesson.service';
 import { UIService } from '@shared/services/ui/ui.service';
@@ -18,9 +17,8 @@ export class EnrollmentsResolver implements Resolve<EnrollmentDetailed[]> {
   enrollmentState = inject(EnrollmentState);
   lessonService = inject(LessonService);
 
-  resolve(route: ActivatedRouteSnapshot): Observable<EnrollmentDetailed[]> | Promise<EnrollmentDetailed[]> | EnrollmentDetailed[] {
+  resolve( route : ActivatedRouteSnapshot ) : Observable<EnrollmentDetailed[]> | Promise<EnrollmentDetailed[]> | EnrollmentDetailed[] {
     const user = this.authService.user();
-
     if (!user) {
       this.uiService.showToastMessage(
         'Debes estar autenticado para acceder a este contenido.'

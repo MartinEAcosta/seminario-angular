@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-import { EnrollmentDetailedListResponse, EnrollmentListResponse, EnrollmentResponse } from '@shared/models/api.interfaces';
+import { EnrollmentDetailedListResponse, EnrollmentListResponse, EnrollmentPopulatedResponse, EnrollmentResponse, EnrollmentUniqueResponse } from '@shared/models/api.interfaces';
 import { Enrollment, EnrollmentDetailed } from '@enrollment/models/enrollment.interfaces';
 import { EnrollmentMapper } from '@mappers/enrollment.mapper';
 
@@ -30,9 +30,23 @@ export class EnrollmentService {
                     );
   }
 
+  public getEnrollmentPopulatedById = ( id_enrollment : string ) : Observable<EnrollmentDetailed> => {
+    return this.http
+                    .get<EnrollmentPopulatedResponse>( `${this.baseURL}/${id_enrollment}` )
+                    .pipe(
+                      map( ( enrollmentResponse ) => { 
+                        return EnrollmentMapper.mapResponseToEnrollmentDetailed( enrollmentResponse.data );
+                      }),
+                      catchError( ({error}) => {
+                        console.log(error);
+                        return throwError(() => new Error(`${error.errorMessage}`));
+                      }),
+                    );
+  }
+
   public getEnrollmentsByUserId = ( id_user : string ) : Observable<EnrollmentDetailed[]> => {
     return this.http
-                    .get<EnrollmentDetailedListResponse>( `${this.baseURL}/${id_user}` )
+                    .get<EnrollmentDetailedListResponse>( `${this.baseURL}/user/${id_user}` )
                     .pipe(
                       map( ( enrollmentsResponse ) => {
                         return EnrollmentMapper.mapResponseToEnrollmentDetailedArray( enrollmentsResponse );

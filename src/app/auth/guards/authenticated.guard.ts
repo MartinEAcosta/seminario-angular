@@ -1,16 +1,16 @@
 import { inject } from '@angular/core';
 import { CanMatchFn, Route, Router, UrlSegment } from '@angular/router';
-import { AuthService } from '../services/auth.service';
 import { firstValueFrom } from 'rxjs';
+
+import { AuthService } from '@auth/services/auth.service';
 
 export const AuthenticatedGuard: CanMatchFn = async(
     route: Route,
     segments: UrlSegment[]
 ) => {
 
-    const authService = inject(AuthService);
     const router = inject(Router);
-    // firstValueFrom: permite trabajar con observables, espera la respuesta como si fuera una promesa.
+    const authService = inject(AuthService);
     const isAuthenticated = await firstValueFrom( authService.checkStatus() );
 
     if( !isAuthenticated ){

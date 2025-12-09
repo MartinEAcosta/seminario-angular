@@ -12,8 +12,10 @@ export class EnrollmentState {
 
   private authService = inject(AuthService);
   private _enrollmentList = signal<EnrollmentDetailed[] | null>(null);
-  
+  private _selectedEnrollment = signal<EnrollmentDetailed | null>(null);
+
   enrollmentList = this._enrollmentList.asReadonly();
+  selectedEnrollment = this._selectedEnrollment.asReadonly();
   user = computed(() => this.authService.user());
 
   constructor( private enrollmentService : EnrollmentService ) { }
@@ -25,8 +27,20 @@ export class EnrollmentState {
     }
     return this.enrollmentService.getEnrollmentsByUserId( this.user()!.id ).pipe( 
       tap( (enrollments) => {
-        console.log(enrollments);
+        console.log(enrollments)
         this._enrollmentList.set( enrollments );
+      })
+    );
+  }
+
+  obtainEnrollment = ( id_enrollment : string ) : Observable<EnrollmentDetailed | null> => {
+    if( !this.user() ) return of();
+    if( this.selectedEnrollment() ){
+      return of( this.selectedEnrollment() );
+    }
+    return this.enrollmentService.getEnrollmentPopulatedById( id_enrollment ).pipe(
+      tap( (enrollment) => {
+        this._selectedEnrollment.set( enrollment );
       })
     );
   }

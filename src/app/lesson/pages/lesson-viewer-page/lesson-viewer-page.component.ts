@@ -1,10 +1,11 @@
 import { Router } from '@angular/router';
-import { Component, inject} from '@angular/core';
+import { Component, computed, inject} from '@angular/core';
 
 import { AuthService } from '@auth/services/auth.service';
 import { EnrollmentService } from '@enrollment/services/enrollment.service';
 import { ModuleService } from '@module/services/module.service';
 import { LessonService } from '@lesson/services/lesson.service';
+import { EnrollmentState } from '@enrollment/state/enrollment-state';
 
 @Component({
   selector: 'app-lesson-viewer-page',
@@ -19,6 +20,11 @@ export class LessonViewerPageComponent {
   enrollmentService = inject(EnrollmentService);
   lessonService = inject(LessonService);
 
+  enrollmentState = inject(EnrollmentState);
 
+  selectedEnrollment = computed( () => this.enrollmentState.selectedEnrollment());
 
+  constructor( ) {
+    console.log(this.selectedEnrollment())
+  }
 }

@@ -14,8 +14,6 @@ export class EnrollmentMiniCardComponent {
 
   enrollment = input.required<EnrollmentDetailed>();
 
-  constructor() { 
-    
-  }
+  constructor() { }
 
 }

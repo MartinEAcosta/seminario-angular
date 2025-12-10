@@ -27,16 +27,15 @@ export class EnrollmentState {
     }
     return this.enrollmentService.getEnrollmentsByUserId( this.user()!.id ).pipe( 
       tap( (enrollments) => {
-        console.log(enrollments)
         this._enrollmentList.set( enrollments );
       })
     );
   }
 
-  obtainEnrollment = ( id_enrollment : string ) : Observable<EnrollmentDetailed | null> => {
+  obtainEnrollment = ( id_enrollment : string ) : Observable<EnrollmentDetailed> => {
     if( !this.user() ) return of();
     if( this.selectedEnrollment() ){
-      return of( this.selectedEnrollment() );
+      return of( this.selectedEnrollment()! );
     }
     return this.enrollmentService.getEnrollmentPopulatedById( id_enrollment ).pipe(
       tap( (enrollment) => {

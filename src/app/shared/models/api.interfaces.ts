@@ -76,7 +76,7 @@ export interface EnrollmentUniqueResponse {
   completed_lessons : string[];
 }
 
-export interface EnrollmentDetailedUniqueResponse {
+export interface EnrollmentPopulatedUniqueResponse {
   id : string;
   id_user : string;
   course : {
@@ -92,8 +92,8 @@ export interface EnrollmentDetailedUniqueResponse {
 
 export type EnrollmentResponse = ApiResponse<EnrollmentUniqueResponse>;
 export type EnrollmentListResponse = ApiResponse<EnrollmentUniqueResponse[]>;
-export type EnrollmentPopulatedResponse = ApiResponse<EnrollmentDetailedUniqueResponse>;
-export type EnrollmentDetailedListResponse = ApiResponse<EnrollmentDetailedUniqueResponse[]>;
+export type EnrollmentPopulatedResponse = ApiResponse<EnrollmentPopulatedUniqueResponse>;
+export type EnrollmentPopulatedListResponse = ApiResponse<EnrollmentPopulatedUniqueResponse[]>;
 
 //* Modules * //
 

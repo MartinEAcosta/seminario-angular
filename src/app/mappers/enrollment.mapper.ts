@@ -1,5 +1,5 @@
-import { Enrollment, EnrollmentDetailed } from '../enrollment/models/enrollment.interfaces';
-import { EnrollmentDetailedListResponse, EnrollmentDetailedUniqueResponse, EnrollmentListResponse, EnrollmentUniqueResponse } from '../shared/models/api.interfaces';
+import { Enrollment, EnrollmentDetailed } from '@enrollment/models/enrollment.interfaces';
+import { EnrollmentPopulatedListResponse, EnrollmentPopulatedUniqueResponse, EnrollmentListResponse, EnrollmentUniqueResponse } from '../shared/models/api.interfaces';
 
 
 export class EnrollmentMapper {
@@ -19,7 +19,7 @@ export class EnrollmentMapper {
         return response.data.map( this.mapResponseToEnrollment );
     }
 
-    static mapResponseToEnrollmentDetailed ( response : EnrollmentDetailedUniqueResponse ) : EnrollmentDetailed {
+    static mapResponseToEnrollmentDetailed ( response : EnrollmentPopulatedUniqueResponse ) : EnrollmentDetailed {
         return{
             id : response.id,
             id_user : response.id_user,
@@ -35,7 +35,7 @@ export class EnrollmentMapper {
         };
     }
 
-    static mapResponseToEnrollmentDetailedArray ( response : EnrollmentDetailedListResponse ) : EnrollmentDetailed[] {
+    static mapResponseToEnrollmentDetailedArray ( response : EnrollmentPopulatedListResponse ) : EnrollmentDetailed[] {
         return response.data.map( this.mapResponseToEnrollmentDetailed );
     }
 }

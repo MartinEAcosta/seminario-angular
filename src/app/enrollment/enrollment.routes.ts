@@ -4,6 +4,7 @@ import { AuthenticatedGuard } from "@guards/authenticated.guard";
 import EnrollmentsPage from "@enrollment/pages/enrollments-page";
 import { LessonViewerPageComponent } from "@lesson/pages/lesson-viewer-page/lesson-viewer-page.component";
 import { EnrollmentsResolver } from "@enrollment/resolver/enrollments-resolver";
+import { EnrollmentResolver } from "./resolver/enrollment-resolver";
 
 export const enrollmentRoutes : Routes = [
     {
@@ -20,6 +21,9 @@ export const enrollmentRoutes : Routes = [
             {
                 path : ':id_enrollment',
                 canMatch : [ AuthenticatedGuard ],
+                resolve : {
+                    resolvedEnrollment : EnrollmentResolver,
+                },
                 component : LessonViewerPageComponent
             },
 

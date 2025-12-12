@@ -1,16 +1,16 @@
-<!-- <div class="container-content">
-    @if( enrollmentResource.isLoading() ){
+<div class="container-content">
+    @if( enrollmentState.isLoading() ){
         <div class="container-loader">
             <app-loader />
         </div>
     }
     @else {
-        <app-list-of-content [courseId]="resolvedCourse().id" [courseId]="resolvedCourse().id" />
+        <app-list-of-content [courseId]="courseState.selectedCourse()!.id" />
 
         <div class="container-media">
             <div class="container-title-lesson box-shadow" [ngClass]="{ 'skeleton-box': !lessonSelected() }">
                 @if( lessonSelected() ){
-                    <h1> {{ lessonSelected()?.title }}</h1>
+                    <h1> {{ lessonSelected()?.title }} </h1>
                 }
             </div>
             <div class="container-reserved-space box-shadow">
@@ -34,4 +34,4 @@
             </div>
         </div>  
     }
-</div> -->
+</div>

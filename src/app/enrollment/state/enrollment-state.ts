@@ -4,10 +4,9 @@ import { catchError, finalize, Observable, of, tap } from 'rxjs';
 import { AuthService } from '@auth/services/auth.service';
 import { EnrollmentDetailed } from '@enrollment/models/enrollment.interfaces';
 import { EnrollmentService } from '@enrollment/services/enrollment.service';
+import { State } from '@shared/state/state';
 
-interface EnrollmentStateData {
-  isLoading : boolean,
-  error : string | null,
+interface EnrollmentStateProps {
   selectedEnrollment : EnrollmentDetailed | null,
   enrollmentList : EnrollmentDetailed[] | null,
 };
@@ -15,23 +14,17 @@ interface EnrollmentStateData {
 @Injectable({
   providedIn: 'root'
 })
-export class EnrollmentState {
+export class EnrollmentState extends State<EnrollmentStateProps> {
 
   private authService = inject(AuthService);
   private enrollmentService = inject(EnrollmentService);
 
-  private state = signal<EnrollmentStateData>({
-    isLoading : false,
-    error : null,
-    selectedEnrollment : null,
-    enrollmentList : null,
-  });
-
-  enrollmentList = computed(() => this.state().enrollmentList);
-  selectedEnrollment = computed(() => this.state().selectedEnrollment);
+  enrollmentList = computed(() => this.state().data?.enrollmentList);
+  selectedEnrollment = computed(() => this.state().data?.selectedEnrollment);
   user = computed(() => this.authService.user());
 
   constructor( ) {
+    super();
     effect(() => {
       if (!this.user()) {
         this.resetState();
@@ -39,7 +32,7 @@ export class EnrollmentState {
     });
   }
 
-  obtainEnrollmentList ( ) : Observable<EnrollmentDetailed[]> {
+  loadEnrollmentList ( ) : Observable<EnrollmentDetailed[]> {
     if( !this.user() ) return of([]);
 
     if( this.enrollmentList() ) { 
@@ -54,14 +47,14 @@ export class EnrollmentState {
       }),
       catchError( (error) => {
         this.handleError( error );
-        throw error;
+        return of([]);
       }),
       finalize(() => this.setIsLoading(false))
     );
   }
 
-  obtainEnrollment ( id_enrollment : string ) : Observable<EnrollmentDetailed> {
-    if( !this.user() ) return of();
+  loadEnrollment ( id_enrollment : string ) : Observable<EnrollmentDetailed | null> {
+    if( !this.user() ) return of(null);
     
     if( this.selectedEnrollment() && (this.selectedEnrollment()?.id === id_enrollment)  ){
       return of( this.selectedEnrollment()! );
@@ -81,39 +74,10 @@ export class EnrollmentState {
         }),
         catchError((error) => {
           this.handleError(error);
-          throw error;
+          return of(null);
         }),
         finalize(() => this.setIsLoading(false))
       );
-  }
-
-  setIsLoading( bool : boolean ) {
-    this.state.update( (c) => ({
-        ...c ,
-        isLoading : bool,
-    }))
-  }
-
-  resetState ( ) : EnrollmentStateData {
-    this.state.set( {
-      isLoading : false,
-      error : null,
-      enrollmentList : null,
-      selectedEnrollment : null,
-    } );
-
-    return this.state();
-  }
-
-  handleError ( error : any ) : EnrollmentStateData {
-    const errorMessage = error.message || 'Ocurrio un error inesperado.';
-
-    this.state.update( (c) => ({
-      ...c , 
-      error : errorMessage, 
-      }) 
-    );
-    return this.state();
   }
 
 }

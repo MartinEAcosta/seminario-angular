@@ -17,7 +17,6 @@ export class ListOfContentComponent {
   private authService = inject(AuthService);
 
   courseId = input.required<string>();
-  userHasEnrollment = input<boolean>(false);
   user = computed( () => this.authService.user() );
 
   modulesResource = rxResource({

@@ -1,30 +1,25 @@
 import { Router } from '@angular/router';
-import { Component, computed, inject} from '@angular/core';
+import { Component, inject} from '@angular/core';
 
-import { AuthService } from '@auth/services/auth.service';
-import { EnrollmentService } from '@enrollment/services/enrollment.service';
-import { ModuleService } from '@module/services/module.service';
-import { LessonService } from '@lesson/services/lesson.service';
 import { EnrollmentState } from '@enrollment/state/enrollment-state';
+import { VjsPlayerComponent } from "@shared/components/vjs-player/vjs-player.component";
+import { ListOfContentComponent } from "@lesson/components/list-of-content/list-of-content.component";
+import { LoaderComponent } from "@shared/components/loader/loader.component";
+import { CourseState } from '@course/state/course/course-state';
 
 @Component({
   selector: 'app-lesson-viewer-page',
   templateUrl: './lesson-viewer-page.component.html',
-  styleUrl: './lesson-viewer-page.component.scss'
+  styleUrl: './lesson-viewer-page.component.scss',
+  imports: [VjsPlayerComponent, ListOfContentComponent, LoaderComponent]
 })
 export class LessonViewerPageComponent {
 
   router = inject(Router);
-  authService = inject(AuthService);
-  moduleService = inject(ModuleService);
-  enrollmentService = inject(EnrollmentService);
-  lessonService = inject(LessonService);
 
   enrollmentState = inject(EnrollmentState);
+  courseState = inject(CourseState);
 
-  selectedEnrollment = computed( () => this.enrollmentState.selectedEnrollment());
+  constructor( ) {  }
 
-  constructor( ) {
-    console.log(this.selectedEnrollment())
-  }
 }

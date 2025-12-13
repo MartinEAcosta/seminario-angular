@@ -19,9 +19,9 @@ export class LessonService {
   
   constructor() { }
 
-  public getAllLessonPopulatedFromCourse = ( courseId : string ) : Observable<LessonPopulated[]> => {
+  public getAllLessonPopulatedFromCourse = ( id_course : string ) : Observable<LessonPopulated[]> => {
     return this.http
-                    .get<LessonPopulatedListResponse>(`${this.baseURL}/detailed/course/${courseId}`)
+                    .get<LessonPopulatedListResponse>(`${this.baseURL}/populated/course/${id_course}`)
                     .pipe(
                       map( (lessonResponse) => {
                         // console.log(lessonResponse)
@@ -34,8 +34,8 @@ export class LessonService {
                     );
   }
 
-  public getLessonById = ( lessonId : string ) : Observable<Lesson> => {
-    return this.http.get<any>(`${this.baseURL}/${lessonId}`)
+  public getLessonById = ( id_lesson : string ) : Observable<Lesson> => {
+    return this.http.get<any>(`${this.baseURL}/${id_lesson}`)
                     .pipe(
                       map( (lessonResponse) => {
                         return LessonMapper.mapResponseToLesson( lessonResponse );
@@ -47,13 +47,26 @@ export class LessonService {
                     );
   }
 
-    public getNextLesson = ( id_enrollment : string ) : Observable<LessonPopulated> => {
+  public getLessonPopulatedById = ( id_lesson : string ) => {
+    return this.http
+                    .get<LessonPopulatedResponse>( `${this.baseURL}/populated/${id_lesson}` )
+                    .pipe(
+                      map( (lessonResponse) => {
+                        return LessonMapper.mapResponseToLessonPopulated( lessonResponse.data );
+                      }),
+                      catchError( (error) => {
+                        console.log(error);
+                        return throwError(() => new Error(`${error.errorMessage}`));
+                      }),
+                    );
+  }
+
+  public getNextLesson = ( id_enrollment : string ) : Observable<LessonPopulated> => {
     return this.http
                     .get<LessonPopulatedResponse>( `${this.baseURL}/next/${id_enrollment}` )
                     .pipe(
-                      map( ( enrollmentResponse ) => {
-                          console.log(enrollmentResponse);
-                          return LessonMapper.mapResponseToLessonPopulated( enrollmentResponse.data );
+                      map( ( lessonResponse ) => {
+                          return LessonMapper.mapResponseToLessonPopulated( lessonResponse.data );
                       }),
                       catchError( (error) => {
                         console.log(error);
@@ -101,9 +114,9 @@ export class LessonService {
     }
   }
 
-  public deleteLesson = ( id : string ) : Observable<boolean> => {
+  public deleteLesson = ( id_lesson : string ) : Observable<boolean> => {
     return this.http
-            .delete<DeleteResponse>(`${this.baseURL}/delete/${id}` )
+            .delete<DeleteResponse>(`${this.baseURL}/delete/${id_lesson}` )
             .pipe(
               map( (response) =>{
                 return response.data;

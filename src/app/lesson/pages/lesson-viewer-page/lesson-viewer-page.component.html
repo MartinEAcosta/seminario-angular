@@ -8,28 +8,28 @@
         <app-list-of-content [courseId]="courseState.selectedCourse()!.id" />
 
         <div class="container-media">
-            <div class="container-title-lesson box-shadow" [ngClass]="{ 'skeleton-box': !lessonSelected() }">
-                @if( lessonSelected() ){
-                    <h1> {{ lessonSelected()?.title }} </h1>
+            <div class="container-title-lesson box-shadow" [ngClass]="{ 'skeleton-box': !lessonState.selectedLesson() }">
+                @if( lessonState.selectedLesson() ){
+                    <h1> {{ lessonState.selectedLesson()?.title }} </h1>
                 }
             </div>
             <div class="container-reserved-space box-shadow">
-                @if( lessonSelected()?.file?.resource_type === "video" ) {
+                @if( lessonState.selectedLesson()?.file?.resource_type === "video" ) {
                     <app-vjs-player [options]="{ 
                             fluid : true,
                             aspectRatio : '16:9',
                             autoplay: false, 
                             sources:[
                                 {
-                                    src : lessonSelected()?.file?.url!,
-                                    type: lessonSelected()?.file?.resource_type + '/' + lessonSelected()?.file?.extension!
+                                    src : lessonState.selectedLesson()?.file?.url!,
+                                    type: lessonState.selectedLesson()?.file?.resource_type + '/' + lessonState.selectedLesson()?.file?.extension!
                                 }
                             ],
                             language: 'es', 
                         }" />
                 }
-                @else if( lessonSelected()?.file?.resource_type === "image" ) {
-                    <img src="{{lessonSelected()?.file?.url}}" alt="">
+                @else if( lessonState.selectedLesson()?.file?.resource_type === "image" ) {
+                    <img src="{{lessonState.selectedLesson()?.file?.url}}" alt="">
                 }
             </div>
         </div>  

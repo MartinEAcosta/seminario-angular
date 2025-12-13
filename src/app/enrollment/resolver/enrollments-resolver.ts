@@ -27,7 +27,7 @@ export class EnrollmentsResolver implements Resolve<EnrollmentDetailed[]> {
       return [];   
     }
 
-    const enrollmentList = this.enrollmentState.obtainEnrollmentList( );
+    const enrollmentList = this.enrollmentState.loadEnrollmentList( );
     return enrollmentList ? enrollmentList : [];
   }
 }

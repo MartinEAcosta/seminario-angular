@@ -4,7 +4,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { CourseService } from '../../services/course.service';
 import { CourseMapper } from '@mappers/course.mapper';
 import { FormCourseComponent } from "../../components/form-course/form-course.component";
-import { CourseFormState } from '../../state/course/course-form-state';
+import { CourseFormState } from '../../state/course-form/course-form-state';
 import { Router } from '@angular/router';
 
 @Component({

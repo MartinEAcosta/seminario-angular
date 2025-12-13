@@ -6,8 +6,8 @@ import { environment } from 'src/environments/environment';
 import { FileMapper } from '@mappers/file.mapper';
 import { DeleteResponse, FileResponse } from '../../shared/models/api.interfaces';
 import { UploadedFile } from '../models/file.interfaces';
-import { CourseFormState } from 'src/app/course/state/course/course-form-state';
-import { LessonFormState } from 'src/app/lesson/state/lesson/lesson-form-state';
+import { CourseFormState } from '@course/state/course-form/course-form-state';
+import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
 
 @Injectable({
   providedIn: 'root'

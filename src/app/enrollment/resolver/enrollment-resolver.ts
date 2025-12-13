@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Observable, of} from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 import { AuthService } from '@auth/services/auth.service';
 import { LessonService } from '@lesson/services/lesson.service';
@@ -34,7 +35,18 @@ export class EnrollmentResolver implements Resolve<EnrollmentDetailed> {
       return of();   
     }
 
-    const enrollment = this.enrollmentState.obtainEnrollment( enrollmentId! );
-    return enrollment ? enrollment : of();
+    const enrollment = this.enrollmentState.loadEnrollment( enrollmentId! );
+    return enrollment.pipe(
+      filter((value) => {
+        if (!value) {
+          this.uiService.showToastMessage(
+            'Hubo un error al recopilar la inscripción.'
+          );
+          this.router.navigateByUrl('/');
+          return false;
+        }
+        return true;
+      })
+    );
   }
 }

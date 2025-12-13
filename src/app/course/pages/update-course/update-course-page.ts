@@ -4,7 +4,7 @@ import { Component, inject, input } from '@angular/core';
 import { CourseService } from 'src/app/course/services/course.service';
 import { CourseMapper } from '@mappers/course.mapper';
 import { FormCourseComponent } from "src/app/course/components/form-course/form-course.component";
-import { CourseFormState } from '../../state/course/course-form-state';
+import { CourseFormState } from '../../state/course-form/course-form-state';
 import { Course } from '@course/models/course.interfaces';
 import { AuthService } from '@auth/services/auth.service';
 

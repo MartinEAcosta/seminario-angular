@@ -4,7 +4,6 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { catchError, of, tap } from 'rxjs';
 
 import { LessonService } from '../../services/lesson.service';
-import { LessonFormState } from '../../state/lesson/lesson-form-state';
 import { LessonPopulated } from '../../models/lesson.interfaces';
 import { ThumbnailSelectorComponent } from 'src/app/course/components/thumbnail-selector/thumbnail-selector.component';
 import { FormLessonComponent } from "../form-lesson/form-lesson.component";
@@ -15,6 +14,7 @@ import { CardActionComponent } from "src/app/shared/components/card-action/card-
 import { SaveModuleComponent } from "@module/components/save-module/save-module.component";
 import { UIService } from 'src/app/shared/services/ui/ui.service';
 import { LoaderComponent } from "src/app/shared/components/loader/loader.component";
+import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
 
 @Component({
   selector: 'app-slider-content-manager',

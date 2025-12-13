@@ -4,7 +4,7 @@ import { catchError, map, Observable, of } from "rxjs";
 
 import { Course } from "@interfaces/course.interfaces";
 import { CourseService } from "../services/course.service";
-import { CourseFormState } from "@course/state/course/course-form-state";
+import { CourseFormState } from "@course/state/course-form/course-form-state";
 import { AuthService } from "@auth/services/auth.service";
 
 @Injectable({ providedIn: 'root' })

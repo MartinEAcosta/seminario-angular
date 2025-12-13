@@ -53,8 +53,8 @@ export class EnrollmentState extends State<EnrollmentStateProps> {
     );
   }
 
-  loadEnrollment ( id_enrollment : string ) : Observable<EnrollmentDetailed | null> {
-    if( !this.user() ) return of(null);
+  loadEnrollment ( id_enrollment : string ) : Observable<EnrollmentDetailed> {
+    if( !this.user() ) throw new Error('El usuario no esta autenticado.');
     
     if( this.selectedEnrollment() && (this.selectedEnrollment()?.id === id_enrollment)  ){
       return of( this.selectedEnrollment()! );
@@ -74,7 +74,7 @@ export class EnrollmentState extends State<EnrollmentStateProps> {
         }),
         catchError((error) => {
           this.handleError(error);
-          return of(null);
+          return of();
         }),
         finalize(() => this.setIsLoading(false))
       );

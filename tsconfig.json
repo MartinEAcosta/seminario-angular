@@ -9,6 +9,7 @@
       "@course/*" : ["src/app/course/*"],
       "@cart/*" : ["src/app/cart/*"],
       "@enrollment/*" : ["src/app/enrollment/*"],
+      "@file/*" : ["src/app/file/*"],
       "@lesson/*" : ["src/app/lesson/*"],
       "@module/*" : ["src/app/module/*"],
       "@payment/*" : ["./src/app/payment/*"],

@@ -1,5 +1,6 @@
-import { Component, EventEmitter, inject, input } from '@angular/core';
-import { CourseFormState } from '../../state/course-form/course-form-state';
+import { Component, inject, input } from '@angular/core';
+
+import { CourseFormState } from '@course/state/course-form/course-form-state';
 import { FileService } from 'src/app/file/services/file.service';
 import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
 
@@ -15,7 +16,7 @@ export class ThumbnailSelectorComponent {
   courseFormState = inject(CourseFormState);
   lessonFormState = inject(LessonFormState);
 
-  folder = input.required< 'lessons' | 'courses'>();
+  folder = input.required<'lessons' | 'courses'>();
 
   constructor() { }
 

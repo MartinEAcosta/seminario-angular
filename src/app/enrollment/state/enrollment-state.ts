@@ -1,4 +1,4 @@
-import { computed, effect, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable } from '@angular/core';
 import { catchError, finalize, Observable, of, tap } from 'rxjs';
 
 import { AuthService } from '@auth/services/auth.service';
@@ -31,7 +31,7 @@ export class EnrollmentState extends State<EnrollmentStateProps> {
       }
     });
   }
-
+   
   loadEnrollmentList ( ) : Observable<EnrollmentDetailed[]> {
     if( !this.user() ) return of([]);
 
@@ -40,10 +40,17 @@ export class EnrollmentState extends State<EnrollmentStateProps> {
     }
 
     this.setIsLoading(true);
-
     return this.enrollmentService.getEnrollmentsByUserId( this.user()!.id ).pipe( 
       tap( (enrollments) => {
-        this.state.update( (c) => ({ ...c, enrollmentList : enrollments}));
+        this.state.update( (c) => ({ 
+          ...c,
+          isLoading : false,
+          error: null,
+          data : {
+            ...c.data!,
+            enrollmentList : enrollments,
+          },
+        }));
       }),
       catchError( (error) => {
         this.handleError( error );
@@ -53,13 +60,10 @@ export class EnrollmentState extends State<EnrollmentStateProps> {
     );
   }
 
-  loadEnrollment ( id_enrollment : string ) : Observable<EnrollmentDetailed> {
-    if( !this.user() ) throw new Error('El usuario no esta autenticado.');
-    
+  loadEnrollment ( id_enrollment : string ) : Observable<EnrollmentDetailed | null> {
     if( this.selectedEnrollment() && (this.selectedEnrollment()?.id === id_enrollment)  ){
       return of( this.selectedEnrollment()! );
     }
-
     this.setIsLoading(true);
 
     return this.enrollmentService
@@ -67,14 +71,17 @@ export class EnrollmentState extends State<EnrollmentStateProps> {
       .pipe(
         tap((enrollment) => {
           this.state.update((c) => ({
-            ...c,
-            selectedEnrollment: enrollment,
+            isLoading : false,
             error: null,
+            data : {
+              ...c.data!,
+              selectedEnrollment: enrollment,
+            },
           }));
         }),
         catchError((error) => {
           this.handleError(error);
-          return of();
+          return of(null);
         }),
         finalize(() => this.setIsLoading(false))
       );

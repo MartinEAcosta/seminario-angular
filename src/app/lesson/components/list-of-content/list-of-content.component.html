@@ -10,6 +10,6 @@
         </div>
     }
     @for( module of modulesResource.value(); track module.unit ){
-        <app-modules-accordion [module]="module" [isClickable]="!!user()" [courseId]="courseId()" />
+        <app-modules-accordion [module]="module" [isClickable]="!!user()" />
     }
 </div>

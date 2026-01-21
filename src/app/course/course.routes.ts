@@ -4,7 +4,6 @@ import { AuthenticatedGuard } from "@auth/guards/authenticated.guard";
 import { ValidateParamIdGuard } from "@course/guards/validate-param.guard";
 import { CourseResolver } from "@course/resolver/course-resolver";
 import { CoursePage , CreateCoursePageComponent , UpdateCoursePageComponent } from "@course/pages/";
-import { LessonViewerPageComponent } from "@lesson/pages/lesson-viewer-page/lesson-viewer-page.component";
 
 export const courseRoutes : Routes = [
     {

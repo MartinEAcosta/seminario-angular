@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, inject} from '@angular/core';
 import { NgClass } from '@angular/common';
 
@@ -8,6 +8,8 @@ import { ListOfContentComponent } from "@lesson/components/list-of-content/list-
 import { LoaderComponent } from "@shared/components/loader/loader.component";
 import { CourseState } from '@course/state/course-state';
 import { LessonState } from '@lesson/state/lesson-state';
+import { map } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-lesson-viewer-page',
@@ -17,12 +19,42 @@ import { LessonState } from '@lesson/state/lesson-state';
 })
 export class LessonViewerPageComponent {
 
-  router = inject(Router);
-
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute)
+  
+  lessonId = toSignal<string>(this.activatedRoute.params.pipe( map( (p) => p['id_lesson'] )));
   enrollmentState = inject(EnrollmentState);
   courseState = inject(CourseState);
   lessonState = inject(LessonState);
 
-  constructor( ) {  }
+  ngOnInit( ) { 
+    const enrollment = this.enrollmentState.selectedEnrollment();
+    if( !enrollment ) return;
+    
+    if( !this.lessonId() ) {
+      this.lessonState.loadNextLesson( enrollment.id! ).subscribe(
+        lesson => {
+          console.log(lesson)
+          this.router.navigate(
+            ['lesson' , lesson!.id],
+            { relativeTo : this.activatedRoute } 
+          );
+        }
+      );
+    } 
+    else {
+      this.lessonState.loadLesson( this.lessonId()! ).subscribe(
+        lesson => {
+          if( !lesson ) {
+            this.router.navigate(
+              ['/'],
+            );
+            return;
+          }
+        }
+      );
+    }
+    return;
+  }
 
-}
+  }

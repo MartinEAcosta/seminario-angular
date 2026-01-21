@@ -29,6 +29,8 @@ export class State<T> {
       ...c,
       error: errorMessage,
     }));
+    this.setIsLoading(false);
+
     return this.state();
   }
 

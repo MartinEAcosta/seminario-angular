@@ -5,6 +5,12 @@ export interface ApiResponse<T> {
   data      : T; 
 }
 
+export interface ErrorResponse {
+  ok : boolean,
+  status : number,
+  error : string,
+}
+
 export interface PaginationResponseDto<T> {
   pages : number,
   current_page  : number,

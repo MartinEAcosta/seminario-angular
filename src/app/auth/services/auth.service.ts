@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { UIService } from 'src/app/shared/services/ui/ui.service';
 import { AuthResponse, User, UserDTO } from 'src/app/auth/models/auth.interfaces';
 import { AuthMapper } from '@mappers/auth.mapper';
+import { ErrorResponse } from '@shared/models/api.interfaces';
 
 type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
 
@@ -101,10 +102,12 @@ export class AuthService {
     return AuthMapper.mapResponseToUser( authResponse );
   }
   
-  private handleAuthError = ( error: any ) : Observable<false>  => {
-    console.log(error);
+  private handleAuthError = ( error : any | ErrorResponse ) : Observable<false>  => {
     this.logoutUser();
-    this.uiService.showToastMessage( error.error );
+    console.log( error);
+    if( error.status === 400 ) {
+      this.uiService.showToastMessage( error.error );
+    }
     console.log(this.uiService.errorMessage());
     
     return of(false);

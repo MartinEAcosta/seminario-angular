@@ -5,7 +5,7 @@
         </div>
     }
     @else {
-        <app-list-of-content [courseId]="courseState.selectedCourse()!.id" />
+        <app-list-of-content [courseId]="enrollmentState.selectedEnrollment()?.course?.id_course!" />
 
         <div class="container-media">
             <div class="container-title-lesson box-shadow" [ngClass]="{ 'skeleton-box': !lessonState.selectedLesson() }">

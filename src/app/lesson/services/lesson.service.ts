@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { catchError, map, Observable, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
+
 import { LessonMapper } from '@mappers/lesson.mapper';
-import { DeleteResponse, LessonPopulatedListResponse, LessonPopulatedResponse, LessonResponse, LessonUniqueResponse } from '@shared/models/api.interfaces';
-import { Lesson, LessonPopulated, SaveLessonDto } from '../models/lesson.interfaces';
-import { FileService } from 'src/app/file/services/file.service';
+import { Lesson, LessonPopulated, SaveLessonDto } from '@lesson/models/lesson.interfaces';
+import { DeleteResponse, LessonPopulatedListResponse, LessonPopulatedResponse, LessonResponse } from '@shared/models/api.interfaces';
+import { FileService } from '@file/services/file.service';
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +67,7 @@ export class LessonService {
                     .get<LessonPopulatedResponse>( `${this.baseURL}/next/${id_enrollment}` )
                     .pipe(
                       map( ( lessonResponse ) => {
+                          console.log(lessonResponse)
                           return LessonMapper.mapResponseToLessonPopulated( lessonResponse.data );
                       }),
                       catchError( (error) => {

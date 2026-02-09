@@ -1,0 +1,11 @@
+<!-- [queryParams]="this.getQueryParam()!" -->
+<li 
+    [routerLink]=[]
+    (click)="onClickFilterOption()"
+    class="option-filter">
+    {{ filter().label }} 
+</li>
+@if( filter().type === 'compound' ){
+    <div class="container-compound">
+    </div>
+}

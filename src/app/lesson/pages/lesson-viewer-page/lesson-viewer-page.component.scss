@@ -54,10 +54,16 @@
     margin: auto;
     border-radius: 0.5rem;
     background-color: rgba(40, 40 , 40 , 0.1);
+    overflow: hidden;      /* importante para object-fit */
 }
 
 .box-shadow{
     box-shadow: 6px 8px 15px rgba(40, 40 , 40 , 0.3);
+}
+
+.content-image{
+    display: flex;
+    margin: auto;
 }
 
 .container-loader{

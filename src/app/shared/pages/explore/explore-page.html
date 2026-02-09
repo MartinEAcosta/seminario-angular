@@ -5,7 +5,7 @@
             [initialValue]="this.searchService.textSearch()"
             (value)="this.searchService.textSearch.set($event)">
 
-            <app-filter-selector filter-selector [filters]="filterMaps['courses']" />
+            <app-filter-selector filter-selector [filters]="filterOptions()" />
 
         </app-search-bar>
 

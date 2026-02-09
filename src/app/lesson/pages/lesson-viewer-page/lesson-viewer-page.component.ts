@@ -1,6 +1,8 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, inject} from '@angular/core';
 import { NgClass } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
 
 import { EnrollmentState } from '@enrollment/state/enrollment-state';
 import { VjsPlayerComponent } from "@shared/components/vjs-player/vjs-player.component";
@@ -8,8 +10,6 @@ import { ListOfContentComponent } from "@lesson/components/list-of-content/list-
 import { LoaderComponent } from "@shared/components/loader/loader.component";
 import { CourseState } from '@course/state/course-state';
 import { LessonState } from '@lesson/state/lesson-state';
-import { map } from 'rxjs';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-lesson-viewer-page',

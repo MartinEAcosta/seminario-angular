@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FilterOptionComponent } from './filter-option.component';
 
-import { FilterDefaultComponent } from './filter-default.component';
 
-describe('FilterDefaultComponent', () => {
-  let component: FilterDefaultComponent;
-  let fixture: ComponentFixture<FilterDefaultComponent>;
+describe('FilterOptionComponent', () => {
+  let component: FilterOptionComponent;
+  let fixture: ComponentFixture<FilterOptionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FilterDefaultComponent]
+      imports: [FilterOptionComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FilterDefaultComponent);
+    fixture = TestBed.createComponent(FilterOptionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

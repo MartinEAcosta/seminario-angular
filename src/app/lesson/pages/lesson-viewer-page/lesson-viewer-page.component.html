@@ -29,7 +29,7 @@
                         }" />
                 }
                 @else if( lessonState.selectedLesson()?.file?.resource_type === "image" ) {
-                    <img src="{{lessonState.selectedLesson()?.file?.url}}" alt="">
+                    <img class="content-image" src="{{lessonState.selectedLesson()?.file?.url}}" alt="">
                 }
             </div>
         </div>  

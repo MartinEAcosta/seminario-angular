@@ -1,16 +1,16 @@
 import { Component, input } from '@angular/core';
 
-import { FilterOption } from '@utils/filter-options';
-import { FilterDefaultComponent } from "@shared/components/filter-default/filter-default.component";
+import { FilterOptionComponent } from "@shared/components/filter-option/filter-option.component";
+import { FilterOption } from '@utils/filters/filter-options';
 
 @Component({
   selector: 'app-filter-selector',
-  imports: [FilterDefaultComponent],
+  imports: [ FilterOptionComponent],
   templateUrl: './filter-selector.component.html',
   styleUrl: './filter-selector.component.scss'
 })
 export class FilterSelectorComponent {
 
   filters = input<FilterOption[]>();
-
+  
 }

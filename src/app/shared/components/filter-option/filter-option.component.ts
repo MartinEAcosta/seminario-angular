@@ -15,14 +15,6 @@ export class FilterOptionComponent {
 
   constructor( ) {   }
 
-  ngOnInit( ) : void {
-    console.log(this.filter());
-  }
-
-  // getQueryParam = (  )  => {
-    // return { [ this.filter().key ] : this.filter().value };
-  // }
-
   onClickFilterOption = ( ) => {
     console.log(this.filter());
   }

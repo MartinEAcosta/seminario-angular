@@ -13,7 +13,11 @@
             </div>
             <ul class="options">
                 @for( filter of filters(); track filter) {
-                    <app-filter-option [filter]="filter" />
+                    @switch( filter.type ){
+                        @case ('default') {
+                            <app-filter-option-default [filter]="filter" />
+                        }
+                    }
                 }
             </ul>
         </div>

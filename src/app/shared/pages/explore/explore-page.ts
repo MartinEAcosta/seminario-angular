@@ -11,14 +11,13 @@ import { CourseMiniCardComponent } from "src/app/course/components/course-mini-c
 import { CartComponent } from "src/app/cart/components/cart/cart.component";
 import { PaginationComponent } from "../../pagination/pagination.component";
 import { SearchBarComponent } from "../../components/search-filter-bar/search-bar.component";
-import { FilterSelectorComponent } from "../../components/filter-selector/filter-selector/filter-selector.component";
 import { FilterMaps } from '@utils/filters/filter-options';
+import { FilterSelectComponent } from "@shared/components/filters/filter-select/filter-select.component";
 
 @Component({
   selector: 'app-explore-page',
-  imports: [SearchBarComponent, PageTitleComponent, LoaderComponent, CourseMiniCardComponent, 
-            CartComponent, PaginationComponent, FilterSelectorComponent
-          ],
+  imports: [SearchBarComponent, PageTitleComponent, LoaderComponent, CourseMiniCardComponent,
+    CartComponent, PaginationComponent, FilterSelectComponent],
   templateUrl: './explore-page.html',
   styleUrl: './explore-page.scss'
 })

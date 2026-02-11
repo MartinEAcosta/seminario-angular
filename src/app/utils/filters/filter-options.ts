@@ -4,10 +4,12 @@ export type FilterOption =
   | FilterOptionHover
   | FilterOptionCompound;
 
+type FilterOptionType = 'default' | 'basic' | 'hover' | 'compound';
+
 export interface FilterOptionBasic {
     key: string;
     label: string;
-    type: 'default' | 'basic' | 'hover' | 'compound';
+    type: FilterOptionType;
 }
 
 export interface FilterOptionDefault extends FilterOptionBasic {

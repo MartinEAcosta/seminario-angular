@@ -1,6 +1,6 @@
 import { Component, computed, inject, linkedSignal } from '@angular/core';
 import { Router } from '@angular/router';
-import { rxResource } from '@angular/core/rxjs-interop';
+import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 
 import { CourseService } from 'src/app/course/services/course.service';
 import { SearchService } from '../../services/search/search.service';
@@ -11,8 +11,9 @@ import { CourseMiniCardComponent } from "src/app/course/components/course-mini-c
 import { CartComponent } from "src/app/cart/components/cart/cart.component";
 import { PaginationComponent } from "../../pagination/pagination.component";
 import { SearchBarComponent } from "../../components/search-filter-bar/search-bar.component";
-import { FilterMaps } from '@utils/filters/filter-options';
 import { FilterSelectComponent } from "@shared/components/filters/filter-select/filter-select.component";
+import { CategoryService } from 'src/app/category/services/category.service';
+import { FilterExplorePage } from '@utils/filters/filter-options';
 
 @Component({
   selector: 'app-explore-page',
@@ -27,8 +28,34 @@ export class ExplorePage {
   private courseService = inject(CourseService);
   paginationService = inject(PaginationService);
   searchService = inject(SearchService)
-  
-  filterOptions = computed(() => FilterMaps['courses'] || []);
+  categoryService = inject(CategoryService);
+
+  categories = toSignal( 
+    this.categoryService.getAllCategories(),
+    { initialValue : [] }
+  );
+
+  categoriesResource = rxResource({
+    request : () => ({}),
+    loader : () => this.categoryService.getAllCategories(),
+  });
+  filterOptions = computed( () => {
+    const filters = FilterExplorePage.map( filter => {
+      if( filter.type === 'hover' && filter.key === 'id_category') {
+        return {
+          ...filter,
+          value : this.categories().map( category => ({
+            key : 'id_category',
+            label : category.name,
+            type: 'default',
+            value : category.id,
+          })
+        )};
+      }
+      return filter;
+    });
+    return filters;
+  });
   courses = linkedSignal(() => this.coursesResource.value());
   
   coursesResource = rxResource({

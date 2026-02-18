@@ -1,13 +1,14 @@
 import { Component, input } from '@angular/core';
 
 import { RouterLink } from "@angular/router";
-import { FilterOptionDefault } from '@utils/filters/filter-options';
+import {  } from '@utils/filters/filter-options';
+import { FilterOptionDefault } from '@utils/filters/filter.interfaces';
 
 @Component({
   selector: 'app-filter-option-default',
   imports: [RouterLink],
   templateUrl: './filter-option-default.component.html',
-  styleUrl: './filter-option-default.component.scss'
+  styleUrl: '../filter-option.component.scss'
 })
 export class FilterOptionDefaultComponent {
 

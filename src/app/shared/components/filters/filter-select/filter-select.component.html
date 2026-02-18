@@ -13,10 +13,11 @@
             </div>
             <ul class="options">
                 @for( filter of filters(); track filter) {
-                    @switch( filter.type ){
-                        @case ('default') {
-                            <app-filter-option-default [filter]="filter" />
-                        }
+                    @if( filter.type === 'default'){
+                        <app-filter-option-default [filter]="filter" />
+                    }
+                    @else if ( filter.type === 'hover') {
+                        <app-filter-option-hover [filter]="filter" />
                     }
                 }
             </ul>

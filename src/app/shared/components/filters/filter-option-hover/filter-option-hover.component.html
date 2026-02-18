@@ -1,0 +1,15 @@
+
+<div>
+    <li 
+        class="option-filter">
+        {{ filter().label }} 
+    </li>
+    <div>
+        @for (item of filter().value; track $index) {
+            <li
+                class="option-filter">
+                {{ item.label }}
+            </li>
+        }
+    </div>
+</div>

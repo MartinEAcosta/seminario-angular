@@ -65,7 +65,6 @@ export class ExplorePage {
       page : this.paginationService.currentPage(),
     }),
     loader : ({request}) => { 
-      // console.log(request.textSearch)
       this.router.navigate(['/explore'] , {
           queryParams : { 
             ...request.filters,

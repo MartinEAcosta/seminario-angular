@@ -1,0 +1,35 @@
+@use '@variables' as v;
+
+
+.container-hover-filter {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.container-main-label {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.container-main-label .option-filter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.container-list{
+    display: none;
+}
+
+.container-hover-filter:hover .container-list {
+    display: block;
+    width: 100%;
+    z-index: 1000;
+    position: absolute;
+    margin: auto;
+    right: -100%;
+}
+

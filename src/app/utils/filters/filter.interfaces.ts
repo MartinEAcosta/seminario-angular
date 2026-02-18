@@ -15,7 +15,7 @@ export interface FilterOptionDefault extends FilterOptionBasic {
 }
 
 export interface FilterOptionHover extends FilterOptionBasic {
-    value?: FilterOptionBasic[];
+    value?: FilterOptionDefault[];
     type: 'hover';
 }
 

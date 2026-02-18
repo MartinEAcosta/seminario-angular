@@ -1,13 +1,17 @@
-
-<div>
-    <li 
-        class="option-filter">
-        {{ filter().label }} 
-    </li>
-    <div>
+<div class="container-hover-filter">
+    <div class="container-main-label">
+        <li 
+            class="option-filter">
+            {{ filter().label }} 
+        </li>
+    </div>
+    <div class="container-list">
         @for (item of filter().value; track $index) {
             <li
-                class="option-filter">
+                [routerLink]=[]
+                [queryParams]="this.onClickFilterOption( item )!"
+                class="option-filter"
+                >
                 {{ item.label }}
             </li>
         }

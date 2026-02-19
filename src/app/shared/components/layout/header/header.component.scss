@@ -19,6 +19,7 @@ header .logo{
     color: v.$brand-color;
     font-family: v.$font-brand;
     text-decoration: none;
+    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
 }
 
 .container-brand-icon{
@@ -43,6 +44,7 @@ nav a{
     margin: 0px 10px 0px 10px;
     font-family: v.$font-primary;
     cursor: pointer;
+    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
     transition: all 0.3s ease;
 }
 

@@ -1,23 +1,23 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { RouterLink } from "@angular/router";
-import {  } from '@utils/filters/filter-options';
 import { FilterOptionDefault } from '@utils/filters/filter.interfaces';
 
 @Component({
   selector: 'app-filter-option-default',
-  imports: [RouterLink],
   templateUrl: './filter-option-default.component.html',
   styleUrl: '../filter-option.component.scss'
 })
 export class FilterOptionDefaultComponent {
+
+  private router = inject(Router);
 
   filter = input.required<FilterOptionDefault>();
 
   constructor( ) {   }
 
   onClickFilterOption = ( ) => {
-    return { [  this.filter().key ] : this.filter().value};
+    this.router.navigate( [] , { queryParams : { [  this.filter().key ] : this.filter().value } });
   }
 
 }

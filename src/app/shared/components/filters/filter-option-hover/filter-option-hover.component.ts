@@ -1,21 +1,25 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { FilterOptionDefault, FilterOptionHover } from '@utils/filters/filter.interfaces';
-import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-filter-option-hover',
-  imports: [RouterLink],
   templateUrl: './filter-option-hover.component.html',
   styleUrls: [ '../filter-option.component.scss' , './filter-option-hover.component.scss' ]
 })
 export class FilterOptionHoverComponent {
+
+  private router = inject(Router);
 
   filter = input.required<FilterOptionHover>();
 
   constructor ( ) { }
 
   onClickFilterOption = ( filter : FilterOptionDefault ) => {
-      return { [ filter.key ] : filter.value};
+    console.log('disparo')
+
+    this.router.navigate([ ] , { queryParams :{ [ filter.key ] : filter.value} });
   }  
 
 

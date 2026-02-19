@@ -14,6 +14,7 @@ import { SearchBarComponent } from "../../components/search-filter-bar/search-ba
 import { FilterSelectComponent } from "@shared/components/filters/filter-select/filter-select.component";
 import { CategoryService } from 'src/app/category/services/category.service';
 import { FilterExplorePage } from '@utils/filters/filter-options';
+import { FilterOptionDefault } from '@utils/filters/filter.interfaces';
 
 @Component({
   selector: 'app-explore-page',
@@ -34,30 +35,12 @@ export class ExplorePage {
     this.categoryService.getAllCategories(),
     { initialValue : [] }
   );
-
   categoriesResource = rxResource({
     request : () => ({}),
     loader : () => this.categoryService.getAllCategories(),
   });
-  filterOptions = computed( () => {
-    const filters = FilterExplorePage.map( filter => {
-      if( filter.type === 'hover' && filter.key === 'id_category') {
-        return {
-          ...filter,
-          value : this.categories().map( category => ({
-            key : 'id_category',
-            label : category.name,
-            type: 'default',
-            value : category.id,
-          })
-        )};
-      }
-      return filter;
-    });
-    return filters;
-  });
+
   courses = linkedSignal(() => this.coursesResource.value());
-  
   coursesResource = rxResource({
     request : () => ({
       textSearch : this.searchService.textSearch(), 
@@ -78,6 +61,23 @@ export class ExplorePage {
         page : request.page
       } );
     }
+  });
+
+  filterOptions = computed( () => {
+    const filters = FilterExplorePage.map( filter => {
+      if( filter.type === 'hover' && filter.key === 'id_category') {
+        const categoriesFilter : FilterOptionDefault[] = this.categories().map( category => ({
+            key : 'id_category',
+            label : category.name,
+            type: 'default',
+            value : category.id,
+          })
+        );
+        return { ...filter , value : categoriesFilter };
+      }
+      return filter;
+    });
+    return filters;
   });
 
 

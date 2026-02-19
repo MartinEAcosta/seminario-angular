@@ -12,9 +12,6 @@
     </div>
 
     <div class="container-nav-anchors">
-      <a [routerLink]="['/']">
-        Inicio
-      </a>
       <a [routerLink]="['/explore']" (click)="searchService.reset()">
           Explorar
       </a>
@@ -29,9 +26,8 @@
           </a>
         }
 
-        <a [routerLink]="['/']" (click)="authService.logoutUser()" class="last-element">
-          Cerrar sesión
-        </a>
+        <app-user-profile-dropdown />
+        
       }
       @else{
         <a [routerLink]="['/auth/login']" class="last-element">

@@ -1,6 +1,5 @@
 <li 
-[routerLink]=[]
-    [queryParams]="this.onClickFilterOption()!"
+    (click)="onClickFilterOption()"
     class="option-filter">
     {{ filter().label }} 
 </li>

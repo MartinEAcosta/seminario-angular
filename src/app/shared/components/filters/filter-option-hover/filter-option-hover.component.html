@@ -8,8 +8,7 @@
     <div class="container-list">
         @for (item of filter().value; track $index) {
             <li
-                [routerLink]=[]
-                [queryParams]="this.onClickFilterOption( item )!"
+                (click)="this.onClickFilterOption( item )!"
                 class="option-filter"
                 >
                 {{ item.label }}

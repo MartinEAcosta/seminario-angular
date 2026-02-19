@@ -29,7 +29,6 @@ export class CourseService {
   private http = inject(HttpClient);
   private baseURL: string = `${environment.apiURL}courses`;
 
-  // query ?: string , page ?: number, limit ?: number
   public getAll = ( options ?: Options ): Observable<PaginationResponseDto<Course[]>> => {
     const params = obtainOptionsParams( options || {});
 
@@ -38,12 +37,10 @@ export class CourseService {
     })
     .pipe(
       map((courseResponse) => {
-        console.log(courseResponse);
         return PaginationMapper.mapToPaginationDto<Course[]>( courseResponse );
       }),
       catchError((error) => {
-        // Se retorna un arreglo de cursos por ngdefecto.
-        // return of(defaultCourses);
+        console.log(error);
         return of();
       })
     );

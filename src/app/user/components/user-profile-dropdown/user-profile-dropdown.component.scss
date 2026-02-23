@@ -1,8 +1,9 @@
 @use '@variables' as v;
 
 .container-user-profile {
+    position: relative;
     display: flex;
-
+    margin-left: 2rem;
     align-items: center;
     justify-content: center;
 }
@@ -10,5 +11,59 @@
 .user-profile-img {
     width: 2rem;
     filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
-    
+}
+
+.container-dropdown-content{
+    visibility: hidden;
+    flex-direction: column;
+    position: absolute;
+    justify-content: center;
+    top: 200%;
+    right: 0;
+    width: 10rem;
+    height: 0rem;
+    border-radius: 0.5rem;
+    background-color: v.$white-custom;
+    transition: all 0.25s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.25);
+}
+
+.open{
+    display: flex;
+    visibility: visible;
+    height: 4rem;
+    transition: height 0.25s ease-in-out;
+    overflow: hidden;
+
+}
+
+.dropdown-item{
+    padding: 0.3rem;
+    border-bottom: solid thin rgba(40,40,40,0.25);
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(40,40,40,0.05);
+    transition: all 0.15s ease;
+}
+
+.dropdown-item:hover a{
+    transition: all 0.25s ease;
+    color: rgba(0, 120, 140, 0.70);
+}
+
+.container-dropdown-content a {
+    display: flex;
+    font-family: v.$font-primary;
+    font-weight: 450;
+    color: v.$black-custom;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    transition: all 0.25s ease;
 }

@@ -1,3 +1,14 @@
 <div class="container-user-profile">
-    <img src="assets/user-profile.svg" alt="User icon profile" class="user-profile-img">
+    <img 
+        (click)="onClickProfile()"
+        src="assets/user-profile.svg" 
+        alt="User icon profile" class="user-profile-img">
+        <div class="container-dropdown-content" [ngClass]="{ 'open': open() }">
+            <div class="dropdown-item">
+                <a>Tu perfil</a>
+            </div>
+            <div class="dropdown-item" (click)="this.authService.logoutUser()">
+                <a>Cerrar sesión</a>
+            </div>
+        </div>
 </div>

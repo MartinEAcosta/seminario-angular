@@ -1,5 +1,8 @@
-import { NgClass } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { filter } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
+
 import { AuthService } from '@auth/services/auth.service';
 
 @Component({
@@ -10,13 +13,16 @@ import { AuthService } from '@auth/services/auth.service';
 })
 export class UserProfileDropdownComponent {
 
+  router = inject(Router);
   authService = inject(AuthService);
-  open = signal<boolean>(true);
+  open = signal<boolean>(false);
 
-  constructor ( ) { }
-
-  ngOnDestroy () {
-    this.open.set(false);
+constructor() {
+  this.router.events
+    .pipe(filter(event => event instanceof NavigationEnd))
+    .subscribe(() => {
+      this.open.set(false);
+    });
   }
 
   onClickProfile () {

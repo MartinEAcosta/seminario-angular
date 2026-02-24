@@ -19,7 +19,7 @@ export class FilterOptionHoverComponent {
   onClickFilterOption = ( filter : FilterOptionDefault ) => {
     console.log('disparo')
 
-    this.router.navigate([ ] , { queryParams :{ [ filter.key ] : filter.value} });
+    this.router.navigate([ ] , { queryParams : { [ filter.key ] : filter.value} });
   }  
 
 

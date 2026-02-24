@@ -23,4 +23,12 @@
             </ul>
         </div>
     </div>
+</div>    
+
+<div class="container-filters-selected">
+    @for( filter of selectedFilters(); track filter){
+        <div class="filter-selected">
+            <p>{{ filter?.key }}</p>
+        </div>
+    }
 </div>

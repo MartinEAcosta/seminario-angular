@@ -10,7 +10,7 @@ import { LoaderComponent } from "../../components/loader/loader.component";
 import { CourseMiniCardComponent } from "src/app/course/components/course-mini-card/course-mini-card.component";
 import { CartComponent } from "src/app/cart/components/cart/cart.component";
 import { PaginationComponent } from "../../pagination/pagination.component";
-import { SearchBarComponent } from "../../components/search-filter-bar/search-bar.component";
+import { SearchBarComponent } from "../../components/search-bar/search-bar.component";
 import { FilterSelectComponent } from "@shared/components/filters/filter-select/filter-select.component";
 import { CategoryService } from 'src/app/category/services/category.service';
 import { FilterExplorePage } from '@utils/filters/filter-options';

@@ -1,7 +1,7 @@
 import { inject, Injectable, linkedSignal, Signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 export interface QueryParams {
   // Los nombres de los parametros los saco del contrato con el back.
@@ -15,6 +15,7 @@ export interface QueryParams {
   providedIn: 'root',
 })
 export class SearchService {
+  private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
 
   textParam = this.activatedRoute.snapshot.queryParamMap.get('title') ?? '';
@@ -22,7 +23,7 @@ export class SearchService {
   // En vez de pasar un valor por default se toma el mismo de una función computada.
   textSearch = linkedSignal(() => this.textParam);
 
-  query : Signal<QueryParams | undefined> = toSignal(
+  query: Signal<QueryParams | undefined> = toSignal(
     this.activatedRoute.queryParamMap.pipe(
       map((params) => {
         return {
@@ -41,12 +42,17 @@ export class SearchService {
         };
       }),
       map((params) => {
-        if ( !params.id_category && !params.maxPrice && !params.minPrice && !params.notFullyEnrolled ) {
+        if (
+          !params.id_category &&
+          !params.maxPrice &&
+          !params.minPrice &&
+          !params.notFullyEnrolled
+        ) {
           return undefined;
         }
         return params;
-      })
-    )
+      }),
+    ),
   );
 
   constructor() {}
@@ -55,5 +61,22 @@ export class SearchService {
     this.textSearch.set('');
     this.textParam = '';
   }
-  
+
+  addFilter( key : string, value : string ) {
+    this.router.navigate([], {
+      queryParams: {
+        ...this.query() ?? {},
+        [key]: value,
+      },
+    });
+  }
+
+  // removeFilter( key : string ) {
+  //   const { [ key]: removed , ...rest } = this.query() ?? {};
+  //   this.router.navigate([] , {
+  //     queryParams : {
+  //       ...rest,
+  //     }
+  //   });
+  // }
 }

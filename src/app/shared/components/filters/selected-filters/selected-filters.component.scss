@@ -1,0 +1,39 @@
+@use '@variables' as v;
+
+.container-filters-selected {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: v.$font-primary;
+    color: v.$white-custom;
+}
+
+.filter-selected{
+    display: flex;
+    margin: 1rem 0 0 0;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 0.5rem 1rem;
+    background-color: v.$black-custom;
+    border-radius: 1rem;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+
+.remove-filter {
+    display: flex;
+    padding-left: 0.6rem;
+}
+
+.close-icon{
+    width: 1rem;
+    height: 1rem;
+}
+
+.filter-selected:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    background-color: rgba(40, 40, 40, 0.95);
+    transition: all 0.3s ease;
+}

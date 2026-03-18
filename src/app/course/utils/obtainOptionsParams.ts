@@ -1,6 +1,6 @@
 import { Options } from "@course/services/course.service";
 
-export const obtainOptionsParams = ( options : Options ) : Options => {
+export const buildExploreQueryParams = ( options : Options ) : Options => {
   let params = {
     current_page : options?.page ?? 1,
     limit : options?.limit ?? 10,

@@ -1,6 +1,6 @@
 import { Component, inject, input } from '@angular/core';
-import { Router } from '@angular/router';
 
+import { SearchService } from '@shared/services/search/search.service';
 import { FilterOptionDefault, FilterOptionHover } from '@utils/filters/filter.interfaces';
 
 @Component({
@@ -10,16 +10,15 @@ import { FilterOptionDefault, FilterOptionHover } from '@utils/filters/filter.in
 })
 export class FilterOptionHoverComponent {
 
-  private router = inject(Router);
+  private searchService = inject(SearchService);
 
   filter = input.required<FilterOptionHover>();
 
   constructor ( ) { }
 
   onClickFilterOption = ( filter : FilterOptionDefault ) => {
-    console.log('disparo')
-
-    this.router.navigate([ ] , { queryParams : { [ filter.key ] : filter.value} });
+    // this.router.navigate([ ] , { queryParams : { [ filter.key ] : filter.value} });
+    this.searchService.addFilter(filter.key! , filter.value!); 
   }  
 
 

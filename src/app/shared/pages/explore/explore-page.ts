@@ -44,7 +44,7 @@ export class ExplorePage {
   coursesResource = rxResource({
     request : () => ({
       textSearch : this.searchService.textSearch(), 
-      filters : { ...this.searchService.query() },
+      filters : this.searchService.queryParams() ,
       page : this.paginationService.currentPage(),
     }),
     loader : ({request}) => { 

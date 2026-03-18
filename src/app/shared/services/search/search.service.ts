@@ -1,10 +1,12 @@
-import { inject, Injectable, linkedSignal, Signal } from '@angular/core';
+import { computed, inject, Injectable, linkedSignal, Signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs';
+import { filter, map } from 'rxjs';
+import { FilterOption } from '@utils/filters/filter.interfaces';
+import { FilterOptions } from '@utils/filters/filter-options';
 import { toSignal } from '@angular/core/rxjs-interop';
 
-export interface QueryParams {
-  // Los nombres de los parametros los saco del contrato con el back.
+// Los nombres de los parametros los saco del contrato con el back.
+export type QueryParams = {
   id_category?: string;
   minPrice?: string;
   maxPrice?: string;
@@ -23,60 +25,64 @@ export class SearchService {
   // En vez de pasar un valor por default se toma el mismo de una función computada.
   textSearch = linkedSignal(() => this.textParam);
 
-  query: Signal<QueryParams | undefined> = toSignal(
+  queryParams: Signal<QueryParams | undefined> = toSignal(
     this.activatedRoute.queryParamMap.pipe(
-      map((params) => {
-        return {
-          id_category: params.get('id_category')
-            ? params.get('id_category')!
-            : undefined,
-          minPrice: params.get('minPrice')
-            ? params.get('minPrice')!
-            : undefined,
-          maxPrice: params.get('maxPrice')
-            ? params.get('maxPrice')!
-            : undefined,
-          notFullyEnrolled: params.get('notFullyEnrolled')
-            ? params.get('notFullyEnrolled')!
-            : undefined,
-        };
-      }),
-      map((params) => {
-        if (
-          !params.id_category &&
-          !params.maxPrice &&
-          !params.minPrice &&
-          !params.notFullyEnrolled
-        ) {
-          return undefined;
-        }
-        return params;
-      }),
+      map(
+        (params) => {
+          console.log(params);
+          return {
+            id_category: params.get('id_category') ?? undefined,
+            minPrice: params.get('minPrice') ?? undefined,
+            maxPrice: params.get('maxPrice') ?? undefined,
+            notFullyEnrolled: params.get('notFullyEnrolled') ?? undefined,
+          };
+        },
+      ),
     ),
+    { initialValue : undefined }
   );
+
+
+  selectedFilters : Signal<FilterOption[]> = computed(() => {
+    const queryObject = this.queryParams();
+    if (!queryObject) return [];
+    const filters = Object.entries(queryObject);
+    const selected: FilterOption[] = [];
+    filters.forEach(([key, value]) => {
+      const filter = FilterOptions.getFilters().find(
+        (filter) => filter.key === key,
+      );
+      if (filter && value) {
+        selected.push({
+          ...filter,
+        });
+      }
+    });
+    return selected;
+  });
 
   constructor() {}
 
-  reset() {
+  reset(): void {
     this.textSearch.set('');
     this.textParam = '';
   }
 
-  addFilter( key : string, value : string ) {
+  addFilter(key: string, value: string): void {
     this.router.navigate([], {
       queryParams: {
-        ...this.query() ?? {},
+        ...(this.queryParams() ?? {}),
         [key]: value,
       },
     });
   }
 
-  // removeFilter( key : string ) {
-  //   const { [ key]: removed , ...rest } = this.query() ?? {};
-  //   this.router.navigate([] , {
-  //     queryParams : {
-  //       ...rest,
-  //     }
-  //   });
-  // }
+  removeFilter(key: string) {
+    this.router.navigate([], {
+      queryParams : {
+        [key] : null
+      },
+      queryParamsHandling: 'merge'
+    });
+  }
 }

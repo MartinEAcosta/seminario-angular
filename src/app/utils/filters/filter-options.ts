@@ -1,5 +1,13 @@
 import { FilterOption } from "./filter.interfaces";
 
+export class FilterOptions {
+
+  static getFilters ( ) : FilterOption[] {
+    return FilterExplorePage;
+  }
+
+}
+
 export const FilterExplorePage: FilterOption[] = [
   {
     key: 'notFullyEnrolled',

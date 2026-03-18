@@ -3,7 +3,6 @@ export type FilterOption =
   | FilterOptionHover
   | FilterOptionCompound;
 
-
 export interface FilterOptionBasic {
     key: string;
     label: string;

@@ -1,0 +1,10 @@
+<div class="container-filters-selected">
+    @for( filter of searchService.selectedFilters(); track filter){
+        <div class="filter-selected" (click)="searchService.removeFilter(filter.key)">
+            <p>{{ filter?.label }}</p>
+            <div class="remove-filter">
+                <img class="close-icon" src="assets/close-icon.svg" alt="">
+            </div>
+        </div>
+    }
+</div>

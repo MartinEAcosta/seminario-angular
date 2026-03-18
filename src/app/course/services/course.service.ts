@@ -8,9 +8,9 @@ import { CourseMapper } from '@mappers/course.mapper';
 import { DeleteResponse, CourseResponse, PaginationResponseDto, PaginationResponse } from '@shared/models/api.interfaces';
 import { FileService } from 'src/app/file/services/file.service';
 import { PaginationMapper } from '@mappers/pagination.mapper';
-import { obtainOptionsParams } from '@course/utils/obtainOptionsParams';
+import { buildExploreQueryParams } from '@course/utils/obtainOptionsParams';
 
-export interface Options extends Record<string, any> {
+export type Options = {
   page ?: number,
   limit ?: number,
   title ?: string;
@@ -30,10 +30,10 @@ export class CourseService {
   private baseURL: string = `${environment.apiURL}courses`;
 
   public getAll = ( options ?: Options ): Observable<PaginationResponseDto<Course[]>> => {
-    const params = obtainOptionsParams( options || {});
+    const params = options ? buildExploreQueryParams( options ) : { };
 
     return this.http.get<PaginationResponse<Course[]>>(`${this.baseURL}`, { 
-      params : params,
+      params,
     })
     .pipe(
       map((courseResponse) => {

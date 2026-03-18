@@ -1,4 +1,4 @@
-@use '../../../../variables.scss' as v;
+@use '@variables' as v;
 
 .container-bar{
     display: flex;
@@ -66,5 +66,4 @@
 
 .input-search::placeholder{
     color: rgba(233 ,233,233, 0.75);
-
 }

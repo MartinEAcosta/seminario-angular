@@ -22,7 +22,7 @@ export class LessonFormState {
   public tempMedia = signal<string | null>(null);
   public typeMedia = signal<'image' | 'video' | null>(null);
   public isLessonFormVisible = signal<boolean>( false ); 
-  public isModulePopUpVisible = signal<boolean>( false );
+  public isModulePopUpVisible = signal<boolean>( true );
   
   public reset () : void  {
     this.lessons.set([]);

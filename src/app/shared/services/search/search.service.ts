@@ -29,7 +29,6 @@ export class SearchService {
     this.activatedRoute.queryParamMap.pipe(
       map(
         (params) => {
-          console.log(params);
           return {
             id_category: params.get('id_category') ?? undefined,
             minPrice: params.get('minPrice') ?? undefined,
@@ -46,6 +45,7 @@ export class SearchService {
   selectedFilters : Signal<FilterOption[]> = computed(() => {
     const queryObject = this.queryParams();
     if (!queryObject) return [];
+
     const filters = Object.entries(queryObject);
     const selected: FilterOption[] = [];
     filters.forEach(([key, value]) => {

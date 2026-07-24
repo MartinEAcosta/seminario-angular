@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
-import { Course } from 'src/app/course/models/course.interfaces';
 import { LoaderComponent } from "../../../shared/components/loader/loader.component";
 import { CourseCardComponent } from "../course-card/course-card.component";
+import { Course } from '@course/models/course.interfaces';
 
 @Component({
   selector: 'app-course-list',

@@ -2,15 +2,15 @@ import { Component, Output, EventEmitter, inject, input } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { AuthService } from 'src/app/auth/services/auth.service';
-import { FileService } from 'src/app/file/services/file.service';
 import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
-import { CategorySelectComponent } from "src/app/category/components/category-select/category-select.component";
 import { ThumbnailSelectorComponent } from "../thumbnail-selector/thumbnail-selector.component";
 import { CourseFormState } from '../../state/course-form/course-form-state';
-import { SliderContentManagerComponent } from 'src/app/lesson/components/slider-content-manager/slider-content-manager.component';
 import { BtnRemoveComponent } from "@shared/components/btns/btn-remove/btn-remove.component";
 import { Course } from '@course/models/course.interfaces';
+import { SliderContentManagerComponent } from '@lesson/components/slider-content-manager/slider-content-manager.component';
+import { CategorySelectComponent } from '../../../category/components/category-select/category-select.component';
+import { AuthService } from '@auth/services/auth.service';
+import { FileService } from '@file/services/file.service';
 
 @Component({
   selector: 'app-form-course',

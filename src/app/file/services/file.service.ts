@@ -1,28 +1,30 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, forkJoin, map, Observable, of, throwError } from 'rxjs';
-import { environment } from 'src/environments/environment';
 
 import { FileMapper } from '@mappers/file.mapper';
 import { DeleteResponse, FileResponse } from '../../shared/models/api.interfaces';
 import { UploadedFile } from '@file/models/file.interfaces';
 import { CourseFormState } from '@course/state/course-form/course-form-state';
 import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FileService {
-
+export class FileService {  
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}file`;
   
   private courseFormState = inject(CourseFormState);
   private lessonFormState = inject(LessonFormState);
+  
+  private previousThumbnailUrl: string | null = null;
+  private previousMediaUrl: string | null = null;
 
   constructor ( ) { }
 
-  uploadFiles = ( folder : string , id_entity : string , files : FileList  ) : Observable<UploadedFile[]> => {
+  public uploadFiles = ( folder : string , id_entity : string , files : FileList  ) : Observable<UploadedFile[]> => {
     if( !files ) return of([]);
 
     const uploadObservable = Array.from( files ).map( ( uniqueFile ) => 
@@ -33,7 +35,7 @@ export class FileService {
     return forkJoin(uploadObservable);
   }
   
-  uploadFile = ( folder : string , id_entity : string, file : File ) : Observable<UploadedFile> => {
+  public uploadFile = ( folder : string , id_entity : string, file : File ) : Observable<UploadedFile> => {
     
     const formData = new FormData( );
     formData.append( 'files', file );
@@ -52,7 +54,7 @@ export class FileService {
                                   );
   }
 
-  deleteFile = ( id : string ) : Observable<DeleteResponse> => {
+  public deleteFile = ( id : string ) : Observable<DeleteResponse> => {
     return this.http
                 .delete<DeleteResponse>(
                                       `${this.baseURL}/${id}`,
@@ -67,7 +69,7 @@ export class FileService {
                                     );
   }
   
-  deleteCourseThumbnail = ( id : string ) : Observable<DeleteResponse> => {
+  public deleteCourseThumbnail = ( id : string ) : Observable<DeleteResponse> => {
     return this.http
                 .delete<DeleteResponse>(
                                       `${this.baseURL}/course-thumbnail/${id}`,
@@ -83,7 +85,7 @@ export class FileService {
                                     );
   }
 
-  getFileByPublicId = ( public_id : string ) => {
+  public getFileByPublicId = ( public_id : string ) => {
     return this.http
                 .get<FileResponse>(
                                     `${this.baseURL}/get/${public_id}`
@@ -108,12 +110,16 @@ export class FileService {
 
     switch (type) {
       case 'courses':
-        this.courseFormState.setTempThumbnail(url.shift()!);
+        if (this.previousThumbnailUrl) URL.revokeObjectURL(this.previousThumbnailUrl);
+        this.previousThumbnailUrl = url.shift()!;
+        this.courseFormState.setTempThumbnail(this.previousThumbnailUrl);
         this.courseFormState.setFileThumbnail(fileChanged[0]);
         break;
 
       case 'lessons':
-        this.lessonFormState.setTempMedia(url.shift()!);
+        if (this.previousMediaUrl) URL.revokeObjectURL(this.previousMediaUrl);
+        this.previousMediaUrl = url.shift()!;
+        this.lessonFormState.setTempMedia(this.previousMediaUrl);
         this.lessonFormState.setMediaFile(fileChanged[0]);
         const type = fileChanged.item(0)?.type.split('/').at(0) as 'image' | 'video' | undefined;
         this.lessonFormState.setTypeMedia(

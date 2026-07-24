@@ -1,7 +1,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, inject} from '@angular/core';
+import { Component, DestroyRef, inject} from '@angular/core';
 import { NgClass } from '@angular/common';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 
 import { EnrollmentState } from '@enrollment/state/enrollment-state';
@@ -21,6 +21,7 @@ export class LessonViewerPageComponent {
 
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute)
+  private destroyRef = inject(DestroyRef);
   
   lessonId = toSignal<string>(this.activatedRoute.params.pipe( map( (p) => p['id_lesson'] )));
   enrollmentState = inject(EnrollmentState);
@@ -32,23 +33,22 @@ export class LessonViewerPageComponent {
     if( !enrollment ) return;
     
     if( !this.lessonId() ) {
-      this.lessonState.loadNextLesson( enrollment.id! ).subscribe(
+      this.lessonState.loadNextLesson( enrollment.id! )
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(
         lesson => {
           console.log(lesson)
-          this.router.navigate(
-            ['lesson' , lesson!.id],
-            { relativeTo : this.activatedRoute } 
-          );
+          this.router.navigate(['lesson' , lesson!.id],{ relativeTo : this.activatedRoute } );
         }
       );
     } 
     else {
-      this.lessonState.loadLesson( this.lessonId()! ).subscribe(
+      this.lessonState.loadLesson( this.lessonId()! )
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(
         lesson => {
           if( !lesson ) {
-            this.router.navigate(
-              ['/'],
-            );
+            this.router.navigate( ['/'] );
             return;
           }
         }

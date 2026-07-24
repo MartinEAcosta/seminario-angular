@@ -1,4 +1,4 @@
-import { Course } from "src/app/course/models/course.interfaces";
+import { Course } from "@interfaces/course.interfaces";
 
 export const defaultCourses : Course[] = [
                               {

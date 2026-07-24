@@ -3,9 +3,9 @@ import { inject, Injectable } from '@angular/core';
 import { PaymentMapper } from '@mappers/payment.mapper';
 import { catchError, map, Observable } from 'rxjs';
 import { IdentificationTypeListResponse, IssuerListResponse, TotalResponse } from '@shared/models/api.interfaces';
-import { environment } from 'src/environments/environment';
 import { IdentificationType, Issuer, PaymentDTO } from '../models/payment.interface';
-import { CartItem, ItemQuantity } from 'src/app/cart/models/cart.interface';
+import { environment } from '../../../environments/environment';
+import { ItemQuantity } from '@cart/models/cart.interface';
 
 @Injectable({
   providedIn: 'root'

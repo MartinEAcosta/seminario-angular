@@ -2,13 +2,14 @@ import { inject, Injectable } from '@angular/core';
 import { PaymentService } from '../services/payment.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { loadMercadoPago } from '@mercadopago/sdk-js';
-import { environment } from 'src/environments/environment';
-import { CartService } from 'src/app/cart/state/cart.service';
+import { CartService } from '@cart/state/cart.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CheckoutFormState {
+
   private paymentService = inject(PaymentService);
   private cartService = inject(CartService);
   public mp: any = undefined;

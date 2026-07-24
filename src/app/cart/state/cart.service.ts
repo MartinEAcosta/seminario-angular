@@ -1,10 +1,10 @@
-import { Router } from '@angular/router';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { Course } from '../../course/models/course.interfaces';
-import { map, throwError } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { CartItem, ItemQuantity } from '../models/cart.interface';
 import { Cart } from '../models/cart.model';
-import { PaymentService } from 'src/app/payment/services/payment.service';
+import { PaymentService } from '@payment/services/payment.service';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 const CART_KEY = 'cart';
 
@@ -43,9 +43,23 @@ export class CartService {
   public cartFromLocalStorage = computed ( () => this.cart() );
   public total = signal<number>( 0 );
   private paymentService = inject(PaymentService);
+  private totalResource = rxResource({
+    request : () => ({
+      items : this.getItemsArray(),
+      code : this.cart().code,
+    }),
+    loader : ( { request } ) => {
+      if( request.items.length === 0 ){
+        return of(0);
+      }
+      return this.paymentService.calculateTotal( request.items , request.code ); 
+    }
+  })
 
   constructor() { 
- 
+    effect( () => {
+      this.total.set( this.totalResource.value() ?? 0 );
+    });
   }
   
   private saveToLocalStorage = effect( ( ) => {
@@ -53,23 +67,6 @@ export class CartService {
     const cartSearilized = JSON.stringify( cartArrayValues );
 
     localStorage.setItem( CART_KEY , cartSearilized );
-  });
-
-  private obtainTotalOnChange = effect(() => {
-      const items = this.getItemsArray();
-      const code = this.cart().code;
-
-      if (items.length === 0) {
-        this.total.set(0);
-        return;
-      }
-
-      this.paymentService
-        .calculateTotal(items, code)
-        .subscribe({
-          next: total => this.total.set(total),
-          error: err => console.error('Error calculando total:', err),
-        });
   });
 
   public getItemsArray = () : ItemQuantity[] => {
@@ -95,7 +92,6 @@ export class CartService {
   }
 
   public calculateTotal = ( ) : number => {
-    this.paymentService.calculateTotal( this.getItemsArray() , this.cart().code ).subscribe( value => { this.total.set(value) });
     return this.total();
   }
   

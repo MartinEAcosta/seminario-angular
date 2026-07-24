@@ -3,18 +3,18 @@ import { NgClass } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { LessonService } from 'src/app/lesson/services/lesson.service';
-import { FormErrorLabelComponent } from "src/app/shared/components/form-error-label/form-error-label.component";
 import { BtnNavigationComponent } from "@shared/components/btns/btn-navigation/btn-navigation.component";
-import { AuthService } from 'src/app/auth/services/auth.service';
 import { LessonMapper } from '@mappers/lesson.mapper';
-import { CourseService } from 'src/app/course/services/course.service';
-import { FileService } from 'src/app/file/services/file.service';
 import { BtnRemoveComponent } from "@shared/components/btns/btn-remove/btn-remove.component";
 import { LessonPopulated } from '@lesson/models/lesson.interfaces';
 import { Course } from '@course/models/course.interfaces';
 import { ModulePopulated } from '@module/models/module.interfaces';
 import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
+import { FormErrorLabelComponent } from '@shared/components/form-error-label/form-error-label.component';
+import { AuthService } from '@auth/services/auth.service';
+import { CourseService } from '@course/services/course.service';
+import { LessonService } from '@lesson/services/lesson.service';
+import { FileService } from '@file/services/file.service';
 
 @Component({
   selector: 'app-form-lesson',

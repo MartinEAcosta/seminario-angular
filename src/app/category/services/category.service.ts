@@ -1,10 +1,10 @@
 import { CategoryListResponse } from '../../shared/models/api.interfaces';
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Category } from '../models/category.interfaces';
 import { CategoryMapper } from '@mappers/category.mapper';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

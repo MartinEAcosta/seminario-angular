@@ -30,9 +30,5 @@ export class FormCardCheckoutComponent {
     await this.checkoutFormState.initializeForm();
   }
 
-  public onSubmit = () => {
-    this.checkoutFormState.cardForm.onSubmit();
-  }
-
 }
 

@@ -9,8 +9,8 @@ import {
 } from '@angular/common/http';
 
 import { authInterceptor } from '../app/auth/interceptors/auth.interceptor';
-import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [

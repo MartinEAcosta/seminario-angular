@@ -7,7 +7,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { CourseService } from '../../services/course.service';
 import { CourseDetailComponent } from '../../components';
 import { LoaderComponent } from "../../../shared/components/loader/loader.component";
-import { ListOfContentComponent } from "src/app/lesson/components/list-of-content/list-of-content.component";
+import { ListOfContentComponent } from '@lesson/components/list-of-content/list-of-content.component';
 
 @Component({
   selector: 'app-course-page',

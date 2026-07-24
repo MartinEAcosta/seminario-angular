@@ -12,16 +12,16 @@
     </div>
 
     <div class="container-nav-anchors">
-      <a [routerLink]="['/explore']" (click)="searchService.reset()">
+      <a [routerLink]="['/explore']" (click)="searchService.reset(); closeMobileMenu()">
           Explorar
       </a>
       @if ( authService.authStatus() === "authenticated") {
-        <a [routerLink]="['/enrollment']">
+        <a [routerLink]="['/enrollment']" (click)="closeMobileMenu()">
           Biblioteca
         </a>
 
         @if( authService.user()?.role === 'teacher' || authService.user()?.role === 'admin' ) {
-          <a [routerLink]="['/course/create']">
+          <a [routerLink]="['/course/create']" (click)="closeMobileMenu()">
             Crea tu curso
           </a>
         }
@@ -30,12 +30,43 @@
         
       }
       @else{
-        <a [routerLink]="['/auth/login']" class="last-element">
+        <a [routerLink]="['/auth/login']" class="last-element" (click)="closeMobileMenu()">
           Iniciar sesión
         </a>
       }
     </div>
     
   </nav>
+
+  <button class="hamburger" (click)="toggleMobileMenu()" [class.active]="isMobileMenuOpen()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  @if (isMobileMenuOpen()) {
+    <div class="mobile-menu">
+      <a [routerLink]="['/explore']" (click)="searchService.reset(); closeMobileMenu()">
+          Explorar
+      </a>
+      @if ( authService.authStatus() === "authenticated") {
+        <a [routerLink]="['/enrollment']" (click)="closeMobileMenu()">
+          Biblioteca
+        </a>
+
+        @if( authService.user()?.role === 'teacher' || authService.user()?.role === 'admin' ) {
+          <a [routerLink]="['/course/create']" (click)="closeMobileMenu()">
+            Crea tu curso
+          </a>
+        }
+        
+      }
+      @else{
+        <a [routerLink]="['/auth/login']" (click)="closeMobileMenu()">
+          Iniciar sesión
+        </a>
+      }
+    </div>
+  }
 
 </header>

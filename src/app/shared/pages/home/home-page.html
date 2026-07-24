@@ -1,16 +1,50 @@
-<div class="container">
-    <div class="overlay"></div>
-    <section>
-        <h1>¡Los mejores cursos, al mejor precio!</h1>
-        <p>Aprende a tu ritmo, desde cualquier lugar y en cualquier momento.</p>
-        <p>Con Udemix, tendrás acceso a una amplia variedad de cursos en línea, diseñados para ayudarte a alcanzar tus metas profesionales y personales.</p>
-        <div class="container-actions">
-            <button [routerLink]="'/about'" class="btn-about-us btn">Sobre nosotros</button>
-            <button [routerLink]="'/pricing'" class="btn-become-a-teacher btn">Convertirse en profesor</button>
+<div class="hero">
+    <div class="hero__bg">
+        <div class="hero__gradient"></div>
+        <div class="hero__orb hero__orb--1"></div>
+        <div class="hero__orb hero__orb--2"></div>
+        <div class="hero__orb hero__orb--3"></div>
+        <div class="hero__grid"></div>
+    </div>
+
+    <section class="hero__content">
+        <div class="hero__left">
+            <div class="hero__stat-card">
+                <span class="hero__stat-number">10K+</span>
+                <span class="hero__stat-label">Estudiantes activos</span>
+            </div>
+            <div class="hero__stat-card">
+                <span class="hero__stat-number">500+</span>
+                <span class="hero__stat-label">Cursos disponibles</span>
+            </div>
+            <div class="hero__stat-card">
+                <span class="hero__stat-number">4.9</span>
+                <span class="hero__stat-label">Rating promedio</span>
+            </div>
+        </div>
+
+        <div class="hero__right">
+            <span class="hero__badge">Plataforma #1 en cursos online</span>
+            <h1 class="hero__title">
+                Transforma tu carrera con
+                <span class="hero__title--highlight">educación de calidad</span>
+            </h1>
+            <p class="hero__subtitle">
+                Accede a cientos de cursos impartidos por expertos de la industria.
+                Aprende a tu ritmo, desde cualquier lugar, y lleva tus habilidades al siguiente nivel.
+            </p>
+            <div class="hero__actions">
+                <button [routerLink]="'/about'" class="hero__btn hero__btn--primary">
+                    Explorar cursos
+                </button>
+                <button [routerLink]="'/pricing'" class="hero__btn hero__btn--secondary">
+                    Convertirse en profesor
+                </button>
+            </div>
         </div>
     </section>
-    <!-- TODO: Alternativas para mejorar rendimiento -->
-    <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/fO74AMjx2fk?si=F9Ssa3p5sl5vhEDK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
+
+    <div class="hero__fade"></div>
 </div>
 
 <div class="container-recommended">
@@ -18,8 +52,8 @@
 </div>
 
 <div class="container-course-list">
-    <app-course-list 
-        [courses]='this.coursesResource.value().items' 
+    <app-course-list
+        [courses]='this.coursesResource.value().items'
         [isLoading]='this.coursesResource.isLoading()'
         [errorMessage]='this.coursesResource.error()'
     />

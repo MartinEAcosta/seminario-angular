@@ -5,16 +5,16 @@ import { catchError, of, tap } from 'rxjs';
 
 import { LessonService } from '../../services/lesson.service';
 import { LessonPopulated } from '../../models/lesson.interfaces';
-import { ThumbnailSelectorComponent } from 'src/app/course/components/thumbnail-selector/thumbnail-selector.component';
 import { FormLessonComponent } from "../form-lesson/form-lesson.component";
-import { FileService } from 'src/app/file/services/file.service';
 import { Course } from '@course/models/course.interfaces';
 import { ModuleService } from '@module/services/module.service';
-import { CardActionComponent } from "src/app/shared/components/card-action/card-action.component";
 import { SaveModuleComponent } from "@module/components/save-module/save-module.component";
-import { UIService } from 'src/app/shared/services/ui/ui.service';
-import { LoaderComponent } from "src/app/shared/components/loader/loader.component";
 import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
+import { ThumbnailSelectorComponent } from '@course/components';
+import { CardActionComponent } from '@shared/components/card-action/card-action.component';
+import { LoaderComponent } from '@shared/components/loader/loader.component';
+import { UIService } from '@shared/services/ui/ui.service';
+import { FileService } from '@file/services/file.service';
 
 @Component({
   selector: 'app-slider-content-manager',

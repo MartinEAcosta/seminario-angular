@@ -1,9 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { AuthService } from '@auth/services/auth.service';
 import { SearchService } from '../../../services/search/search.service';
-import { UserProfileDropdownComponent } from "src/app/user/components/user-profile-dropdown/user-profile-dropdown.component";
+import { UserProfileDropdownComponent } from '../../../../user/components/user-profile-dropdown/user-profile-dropdown.component';
 
 @Component({
     selector: 'app-header',
@@ -16,6 +16,14 @@ export class HeaderComponent {
   authService = inject(AuthService);
   searchService = inject(SearchService);
 
+  isMobileMenuOpen = signal(false);
+
+  toggleMobileMenu(): void {
+    this.isMobileMenuOpen.update(value => !value);
+  }
+
+  closeMobileMenu(): void {
+    this.isMobileMenuOpen.set(false);
+  }
     
 }
-

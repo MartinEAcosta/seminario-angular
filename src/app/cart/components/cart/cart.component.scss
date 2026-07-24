@@ -41,19 +41,17 @@
 
 .container-icon{
     display: flex;
-    color: v.$white-custom;
-    font-size: 1.5rem;
-    font-family: v.$font-primary;
-    margin: auto;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    height: auto;
+    height: 100%;
     border: none;
-    padding: 10px 20px;
-    border-radius: 100%;
-    cursor: pointer;
+    padding: 0;
 }
 
 .imgIconCart{
+  width: 24px;
+  height: 24px;
   visibility: visible;
   opacity: 1;
   transform: scale(1);
@@ -61,14 +59,10 @@
 }
 
 .imgVisibility{
-visibility: hidden;
+  visibility: hidden;
   opacity: 0;
   transform: scale(0);
-  transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s ease 0.5s; // delay opcional
-}
-
-img{
-    width: 100%;
+  transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s ease 0.5s;
 }
 
 .content-open{

@@ -14,10 +14,9 @@ import { defaultCourses } from '@utils/defaultCourses';
     selector: 'app-home',
     templateUrl: './home-page.html',
     styleUrl: './home-page.scss',
-    imports: [CourseListComponent, ModalErrorMessageComponent, CartComponent, RouterLink]
+    imports: [CourseListComponent, ModalErrorMessageComponent, CartComponent, RouterLink],
 })
 export class HomeComponent {
-  
   courseService = inject(CourseService);
   cartService = inject(CartService);
   uiService = inject(UIService);

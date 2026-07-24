@@ -1,4 +1,4 @@
-import type { User , AuthResponse } from "src/app/auth/models/auth.interfaces";
+import { AuthResponse, User } from "@auth/models/auth.interfaces";
 
 export class AuthMapper {
 

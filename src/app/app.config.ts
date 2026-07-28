@@ -10,11 +10,10 @@ import {
 
 import { authInterceptor } from '../app/auth/interceptors/auth.interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    importProvidersFrom(BrowserModule, ReactiveFormsModule),
+    importProvidersFrom(ReactiveFormsModule),
     provideRouter(
                   routes,
                   withInMemoryScrolling({

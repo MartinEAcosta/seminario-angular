@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
 
 import { LessonMapper } from '@mappers/lesson.mapper';
 import { Lesson, LessonPopulated, SaveLessonDto } from '@lesson/models/lesson.interfaces';

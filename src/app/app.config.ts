@@ -8,7 +8,7 @@ import {
   withInterceptors,
 } from '@angular/common/http';
 
-import { authInterceptor } from '../app/auth/interceptors/auth.interceptor';
+import { authInterceptor } from '@auth/interceptors/auth.interceptor';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ModalErrorMessageComponent } from "src/app/shared/components/modal-error-message/modal-error-message.component";
+import { ModalErrorMessageComponent } from "@shared/components/modal-error-message/modal-error-message.component";
 
 @Component({
   selector: 'app-auth-layout',

@@ -1,4 +1,4 @@
-import { CartItem, ItemQuantity } from "src/app/cart/models/cart.interface"
+import { CartItem, ItemQuantity } from "@cart/models/cart.interface"
 
 export interface Issuer {
     id: string,

@@ -1,10 +1,10 @@
 import { Router } from '@angular/router';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { Course } from '../../course/models/course.interfaces';
+import { Course } from '@course/models/course.interfaces';
 import { map, throwError } from 'rxjs';
 import { CartItem, ItemQuantity } from '../models/cart.interface';
 import { Cart } from '../models/cart.model';
-import { PaymentService } from 'src/app/payment/services/payment.service';
+import { PaymentService } from '@payment/services/payment.service';
 
 const CART_KEY = 'cart';
 

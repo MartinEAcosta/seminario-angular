@@ -1,5 +1,5 @@
-import { ModuleListResponse , ModulePopulatedListResponse, ModuleUniqueResponse } from "../shared/models/api.interfaces";
-import { Module, ModuleDTO, ModulePopulated } from "../module/models/module.interfaces";
+import { ModuleListResponse , ModulePopulatedListResponse, ModuleUniqueResponse } from "@shared/models/api.interfaces";
+import { Module, ModuleDTO, ModulePopulated } from "@module/models/module.interfaces";
 
 export class ModuleMapper {
 

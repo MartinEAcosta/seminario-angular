@@ -1,5 +1,5 @@
 import { Enrollment, EnrollmentDetailed } from '@enrollment/models/enrollment.interfaces';
-import { EnrollmentPopulatedListResponse, EnrollmentPopulatedUniqueResponse, EnrollmentListResponse, EnrollmentUniqueResponse } from '../shared/models/api.interfaces';
+import { EnrollmentPopulatedListResponse, EnrollmentPopulatedUniqueResponse, EnrollmentListResponse, EnrollmentUniqueResponse } from '@shared/models/api.interfaces';
 
 
 export class EnrollmentMapper {

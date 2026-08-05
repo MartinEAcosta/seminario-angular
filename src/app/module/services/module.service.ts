@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { ModuleMapper } from '@mappers/module.mapper';
 import { catchError, map, Observable, throwError } from 'rxjs';
 
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
 import { ModulePopulatedListResponse, ModuleResponse } from '@shared/models/api.interfaces';
 import { Module, ModuleDTO, ModulePopulated } from '../models/module.interfaces';
 

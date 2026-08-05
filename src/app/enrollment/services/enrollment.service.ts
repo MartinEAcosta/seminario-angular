@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
 
 import { EnrollmentPopulatedListResponse, EnrollmentListResponse, EnrollmentPopulatedResponse, EnrollmentResponse } from '@shared/models/api.interfaces';
 import { Enrollment, EnrollmentDetailed } from '@enrollment/models/enrollment.interfaces';

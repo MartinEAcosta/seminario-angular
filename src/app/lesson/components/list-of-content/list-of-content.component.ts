@@ -1,7 +1,7 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { ModulesAccordionComponent } from "../modules-accordion/modules-accordion.component";
 import { rxResource } from '@angular/core/rxjs-interop';
-import { ModuleService } from 'src/app/module/services/module.service';
+import { ModuleService } from '@module/services/module.service';
 import { AuthService } from '@auth/services/auth.service';
 import { LoaderComponent } from "@shared/components/loader/loader.component";
 

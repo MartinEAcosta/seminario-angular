@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, forkJoin, map, Observable, of, throwError } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
 
 import { FileMapper } from '@mappers/file.mapper';
-import { DeleteResponse, FileResponse } from '../../shared/models/api.interfaces';
+import { DeleteResponse, FileResponse } from '@shared/models/api.interfaces';
 import { UploadedFile } from '@file/models/file.interfaces';
 import { CourseFormState } from '@course/state/course-form/course-form-state';
 import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';

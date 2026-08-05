@@ -3,10 +3,10 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { Course, CourseDTO } from 'src/app/course/models/course.interfaces';
+import { Course, CourseDTO } from '@course/models/course.interfaces';
 import { CourseMapper } from '@mappers/course.mapper';
 import { DeleteResponse, CourseResponse, PaginationResponseDto, PaginationResponse } from '@shared/models/api.interfaces';
-import { FileService } from 'src/app/file/services/file.service';
+import { FileService } from '@file/services/file.service';
 import { PaginationMapper } from '@mappers/pagination.mapper';
 import { buildExploreQueryParams } from '@course/utils/obtainOptionsParams';
 

@@ -7,6 +7,7 @@
       "@auth/*" : ["./src/app/auth/*"],
       "@course/*" : ["./src/app/course/*"],
       "@cart/*" : ["./src/app/cart/*"],
+      "@category/*" : ["./src/app/category/*"],
       "@enrollment/*" : ["./src/app/enrollment/*"],
       "@file/*" : ["./src/app/file/*"],
       "@lesson/*" : ["./src/app/lesson/*"],

@@ -1,4 +1,4 @@
-import { ModulePopulated } from "src/app/module/models/module.interfaces";
+import { ModulePopulated } from "@module/models/module.interfaces";
 
 export interface ApiResponse<T> {
   ok        : boolean;

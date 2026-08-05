@@ -2,8 +2,8 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { AuthService } from '@auth/services/auth.service';
-import { SearchService } from '../../../services/search/search.service';
-import { UserProfileDropdownComponent } from "src/app/user/components/user-profile-dropdown/user-profile-dropdown.component";
+import { SearchService } from '@shared/services/search/search.service';
+import { UserProfileDropdownComponent } from '../../../../user/components/user-profile-dropdown/user-profile-dropdown.component';
 
 @Component({
     selector: 'app-header',

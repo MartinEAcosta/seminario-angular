@@ -2,7 +2,7 @@ import { CurrencyPipe } from '@angular/common';
 import { Component, computed, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Course } from '@interfaces/course.interfaces';
-import { CartService } from 'src/app/cart/state/cart.service';
+import { CartService } from '@cart/state/cart.service';
 
 @Component({
   selector: 'app-course-mini-card',

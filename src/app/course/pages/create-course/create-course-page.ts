@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 
-import { AuthService } from '../../../auth/services/auth.service';
+import { AuthService } from '@auth/services/auth.service';
 import { CourseService } from '../../services/course.service';
 import { CourseMapper } from '@mappers/course.mapper';
 import { FormCourseComponent } from "../../components/form-course/form-course.component";

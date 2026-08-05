@@ -2,10 +2,10 @@ import { Component, computed, inject } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
 
-import { PageTitleComponent } from "src/app/shared/components/page-title/page-title.component";
-import { CartCheckoutComponent } from "src/app/cart/components/cart-checkout/cart-checkout.component";
+import { PageTitleComponent } from "@shared/components/page-title/page-title.component";
+import { CartCheckoutComponent } from "@cart/components/cart-checkout/cart-checkout.component";
 import { PaymentService } from '../../services/payment.service';
-import { CartService } from '../../../cart/state/cart.service';
+import { CartService } from '@cart/state/cart.service';
 import { FormCardCheckoutComponent } from "../../components/form-card-checkout/form-card-checkout.component";
 
 @Component({

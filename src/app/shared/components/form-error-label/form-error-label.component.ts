@@ -1,5 +1,5 @@
 import { Component, input,  } from '@angular/core';
-import { FormUtils } from '../../../utils/form-utils';
+import { FormUtils } from '@utils/form-utils';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { NgClass } from '@angular/common';
 

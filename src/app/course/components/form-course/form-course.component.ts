@@ -5,22 +5,23 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '@auth/services/auth.service';
 import { FileService } from '@file/services/file.service';
 import { FormErrorLabelComponent } from "@shared/components/form-error-label/form-error-label.component";
-import { CategorySelectComponent } from "@category/components/category-select/category-select.component";
 import { ThumbnailSelectorComponent } from "../thumbnail-selector/thumbnail-selector.component";
 import { CourseFormState } from '../../state/course-form/course-form-state';
 import { SliderContentManagerComponent } from '@lesson/components/slider-content-manager/slider-content-manager.component';
 import { BtnRemoveComponent } from "@shared/components/btns/btn-remove/btn-remove.component";
 import { Course } from '@course/models/course.interfaces';
+import { CategorySelectComponent } from "../../../category/components/category-select/category-select.component";
 
 @Component({
   selector: 'app-form-course',
   templateUrl: './form-course.component.html',
   styleUrl: './form-course.component.scss',
   imports: [
-            ReactiveFormsModule, NgClass, FormErrorLabelComponent,
-            CategorySelectComponent, ThumbnailSelectorComponent, 
-            SliderContentManagerComponent, BtnRemoveComponent
-          ],
+    ReactiveFormsModule, NgClass, FormErrorLabelComponent,
+    ThumbnailSelectorComponent,
+    SliderContentManagerComponent, BtnRemoveComponent,
+    CategorySelectComponent
+],
 })
 export class FormCourseComponent {
 

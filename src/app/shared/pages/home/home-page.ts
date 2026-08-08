@@ -9,12 +9,13 @@ import { CourseListComponent } from "../../../course/components/course-list/cour
 import { ModalErrorMessageComponent } from '../../components/modal-error-message/modal-error-message.component';
 import { CartComponent } from '@cart/components/cart/cart.component';
 import { defaultCourses } from '@utils/defaultCourses';
+import { PageTitleComponent } from "@shared/components/page-title/page-title.component";
 
 @Component({
     selector: 'app-home',
     templateUrl: './home-page.html',
     styleUrl: './home-page.scss',
-    imports: [CourseListComponent, ModalErrorMessageComponent, CartComponent, RouterLink]
+    imports: [CourseListComponent, ModalErrorMessageComponent, CartComponent, PageTitleComponent]
 })
 export class HomeComponent {
   

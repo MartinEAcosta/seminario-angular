@@ -4,56 +4,49 @@ on:
   issues:
     types: [opened, edited]
 
-concurrency:
-  group: issue-triage-${{ github.event.issue.number }}
-  cancel-in-progress: true
-
 jobs:
-  triage:
+  format-issue:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       issues: write
-      pull-requests: read
       id-token: write
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - name: Run Claude Issue Triage
-        id: claude-triage
+      - name: Format issue with Claude
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-
+          claude_args: "--allowedTools Bash(gh issue *)"
           prompt: |
-            You are triaging a newly opened or edited GitHub issue at ${{ github.repository }}/issues/${{ github.event.issue.number }}.
-
-            Your job in this workflow is DIAGNOSIS AND LABELING ONLY. Do NOT write, edit, or fix any code, and do NOT open a pull request or branch. A separate later workflow will handle the actual implementation.
-
-            Steps:
-            1. Read the issue title and body via the GitHub context (issue #${{ github.event.issue.number }} in ${{ github.repository }}).
-            2. Explore the repository as needed (Read/Grep/Glob only) to understand which part of the codebase the issue likely relates to. This is an Angular 19 e-commerce course platform with a feature-folder structure under src/app/<feature>/ (features: auth, cart, category, course, enrollment, file, lesson, module, payment, shared, user, plus top-level mappers/ and utils/). See CLAUDE.md at the repo root for full architecture details (state management via signals, mapper pattern for API/DTO boundary, routing conventions, etc.) before writing your diagnosis.
-            3. Determine labels to apply, choosing ONLY from this fixed taxonomy (do not invent new label names outside it):
-               - Type (exactly one, required): bug, enhancement, or question
-               - Area (zero to two, only if clearly applicable): area:auth, area:cart, area:category, area:course, area:enrollment, area:file, area:lesson, area:module, area:payment, area:shared, area:user, area:mappers, area:utils, area:build
-               - Priority (zero or one, only apply if the issue clearly signals severity, e.g. broken checkout/data loss/crash = high): priority:high, priority:medium, priority:low
-               - Always also apply: triaged
-               For any label in this taxonomy that does not yet exist in the repo, create it first with `gh label create "<name>" --force` (pick a reasonable color/description), then apply the chosen labels to the issue with `gh issue edit ${{ github.event.issue.number }} --add-label "<label1>,<label2>,..."`. Apply all your chosen labels in as few `gh issue edit` calls as possible.
-            4. Post exactly one diagnostic comment on the issue via `gh issue comment ${{ github.event.issue.number }} --body "..."` containing, in this structure:
-               - **Likely cause**: your best-effort analysis of what's going wrong (for bugs) or what's being requested (for enhancements/questions), based on the issue text and your exploration of the code.
-               - **Affected areas**: specific file paths / features (using the src/app/<feature>/ structure and path aliases like @cart/*, @auth/*, etc. from CLAUDE.md) you believe are relevant, with brief reasoning.
-               - **Suggested direction**: a short, high-level outline of how a fix or implementation could proceed (do not write actual code diffs) — 2-5 bullet points.
-               - A closing note stating this is an automated diagnosis, no code changes have been made, and a separate step will pick this up for implementation.
-               Keep the comment concise (roughly 150-300 words) and written for a human maintainer to quickly act on.
-
-            If the issue content is too vague to diagnose meaningfully (e.g. no description, spam, or clearly not actionable), skip detailed diagnosis, still apply the `triaged` label plus your best-guess type label, and post a short comment asking the author for more detail (steps to reproduce, expected vs actual behavior, environment) instead of a full diagnosis.
-
-          # Scope Claude to read-only repo exploration + label/comment gh commands only.
-          # This workflow must never modify code — Edit/Write are explicitly disallowed.
-          # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
-          # or https://code.claude.com/docs/en/cli-reference for available options
-          claude_args: '--allowed-tools "Read,Grep,Glob,Bash(gh issue edit:*),Bash(gh issue comment:*),Bash(gh label create:*),Bash(gh label list:*)" --disallowed-tools "Edit,Write,NotebookEdit,Bash(git push:*),Bash(git commit:*)"'
+            You are a GitHub issue formatter for a Tetris game project (vanilla JS/HTML/CSS, no dependencies).
+            An issue was just ${{ github.event.action }} with the following details:
+            - Issue number: #${{ github.event.issue.number }}
+            - Title: ${{ github.event.issue.title }}
+            - Body: ${{ github.event.issue.body }}
+            - Author: ${{ github.event.issue.user.login }}
+            Your tasks:
+            1. **Add labels** based on the issue content. Use only these labels:
+               - `bug` — something is broken or behaving incorrectly
+               - `enhancement` — new feature or improvement request
+               - `question` — asking for help or clarification
+               - `documentation` — docs need updating
+               - `good first issue` — simple, beginner-friendly task
+               - `duplicate` — if it seems like a known/repeated problem
+            2. **Post a comment** on the issue that includes:
+               - A brief, friendly summary of what the issue is about (1-2 sentences)
+               - A "Formatted Report" section with:
+                 - **Type**: Bug / Feature Request / Question / Other
+                 - **Summary**: one clear sentence describing the problem or request
+                 - **Steps to reproduce** (for bugs): list them if not provided, ask the user to provide them if it's a bug
+                 - **Expected behavior** (for bugs): what should happen
+                 - **Suggested labels**: the labels you applied and why
+               - A closing note thanking the contributor
+            Use the `gh` CLI to apply labels and post the comment. Example commands:
+              gh issue edit ${{ github.event.issue.number }} --add-label "bug" --repo ${{ github.repository }}
+              gh issue comment ${{ github.event.issue.number }} --body "..." --repo ${{ github.repository }}
+            Be concise, helpful, and friendly. Do not over-engineer the response.

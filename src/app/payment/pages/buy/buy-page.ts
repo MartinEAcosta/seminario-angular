@@ -22,7 +22,7 @@ export class BuyPage {
   shoppingList = computed( () => this.cartService.cart()); 
 
   paymentMethodsResource = rxResource({
-    loader: () => { 
+    stream: () => { 
       return this.paymentService.getAllPaymentMethods(); 
     }
   });

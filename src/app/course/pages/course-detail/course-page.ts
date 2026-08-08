@@ -28,11 +28,11 @@ export class CoursePage {
   private courseId = this.activatedRoute.snapshot.params['id'] || '';
   
   courseResource = rxResource({
-    request : ( ) => ( { id : this.courseId } ),
-    loader : ( { request  } ) => {
-      if( request.id === '' ) return of();
+    params : ( ) => ( { id : this.courseId } ),
+    stream : ( { params  } ) => {
+      if( params.id === '' ) return of();
       
-      return this.courseService.getById( request.id )
+      return this.courseService.getById( params.id )
     },
   });
 

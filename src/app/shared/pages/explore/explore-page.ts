@@ -36,29 +36,29 @@ export class ExplorePage {
     { initialValue : [] }
   );
   categoriesResource = rxResource({
-    request : () => ({}),
-    loader : () => this.categoryService.getAllCategories(),
+    params : () => ({}),
+    stream : () => this.categoryService.getAllCategories(),
   });
 
   courses = linkedSignal(() => this.coursesResource.value());
   coursesResource = rxResource({
-    request : () => ({
+    params : () => ({
       textSearch : this.searchService.textSearch(), 
       filters : this.searchService.queryParams() ,
       page : this.paginationService.currentPage(),
     }),
-    loader : ({request}) => { 
+    stream : ({params}) => { 
       this.router.navigate(['/explore'] , {
           queryParams : { 
-            ...request.filters,
-            title : request.textSearch || undefined,
-            page : request.page,
+            ...params.filters,
+            title : params.textSearch || undefined,
+            page : params.page,
           }
       });
       return this.courseService.getAll( { 
-        ...request.filters,
-        title: request.textSearch || undefined,
-        page : request.page
+        ...params.filters,
+        title: params.textSearch || undefined,
+        page : params.page
       } );
     }
   });

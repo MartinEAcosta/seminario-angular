@@ -41,7 +41,15 @@ export class CourseService {
       }),
       catchError((error) => {
         console.log(error);
-        return of();
+        return of({
+          items: [],
+          pages: 0,
+          current_page: 1,
+          limit: 0,
+          total: 0,
+          next: null,
+          prev: null,
+        });
       })
     );
   };

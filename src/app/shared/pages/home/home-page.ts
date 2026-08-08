@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, effect, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 
@@ -23,17 +23,26 @@ export class HomeComponent {
   cartService = inject(CartService);
   uiService = inject(UIService);
   
+  private readonly emptyCoursesValue = {
+    items: [...defaultCourses],
+    pages: 1,
+    current_page: 1,
+    limit: defaultCourses.length,
+    total: defaultCourses.length,
+    next: null,
+    prev: null,
+  };
+
   coursesResource = rxResource({
-    loader: () => this.courseService.getAll(),
-    defaultValue: {
-      items: [ ...defaultCourses ],
-      pages: 1,
-      current_page: 1,
-      limit: defaultCourses.length,
-      total: defaultCourses.length,
-      next : null,
-      prev : null,
+    stream: () => this.courseService.getAll(),
+  });
+
+  coursesToShow = computed(() => {
+    const value = this.coursesResource.value();
+    if (!value || value.items.length === 0) {
+      return this.emptyCoursesValue;
     }
+    return value;
   });
 
 }

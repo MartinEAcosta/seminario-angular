@@ -28,7 +28,7 @@ export class AuthService {
 
   // Se dispara ni bien el servicio es inyectado por primera vez.
   checkStatusResource = rxResource({
-    loader: () => this.checkStatus()
+    stream: () => this.checkStatus()
   });
   
   user = computed( this._user );

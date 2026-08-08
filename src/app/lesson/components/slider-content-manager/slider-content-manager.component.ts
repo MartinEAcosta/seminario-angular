@@ -40,10 +40,10 @@ export class SliderContentManagerComponent implements OnDestroy {
   course = input.required<Course | null>();
 
   lessonsResource = rxResource<LessonPopulated[], string | null>({
-    request: () => this.course()?.id ?? null,
-    loader: ({ request }) => {
-      if (request) {
-        return this.lessonService.getAllLessonPopulatedFromCourse(request).pipe(
+      params: () => this.course()?.id ?? null,
+    stream: ({ params }) => {
+      if (params) {
+        return this.lessonService.getAllLessonPopulatedFromCourse(params).pipe(
           tap((res) => this.lessonFormState.lessons.set(res)),
           catchError((error) => {
             // * No se han podido cargar...
@@ -56,10 +56,10 @@ export class SliderContentManagerComponent implements OnDestroy {
   });
 
   modulesResource = rxResource({
-    request: () => this.course()?.id ?? null,
-    loader: ({ request }) => {
-      if (request) {
-        return this.moduleService.getModulesByCourseId(request);
+    params: () => ({ id: this.course()?.id ?? null }),
+    stream: ({ params }) => {
+      if (params.id) {
+        return this.moduleService.getModulesByCourseId(params.id);
       }
       return of([]);
     },

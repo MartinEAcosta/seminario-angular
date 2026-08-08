@@ -21,7 +21,7 @@ export class CategorySelectComponent {
 
   categorySelected = signal<Category | undefined>( undefined );
   categoriesResource = rxResource({ 
-    loader : () => { return this.categoryService.getAllCategories() }
+    stream : () => { return this.categoryService.getAllCategories() }
   });
 
   constructor ( ) {

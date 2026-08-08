@@ -12,11 +12,11 @@
         </section>
     </div> -->
     <div class="header-page">
-        <app-page-title [title]="'Mejores valoradosas'" />
-    </div>
-    <div class="container-course-list">
-        <app-course-list [courses]='this.coursesResource.value().items' [isLoading]='this.coursesResource.isLoading()'
-            [errorMessage]='this.coursesResource.error()' />
+        <app-page-title [title]="'Mejores valorados'" />
+        <div class="container-course-list">
+            <app-course-list [courses]='this.coursesToShow().items' [isLoading]='this.coursesResource.isLoading()'
+                [errorMessage]='this.coursesResource.error()' />
+        </div>
     </div>
 
     <app-modal-error-message />

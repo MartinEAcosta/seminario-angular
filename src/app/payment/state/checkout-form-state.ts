@@ -15,7 +15,7 @@ export class CheckoutFormState {
   public cardForm: any;
 
   public identificationTypeResource = rxResource({
-    loader: () => {
+    stream: () => {
       return this.paymentService.getAllIdentificationTypes();
     },
   });

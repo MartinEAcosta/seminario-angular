@@ -20,7 +20,7 @@ export class ListOfContentComponent {
   user = computed( () => this.authService.user() );
 
   modulesResource = rxResource({
-    loader : ( ) => {
+    stream : ( ) => {
       return this.moduleService.getModulesByCourseId( this.courseId() );
     },
   });

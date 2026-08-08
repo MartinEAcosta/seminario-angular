@@ -1,6 +1,6 @@
-<div class="container">
+<section class="hero">
     <div class="overlay"></div>
-    <section>
+    <div class="hero-content">
         <h1>¡Los mejores cursos, al mejor precio!</h1>
         <p>Aprende a tu ritmo, desde cualquier lugar y en cualquier momento.</p>
         <p>Con Udemix, tendrás acceso a una amplia variedad de cursos en línea, diseñados para ayudarte a alcanzar tus metas profesionales y personales.</p>
@@ -8,10 +8,18 @@
             <button [routerLink]="'/about'" class="btn-about-us btn">Sobre nosotros</button>
             <button [routerLink]="'/pricing'" class="btn-become-a-teacher btn">Convertirse en profesor</button>
         </div>
-    </section>
-    <!-- TODO: Alternativas para mejorar rendimiento -->
-    <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/fO74AMjx2fk?si=F9Ssa3p5sl5vhEDK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
-</div>
+    </div>
+    <div class="hero-stats">
+        <div class="stat-item">
+            <span class="stat-number">+{{ coursesCount() }}</span>
+            <span class="stat-label">Cursos</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">+{{ teachersCount() }}</span>
+            <span class="stat-label">Profesores</span>
+        </div>
+    </div>
+</section>
 
 <div class="container-recommended">
     <h2>Los mejores valorados</h2>

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 
@@ -34,5 +34,12 @@ export class HomeComponent {
       prev : null,
     }
   });
+
+  teachersCount = computed(() => {
+    const items = this.coursesResource.value().items;
+    return new Set(items.map(course => course.id_owner)).size;
+  });
+
+  coursesCount = computed(() => this.coursesResource.value().total);
 
 }

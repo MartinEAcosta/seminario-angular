@@ -30,6 +30,7 @@ export class CourseResolver implements Resolve<Course | null> {
                     return course;
                 }
                 // No tienes los permisos suficientes para obtener el curso.
+                this.router.navigateByUrl('/');
                 return null;
             } ),
             catchError( (error)  => {

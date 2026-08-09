@@ -22,9 +22,11 @@ export const courseRoutes : Routes = [
                 canMatch : [ AuthenticatedGuard ],
             },
             {
+                //Guard de propiedad
                 path : 'update/:id',
                 component : UpdateCoursePageComponent,
                 canActivate : [ ValidateParamIdGuard ],
+                canMatch : [ AuthenticatedGuard ],
                 resolve : {
                     resolvedCourse : CourseResolver
                 }

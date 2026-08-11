@@ -11,6 +11,9 @@
             </div>
         </section>
     </div> -->
+
+    <app-course-carousel [courses]='this.carouselCourses()' [isLoading]='this.coursesResource.isLoading()' />
+
     <div class="header-page">
         <app-page-title [title]="'Mejores valorados'" />
         <div class="container-course-list">

@@ -1,0 +1,101 @@
+@use '@variables' as v;
+
+.carousel-shelf {
+    display: flex;
+    flex-direction: column;
+    margin: 3rem 5%;
+    padding: 2.5rem 0;
+    border-radius: 1rem;
+    background-color: #161616;
+}
+
+.shelf-title {
+    padding: 0 2rem;
+    margin-bottom: 1.5rem;
+    font-family: v.$font-primary;
+    font-weight: 500;
+    font-size: 1.8rem;
+    color: v.$white-custom;
+}
+
+.shelf-viewport {
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+
+.track {
+    display: flex;
+    overflow-x: auto;
+    gap: 2.25rem;
+    padding: 2rem 3rem 1.5rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+    mask-composite: intersect;
+}
+
+.track::-webkit-scrollbar {
+    display: none;
+}
+
+.track-item {
+    --mini-card-width: 16rem;
+    --mini-card-height: 20rem;
+    --mini-card-title-font-size: 1.15rem;
+    --mini-card-hover-bg: #333333;
+    --mini-card-shadow: 5px 7px 20px rgba(0, 0, 0, 0.8), 0 0 0 rgba(220, 220, 240, 0);
+    --mini-card-hover-shadow: 0 14px 30px rgba(0, 0, 0, 0.6), 0 0 22px rgba(220, 220, 240, 0.12);
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+}
+
+.nav-btn {
+    display: flex;
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: none;
+    border-radius: 50%;
+    background-color: v.$brand-color;
+    color: v.$white-custom;
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    transform: translateY(-50%);
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.6);
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover:not(:disabled) {
+    background-color: rgba(0, 120, 140, 0.8);
+    transform: translateY(-50%) scale(1.08);
+}
+
+.nav-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+    pointer-events: none;
+}
+
+.nav-prev {
+    left: 0.75rem;
+}
+
+.nav-next {
+    right: 0.75rem;
+}
+
+@media (max-width: 640px) {
+    .nav-btn {
+        display: none;
+    }
+
+    .track {
+        padding: 0.5rem 1rem 1rem;
+    }
+}

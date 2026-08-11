@@ -6,6 +6,7 @@ import { CourseService } from '@course/services/course.service';
 import { CartService } from '@cart/state/cart.service';
 import { UIService } from '../../services/ui/ui.service';
 import { CourseListComponent } from "../../../course/components/course-list/course-list.component";
+import { CourseCarouselComponent } from "@course/components/course-carousel/course-carousel.component";
 import { ModalErrorMessageComponent } from '../../components/modal-error-message/modal-error-message.component';
 import { CartComponent } from '@cart/components/cart/cart.component';
 import { defaultCourses } from '@utils/defaultCourses';
@@ -15,7 +16,7 @@ import { PageTitleComponent } from "@shared/components/page-title/page-title.com
     selector: 'app-home',
     templateUrl: './home-page.html',
     styleUrl: './home-page.scss',
-    imports: [CourseListComponent, ModalErrorMessageComponent, CartComponent, PageTitleComponent]
+    imports: [CourseListComponent, CourseCarouselComponent, ModalErrorMessageComponent, CartComponent, PageTitleComponent]
 })
 export class HomeComponent {
   
@@ -44,5 +45,7 @@ export class HomeComponent {
     }
     return value;
   });
+
+  carouselCourses = computed(() => this.coursesToShow().items.slice(0, 10));
 
 }

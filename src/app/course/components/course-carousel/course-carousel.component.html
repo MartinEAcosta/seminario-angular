@@ -1,0 +1,28 @@
+@if (isLoading()) {
+    <app-loader />
+}
+@else if (courses().length > 0) {
+    <section class="carousel-shelf">
+        <h2 class="shelf-title">{{ title() }}</h2>
+
+        <div class="shelf-viewport">
+            <button type="button" class="nav-btn nav-prev" [disabled]="!canScrollPrev()"
+                (click)="scrollByCard(-1)" aria-label="Ver cursos anteriores">
+                ‹
+            </button>
+
+            <div class="track" #track (scroll)="onScroll()">
+                @for (course of courses(); track course.id) {
+                    <div class="track-item">
+                        <app-course-mini-card [course]="course" />
+                    </div>
+                }
+            </div>
+
+            <button type="button" class="nav-btn nav-next" [disabled]="!canScrollNext()"
+                (click)="scrollByCard(1)" aria-label="Ver más cursos">
+                ›
+            </button>
+        </div>
+    </section>
+}

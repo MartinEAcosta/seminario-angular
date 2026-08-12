@@ -25,7 +25,7 @@
         <button class="btn" [routerLink]="['/course', id_course()]">
             Ver curso
         </button>
-        <button class="btn" (click)="this.cartService.onAddToCart( course() )">
+        <button class="btn btn-add-to-cart" (click)="this.cartService.onAddToCart( course() )">
             Añadir al carrito
         </button>
     </div>

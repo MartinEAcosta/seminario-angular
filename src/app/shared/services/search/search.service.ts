@@ -74,6 +74,7 @@ export class SearchService {
         ...(this.queryParams() ?? {}),
         [key]: value,
       },
+      replaceUrl: true,
     });
   }
 
@@ -82,7 +83,8 @@ export class SearchService {
       queryParams : {
         [key] : null
       },
-      queryParamsHandling: 'merge'
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
     });
   }
 }

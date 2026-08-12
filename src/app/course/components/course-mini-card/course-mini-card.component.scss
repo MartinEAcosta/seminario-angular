@@ -22,7 +22,6 @@
 }
 
 .text-desc{
-
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -87,6 +86,17 @@
     transition: all 0.3s ease;
 }
 
+.btn-add-to-cart{
+    background-color: v.$brand-color;
+    border: solid thin v.$brand-color;
+    color: v.$white-custom;
+}
+
+.btn-add-to-cart:hover{
+    background-color: rgba(0, 0, 0, 0.5);
+    border: solid thin rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
 
 .container-hover:hover{
     visibility: visible;

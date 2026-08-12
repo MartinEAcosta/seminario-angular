@@ -3,7 +3,7 @@
 .overlay{
     position: fixed;
     top: 0;
-    z-index: 0;
+    z-index: 100;
     width: 100%;
     height: 100%;
 }
@@ -96,7 +96,7 @@ img{
 .header-cart{
     display: flex;
     align-items: center;
-    height: 10%;
+    height: 8vh;
     padding: 1%;
     border-radius: 12px;
     background-color: v.$brand-color;

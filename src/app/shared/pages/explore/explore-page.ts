@@ -49,11 +49,12 @@ export class ExplorePage {
     }),
     stream : ({params}) => { 
       this.router.navigate(['/explore'] , {
-          queryParams : { 
+          queryParams : {
             ...params.filters,
             title : params.textSearch || undefined,
             page : params.page,
-          }
+          },
+          replaceUrl : true,
       });
       return this.courseService.getAll( { 
         ...params.filters,

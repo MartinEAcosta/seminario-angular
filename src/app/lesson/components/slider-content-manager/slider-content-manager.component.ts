@@ -134,6 +134,10 @@ export class SliderContentManagerComponent implements OnDestroy {
   };
 
   onAddModule = () => {
+    if( !this.course()?.id ){
+      this.uiService.showToastMessage('Debes crear el curso antes de agregar un módulo');
+      return;
+    }
     this.lessonFormState.toggleVisibilityOfModulePopUp();
   };
 }

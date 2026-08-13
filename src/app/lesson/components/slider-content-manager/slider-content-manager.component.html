@@ -9,7 +9,7 @@
 
             <div class="container-lessons-thumbnails">
                 <div class="container-add-lesson">
-                    <app-card-action (action)="lessonFormState.toggleVisibilityOfModulePopUp()" svgPath1="./assets/bracket-curly-left.svg" svgPath2="./assets/bracket-curly-right.svg" textAction="Crear nuevo módulo"/>
+                    <app-card-action (action)="onAddModule()" svgPath1="./assets/bracket-curly-left.svg" svgPath2="./assets/bracket-curly-right.svg" textAction="Crear nuevo módulo"/>
                         <div 
                             [ngClass]="this.lessonFormState.isModulePopUpVisible() ? 'visible' : 'hidden'"
                             class="container-popup">

@@ -1,124 +1,122 @@
 <section class="bg-section">
         <div class="container">
 
-            <div class="form-header" (click)="courseFormState.toggleFormCollapsed()">
-                <app-page-title [title]="this.course()?.id ? 'Editar curso' : 'Crear curso'" />
-                <img
-                    src="assets/down-icon.svg"
-                    alt=""
-                    class="chevron-icon"
-                    [class.collapsed]="courseFormState.isFormCollapsed()"
-                />
-            </div>
+            <app-collapsible-page-title
+                [title]="this.course()?.id ? 'Editar curso' : 'Crear curso'"
+                [collapsed]="courseFormState.isFormCollapsed()"
+                (toggle)="courseFormState.toggleFormCollapsed()"
+            />
 
-            @if( !courseFormState.isFormCollapsed() ){
-                <form class="form-body-grid" [formGroup]="courseFormState.courseForm" (ngSubmit)="onSubmit()">
+            <div class="collapse-wrapper" [class.collapsed]="courseFormState.isFormCollapsed()">
+                <div class="collapse-inner">
+                    <form class="form-body-grid" [formGroup]="courseFormState.courseForm" (ngSubmit)="onSubmit()">
 
-                    <div class="container-thumbnail">
-                        <app-thumbnail-selector [folder]="'courses'" />
-                    </div>
-
-                    <div class="form-course">
-
-                        <div class="container-form-top">
-                            <input
-                                formControlName="title"
-                                class="input input-title"
-                                type="text"
-                                placeholder="Título del curso"
-                            />
-
-                            <form-error-label [control]="courseFormState.courseForm.get('title')!" [warningSvg]=true />
+                        <div class="container-thumbnail">
+                            <app-thumbnail-selector [folder]="'courses'" />
                         </div>
 
-                        <div class="container-form-description">
-                            <textarea
-                                formControlName="description"
-                                class="input input-description"
-                                type="text"
-                                placeholder="Escribe una breve descripción del curso...">
-                            </textarea>
+                        <div class="form-course">
 
-                            <form-error-label [control]="courseFormState.courseForm.get('description')!" [warningSvg]=true />
-                        </div>
-
-                        <div class="container-category-pricing">
-                            <div class="container-category">
-                                <app-category-select
-                                    [course]="course()"
-                                    (clickCategory)="courseFormState.courseForm.get('id_category')?.setValue($event)"
+                            <div class="container-form-top">
+                                <input
+                                    formControlName="title"
+                                    class="input input-title"
+                                    type="text"
+                                    placeholder="Título del curso"
                                 />
 
-                                <label for="file" class="btn btn-thumbnail">
-                                    {{ courseFormState.tempThumbnail() ? 'Reemplazar portada' : 'Agregar portada' }}
-                                </label>
+                                <form-error-label [control]="courseFormState.courseForm.get('title')!" [warningSvg]=true />
                             </div>
 
-                            <div class="container-pricing-actions">
-                                <div class="container-pricing-capacity">
-                                    <div class="container-capacity field-card">
-                                        <label
-                                            class="label-capacity"
-                                        >
-                                            Capacidad Limitada
-                                        </label>
-                                        <input
-                                            formControlName="capacity"
-                                            type="number"
-                                            class="input input-standard input-capacity"
-                                            [ngClass]="{
-                                                    'invalid-border': courseFormState.courseForm.get('capacity')?.errors,
-                                                    'valid-border': courseFormState.courseForm.get('capacity')?.valid && !courseFormState.courseForm.get('capacity')?.errors && courseFormState.courseForm.get('capacity')?.touched,
+                            <div class="container-form-description">
+                                <textarea
+                                    formControlName="description"
+                                    class="input input-description"
+                                    type="text"
+                                    placeholder="Escribe una breve descripción del curso...">
+                                </textarea>
+
+                                <form-error-label [control]="courseFormState.courseForm.get('description')!" [warningSvg]=true />
+                            </div>
+
+                            <div class="container-category-pricing">
+                                <div class="container-category">
+                                    <app-category-select
+                                        [course]="course()"
+                                        (clickCategory)="courseFormState.courseForm.get('id_category')?.setValue($event)"
+                                    />
+
+                                    <label for="file" class="btn btn-thumbnail">
+                                        {{ courseFormState.tempThumbnail() ? 'Reemplazar portada' : 'Agregar portada' }}
+                                    </label>
+                                </div>
+
+                                <div class="container-pricing-actions">
+                                    <div class="container-pricing-capacity">
+                                        <div class="container-capacity field-card">
+                                            <label
+                                                class="label-capacity"
+                                            >
+                                                Capacidad Limitada
+                                            </label>
+                                            <input
+                                                formControlName="capacity"
+                                                type="number"
+                                                class="input input-standard input-capacity"
+                                                [ngClass]="{
+                                                        'invalid-border': courseFormState.courseForm.get('capacity')?.errors,
+                                                        'valid-border': courseFormState.courseForm.get('capacity')?.valid && !courseFormState.courseForm.get('capacity')?.errors && courseFormState.courseForm.get('capacity')?.touched,
+                                                    }"
+                                                    placeholder="5"
+                                            />
+                                            <form-error-label [control]="courseFormState.courseForm.get('capacity')!" />
+                                        </div>
+                                        <div class="container-pricing field-card">
+                                            <label class="label-pricing">
+                                                Precio del curso
+                                            </label>
+                                            <input
+                                                formControlName="price"
+                                                class="input input-standard input-pricing"
+                                                type="number"
+                                                [ngClass]="{
+                                                    'invalid-border': courseFormState.courseForm.get('price')?.errors && courseFormState.courseForm.get('price')?.touched ,
+                                                    'valid-border': courseFormState.courseForm.get('price')?.touched && !courseFormState.courseForm.get('price')?.errors
                                                 }"
                                                 placeholder="5"
-                                        />
-                                        <form-error-label [control]="courseFormState.courseForm.get('capacity')!" />
+                                                />
+                                                <form-error-label [control]="courseFormState.courseForm.get('price')!" />
+                                            </div>
                                     </div>
-                                    <div class="container-pricing field-card">
-                                        <label class="label-pricing">
-                                            Precio del curso
-                                        </label>
-                                        <input
-                                            formControlName="price"
-                                            class="input input-standard input-pricing"
-                                            type="number"
-                                            [ngClass]="{
-                                                'invalid-border': courseFormState.courseForm.get('price')?.errors && courseFormState.courseForm.get('price')?.touched ,
-                                                'valid-border': courseFormState.courseForm.get('price')?.touched && !courseFormState.courseForm.get('price')?.errors
-                                            }"
-                                            placeholder="5"
-                                            />
-                                            <form-error-label [control]="courseFormState.courseForm.get('price')!" />
-                                        </div>
-                                </div>
 
-                                <div class="container-actions">
-                                    <button
-                                        class="btn btn-create"
-                                        type="submit"
-                                        >
-                                        {{ this.course()?.id  ? 'Editar curso': 'Crear curso'}}
-                                    </button>
-                                    @if( this.course() ){
-                                        <app-btn-remove
-                                            [item]="this.course()"
-                                            [asButton]="true"
-                                            [label]="'Eliminar curso'"
-                                            (onRemove)="this.onRemoveCourse( this.course()! )"
-                                        />
-                                    }
-                                    <button class="btn btn-cancel" type="reset">
-                                        Cancelar
-                                    </button>
+                                    <div class="container-actions">
+                                        <button
+                                            class="btn btn-create"
+                                            type="submit"
+                                            >
+                                            {{ this.course()?.id  ? 'Editar curso': 'Crear curso'}}
+                                        </button>
+                                        @if( this.course() ){
+                                            <app-btn-remove
+                                                [item]="this.course()"
+                                                [asButton]="true"
+                                                [label]="'Eliminar curso'"
+                                                (onRemove)="this.onRemoveCourse( this.course()! )"
+                                            />
+                                        }
+                                        <button class="btn btn-cancel" type="reset">
+                                            Cancelar
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                    </div>
-                </form>
-            }
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
 
-        <app-slider-content-manager [course]="course()" />
+        <!-- <app-slider-content-manager [course]="course()" /> -->
 
     </section>

@@ -11,6 +11,8 @@ import { LessonPopulated } from '@lesson/models/lesson.interfaces';
 export class BtnRemoveComponent {
 
   item = input<Course | LessonPopulated | null>( null );
+  asButton = input<boolean>( false );
+  label = input<string>( 'Eliminar' );
 
   @Output()
   onRemove = new EventEmitter();

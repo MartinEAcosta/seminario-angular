@@ -39,8 +39,7 @@ export class UpdateCoursePageComponent {
     this.courseService.saveCourse( updateCourseDTO , this.courseFormState.thumbnailFile() )
                         .subscribe(
                           ( course ) => {
-                            this.courseFormState.reset();
-                            this.router.navigate([`/course/${ course.id }`]);
+                            this.courseFormState.setFormCollapsed( true );
                           },
                         );
   }

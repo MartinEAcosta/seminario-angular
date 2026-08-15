@@ -1,5 +1,13 @@
 @if( item() ){
-    <div class="container-remove" (click)="onClick()">
-        <img class="svg-remove" src="/assets/remove-icon.svg" alt="Remove course button">
-    </div>
+    @if( asButton() ){
+        <button type="button" class="btn-remove-inline" (click)="onClick()">
+            <img class="svg-remove-inline" src="/assets/remove-icon.svg" alt="">
+            {{ label() }}
+        </button>
+    }
+    @else{
+        <div class="container-remove" (click)="onClick()">
+            <img class="svg-remove" src="/assets/remove-icon.svg" alt="Remove course button">
+        </div>
+    }
 }

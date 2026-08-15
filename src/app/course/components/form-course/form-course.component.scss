@@ -1,5 +1,14 @@
 @use "../../../../variables.scss" as v;
 
+:host{
+    display: block;
+    max-width: 100%;
+}
+
+*{
+    box-sizing: border-box;
+}
+
 .bg-section {
     display: flex;
     flex-direction: column;
@@ -11,73 +20,104 @@
     font-family: v.$font-primary;
 }
 
-.container{ 
-    position: relative;
+.container{
     display: flex;
-    width: 90%;
-    height: 50vh;
-    margin: 1.5% auto;
-    padding: 2%;
-    background-color: v.$black-custom;
-    border-radius: 1rem;
-    gap: 2%;
+    flex-direction: column;
+    width: 100%;
+    margin: 0;
+    padding: 2rem 5%;
+    background-color: v.$white-custom;
+    gap: 1.5rem;
+}
+
+.form-header{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+}
+
+.form-header app-page-title{
+    flex: 1;
+    min-width: 0;
+}
+
+.chevron-icon{
+    display: flex;
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+}
+
+.chevron-icon.collapsed{
+    transform: rotate(-90deg);
+}
+
+.form-body-grid{
+    display: grid;
+    grid-template-columns: minmax(18rem, 32rem) 1fr;
+    align-items: stretch;
+    gap: 2.5rem;
+    width: 100%;
+}
+
+@media (max-width: 48rem){
+    .form-body-grid{
+        grid-template-columns: 1fr;
+    }
+
+    .container-thumbnail{
+        aspect-ratio: 4 / 3;
+        height: auto;
+    }
 }
 
 .container-thumbnail{
-    width: 65%;
-}
-
-.img-course{
-    min-width: 35%;
-    max-width: 35%;
     display: flex;
-}
-
-.img-course  img{
-    min-width: 100%;
-    max-width: 100%;
-    display: flex;
-    object-fit: cover;
-    border-radius: 1rem;
-}
-
-.input{
-    background: transparent;
-    border: none;
-    outline: none;
-    color: v.$white-custom;
-    font-family: v.$font-primary;
+    width: 100%;
+    height: 100%;
 }
 
 .form-course{
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100%;
+    gap: 1.5rem;
+}
+
+.input{
+    background: transparent;
+    border: none;
+    outline: none;
+    color: v.$black-custom;
+    font-family: v.$font-primary;
 }
 
 .container-form-top{
     display: flex;
     width: 100%;
-    height: 20%;
     flex-direction: column;
 }
 
 .input-title{
-    width: 75%;
-    height: 60%;
-    font-size: 1.7rem;
+    width: 40%;
+    min-width: 14rem;
+    font-size: 1.5rem;
+    font-weight: 600;
     font-family: v.$font-primary;
     text-align: left;
-    padding: 0% 1%;
+    padding: 0.5rem 0;
     border-bottom: solid 2px v.$brand-color;
     border-radius: 0.5px;
 }
 
 .container-form-description{
     display: flex;
-    width: 75%;
-    height: 20%;
+    width: 100%;
     flex-direction: column;
 }
 
@@ -85,129 +125,101 @@
     display: flex;
     width: 100%;
     height: auto;
+    min-height: 5rem;
     resize: none;
     overflow: visible;
     scrollbar-width: none;
     font-size: 1rem;
 }
 
-.container-form-right{
+.container-category-pricing{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: flex-start;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+@media (max-width: 37.5rem){
+    .container-category-pricing{
+        grid-template-columns: 1fr;
+    }
+}
+
+.container-category{
     display: flex;
     flex-direction: column;
-    position: absolute;
-    bottom: 20%;
-    right: 2%;
-    width: 20%;
-    height: 45%;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.container-pricing-actions{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.container-pricing-capacity{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 1.5rem;
+}
+
+@media (max-width: 37.5rem){
+    .container-pricing-capacity{
+        flex-direction: column;
+    }
+
+    .field-card{
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
+
+.field-card{
+    display: flex;
+    flex: 1 1 10rem;
+    max-width: 14rem;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .container-capacity{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 50%;
-    align-items: center;
-    color: v.$white-custom;
+    color: v.$black-custom;
     font-size: 1rem;
 }
 
-.container-inline{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2.5%;
-    width: 100%;
-}
-
-.switch-container{
-    display: flex;
-    cursor: pointer;
-}
-
-.switch-checkbox{
-    position: absolute;
-    left: -100vw;
-}
-
-.switch-label{
-    font-size: 2rem;
-    text-indent: -100vw;
-    cursor: pointer;
-    background-color: grey;
-    position: relative;
-    border: solid 1px transparent;
-    width: 65px;
-    height: 30px;
-    border-radius: 2rem;
-    box-shadow: inset 0px 0px 5px 5px rgba(0,0,0,0.5) , 5px 2px 5px rgb(0,0,0 , 0.5);
-}
-
-.switch-label:after{
-    display: flex;
-    position: absolute;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-    width: 30px;
-    height: 100%;
-    padding: 2px;
-    top: 0;
-    left: 0;
-    border-radius: 50%;
-    background-color: rgb(197, 14, 14, 0.8);
-    content: 'OFF';
-    color: v.$white-custom;
-    text-indent: 0;
-    text-transform: uppercase;
-    font-family: v.$font-primary;
-    font-size: 0.7rem;
-    font-weight: 500;
-    box-shadow: 0 2px 5px rgb(197, 14, 14, 0.8);
-    transition: 0.5s;
-}
-
-.switch-checkbox:checked + .switch-label{
-    background-color: v.$white-custom;
-    transition: 0.5s;
-}
-
-.switch-checkbox:checked + .switch-label::after{
-    color: rgb(255,255,255);
-    content: 'ON';
-    background-color: rgb(0, 150, 50 ,0.8);
-    box-shadow: 0 2px 5px rgb(0, 150, 50 ,0.8);
-    transform: translate(35px);
-}
-
 .label-capacity{
-    color: v.$white-custom;
+    color: v.$black-custom;
     transition: color 0.5s ease;
 }
 
-.unlimited-capacity{
-    color: grey;
-    transition: color 0.5s ease;
-}
-
-.input-capacity{
+.input-standard{
     display: flex;
-    width: 13%;
-    border-bottom: solid 2px rgba(0, 0, 0, 0.2);
+    height: 2.5rem;
     font-size: 1.2rem;
+    font-family: v.$font-primary;
     text-align: center;
+    background-color: transparent;
+    color: v.$black-custom;
+    border: none;
+    border-bottom: solid 2px rgba(0, 0, 0, 0.2);
+    outline: none;
     -webkit-appearance: none;
     -moz-appearance: textfield;
     appearance: textfield;
     transition: all 0.3s ease;
 }
 
-.container-error{
+.input-capacity{
     width: 100%;
-    display: flex;
-    margin-top: 0.5rem;
 }
 
-// No dejeba que se centre el texto del input 
 input::-webkit-inner-spin-button,
 input::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -215,22 +227,11 @@ input::-webkit-outer-spin-button {
 }
 
 .container-pricing{
-    display: flex;
-    width: 50%;
-    height: 50%;
-    margin: 0 0 auto auto;
-    flex-direction: column;
     text-align: center;
 }
 
 .input-pricing{
-    height: 2rem;
-    font-size: 1.2rem;
-    text-align: center;
-    background-color: transparent;
-    color: v.$white-custom;
-    border-bottom: solid 2px rgba(0, 0, 0, 0.2);
-    outline: none;
+    width: 100%;
 }
 
 .invalid-border{
@@ -243,105 +244,68 @@ input::-webkit-outer-spin-button {
 
 
 .container-pricing .label-pricing{
-    color: v.$white-custom;
+    color: v.$black-custom;
     text-align: center;
 }
 
-.container-btn{
+.container-actions{
     display: flex;
-    width: 25%;
-    height: 10%;
-    position: absolute;
-    right: 2%;
-    bottom: 10%;
-    gap: 5%;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
 }
 
 .btn{
-    width: 100%;
     font-size: 1rem;
+    line-height: 1;
     padding: 10px 20px;
     text-align: center;
     border-radius: 20rem;
     cursor: pointer;
-    box-shadow: 0px 0px 15px rgba(0,0,0 , 0.5);
-
+    box-shadow: 0px 0px 15px rgba(0,0,0 , 0.2);
 }
 
 .btn-create{
     background-color: v.$brand-color;
     color: v.$white-custom;
-    border: none;
+    border: solid 2px transparent;
     transition: all 0.3s ease;
-}
-
-.btn-create:hover{
-    background-color: rgba(0, 120, 140, 0.70);
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.7);
-    transform: scale(1.05);
 }
 
 .btn-cancel{
     background-color: transparent;
-    color: v.$white-custom;
-    border: solid 2px v.$red-warning;
+    color: v.$black-custom;
+    border: solid 2px v.$black-custom;
     transition: all 0.3s ease;
+}
+
+.btn-thumbnail{
+    background-color: transparent;
+    color: v.$brand-color;
+    border: solid 2px v.$brand-color;
+    border-radius: 0.5rem;
+    padding: 0.6rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-create:hover,
+.btn-cancel:hover,
+.btn-thumbnail:hover{
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
+    transform: scale(1.05);
+}
+
+.btn-create:hover{
+    background-color: rgba(0, 120, 140, 0.70);
 }
 
 .btn-cancel:hover{
-    color: v.$red-warning;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.6);
-    transform: scale(1.05);
+    background-color: v.$black-custom;
+    color: v.$white-custom;
 }
 
-.container-files{
-    display: flex;
-    flex-direction: column;
-    width: 14%;
-    position: absolute;
-    bottom: 10%;
-}
-
-.input-file {
-  display: none;
-}
-
-.custom-file-label {
-    display: flex;
-    width: 100%;
-    height: 10%;
-    padding: 10px 10px;
-    justify-content: space-evenly;
-    align-items: center;
-    background-color: rgb(10, 130, 40);
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5); 
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: all 0.3s ease;
-}
-
-
-.custom-content{
+.btn-thumbnail:hover{
     background-color: v.$brand-color;
-    margin-bottom: 4%;
-}
-
-.custom-file-label:hover {
-    background-color: rgba(2, 15, 30, 0.8);
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8); 
-    transform: scale(1.05);
-    transition: all 0.3s ease;
-}
-
-
-
-.custom-file-label img{
-    width: 10%;
-    height: 5%;
-}
-
-.custom-content img{
-    object-fit: cover;
+    color: v.$white-custom;
 }

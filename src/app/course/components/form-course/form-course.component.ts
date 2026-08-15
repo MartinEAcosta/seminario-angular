@@ -11,6 +11,7 @@ import { SliderContentManagerComponent } from '@lesson/components/slider-content
 import { BtnRemoveComponent } from "@shared/components/btns/btn-remove/btn-remove.component";
 import { Course } from '@course/models/course.interfaces';
 import { CategorySelectComponent } from "../../../category/components/category-select/category-select.component";
+import { PageTitleComponent } from "@shared/components/page-title/page-title.component";
 
 @Component({
   selector: 'app-form-course',
@@ -20,7 +21,7 @@ import { CategorySelectComponent } from "../../../category/components/category-s
     ReactiveFormsModule, NgClass, FormErrorLabelComponent,
     ThumbnailSelectorComponent,
     SliderContentManagerComponent, BtnRemoveComponent,
-    CategorySelectComponent
+    CategorySelectComponent, PageTitleComponent
 ],
 })
 export class FormCourseComponent {
@@ -61,7 +62,6 @@ export class FormCourseComponent {
       if( !uid ) return;
       
       this.submitForm.emit( this.course() );
-      this.courseFormState.reset();
     }
   }
 

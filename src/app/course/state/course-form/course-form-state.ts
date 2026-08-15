@@ -21,12 +21,8 @@ export class CourseFormState {
   limitedCapacity = signal<boolean>( true );
   thumbnailFile = signal<File | null>( null );
   tempThumbnail = signal<string | null>( null );
+  isFormCollapsed = signal<boolean>( false );
   
-  onLimitedCapacityChange = effect(() => {
-    const limited = this.limitedCapacity();
-
-    limited ? this.courseForm.get('capacity')?.enable() : this.courseForm.get('capacity')?.disable();
-  });
 
   public reset () : void {
     this.courseForm.reset();
@@ -59,6 +55,14 @@ export class CourseFormState {
 
   public toggleLimitedCapacity ( ) : void {
     this.limitedCapacity.set( !this.limitedCapacity() );
+  }
+
+  public setFormCollapsed ( collapsed : boolean ) : void {
+    this.isFormCollapsed.set( collapsed );
+  }
+
+  public toggleFormCollapsed ( ) : void {
+    this.isFormCollapsed.set( !this.isFormCollapsed() );
   }
 
 }

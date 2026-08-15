@@ -11,7 +11,7 @@ import { SliderContentManagerComponent } from '@lesson/components/slider-content
 import { BtnRemoveComponent } from "@shared/components/btns/btn-remove/btn-remove.component";
 import { Course } from '@course/models/course.interfaces';
 import { CategorySelectComponent } from "../../../category/components/category-select/category-select.component";
-import { PageTitleComponent } from "@shared/components/page-title/page-title.component";
+import { CollapsiblePageTitleComponent } from "../collapsible-page-title/collapsible-page-title.component";
 
 @Component({
   selector: 'app-form-course',
@@ -21,7 +21,7 @@ import { PageTitleComponent } from "@shared/components/page-title/page-title.com
     ReactiveFormsModule, NgClass, FormErrorLabelComponent,
     ThumbnailSelectorComponent,
     SliderContentManagerComponent, BtnRemoveComponent,
-    CategorySelectComponent, PageTitleComponent
+    CategorySelectComponent, CollapsiblePageTitleComponent
 ],
 })
 export class FormCourseComponent {

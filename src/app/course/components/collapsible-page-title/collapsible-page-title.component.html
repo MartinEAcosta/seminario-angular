@@ -1,0 +1,8 @@
+<div class="form-header" (click)="toggle.emit()">
+    <div class="container-title">
+        <h1 class="title">{{ title() }}</h1>
+    </div>
+    <span class="chevron-toggle">
+        <span class="chevron-icon" [class.collapsed]="collapsed()"></span>
+    </span>
+</div>

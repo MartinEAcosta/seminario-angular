@@ -30,31 +30,27 @@
     gap: 1.5rem;
 }
 
-.form-header{
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-    cursor: pointer;
+.collapse-wrapper{
+    display: grid;
+    grid-template-rows: 1fr;
+    opacity: 1;
+    transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
 }
 
-.form-header app-page-title{
-    flex: 1;
-    min-width: 0;
+.collapse-wrapper.collapsed{
+    grid-template-rows: 0fr;
+    opacity: 0;
 }
 
-.chevron-icon{
-    display: flex;
-    flex-shrink: 0;
-    width: 1.5rem;
-    height: 1.5rem;
-    transform: rotate(0deg);
-    transition: transform 0.3s ease;
+.collapse-inner{
+    overflow: hidden;
+    min-height: 0;
 }
 
-.chevron-icon.collapsed{
-    transform: rotate(-90deg);
+@media (prefers-reduced-motion: reduce){
+    .collapse-wrapper{
+        transition: none;
+    }
 }
 
 .form-body-grid{

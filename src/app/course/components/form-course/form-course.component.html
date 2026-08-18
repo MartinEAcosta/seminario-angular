@@ -17,24 +17,27 @@
 
                         <div class="form-course">
 
-                            <div class="container-form-top">
+                            <div class="container-form-top field-float field-float--title">
                                 <input
                                     formControlName="title"
                                     class="input input-title"
                                     type="text"
-                                    placeholder="Título del curso"
+                                    placeholder=" "
+                                    id="title"
                                 />
+                                <label for="title">Título del curso</label>
 
                                 <form-error-label [control]="courseFormState.courseForm.get('title')!" [warningSvg]=true />
                             </div>
 
-                            <div class="container-form-description">
+                            <div class="container-form-description field-float field-float--description">
                                 <textarea
                                     formControlName="description"
                                     class="input input-description"
-                                    type="text"
-                                    placeholder="Escribe una breve descripción del curso...">
+                                    placeholder=" "
+                                    id="description">
                                 </textarea>
+                                <label for="description">Descripción del curso</label>
 
                                 <form-error-label [control]="courseFormState.courseForm.get('description')!" [warningSvg]=true />
                             </div>
@@ -53,38 +56,34 @@
 
                                 <div class="container-pricing-actions">
                                     <div class="container-pricing-capacity">
-                                        <div class="container-capacity field-card">
-                                            <label
-                                                class="label-capacity"
-                                            >
-                                                Capacidad Limitada
-                                            </label>
+                                        <div class="container-capacity field-card field-float">
                                             <input
                                                 formControlName="capacity"
                                                 type="number"
+                                                id="capacity"
                                                 class="input input-standard input-capacity"
                                                 [ngClass]="{
                                                         'invalid-border': courseFormState.courseForm.get('capacity')?.errors,
                                                         'valid-border': courseFormState.courseForm.get('capacity')?.valid && !courseFormState.courseForm.get('capacity')?.errors && courseFormState.courseForm.get('capacity')?.touched,
                                                     }"
-                                                    placeholder="5"
+                                                    placeholder=" "
                                             />
+                                            <label for="capacity">Capacidad Limitada</label>
                                             <form-error-label [control]="courseFormState.courseForm.get('capacity')!" />
                                         </div>
-                                        <div class="container-pricing field-card">
-                                            <label class="label-pricing">
-                                                Precio del curso
-                                            </label>
+                                        <div class="container-pricing field-card field-float">
                                             <input
                                                 formControlName="price"
                                                 class="input input-standard input-pricing"
                                                 type="number"
+                                                id="price"
                                                 [ngClass]="{
                                                     'invalid-border': courseFormState.courseForm.get('price')?.errors && courseFormState.courseForm.get('price')?.touched ,
                                                     'valid-border': courseFormState.courseForm.get('price')?.touched && !courseFormState.courseForm.get('price')?.errors
                                                 }"
-                                                placeholder="5"
+                                                placeholder=" "
                                                 />
+                                                <label for="price">Precio del curso</label>
                                                 <form-error-label [control]="courseFormState.courseForm.get('price')!" />
                                             </div>
                                     </div>

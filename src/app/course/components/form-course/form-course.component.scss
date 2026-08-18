@@ -45,6 +45,8 @@
 .collapse-inner{
     overflow: hidden;
     min-height: 0;
+    padding: 1rem;
+    margin: -1rem;
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -190,11 +192,6 @@
     font-size: 1rem;
 }
 
-.label-capacity{
-    color: v.$black-custom;
-    transition: color 0.5s ease;
-}
-
 .input-standard{
     display: flex;
     height: 2.5rem;
@@ -231,18 +228,103 @@ input::-webkit-outer-spin-button {
 }
 
 .invalid-border{
-    border-bottom: solid 2px v.$red-warning;
+    border-color: v.$red-warning;
 }
 
 .valid-border{
-    border-bottom: solid 2px v.$brand-color;
+    border-color: v.$brand-color;
 }
 
+/* --- Floating label pattern (title, description, capacity, price) --- */
 
-.container-pricing .label-pricing{
+.field-float{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 0.75rem;
+    gap: 0.4rem;
+}
+
+.field-float .input{
+    width: 100%;
+    height: auto;
+    background-color: transparent;
+    border: solid 2px rgba(0, 0, 0, 0.2);
+    border-radius: 0.6rem;
+    padding: 1.15rem 0.9rem 0.45rem;
+    font-size: 1rem;
+    font-family: v.$font-primary;
     color: v.$black-custom;
-    text-align: center;
+    text-align: left;
+    outline: none;
+    transition: border-color 0.3s ease;
 }
+
+.field-float .input:focus{
+    border-color: v.$brand-color;
+}
+
+.field-float .input.invalid-border{
+    border-color: v.$red-warning;
+}
+
+.field-float .input.valid-border{
+    border-color: v.$brand-color;
+}
+
+.field-float label{
+    position: absolute;
+    left: 0.9rem;
+    top: 1.15rem;
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 0.55);
+    background-color: v.$white-custom;
+    padding: 0 0.3rem;
+    line-height: 1;
+    pointer-events: none;
+    transition: all 0.2s ease;
+}
+
+.field-float .input:focus + label,
+.field-float .input:not(:placeholder-shown) + label{
+    top: -0.55rem;
+    left: 0.7rem;
+    font-size: 0.75rem;
+    color: v.$brand-color;
+}
+
+.field-float .input.invalid-border:not(:focus) + label{
+    color: v.$red-warning;
+}
+
+.field-float--title .input-title{
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding-top: 1.4rem;
+}
+
+.field-float--title label{
+    font-size: 1.3rem;
+    top: 1.4rem;
+}
+
+.field-float--title .input-title:focus + label,
+.field-float--title .input-title:not(:placeholder-shown) + label{
+    font-size: 0.85rem;
+    top: -0.55rem;
+}
+
+.field-float--description .input-description{
+    min-height: 6rem;
+    padding-top: 1.4rem;
+}
+
+.field-float--description label{
+    top: 1.4rem;
+}
+
+
 
 .container-actions{
     display: flex;

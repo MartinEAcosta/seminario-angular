@@ -44,24 +44,22 @@
                         <btn-border-thin (click)="this.cartService.onAddToCart( course() )" />
                     </div>
 
+                    @if( course().id_owner === authService.user()?.id  ) {
+                        <div class="container-extra">
+                            <div class="ellipsis-icon">
+                                <img class="ellipsis-svg" src="/assets/ellipsis-icon.svg" alt="Ellipsis icon for options">
+                            </div>
+                            <div class="course-options">
+                                <a class="option" [routerLink]="['/course/update' , course().id ]" >
+                                    Editar    
+                                </a>
+                                <a class="option" [routerLink]="">
+                                    Eliminar
+                                </a>
+                            </div>
+                        </div>
+                    }
                 </div>
-
-                @if( course().id_owner === authService.user()?.id  ) {
-                    <div class="container-extra">
-                        <div class="ellipsis-icon">
-                            <img class="ellipsis-svg" src="/assets/ellipsis-icon.svg" alt="Ellipsis icon for options">
-                        </div>
-                        <div class="course-options">
-                            <a class="option" [routerLink]="['/course/update' , course().id ]" >
-                                Editar    
-                            </a>
-                            <a class="option" [routerLink]="">
-                                Eliminar
-                            </a>
-                        </div>
-                    </div>
-                }
-
             </div>
         </div>
     </div>

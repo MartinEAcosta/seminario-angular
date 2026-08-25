@@ -6,16 +6,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Angular 19 (standalone components, no NgModules for feature code) e-commerce-style course platform: browse/create/enroll in courses, cart, checkout via MercadoPago, video lessons via video.js. Backend is a separate repo (`seminario-angular-backend`, not in this workspace) — without it running, auth/login/course-creation/image-upload flows won't work; the app falls back to mocked data for browsing.
 
-## Commands
+## Skills
 
-- `npm start` / `ng serve` — dev server (uses `environment.development.ts`)
-- `npm run build` / `ng build` — production build to `dist/seminario-angular`
-- `npm run watch` — dev build with `--watch`
-- `npm test` / `ng test` — Karma/Jasmine unit tests (Chrome launcher)
-  - Run a single spec: temporarily scope with `fdescribe`/`fit` in the spec file (Karma has no built-in `--include` file filter in this config)
-- No lint script is configured in `package.json`.
-
-Backend setup (separate repo, needed for full functionality): clone `seminario-angular-backend`, `npm install`, create `.env` from `env.template`, `npm run dev`.
+Use the /frontend-desing command when implementing changes to the user interface.
 
 ## Architecture
 

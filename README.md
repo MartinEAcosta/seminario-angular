@@ -46,3 +46,15 @@ Son un middleware representados simplemente como una funcion, estos pueden ser u
 
 <!-- Lo que antes en React lo hacia consumiendo el status del store aca lo hago a través del interceptor, 
 permitiendo o no el acceso a la ruta  -->
+
+
+## Commands
+
+- `npm start` / `ng serve` — dev server (uses `environment.development.ts`)
+- `npm run build` / `ng build` — production build to `dist/seminario-angular`
+- `npm run watch` — dev build with `--watch`
+- `npm test` / `ng test` — Karma/Jasmine unit tests (Chrome launcher)
+  - Run a single spec: temporarily scope with `fdescribe`/`fit` in the spec file (Karma has no built-in `--include` file filter in this config)
+- No lint script is configured in `package.json`.
+
+Backend setup (separate repo, needed for full functionality): clone `seminario-angular-backend`, `npm install`, create `.env` from `env.template`, `npm run dev`.

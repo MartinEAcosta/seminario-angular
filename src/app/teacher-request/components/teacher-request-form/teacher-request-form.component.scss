@@ -1,0 +1,111 @@
+@use '@variables' as v;
+
+.form-teacher-request{
+    display: flex;
+    flex-direction: column;
+    max-width: 640px;
+    margin: 0 auto;
+    font-family: v.$font-primary;
+}
+
+.title-form{
+    font-size: 1.8rem;
+    color: v.$black-custom;
+    margin-bottom: 4px;
+}
+
+.subtitle-form{
+    color: rgba(40, 40, 40, 0.75);
+    margin-bottom: 24px;
+}
+
+.field-group{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 22px;
+}
+
+.label-question{
+    font-weight: bold;
+    color: v.$black-custom;
+    margin-bottom: 8px;
+}
+
+textarea, input[type="text"]{
+    font-family: v.$font-primary;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(40, 40, 40, 0.25);
+    resize: vertical;
+    outline: none;
+}
+
+textarea:focus, input[type="text"]:focus{
+    border-color: v.$brand-color;
+}
+
+textarea.hasError, input[type="text"].hasError{
+    border-color: v.$red-warning;
+}
+
+.container-categories{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.text-loading-categories{
+    color: rgba(40, 40, 40, 0.6);
+}
+
+.option-category{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(40, 40, 40, 0.25);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.option-category.checked{
+    background-color: rgba(0, 120, 140, 0.12);
+    border-color: v.$brand-color;
+    color: v.$brand-color;
+    font-weight: bold;
+}
+
+.option-agreement{
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 6px;
+    color: v.$black-custom;
+    cursor: pointer;
+}
+
+.hint-error{
+    color: v.$red-warning;
+    font-size: 80%;
+    margin: 4px 0 0 0;
+}
+
+.btn-submit{
+    align-self: flex-start;
+    margin-top: 20px;
+    background-color: v.$brand-color;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 12px 28px;
+    font-weight: bold;
+    font-family: v.$font-primary;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-submit:hover{
+    background-color: rgba(0, 120, 140, 0.80);
+    transform: scale(1.03);
+}

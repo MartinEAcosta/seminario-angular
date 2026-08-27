@@ -1,0 +1,35 @@
+@if ( isVerified() ) {
+    <div class="container-banner verified">
+        <span class="icon">✓</span>
+        <p class="text-banner">Tu email <strong>{{ authService.user()?.email }}</strong> ya está validado.</p>
+    </div>
+}
+@else {
+    <div class="container-banner not-verified">
+        <span class="icon">!</span>
+        <div class="content-banner">
+            <p class="text-banner">
+                Tu email <strong>{{ authService.user()?.email }}</strong> todavía no está validado.
+            </p>
+            <p class="text-banner-secondary">
+                Validalo para poder solicitar convertirte en profesor y acceder a otras funciones de tu cuenta.
+            </p>
+            <button
+                class="btn-send-verification"
+                type="button"
+                [disabled]="isSending() || cooldown() > 0"
+                (click)="onSendVerificationEmail()"
+            >
+                @if ( isSending() ) {
+                    Enviando...
+                }
+                @else if ( cooldown() > 0 ) {
+                    Reenviar en {{ cooldown() }}s
+                }
+                @else {
+                    Enviar email de validación
+                }
+            </button>
+        </div>
+    </div>
+}

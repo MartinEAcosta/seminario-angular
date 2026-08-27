@@ -5,6 +5,7 @@ export class FormUtils {
     static namePattern = '([a-zA-Z]+) ([a-zA-Z]+)';
     static emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
     static notOnlySpacesPattern = '^[a-zA-Z0-9]+$';
+    static urlPattern = '^(https?:\\/\\/)?([\\w-]+\\.)+[a-zA-Z]{2,}([\\/?#][^\\s]*)?$';
     
     static getTextError = ( errors : ValidationErrors ) : string | null =>  {
 
@@ -29,7 +30,10 @@ export class FormUtils {
                     // Agregado debido a que la funcionalidad del validator.email con que tenga un @ lo acepta.
                     else if( errors['pattern'].requiredPattern === FormUtils.emailPattern ){
                         return `El contenido del campo no luce como un email.`;
-                    }   
+                    }
+                    else if( errors['pattern'].requiredPattern === FormUtils.urlPattern ){
+                        return `El contenido del campo no luce como una URL válida.`;
+                    }
                     return `Error de validación personalizada.`;
             
                 default:

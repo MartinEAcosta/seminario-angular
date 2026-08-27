@@ -13,6 +13,7 @@
       "@lesson/*" : ["./src/app/lesson/*"],
       "@module/*" : ["./src/app/module/*"],
       "@payment/*" : ["./src/app/payment/*"],
+      "@teacher-request/*" : ["./src/app/teacher-request/*"],
       "@utils/*" : ["./src/app/utils/*"],
       "@shared/*" : ["./src/app/shared/*"],
       "@mappers/*" : ["./src/app/mappers/*"],

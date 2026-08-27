@@ -44,7 +44,29 @@ export type CourseListResponse = ApiResponse<CourseUniqueResponse[]>;
 
 // * Auth *
 
-// * File * 
+export type VerificationEmailResponse = ApiResponse<boolean>;
+
+// * Teacher Request *
+
+export type TeacherRequestStatus = 'pending' | 'approved' | 'rejected';
+
+export interface TeacherRequestUniqueResponse {
+  id                : string;
+  id_user           : string;
+  status            : TeacherRequestStatus;
+  category_ids      : string[];
+  experience        : string;
+  motivation        : string;
+  course_idea       : string;
+  portfolio_url    ?: string | null;
+  rejection_reason ?: string | null;
+  created_at        : Date;
+  reviewed_at      ?: Date | null;
+}
+
+export type TeacherRequestResponse = ApiResponse<TeacherRequestUniqueResponse>;
+
+// * File *
 
 export type ResourceValidTypes = "image" | "video" | "raw" | "auto" ;
 

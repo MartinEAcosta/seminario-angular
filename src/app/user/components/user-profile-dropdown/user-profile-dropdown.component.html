@@ -8,6 +8,16 @@
                 <div class="dropdown-item">
                     <a>Tu perfil</a>
                 </div>
+                @if( !authService.user()?.isEmailVerified ) {
+                    <div class="dropdown-item">
+                        <a [routerLink]="['/auth/verify-email']">Validar tu email</a>
+                    </div>
+                }
+                @if( authService.user()?.role === 'student' ) {
+                    <div class="dropdown-item">
+                        <a [routerLink]="['/become-teacher']">Conviértete en profesor</a>
+                    </div>
+                }
                 <div class="dropdown-item" (click)="this.authService.logoutUser()">
                     <a>Cerrar sesión</a>
                 </div>

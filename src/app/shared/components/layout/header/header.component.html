@@ -26,6 +26,12 @@
           </a>
         }
 
+        @if( authService.user()?.role === 'student' ) {
+          <a [routerLink]="['/become-teacher']">
+            Conviértete en profesor
+          </a>
+        }
+
         <app-user-profile-dropdown />
         
       }

@@ -1,0 +1,67 @@
+@use '@variables' as v;
+
+.container-become-teacher{
+    display: flex;
+    flex-direction: column;
+    max-width: 720px;
+    margin: 5% auto;
+    padding: 0 4% 5% 4%;
+    font-family: v.$font-primary;
+}
+
+.title{
+    font-size: 2rem;
+    color: v.$black-custom;
+    margin-bottom: 12px;
+}
+
+.text-intro{
+    color: rgba(40, 40, 40, 0.8);
+    margin-bottom: 24px;
+}
+
+.card-intro{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 32px;
+    border-radius: 12px;
+    background-color: v.$white-custom;
+}
+
+.card-intro .text{
+    color: rgba(40, 40, 40, 0.8);
+    margin-bottom: 8px;
+}
+
+.btn-primary-cta, .btn-secondary{
+    margin-top: 12px;
+    border-radius: 20px;
+    padding: 12px 28px;
+    font-weight: bold;
+    font-family: v.$font-primary;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary-cta{
+    background-color: v.$brand-color;
+    color: white;
+    border: none;
+}
+
+.btn-primary-cta:hover{
+    background-color: rgba(0, 120, 140, 0.80);
+    transform: scale(1.03);
+}
+
+.btn-secondary{
+    background-color: transparent;
+    color: v.$brand-color;
+    border: 1px solid v.$brand-color;
+}
+
+.btn-secondary:hover{
+    background-color: rgba(0, 120, 140, 0.08);
+}

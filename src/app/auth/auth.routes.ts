@@ -1,8 +1,10 @@
 import { Routes } from "@angular/router";
 import { NotAuthenticatedGuard } from "@guards/not-authenticated.guard";
+import { AuthenticatedGuard } from "@guards/authenticated.guard";
 import { AuthLayoutComponent } from "./layout/auth-layout/auth-layout.component";
 import { LoginPageComponent } from "./pages/login-page/login-page.component";
 import { RegisterPageComponent } from "./pages/register-page/register-page.component";
+import { VerifyEmailPageComponent } from "./pages/verify-email-page/verify-email-page.component";
 
 export const authRoutes : Routes = [
 
@@ -24,8 +26,20 @@ export const authRoutes : Routes = [
                 redirectTo: 'login'
             }
         ]
-    }
-    
+    },
+
+    // A diferencia de login/register, requiere una sesión iniciada.
+    {
+        path: 'verify-email',
+        component: VerifyEmailPageComponent,
+        canMatch: [ AuthenticatedGuard ],
+    },
+    {
+        path: 'verify-email/:token',
+        component: VerifyEmailPageComponent,
+        canMatch: [ AuthenticatedGuard ],
+    },
+
 ]
 
 export default authRoutes;

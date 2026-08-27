@@ -1,0 +1,49 @@
+@use '@variables' as v;
+
+.card-status{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 32px;
+    border-radius: 12px;
+    background-color: v.$white-custom;
+    font-family: v.$font-primary;
+}
+
+.icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.icon.pending{
+    background-color: v.$yellow-caution;
+}
+
+.icon.approved{
+    background-color: v.$green-success;
+}
+
+.icon.rejected{
+    background-color: v.$red-warning;
+}
+
+.title{
+    font-size: 1.5rem;
+    color: v.$black-custom;
+    margin: 4px 0;
+}
+
+.text{
+    color: rgba(40, 40, 40, 0.8);
+    margin: 0;
+}

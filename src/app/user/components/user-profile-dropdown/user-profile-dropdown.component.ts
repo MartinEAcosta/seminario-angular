@@ -1,13 +1,13 @@
 import { Component, inject, signal } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { filter } from 'rxjs';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 
 import { AuthService } from '@auth/services/auth.service';
 
 @Component({
   selector: 'app-user-profile-dropdown',
-  imports: [NgClass],
+  imports: [NgClass, RouterLink],
   templateUrl: './user-profile-dropdown.component.html',
   styleUrl: './user-profile-dropdown.component.scss'
 })

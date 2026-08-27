@@ -45,6 +45,12 @@ export const routes: Routes = [
   },
 
   {
+    path : 'become-teacher',
+    loadChildren : () =>
+      import('@teacher-request/teacher-request.routes'),
+  },
+
+  {
     // En caso de no hacer match con ningun path regirige al home
     path : '**',
     redirectTo: ''

@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
 import { UIService } from '@shared/services/ui/ui.service';
 import { AuthResponse, User, UserDTO } from '@auth/models/auth.interfaces';
 import { AuthMapper } from '@mappers/auth.mapper';
-import { ErrorResponse } from '@shared/models/api.interfaces';
+import { ErrorResponse, VerificationEmailResponse } from '@shared/models/api.interfaces';
 
 type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
 
@@ -65,6 +65,38 @@ export class AuthService {
                           return this.handleAuthError( error )
                         } )
               );
+  }
+
+  // Envia (o reenvia) el email con el enlace de validación a la cuenta del usuario logueado.
+  public sendVerificationEmail = ( ) : Observable<boolean> => {
+    return this.http
+                  .post<VerificationEmailResponse>(`${this.baseURL}/verify-email/send`, {} )
+                    .pipe(
+                      map( ( response ) => response.ok ),
+                      catchError( ( { error } : { error : ErrorResponse } ) => {
+                        this.uiService.showToastMessage( error?.error ?? 'No pudimos enviar el email de validación.' );
+                        return of(false);
+                      })
+                    );
+  }
+
+  // Confirma la validación del email a partir del token recibido por correo.
+  public confirmEmailVerification = ( token : string ) : Observable<boolean> => {
+    return this.http
+                  .patch<AuthResponse>(`${this.baseURL}/verify-email/${ token }`, {} )
+                    .pipe(
+                      map( ( authResponse ) => {
+                        if( authResponse.ok ){
+                          // Actualiza el flag en la señal de usuario sin necesidad de re-loguear.
+                          this._user.update( ( user ) => user ? { ...user, isEmailVerified : true } : user );
+                        }
+                        return authResponse.ok;
+                      }),
+                      catchError( ( { error } : { error : ErrorResponse } ) => {
+                        this.uiService.showToastMessage( error?.error ?? 'El enlace de validación no es válido o expiró.' );
+                        return of(false);
+                      })
+                    );
   }
 
   public logoutUser = ( ) : void => {

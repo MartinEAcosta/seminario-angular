@@ -20,7 +20,7 @@ export class TeacherRequestService {
   // Devuelve la última solicitud del usuario logueado, o null si todavía no solicitó nada.
   public getMyTeacherRequest = ( ) : Observable<TeacherRequest | null> => {
     return this.http
-                  .get<TeacherRequestResponse>(`${this.baseURL}/me`)
+                  .post<TeacherRequestResponse>(`${this.baseURL}/me`, { } )
                     .pipe(
                       map( ( response ) => TeacherRequestMapper.mapApiResponseToTeacherRequest( response ) ),
                       // 404 -> el usuario nunca solicitó ser profesor, no es un error a mostrar.

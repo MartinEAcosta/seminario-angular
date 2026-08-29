@@ -70,7 +70,7 @@ export class AuthService {
   // Envia (o reenvia) el email con el enlace de validación a la cuenta del usuario logueado.
   public sendVerificationEmail = ( ) : Observable<boolean> => {
     return this.http
-                  .post<VerificationEmailResponse>(`${this.baseURL}/verify-email/send`, {} )
+                  .post<VerificationEmailResponse>(`${this.baseURL}/send-validation-email`, {} )
                     .pipe(
                       map( ( response ) => response.ok ),
                       catchError( ( { error } : { error : ErrorResponse } ) => {
@@ -83,7 +83,7 @@ export class AuthService {
   // Confirma la validación del email a partir del token recibido por correo.
   public confirmEmailVerification = ( token : string ) : Observable<boolean> => {
     return this.http
-                  .patch<AuthResponse>(`${this.baseURL}/verify-email/${ token }`, {} )
+                  .post<AuthResponse>(`${this.baseURL}/validate-email/${ token }`, {} )
                     .pipe(
                       map( ( authResponse ) => {
                         if( authResponse.ok ){
@@ -114,7 +114,7 @@ export class AuthService {
       this.logoutUser();
       return of(false);
     }
-    return this.http.get<AuthResponse>(`${this.baseURL}/renew`, { } )
+    return this.http.get<AuthResponse>(`${this.baseURL}/renew`)
                       .pipe( 
                         map( ( authResponse ) => {
                             if( authResponse.ok ) this.handleAuthSuccess( authResponse );

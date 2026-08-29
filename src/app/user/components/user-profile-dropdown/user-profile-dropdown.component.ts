@@ -29,8 +29,8 @@ constructor() {
     this.open.update( open => !open );
   }
 
-  onCloseDropdown ( ) : void {
-    const clickedContainer = event?.target as HTMLElement;
+  onCloseDropdown ( event: MouseEvent ) : void {
+    const clickedContainer = event.target as HTMLElement;
     if( clickedContainer.classList.contains('overlay') ){
       this.open.set(false);
     }

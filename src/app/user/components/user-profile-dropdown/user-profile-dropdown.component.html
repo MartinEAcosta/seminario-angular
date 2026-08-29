@@ -1,25 +1,26 @@
-<div class="container-user-profile" >
-    <img 
-    (click)="onClickProfile()"
-    src="assets/user-profile.svg" 
-    alt="User icon profile" class="user-profile-img">
-    <div [ngClass]="{'overlay' : this.open()}" (click)="this.onCloseDropdown()"></div>
-    <div class="container-dropdown-content" [ngClass]="{ 'open': this.open() }">
-                <div class="dropdown-item">
-                    <a>Tu perfil</a>
-                </div>
-                @if( !authService.user()?.isEmailVerified ) {
-                    <div class="dropdown-item">
-                        <a [routerLink]="['/auth/verify-email']">Validar tu email</a>
-                    </div>
-                }
-                @if( authService.user()?.role === 'student' ) {
-                    <div class="dropdown-item">
-                        <a [routerLink]="['/become-teacher']">Conviértete en profesor</a>
-                    </div>
-                }
-                <div class="dropdown-item" (click)="this.authService.logoutUser()">
-                    <a>Cerrar sesión</a>
-                </div>
+<div class="container-user-profile">
+    <button type="button" class="profile-trigger" [class.active]="open()" (click)="onClickProfile()">
+        <img src="assets/user-profile.svg" alt="User icon profile" class="user-profile-img">
+    </button>
+    <div class="overlay" [ngClass]="{ 'open': open() }" (click)="onCloseDropdown($event)"></div>
+    <div class="dropdown-wrapper" [ngClass]="{ 'open': open() }">
+        <div class="dropdown-inner">
+            <div class="dropdown-item">
+                <a>Tu perfil</a>
             </div>
+            @if( !authService.user()?.isEmailVerified ) {
+                <div class="dropdown-item">
+                    <a [routerLink]="['/auth/verify-email']">Validar tu email</a>
+                </div>
+            }
+            @if( authService.user()?.role === 'student' ) {
+                <div class="dropdown-item">
+                    <a [routerLink]="['/become-teacher']">Conviértete en profesor</a>
+                </div>
+            }
+            <div class="dropdown-item logout" (click)="authService.logoutUser()">
+                <a>Cerrar sesión</a>
+            </div>
+        </div>
     </div>
+</div>

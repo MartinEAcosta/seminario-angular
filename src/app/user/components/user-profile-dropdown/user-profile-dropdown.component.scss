@@ -1,11 +1,14 @@
 @use '@variables' as v;
 
-.overlay{
+.overlay {
+    display: none;
     position: fixed;
-    top: 0;
-    z-index: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
+    z-index: 5;
+
+    &.open {
+        display: block;
+    }
 }
 
 .container-user-profile {
@@ -16,61 +19,123 @@
     justify-content: center;
 }
 
-.user-profile-img {
-    width: 2rem;
-    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
-}
-
-.container-dropdown-content{
-    visibility: hidden;
-    flex-direction: column;
-    position: absolute;
-    justify-content: center;
-    top: 200%;
-    right: 0;
-    width: 10rem;
-    height: 0rem;
-    border-radius: 0.5rem;
-    background-color: v.$white-custom;
-    transition: all 0.25s ease-in-out;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.25);
-}
-
-.open{
+.profile-trigger {
     display: flex;
-    visibility: visible;
-    height: 4rem;
-    overflow: hidden;
-    transition: all 0.25s ease-in-out;
-}
-
-.dropdown-item{
-    padding: 0.3rem;
-    border-bottom: solid thin rgba(40,40,40,0.25);
-}
-
-.dropdown-item:last-child {
-    border-bottom: none;
-}
-
-.dropdown-item:hover {
-    background-color: rgba(40,40,40,0.05);
-    transition: all 0.15s ease;
-}
-
-.dropdown-item:hover a{
-    transition: all 0.25s ease;
-    color: rgba(0, 120, 140, 0.70);
-}
-
-.container-dropdown-content a {
-    display: flex;
-    font-family: v.$font-primary;
-    font-weight: 450;
-    color: v.$black-custom;
-    text-decoration: none;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    transition: all 0.25s ease;
+    padding: 0;
+    border: none;
+    background: none;
+    border-radius: 50%;
+    cursor: pointer;
+    line-height: 0;
+    outline-offset: 3px;
+    transition: box-shadow 0.2s ease;
+    box-shadow: 0 0 0 2px transparent;
+
+    &:hover,
+    &.active {
+        box-shadow: 0 0 0 2px rgba(v.$brand-color, 0.45);
+    }
+}
+
+.user-profile-img {
+    width: 2rem;
+    border-radius: 50%;
+    filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
+}
+
+// Grid-rows trick: animates from an intrinsic 0 height to the content's
+// natural height without ever hardcoding a value, so it never clips
+// items when the list grows (e.g. optional "verify email" / "become
+// teacher" rows).
+.dropdown-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    right: 0;
+    z-index: 10;
+    width: 13rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-0.5rem);
+    border-radius: 0.75rem;
+    background-color: v.$white-custom;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    transition: grid-template-rows 0.25s ease, opacity 0.2s ease,
+        transform 0.25s ease, visibility 0s linear 0.25s;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: -0.35rem;
+        right: 0.85rem;
+        width: 0.7rem;
+        height: 0.7rem;
+        background-color: v.$white-custom;
+        border-radius: 0.15rem 0 0 0;
+        transform: rotate(45deg);
+    }
+
+    &.open {
+        grid-template-rows: 1fr;
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        transition: grid-template-rows 0.25s ease, opacity 0.2s ease,
+            transform 0.25s ease;
+    }
+}
+
+.dropdown-inner {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+    padding: 0.4rem;
+}
+
+.dropdown-item {
+    padding: 0.65rem 0.75rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+
+    & + .dropdown-item {
+        margin-top: 0.15rem;
+    }
+
+    &:hover {
+        background-color: rgba(v.$brand-color, 0.08);
+    }
+
+    &:hover a {
+        color: v.$brand-color;
+    }
+
+    &.logout {
+        border-top: solid thin rgba(40, 40, 40, 0.15);
+        margin-top: 0.3rem;
+        padding-top: 0.75rem;
+        border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+    }
+
+    &.logout:hover {
+        background-color: rgba(v.$red-warning, 0.08);
+    }
+
+    &.logout:hover a {
+        color: v.$red-warning;
+    }
+}
+
+.dropdown-item a {
+    display: block;
+    font-family: v.$font-primary;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: v.$black-custom;
+    text-decoration: none;
+    transition: color 0.15s ease;
 }

@@ -26,7 +26,6 @@ export class VerifyEmailPageComponent {
 
   constructor() {
     const token = this.route.snapshot.paramMap.get('token');
-
     if( token ){
       this.confirmState.set('confirming');
       this.authService.confirmEmailVerification( token )

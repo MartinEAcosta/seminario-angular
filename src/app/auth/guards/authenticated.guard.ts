@@ -14,6 +14,7 @@ export const AuthenticatedGuard: CanMatchFn = async(
     const isAuthenticated = await firstValueFrom( authService.checkStatus() );
 
     if( !isAuthenticated ){
+        console.log('sasa')
         router.navigateByUrl('/');
         return false;
     }

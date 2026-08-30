@@ -24,11 +24,10 @@ export const authRoutes : Routes = [
             {
                 path: '**',
                 redirectTo: 'login'
-            }
+            },
         ]
     },
 
-    // A diferencia de login/register, requiere una sesión iniciada.
     {
         path: 'verify-email',
         component: VerifyEmailPageComponent,
@@ -37,7 +36,6 @@ export const authRoutes : Routes = [
     {
         path: 'verify-email/:token',
         component: VerifyEmailPageComponent,
-        canMatch: [ AuthenticatedGuard ],
     },
 
 ]

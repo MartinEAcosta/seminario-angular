@@ -11,7 +11,7 @@
                 formControlName="username"
                 [ngClass]="{'hasError': ( registerForm.get('username')?.errors && registerForm.get('username')?.touched ) ?? false }"
             />
-            <label class="label-text label-email">Nombre de usuario</label>
+            <label class="label-text">Nombre de usuario</label>
             <form-error-label class="error error-username" [control]="registerForm.get('username')!"/>
 
             <input 
@@ -24,7 +24,7 @@
                 formControlName="email"
                 [ngClass]="{'hasError': ( registerForm.get('email')?.errors && registerForm.get('email')?.touched ) ?? false }"
             >
-            <label class="label-text label-email">Correo Electronico</label>
+            <label class="label-text">Correo Electronico</label>
             <form-error-label class="error error-email" [control]="registerForm.get('email')!"/>
 
             <input 

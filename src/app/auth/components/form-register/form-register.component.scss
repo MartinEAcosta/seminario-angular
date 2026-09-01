@@ -1,19 +1,1 @@
 @use '@variables' as v;
-
-.form-auth{
-    padding-top: 5%;
-}
-
-.input-email , .input-password{
-    margin: 4% 0% 0% 0%;
-}
-
-.text-login{
-    font-family: v.$font-primary;
-    color: v.$white-custom
-}
-
-.label-text{
-    top: -32px;
-}
-

@@ -27,7 +27,6 @@ export const authRoutes : Routes = [
             },
         ]
     },
-
     {
         path: 'verify-email',
         component: VerifyEmailPageComponent,
@@ -37,7 +36,6 @@ export const authRoutes : Routes = [
         path: 'verify-email/:token',
         component: VerifyEmailPageComponent,
     },
-
 ]
 
 export default authRoutes;

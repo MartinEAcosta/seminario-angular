@@ -3,19 +3,19 @@
     <h1 class="title-form">Iniciar sesión</h1>
 
     <form [formGroup]="loginForm" (submit)="onLogin()" class="form-auth">
-
-        <form-error-label class="error error-email" [control]="loginForm.get('email')!"  />
-        <input 
-            type="text" 
-            placeholder="example@gmail.com" 
-            class="input-email" 
-            name="email" 
+        
+        <form-error-label class="error error-email" [control]="loginForm.get('email')!" />
+        <input
+            type="text"
+            placeholder="example@gmail.com"
+            class="input-email"
+            name="email"
             autocomplete="off"
             formControlName="email"
-            required 
+            required
             [ngClass]="{'hasError': ( loginForm.get('email')?.errors && loginForm.get('email')?.touched ) ?? false }">
         <label class="label-text">Correo Electronico</label>
-
+        
         <form-error-label class="error error-password" [control]="loginForm.get('password')!" />
         <input type="password" placeholder="unaContraseñaSegur@123" class="input-password" required name="password"
             formControlName="password"

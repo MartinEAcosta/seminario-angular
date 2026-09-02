@@ -7,28 +7,27 @@
         <app-cart-checkout [cart]="shoppingList()" />
 
         <div class="container-resume">
-            <h2 class="title-resume">Resumen de la compra</h2>
-            <div class="detailed-resume">
-                @for (item of shoppingList().items.values(); track item) {
+            <div class="ticket">
+                <h2 class="title-resume">Resumen de la compra</h2>
+                <div class="detailed-resume">
+                    @for (item of shoppingList().items.values(); track item) {
+                        <div class="item-reserved">
+                            <small class="course-title"> {{ item.course.title }}</small>
+                            <small> <span class="text-bold"> Cantidad: </span> {{ item.quantity }}</small>
+                            <small> <span class="text-bold"> Precio unitario: </span> {{ item.course.price | currency}}</small>
+                        </div>
+                    }
+                    <!--
                     <div class="item-reserved">
-                        <small class="course-title"> {{ item.course.title }}</small>
-                        <small> <span class="text-bold"> Cantidad reservada: </span> {{ item.quantity }}</small>
-                        <small> <span class="text-bold"> Precio unitario: </span> {{ item.course.price | currency}}</small>
+                        <small> Código de descuento: -$0</small>
                     </div>
-                }
-                <!-- 
-                <div class="item-reserved">
-                    <small> Código de descuento: -$0</small>
-                </div> 
-                -->
-                <div>
-                    <small class="text-bold">Total a pagar : {{ this.cartService.total() | currency }}</small>
+                    -->
+                    <div class="ticket-total">
+                        <small class="text-bold">Total a pagar: {{ this.cartService.total() | currency }}</small>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- gestor de pago supongo , hay que ver como implementar -->
-         
-        
     </div>
 
     <app-form-card-checkout [amount]="this.cartService.total()"/>

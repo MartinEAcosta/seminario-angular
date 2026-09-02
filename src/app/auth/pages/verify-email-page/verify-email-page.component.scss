@@ -2,61 +2,145 @@
 
 .container-verify-email{
     display: flex;
-    flex-direction: column;
-    max-width: 620px;
-    margin: 5% auto;
-    padding: 0 4%;
-    font-family: v.$font-primary;
+    min-height: 100vh;
+    padding: 6% 4%;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    background:
+        radial-gradient(120% 100% at 12% 0%, rgba(0, 120, 140, 0.07), transparent 55%),
+        radial-gradient(120% 100% at 88% 100%, rgba(255, 190, 40, 0.09), transparent 55%),
+        v.$white-custom;
 }
 
-.title{
-    font-size: 2rem;
-    color: v.$black-custom;
-    margin-bottom: 12px;
+.verify-card{
+    display: flex;
+    width: 100%;
+    max-width: 560px;
+    padding: 48px 40px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    background-color: #fff;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
 }
 
-.text-intro{
-    color: rgba(40, 40, 40, 0.8);
-    margin-bottom: 24px;
-}
-
-.card-confirm{
+.state-block{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;
-    padding: 32px;
-    border-radius: 12px;
-    background-color: v.$white-custom;
+    width: 100%;
+    font-family: v.$font-primary;
 }
 
-.card-confirm .icon{
+.eyebrow{
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: v.$brand-color;
+}
+
+.eyebrow::before{
+    content: "";
+    display: block;
+    width: 2rem;
+    height: 2px;
+    background-color: v.$brand-color;
+}
+
+.title{
+    font-family: v.$font-brand;
+    font-weight: 400;
+    font-size: 2rem;
+    line-height: 1.25;
+    color: v.$black-custom;
+    margin: 0 0 12px;
+}
+
+.text{
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgba(40, 40, 40, 0.75);
+    margin: 0 0 24px;
+}
+
+app-email-verification-banner{
+    display: block;
+    width: 100%;
+}
+
+.icon{
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
     border-radius: 50%;
     color: white;
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
 }
 
-.card-confirm.success .icon{
+.icon-success{
     background-color: v.$green-success;
 }
 
-.card-confirm.error .icon{
+.icon-error{
     background-color: v.$red-warning;
 }
 
-.card-confirm .text{
-    color: rgba(40, 40, 40, 0.8);
+.spinner{
+    width: 40px;
+    height: 40px;
+    margin-bottom: 16px;
+    border: 3px solid rgba(0, 120, 140, 0.15);
+    border-top-color: v.$brand-color;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
 }
 
-.link-action{
-    margin-top: 12px;
-    color: v.$brand-color;
+@keyframes spin{
+    to{ transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .spinner{
+        animation: none;
+        border-top-color: rgba(0, 120, 140, 0.15);
+    }
+}
+
+.btn-action{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 28px;
+    border-radius: 20px;
+    background-color: v.$brand-color;
+    color: white;
     font-weight: bold;
-    text-decoration: underline;
+    font-family: v.$font-primary;
+    text-decoration: none;
+    box-shadow: 0 0 15px rgba(0, 120, 140, 0.25);
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-action:hover{
+    transform: scale(1.03) translateY(-2px);
+    background-color: rgba(0, 120, 140, 0.85);
+}
+
+@media (max-width: 37.5rem){
+    .verify-card{
+        padding: 32px 24px;
+    }
+
+    .title{
+        font-size: 1.6rem;
+    }
 }

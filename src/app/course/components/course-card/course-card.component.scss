@@ -16,15 +16,20 @@
 
 .container-thumbnail-course{
     display: flex;
-    width: 25%;
+    flex-shrink: 0;
+    width: 340px;
+    aspect-ratio: 16 / 9;
 }
 
 .content-card figure{
     display: flex;
+    align-items: center;
+    justify-content: center;
     min-width: 100%;
     min-height: 100%;
     margin: 0px;
     padding: 0px;
+    overflow: hidden;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
     border-radius: 0.3rem;
     background-color: v.$black-custom;
@@ -32,21 +37,24 @@
 .content-card .course-img{
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    object-position: center;
     border-radius: 0.3rem;
     cursor: pointer;
 }
 
 .image-icon{
     display: flex;
-    width: 15%;
-    height: 15%;
+    width: 68px;
+    height: 68px;
     cursor: pointer;
     margin: auto;
 }
 
 .details-course{
     display: flex;
-    width: 75%;
+    flex: 1;
+    min-width: 0;
     flex-direction: column;
     margin: 0px 15px;
     font-family: v.$font-primary;

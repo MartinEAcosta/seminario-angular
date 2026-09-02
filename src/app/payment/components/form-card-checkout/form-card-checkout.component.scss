@@ -1,5 +1,12 @@
 @use '../../../../variables.scss' as v;
 
+// Tokens locales derivados de variables.scss (mismo patrón que buy-page.scss
+// y cart-checkout.component.scss), para que el formulario comparta lenguaje
+// visual con el resto de la pantalla de compra.
+$input-border: rgba(v.$black-custom, 0.3);
+$input-shadow: 2px 4px 15px rgba(v.$black-custom, 0.15);
+$input-radius: 0.5rem;
+
 .container-payment{
     width: 50%;
     justify-content: center;
@@ -29,14 +36,14 @@
     display: flex;
     width: 100%;
     height: 2rem;
-    border-radius: 0.5rem;
-    color: rgba(20,20,20 ,0.3);
+    border-radius: $input-radius;
+    color: $input-border;
     font-weight: 500;
     font-family: v.$font-primary;
-    border: solid 1.2px rgba(20,20,20 ,0.3);
+    border: solid 1.2px $input-border;
     background-color: inherit;
     padding-left: 0.5rem;
-    box-shadow: 2px 4px 15px rgba(20,20,20 ,0.15);
+    box-shadow: $input-shadow;
     z-index: 10;
 }
 
@@ -109,7 +116,7 @@
     border: none;
     outline: none;
     background-color: inherit;
-    border-right: solid thin rgba(20,20,20 ,0.3);
+    border-right: solid thin $input-border;
     color: v.$black-custom;
     height: 2rem;
 }
@@ -120,9 +127,9 @@
 }
 
 .container-select-input{
-    border: solid thin rgba(20,20,20 ,0.3);
-    border-radius: 0.5rem;
-    box-shadow: 2px 4px 15px rgba(20,20,20 ,0.15);
+    border: solid thin $input-border;
+    border-radius: $input-radius;
+    box-shadow: $input-shadow;
     width: 100%;
 }
 
@@ -152,11 +159,17 @@
     height: 0;
 }
 
+.container-email{
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem;
+}
+
 .input-email{
     display: flex;
     color: v.$black-custom;
     outline: none;
-    width: 50%;
+    width: 45%;
 }
 
 .btn-pay{
@@ -172,7 +185,7 @@
     font-weight: 600;
     background-color: v.$green-success;
     justify-content: center;
-    box-shadow: 5px 10px 12px rgba(20,20,20 ,0.30);
+    box-shadow: 5px 10px 12px rgba(v.$black-custom, 0.30);
     transition: all 0.5s ease;
 }
 
@@ -180,5 +193,14 @@
     transform: scale(1.01);
     transition: all 0.5s ease;
     background-color: rgba(0, 165, 65);
-    box-shadow: 5px 10px 12px rgba(20,20,20 ,0.20);
+    box-shadow: 5px 10px 12px rgba(v.$black-custom, 0.20);
+}
+
+@media (max-width: 768px) {
+    .container-payment{
+        width: 100%;
+        margin: 0%;
+        padding: 6% 5%;
+        box-sizing: border-box;
+    }
 }

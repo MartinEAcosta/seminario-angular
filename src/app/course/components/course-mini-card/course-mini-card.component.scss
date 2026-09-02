@@ -7,6 +7,11 @@
 
 .title{
     overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 
 .text{
@@ -32,6 +37,8 @@
     margin: 1% 2%;
     text-align: center;
     font-size: medium;
+    line-height: 1.4em;
+    min-height: calc(1.4em * 2);
 }
 
 .container-pricing{
@@ -39,7 +46,10 @@
     font-family: v.$font-primary;
     align-items: center;
     justify-content: center;
-    margin-top: 5%;
+    /* title clamp + fixed image ratio + reserved desc height above
+       keep this box's position constant on its own, no auto-margin
+       needed, so the gap to the description stays tight */
+    margin-top: 3%;
     color: v.$green-success;
 }
 

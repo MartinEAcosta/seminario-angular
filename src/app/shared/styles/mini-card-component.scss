@@ -7,7 +7,7 @@
     position: relative;
     overflow: hidden;
     flex-direction: column;
-    padding: 2.5%;
+    padding: 5% 2.5%;
     border-radius: 0.2rem;
     margin-bottom: 10%;
     background-color: rgb(40, 40, 40);
@@ -40,6 +40,10 @@
 figure .thumbnail-course{
     display: flex;
     width: 95%;
+    /* fixed ratio: image never dictates the figure's height, so
+       cards with differently-shaped thumbnails still line up */
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
     margin: 1.5% auto;
     mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent),
                 linear-gradient(to bottom, transparent, black 3%, black 97%, transparent);

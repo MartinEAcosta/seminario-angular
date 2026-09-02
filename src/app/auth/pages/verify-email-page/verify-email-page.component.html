@@ -1,41 +1,50 @@
 <section class="container-verify-email">
+    <div class="verify-card">
 
-    @switch ( confirmState() ) {
+        @switch ( confirmState() ) {
 
-        @case ( 'confirming' ) {
-            <div class="card-confirm">
-                <h1 class="title">Validando tu email...</h1>
-                <p class="text">Danos un segundo mientras confirmamos tu enlace.</p>
-            </div>
+            @case ( 'confirming' ) {
+                <div class="state-block">
+                    <span class="spinner" aria-hidden="true"></span>
+                    <span class="eyebrow">Verificación de cuenta</span>
+                    <h1 class="title">Validando tu email...</h1>
+                    <p class="text">Danos un segundo mientras confirmamos tu enlace.</p>
+                </div>
+            }
+
+            @case ( 'success' ) {
+                <div class="state-block">
+                    <span class="icon icon-success" aria-hidden="true">✓</span>
+                    <span class="eyebrow">Verificación completada</span>
+                    <h1 class="title">¡Tu email fue validado!</h1>
+                    <p class="text">Ya podés solicitar convertirte en profesor cuando quieras.</p>
+                    <a [routerLink]="['/become-teacher']" class="btn-action">Ir a la solicitud</a>
+                </div>
+            }
+
+            @case ( 'error' ) {
+                <div class="state-block">
+                    <span class="icon icon-error" aria-hidden="true">!</span>
+                    <span class="eyebrow">Verificación fallida</span>
+                    <h1 class="title">No pudimos validar tu email</h1>
+                    <p class="text">El enlace puede haber expirado o ya haber sido utilizado. Podés pedir uno nuevo debajo.</p>
+                    <app-email-verification-banner />
+                </div>
+            }
+
+            @default {
+                <div class="state-block">
+                    <span class="eyebrow">Verificación de cuenta</span>
+                    <h1 class="title">Validá tu email</h1>
+                    <p class="text">
+                        Para solicitar convertirte en profesor y realizar otras acciones dentro de tu cuenta,
+                        primero necesitamos confirmar que la dirección de correo con la que te registraste te pertenece.
+                    </p>
+                    <app-email-verification-banner />
+                </div>
+            }
+
         }
 
-        @case ( 'success' ) {
-            <div class="card-confirm success">
-                <span class="icon">✓</span>
-                <h1 class="title">¡Tu email fue validado!</h1>
-                <p class="text">Ya podés solicitar convertirte en profesor cuando quieras.</p>
-                <a [routerLink]="['/become-teacher']" class="link-action">Ir a la solicitud</a>
-            </div>
-        }
-
-        @case ( 'error' ) {
-            <div class="card-confirm error">
-                <span class="icon">!</span>
-                <h1 class="title">No pudimos validar tu email</h1>
-                <p class="text">El enlace puede haber expirado o ya haber sido utilizado. Podés pedir uno nuevo debajo.</p>
-                <app-email-verification-banner />
-            </div>
-        }
-
-        @default {
-            <h1 class="title">Validar tu email</h1>
-            <p class="text-intro">
-                Para solicitar convertirte en profesor y realizar otras acciones dentro de tu cuenta,
-                primero necesitamos confirmar que la dirección de correo con la que te registraste te pertenece.
-            </p>
-            <app-email-verification-banner />
-        }
-
-    }
-
+    </div>
 </section>

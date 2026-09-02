@@ -3,18 +3,22 @@
     @if ( user()?.role !== 'student' ) {
 
         <div class="card-intro">
-            <h1 class="title">Ya formás parte del equipo docente de Udemix 🎉</h1>
+            <span class="icon-badge">🎓</span>
+            <h1 class="title">Ya formás parte del equipo docente de Udemix</h1>
             <p class="text">Podés crear tus cursos desde la sección "Crea tu curso".</p>
         </div>
 
     }
     @else if ( !user()?.isEmailVerified ) {
 
-        <h1 class="title">Conviértete en profesor</h1>
-        <p class="text-intro">
-            Antes de poder solicitarlo necesitamos que valides tu email, así confirmamos que la cuenta te pertenece.
-        </p>
-        <app-email-verification-banner />
+        <div class="card-intro">
+            <span class="icon-badge">📧</span>
+            <h1 class="title">Conviértete en profesor</h1>
+            <p class="text">
+                Antes de poder solicitarlo necesitamos que valides tu email, así confirmamos que la cuenta te pertenece.
+            </p>
+            <app-email-verification-banner />
+        </div>
 
     }
     @else if ( isLoading() ) {
@@ -38,6 +42,7 @@
     @else if ( !showForm() ) {
 
         <div class="card-intro">
+            <span class="icon-badge">🎓</span>
             <h1 class="title">Conviértete en profesor</h1>
             <p class="text">
                 Contanos un poco sobre vos: qué te gustaría enseñar y por qué. Un administrador va a

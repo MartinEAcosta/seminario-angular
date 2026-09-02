@@ -1,8 +1,17 @@
 @use '../../../../variables.scss' as v;
 
+// Tokens locales derivados de variables.scss (no se toca el archivo global).
+// El "ticket" necesita despegarse del fondo gris de la página ($white-custom),
+// por eso usa blanco puro + sombra, con el acento de marca reservado para la franja.
+$ticket-bg: #fff;
+$ticket-shadow: 0 10px 30px rgba(v.$black-custom, 0.12);
+$ticket-accent: v.$brand-color;
+$ticket-radius: 12px;
+$content-gap: 2.5rem;
+
 .container-bg {
     width: 100%;
-    background-color: v.$white-custom; 
+    background-color: v.$white-custom;
 }
 
 .container-header{
@@ -11,35 +20,49 @@
 
 .container-content{
     display: flex;
-    position: relative;
-    justify-content: space-between;
-    margin: 0% 4%;
-    height: 100%;
-    top: 0px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: $content-gap;
+    margin: 0 4% 2%;
+}
+
+app-cart-checkout{
+    flex: 1 1 55%;
+    min-width: 320px;
 }
 
 .container-resume{
     display: flex;
     flex-direction: column;
-    width: 40%;
-    height: 100%;
+    flex: 1 1 40%;
+    min-width: 280px;
     align-items: center;
     justify-content: center;
-    margin: 2.5%;
     font-family: v.$font-primary;
     color: v.$black-custom;
 }
 
+// El "ticket": card del resumen de compra, con franja de acento arriba.
+.ticket{
+    box-sizing: border-box;
+    width: 100%;
+    background-color: $ticket-bg;
+    border-radius: $ticket-radius;
+    box-shadow: $ticket-shadow;
+    border-top: 4px solid $ticket-accent;
+    padding: 1.75rem 1.5rem;
+}
 
 .text-bold{
     font-weight: bold;
 }
 
 .title-resume{
-    display: flex;
-    text-shadow: 2px 4px 6px rgba(20 ,20, 20, 0.17);
-    padding: 1.5%;
-    font-weight: 600;
+    margin: 0 0 1.25rem;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-align: center;
 }
 
 .detailed-resume{
@@ -47,8 +70,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 70%;
+    width: 100%;
     text-align: center;
+    font-variant-numeric: tabular-nums;
 }
 
 .item-reserved{
@@ -57,12 +81,43 @@
     width: 100%;
     padding: 0.5rem;
     margin: auto;
-    border-bottom: solid thin rgba(203 ,203, 203, 0.75);
+    border-bottom: dashed thin rgba(v.$black-custom, 0.25);
+}
+
+.ticket-total{
+    width: 100%;
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 2px solid $ticket-accent;
+    font-size: 1.1rem;
+    color: $ticket-accent;
 }
 
 .course-title{
     display: flex;
     justify-content: center;
     width: 100%;
+}
+
+@media (max-width: 768px) {
+    .container-header{
+        padding: 6% 6% 2%;
+    }
+
+    .container-content{
+        flex-direction: column;
+        margin: 0 5% 6%;
+    }
+
+    app-cart-checkout,
+    .container-resume{
+        flex-basis: 100%;
+        min-width: 0;
+        width: 100%;
+    }
+
+    .ticket{
+        padding: 1.25rem 1rem;
+    }
 }
 

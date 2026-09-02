@@ -34,6 +34,11 @@ export class CartComponent {
     }
   }
 
+  public closeCart = ( event: MouseEvent ) : void => {
+    event.stopPropagation();
+    this.isCartOpen.set(false);
+  }
+
 
 
 }

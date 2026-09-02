@@ -8,6 +8,7 @@
     <div class="content-open" [ngClass]="{'hidden' : !this.isCartOpen()}">
       <div class="header-cart">
         <p>Mi Carrito</p>
+        <button type="button" class="btn-close-cart" (click)="this.closeCart($event)" aria-label="Cerrar carrito">✕</button>
       </div>
       @if( this.cart().items.size != 0 ){
         <div class="list-courses">

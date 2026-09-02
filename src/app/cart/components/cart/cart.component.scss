@@ -41,14 +41,16 @@
 
 .container-icon{
     display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
     color: v.$white-custom;
     font-size: 1.5rem;
     font-family: v.$font-primary;
-    margin: auto;
     width: 100%;
-    height: auto;
+    height: 100%;
     border: none;
-    padding: 10px 20px;
+    padding: 25%;
     border-radius: 100%;
     cursor: pointer;
 }
@@ -96,20 +98,40 @@ img{
 .header-cart{
     display: flex;
     align-items: center;
+    justify-content: space-between;
     height: 8vh;
-    padding: 1%;
+    padding: 1% 4%;
     border-radius: 12px;
     background-color: v.$brand-color;
     box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.4);
+    pointer-events: all;
 }
 
 .header-cart p{
     font-family: v.$font-primary;
     color: v.$white-custom;
-    text-align: center;
-    justify-content: center;
     margin: auto;
     font-weight: bold;
+}
+
+.btn-close-cart{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 100%;
+    background-color: transparent;
+    color: v.$white-custom;
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-close-cart:hover{
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .list-courses{

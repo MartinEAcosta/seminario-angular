@@ -1,6 +1,6 @@
 # SPEC 01 — Rediseño estético de la pantalla de compra (buy-page)
 
-> **Status:** Aprobada
+> **Status:** Implementado
 > **Depends on:** ninguna
 > **Date:** 2026-09-02
 > **Objective:** Rediseñar visualmente `buy-page` (resumen de compra tipo ticket + layout responsive) sin tocar lógica ni componentes hijos.

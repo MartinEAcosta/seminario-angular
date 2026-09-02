@@ -1,6 +1,6 @@
 # SPEC 02 — Rediseño de cart-checkout y form-card-checkout (componentes hijos de buy-page)
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 01
 > **Date:** 2026-09-02
 > **Objective:** Adaptar visualmente `cart-checkout.component` y `form-card-checkout.component` al layout fluido de `buy-page` (spec 01), armonizando tokens de diseño y corrigiendo el layout roto que dejaban sus anchos fijos en `vw`/`%`, sin tocar lógica ni el motivo visual de "ticket".

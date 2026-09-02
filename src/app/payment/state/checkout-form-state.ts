@@ -54,7 +54,7 @@ export class CheckoutFormState {
         id: 'form-checkout',
         cardNumber: {
           id: 'form-checkout__cardNumber',
-          placeholder: 'Número de la tarjeta',
+          placeholder: '0000 0000 0000 0000',
         },
         expirationDate: {
           id: 'form-checkout__expirationDate',
@@ -62,18 +62,18 @@ export class CheckoutFormState {
         },
         securityCode: {
           id: 'form-checkout__securityCode',
-          placeholder: 'Código de seguridad',
+          placeholder: '123',
         },
         cardholderName: {
           id: 'form-checkout__cardholderName',
-          placeholder: 'Carlos Baute',
+          placeholder: 'Como figura en la tarjeta',
         },
         identificationType: {
           id: 'form-checkout__identificationType',
         },
         identificationNumber: {
           id: 'form-checkout__identificationNumber',
-          placeholder: '33285734',
+          placeholder: '12345678',
         },
         issuer: {
           id: 'form-checkout__issuer',
@@ -83,7 +83,7 @@ export class CheckoutFormState {
         },
         cardholderEmail: {
           id: 'form-checkout__cardholderEmail',
-          placeholder: 'carlosbaute@gmail.com',
+          placeholder: 'nombre@ejemplo.com',
         },
       },
       callbacks: {

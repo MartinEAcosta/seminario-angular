@@ -1,27 +1,44 @@
 <div class="card-course">
+    <button
+        type="button"
+        class="btn-remove"
+        (click)="onRemove()"
+        aria-label="Quitar {{ item().course.title }} del carrito">
+        <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+            <line x1="1.5" y1="1.5" x2="12.5" y2="12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="12.5" y1="1.5" x2="1.5" y2="12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    </button>
+
     <div class="details">
         <div class="container-imgCourse">
             <img
                 src={{item().course.thumbnail_url}}
                 alt="{{item().course.title}} image">
         </div>
-        
+
         <div class="rightSection">
 
             <p class="title-course">
                 {{item().course.title}}
             </p>
-            
+
             <p class="desc-course">
                 {{item().course.description}}
             </p>
 
             <div class="quantity-selector">
                 <p class="text-quota">Cupos a reservar:</p>
-                <button class="leftBtn" (click)="this.cartService.downQuantity( item().course )" type="button"> - </button>
-                <input class="inputNumber" type="number" name="" id="" value="{{ cart().items.get( item().course.id )?.quantity }}" readonly >
-                <button class="rightBtn" (click)="this.cartService.upQuantity( item().course )" type="button"> + </button>
+                <button class="leftBtn" (click)="this.cartService.downQuantity( item().course )" type="button" aria-label="Disminuir cupos"> - </button>
+                <input class="inputNumber" type="number" name="" id="" value="{{ quantity() }}" readonly >
+                <button class="rightBtn" (click)="this.cartService.upQuantity( item().course )" type="button" aria-label="Aumentar cupos" [disabled]="isAtCapacity()"> + </button>
             </div>
+
+            @if( capacity() != null ){
+                <p class="text-capacity" [class.at-capacity]="isAtCapacity()">
+                    {{ isAtCapacity() ? 'No quedan más cupos disponibles' : 'Quedan ' + remainingSeats() + ' cupos' }}
+                </p>
+            }
 
         </div>
     </div>

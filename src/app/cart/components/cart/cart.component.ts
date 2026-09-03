@@ -13,32 +13,29 @@ import { DiscountCodeInputComponent } from '../discount-code-input/discount-code
     imports: [NgClass, CartItemCardComponent, RouterLink, DiscountCodeInputComponent],
 })
 export class CartComponent {
-  
+
   private cartService = inject(CartService);
   cart = computed( () => this.cartService.cart());
   isCartOpen = signal<boolean>(false);
 
   constructor( ) { }
-  
-  public onOpenCart = ( ) : void => {
-    if( this.isCartOpen() ) {
-      return;
-    }
-    this.isCartOpen.set(!this.isCartOpen());
+
+  // Abre el carrito. Detiene la propagación para que el click no llegue
+  // al fondo (.cart-widget) y se vuelva a cerrar en el mismo evento.
+  public onToggleCart = ( event: MouseEvent ) : void => {
+    event.stopPropagation();
+    this.isCartOpen.set(true);
   }
 
+  // Sólo la llama el fondo/overlay: cualquier click dentro del panel
+  // detiene su propagación antes de llegar acá.
   public onCloseCart = ( ) : void => {
-    const clickedContainer = event?.target as HTMLElement;
-    if( clickedContainer.classList.contains('overlay') || clickedContainer.classList.contains('btn-continue') ){
-      this.isCartOpen.set(false);
-    }
+    this.isCartOpen.set(false);
   }
 
   public closeCart = ( event: MouseEvent ) : void => {
     event.stopPropagation();
     this.isCartOpen.set(false);
   }
-
-
 
 }

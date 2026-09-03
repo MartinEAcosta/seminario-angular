@@ -2,9 +2,36 @@
 
 .card-course{
     display: flex;
+    position: relative;
     width: 100%;
     margin: auto;
     border-bottom: solid thin rgba(203 ,203, 203, 0.75);
+}
+
+.btn-remove{
+    display: flex;
+    position: absolute;
+    top: 4%;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 100%;
+    background-color: transparent;
+    color: v.$red-warning;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-remove:hover{
+    background-color: rgba(197, 14, 14, 0.1);
+}
+
+.btn-remove:focus-visible{
+    outline: 2px solid v.$red-warning;
+    outline-offset: 2px;
 }
 
 .details{
@@ -20,7 +47,7 @@
     max-width: 35%;
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0 , 0.5);
+    box-shadow: 0 6px 20px rgba(v.$black-custom, 0.18);
     justify-content: center;
     align-items: center;
 }
@@ -37,6 +64,7 @@ img{
     overflow: hidden;
     flex-direction: column;
     margin-left: 10px;
+    padding-right: 32px; // deja lugar al botón de eliminar (absoluto, esquina superior derecha)
 }
 
 
@@ -126,10 +154,32 @@ img{
     border-radius: 0px 20px 20px 0px;
 }
 
+.leftBtn:focus-visible , .rightBtn:focus-visible{
+    outline: 2px solid v.$brand-color;
+    outline-offset: 2px;
+}
+
+.rightBtn:disabled{
+    background-color: rgba(0, 120, 140, 0.4);
+    cursor: not-allowed;
+}
+
 .text-quota{
     font-family: v.$font-primary;
     font-size: 75%;
     font-weight: 600;
     color: v.$black-custom;
     margin-right: 5px;
+}
+
+.text-capacity{
+    font-family: v.$font-primary;
+    font-size: 75%;
+    color: rgba(v.$black-custom, 0.6);
+    margin: 4px 0 0 0;
+}
+
+.text-capacity.at-capacity{
+    color: v.$red-warning;
+    font-weight: 600;
 }

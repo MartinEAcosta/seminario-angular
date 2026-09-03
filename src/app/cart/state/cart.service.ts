@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { Course } from '@course/models/course.interfaces';
-import { map, throwError } from 'rxjs';
+import { map, Observable, tap, throwError } from 'rxjs';
 import { CartItem, ItemQuantity } from '../models/cart.interface';
 import { Cart } from '../models/cart.model';
 import { PaymentService } from '@payment/services/payment.service';
@@ -90,8 +90,27 @@ export class CartService {
   }
 
   public downQuantity = ( course : Course ) : Cart => {
-    this.cart.set( new Cart(this.cart().downQuantity( course )) );
+    this.cart.set( new Cart( this.cart().downQuantity( course ) , this.cart().code ) );
     return this.cart();
+  }
+
+  public removeFromCart = ( course : Course ) : Cart => {
+    this.cart.set( new Cart( this.cart().removeItem( course ) , this.cart().code ) );
+    return this.cart();
+  }
+
+  // Aplica un cupón de descuento: sólo se persiste en el carrito si el back-end
+  // responde correctamente (evita dejar un código sin confirmar en el estado).
+  public applyDiscountCode = ( code : string ) : Observable<number> => {
+    const trimmedCode = code.trim();
+    return this.paymentService
+      .calculateTotal( this.getItemsArray() , trimmedCode )
+      .pipe(
+        tap( total => {
+          this.cart.set( new Cart( this.cart().items , trimmedCode ) );
+          this.total.set( total );
+        })
+      );
   }
 
   public calculateTotal = ( ) : number => {

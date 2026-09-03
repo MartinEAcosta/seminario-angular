@@ -2,36 +2,95 @@
 
 .container-referral{
     display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
     margin: 1% 4% 3% 4%;
     font-family: v.$font-primary;
     width: auto;
-    height: 40%;
-    align-items: center;
-}
-
-.container-referral input{
-    width: 50%;
-    height: 80%;
-    text-align: center;
-    pointer-events: all;
-    background-color: rgba(255, 255, 255 , 0.1);
-    color: v.$white-custom;
-    border: none;
-    padding: 1%;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0 , 0.5);
-    border-radius: 20px;
-}
-
-.container-referral input:focus{
-    outline: none;
-}
-
-.container-referral input::placeholder{
-    color: rgba(233 , 233, 233, 0.7);
 }
 
 .text-referral{
     font-size: smaller;
     color: v.$white-custom;
     text-align: left;
+}
+
+.input-row{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.input-row input{
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 40px;
+    text-align: center;
+    pointer-events: all;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: v.$white-custom;
+    border: none;
+    padding: 0 0.5rem;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+}
+
+.input-row input:focus-visible{
+    outline: 2px solid v.$white-custom;
+    outline-offset: 2px;
+}
+
+.input-row input::placeholder{
+    color: rgba(233, 233, 233, 0.7);
+}
+
+.input-row input:disabled{
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-apply{
+    flex: 0 0 auto;
+    min-height: 40px;
+    padding: 0 0.9rem;
+    border: solid 1px rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    background-color: transparent;
+    color: v.$white-custom;
+    font-family: v.$font-primary;
+    font-size: smaller;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-apply:hover:not(:disabled){
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.btn-apply:focus-visible{
+    outline: 2px solid v.$white-custom;
+    outline-offset: 2px;
+}
+
+.btn-apply:disabled{
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.status-message{
+    margin: 0;
+    font-size: smaller;
+    font-family: v.$font-primary;
+    font-weight: 600;
+}
+
+// Se aclaran ambos tonos mezclándolos con blanco: los valores base de
+// variables.scss quedan con poco contraste sobre el fondo teal de este componente.
+.status-success{
+    color: color-mix(in srgb, v.$green-success 65%, white);
+}
+
+.status-error{
+    color: color-mix(in srgb, v.$red-warning 65%, white);
 }

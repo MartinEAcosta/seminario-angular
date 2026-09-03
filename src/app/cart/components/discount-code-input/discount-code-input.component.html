@@ -1,4 +1,25 @@
 <div class="container-referral">
     <p class="text-referral">¿Tiene un cupón de descuento? Ingresalo Aquí.</p>
-    <input type="text" placeholder="CURSOS-2025" >
+    <div class="input-row">
+        <input
+            type="text"
+            placeholder="CURSOS-2025"
+            aria-label="Código de cupón de descuento"
+            [formControl]="codeControl"
+            [disabled]="status() === 'applying'"
+            (keydown.enter)="onApply()">
+        <button
+            type="button"
+            class="btn-apply"
+            [disabled]="status() === 'applying' || !codeControl.value.trim()"
+            (click)="onApply()">
+            {{ status() === 'applying' ? 'Aplicando…' : 'Aplicar' }}
+        </button>
+    </div>
+    @if( status() === 'applied' ){
+        <p class="status-message status-success">Cupón aplicado.</p>
+    }
+    @if( status() === 'error' ){
+        <p class="status-message status-error">No se pudo aplicar el cupón.</p>
+    }
 </div>

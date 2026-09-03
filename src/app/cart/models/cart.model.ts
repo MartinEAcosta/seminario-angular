@@ -9,6 +9,7 @@ export class Cart {
 
     constructor( items : Map<string,CartItem> = new Map<string,CartItem>() , code ?: string ) {
         items.forEach( item => this.items.set( item.course.id , item ) );
+        this.code = code;
     }
 
     public addToCart = ( course : Course )  => {
@@ -39,16 +40,21 @@ export class Cart {
 
     public downQuantity = ( course : Course ) : Map<string,CartItem> => {
         if( this.items.get(course.id)!.quantity > 1  ){
-            this.items.set( course.id , 
+            this.items.set( course.id ,
                 {
                     course: course ,
-                    quantity: +this.items.get( course.id )?.quantity! -1 
-                } 
+                    quantity: +this.items.get( course.id )?.quantity! -1
+                }
             );
         }
         else{
             this.items.delete( course.id );
         }
+        return this.items;
+    }
+
+    public removeItem = ( course : Course ) : Map<string,CartItem> => {
+        this.items.delete( course.id );
         return this.items;
     }
 

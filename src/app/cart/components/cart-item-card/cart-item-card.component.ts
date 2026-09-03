@@ -10,13 +10,31 @@ import { CartService } from '../../state/cart.service';
 })
 export class CartItemCardComponent {
 
-  
   cartService = inject(CartService);
 
   cart = computed( () => this.cartService.cart());
   item = input.required<CartItem>();
 
-  constructor () { }
+  public quantity = computed<number>( () =>
+    this.cart().items.get( this.item().course.id )?.quantity ?? 0
+  );
 
+  public capacity = computed<number | null>( () => this.item().course.capacity ?? null );
+
+  public remainingSeats = computed<number | null>( () => {
+    const capacity = this.capacity();
+    return capacity == null ? null : Math.max( capacity - this.quantity() , 0 );
+  });
+
+  public isAtCapacity = computed<boolean>( () => {
+    const capacity = this.capacity();
+    return capacity != null && this.quantity() >= capacity;
+  });
+
+  public onRemove = ( ) : void => {
+    this.cartService.removeFromCart( this.item().course );
+  }
+
+  constructor () { }
 
 }

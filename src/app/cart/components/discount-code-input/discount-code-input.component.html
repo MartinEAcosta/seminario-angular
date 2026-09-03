@@ -6,7 +6,6 @@
             placeholder="CURSOS-2025"
             aria-label="Código de cupón de descuento"
             [formControl]="codeControl"
-            [disabled]="status() === 'applying'"
             (keydown.enter)="onApply()">
         <button
             type="button"

@@ -28,11 +28,16 @@ export class DiscountCodeInputComponent {
     if( !code || this.status() === 'applying' ) return;
 
     this.status.set('applying');
+    this.codeControl.disable(); // deshabilitar vía el FormControl, no con [disabled] en el template
     this.cartService.applyDiscountCode( code ).subscribe({
-      next: () => this.status.set('applied'),
+      next: () => {
+        this.status.set('applied');
+        this.codeControl.enable();
+      },
       error: ( err ) => {
         console.error('Error aplicando cupón:', err);
         this.status.set('error');
+        this.codeControl.enable();
       }
     });
   }

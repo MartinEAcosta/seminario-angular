@@ -4,17 +4,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Angular 19 (standalone components, no NgModules for feature code) e-commerce-style course platform: browse/create/enroll in courses, cart, checkout via MercadoPago, video lessons via video.js. Backend is a separate repo (`seminario-angular-backend`, not in this workspace) — without it running, auth/login/course-creation/image-upload flows won't work; the app falls back to mocked data for browsing.
+Angular 20 (standalone components, no NgModules for feature code) e-commerce-style course platform: browse/create/enroll in courses, cart, checkout via MercadoPago, video lessons via video.js. Backend is a separate repo (`seminario-angular-backend`, not in this workspace) — without it running, auth/login/course-creation/image-upload flows won't work; the app falls back to mocked data for browsing.
 
 ## Skills
 
-Use the /frontend-desing command when implementing changes to the user interface.
+The `frontend-design` skill auto-applies when implementing changes to the user interface.
 
 ## Architecture
 
-**Feature-folder structure**, per Angular's official style guide. Each feature under `src/app/<feature>/` typically contains its own `components/`, `pages/`, `services/`, `models/`, `state/`, and sometimes `guards/`, `resolver/`, `interceptors/`, `utils/`. Features: `auth`, `cart`, `category`, `course`, `enrollment`, `file`, `lesson`, `module`, `payment`, `shared`, `user`, plus top-level `mappers/` and `utils/`.
+**Feature-folder structure**, per Angular's official style guide. Each feature under `src/app/<feature>/` typically contains its own `components/`, `pages/`, `services/`, `models/`, `state/`, and sometimes `guards/`, `resolver/`, `interceptors/`, `utils/`. Features: `auth`, `cart`, `category`, `course`, `enrollment`, `file`, `lesson`, `module`, `payment`, `shared`, `teacher-request`, `user`, plus top-level `mappers/` and `utils/`.
 
-**Path aliases** (see `tsconfig.json`) — always prefer these over relative imports across features: `@auth/*`, `@course/*`, `@cart/*`, `@enrollment/*`, `@file/*`, `@lesson/*`, `@module/*`, `@payment/*`, `@utils/*`, `@shared/*`, `@mappers/*`, `@guards/*`, `@interfaces/*` (aggregates model dirs from course/auth/module/lesson), `@variables` (→ `src/variables.scss`).
+**Path aliases** (see `tsconfig.json`) — always prefer these over relative imports across features: `@auth/*`, `@course/*`, `@cart/*`, `@category/*`, `@enrollment/*`, `@file/*`, `@lesson/*`, `@module/*`, `@payment/*`, `@teacher-request/*`, `@utils/*`, `@shared/*`, `@mappers/*`, `@guards/*`, `@interfaces/*` (aggregates model dirs from course/auth/module/lesson), `@variables` (→ `src/variables.scss`).
 
 **Routing**: `app.routes.ts` is the root route table; each feature with routes exports its own `<feature>.routes.ts` (default export) lazy-loaded via `loadChildren`. Route guards use the functional `CanMatchFn`/`CanActivateFn` style (e.g. `AuthenticatedGuard`), and route data resolvers live in each feature's `resolver/` dir.
 
@@ -25,3 +25,5 @@ Use the /frontend-desing command when implementing changes to the user interface
 **HTTP**: `provideHttpClient(withFetch(), withInterceptors([authInterceptor]))` in `app.config.ts`. `authInterceptor` (`auth/interceptors/auth.interceptor.ts`) attaches `Authorization: Bearer <token>` from `AuthService`'s token signal to outgoing requests when present. `environment.ts` / `environment.development.ts` hold `apiURL` and `MERCADOPAGO_PUBLIC_KEY`; the dev build swaps in the development environment via `fileReplacements`.
 
 **Cart/Payment**: `CartService` (`cart/state/cart.service.ts`) persists cart contents to `localStorage` via an `effect`, and reactively recomputes the total by calling `PaymentService.calculateTotal` in another `effect` whenever cart items or the applied discount code change.
+
+**Specs**: feature work is tracked as spec docs under `specs/*.md` (see `specs/.spec-config.yml`) — check there for in-progress feature context/design notes before starting related work.

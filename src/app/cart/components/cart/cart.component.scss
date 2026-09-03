@@ -229,6 +229,8 @@ img{
     margin-top: auto;
     border-radius: 15px 15px 0 0;
     background-color: v.$brand-color;
+    pointer-events: all; // .content-open desactiva pointer-events por defecto; sin esto
+                         // el input/botón de app-discount-code-input quedan inertes al click.
 }
 
 .container-btns{

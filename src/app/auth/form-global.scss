@@ -35,7 +35,7 @@
     align-items: center;
     box-sizing: border-box;
     width: 50%;
-    height: 2.75rem;
+    height: 3.25rem;
     padding: 0 1rem;
     margin: 4% auto 0%;
     color: v.$white-custom;
@@ -61,7 +61,7 @@
 
 input:not(:placeholder-shown) + label{
     background-color: rgb(60, 60, 60);
-    transform: translateY(-25px);
+    transform: translateY(-30px);
     transition: all 0.3s ease-in-out;
 }
 
@@ -78,7 +78,7 @@ input:not(:placeholder-shown) + label{
 .input-password:focus + .label-text {
     background-color: rgb(60, 60, 60);
     border-radius: 20px 20px;
-    transform: translateY(-25px);
+    transform: translateY(-30px);
     transition: all 0.3s ease-in-out;
 }
 
@@ -96,7 +96,7 @@ input:not(:placeholder-shown) + label{
     display: flex;
     position: relative;
     z-index: 100;
-    top: -1.97rem;
+    top: -2.47rem;
     margin: 0;
     padding: 0 10px 0 10px;
     justify-content: center;

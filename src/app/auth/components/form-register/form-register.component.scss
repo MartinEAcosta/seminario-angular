@@ -1,1 +1,12 @@
 @use '@variables' as v;
+
+.container-form {
+    font-family: v.$font-primary;
+    font-size: 1.15rem;
+}
+
+.input-username,
+.input-email,
+.input-password {
+    font-size: 1.15rem;
+}

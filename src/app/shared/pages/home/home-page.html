@@ -1,16 +1,36 @@
 <div class="bg-home">
-    <!-- <div class="container">
-        <div class="overlay"></div>
+    <div class="container">
+        <canvas class="hero-canvas" appHeroCanvasBackground></canvas>
         <section>
-            <h1>¡Los mejores cursos, al mejor precio!</h1>
-            <p>Aprende a tu ritmo, desde cualquier lugar y en cualquier momento.</p>
-            <p>Con Udemix, tendrás acceso a una amplia variedad de cursos en línea, diseñados para ayudarte a alcanzar tus metas profesionales y personales.</p>
+            <span class="badge">Nuestro impacto en números</span>
+            <h1>Tu próximo curso empieza hoy</h1>
+            <p class="typewriter-text">{{ typewriterText() }}<span class="cursor"></span></p>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-value">{{ coursesToShow().total }}</span>
+                    <span class="stat-label">cursos</span>
+                    <p class="stat-description">Programas creados por profesores reales, listos para aprender a tu ritmo.</p>
+                    <span class="stat-icon"><img src="/assets/stat-courses-icon.svg" alt="Cursos"></span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value">+200</span>
+                    <span class="stat-label">estudiantes</span>
+                    <p class="stat-description">Personas aprendiendo hoy mismo con la comunidad Udemix.</p>
+                    <span class="stat-icon"><img src="/assets/stat-students-icon.svg" alt="Estudiantes"></span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value">+20</span>
+                    <span class="stat-label">profesores</span>
+                    <p class="stat-description">Profesionales que comparten su conocimiento y construyen contenido de calidad.</p>
+                    <span class="stat-icon"><img src="/assets/stat-teachers-icon.svg" alt="Profesores"></span>
+                </div>
+            </div>
             <div class="container-actions">
-                <button [routerLink]="'/about'" class="btn-about-us btn">Sobre nosotros</button>
-                <button [routerLink]="'/pricing'" class="btn-become-a-teacher btn">Convertirse en profesor</button>
+                <button [routerLink]="'/explore'" class="btn-primary btn">Explorar cursos</button>
+                <button [routerLink]="'/about'" class="btn-secondary btn">Sobre nosotros</button>
             </div>
         </section>
-    </div> -->
+    </div>
 
     <app-course-carousel [courses]='this.carouselCourses()' [isLoading]='this.coursesResource.isLoading()' />
 

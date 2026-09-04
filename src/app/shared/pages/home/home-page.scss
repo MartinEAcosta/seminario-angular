@@ -11,19 +11,27 @@
 
 .container{
     display: flex;
-    background: linear-gradient(50deg, rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 60%, rgba(32, 77, 128, 1) 100%);
-    mask-image: linear-gradient(to top, transparent, black 13%);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 200% 200%;
-    max-width: 100vw;
-    height: 60vh;
-    padding: 4%;
-    gap: 5%;
+    flex-direction: column;
     align-items: center;
-    animation: gradientAnimation 5s ease infinite;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background-color: #161616;
+    max-width: 100vw;
+    height: auto;
+    padding: 6% 5% 5%;
+    gap: 1.5rem;
     transition: all 0.4s ease-in-out;
-    justify-content: space-between;
+}
+
+.hero-canvas{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+    z-index: 0;
 }
 
 .header-page{
@@ -35,53 +43,143 @@
     top: 0px;
 }
 
-@keyframes gradientAnimation {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-.overlay{
-    position: absolute;
-    inset: 0;
-    background-color: v.$black-custom;
-}
-
 .container section{
     display: flex;
     position: relative;
-    z-index: 1000;
+    z-index: 1;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
-    width: 65%;
-}
-.container section h1{
-    font-size: 2.5rem;
-    color: v.$white-custom;
-    font-family: v.$font-brand;
-    text-align: left;
-    text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
-    margin-bottom: 3%;
+    width: 100%;
+    max-width: 900px;
 }
 
-.container section p {
-    font-size: 1.4rem;
+.badge{
+    display: inline-flex;
+    align-self: center;
+    align-items: center;
+    padding: 0.4rem 1.1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(233, 233, 233, 0.15);
+    background-color: rgba(233, 233, 233, 0.04);
+    color: rgba(233, 233, 233, 0.7);
+    font-family: v.$font-primary;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin-bottom: 1rem;
+}
+
+.container section h1,
+.stat-value{
+    background: linear-gradient(180deg, v.$white-custom 0%, rgba(150, 150, 150, 1) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+}
+
+.container section h1{
+    font-size: 2.5rem;
+    font-family: v.$font-brand;
+    margin-bottom: 0.5rem;
+}
+
+.typewriter-text{
+    display: inline-block;
+    min-height: 1.4em;
+    font-size: 1.2rem;
+    color: rgba(233, 233, 233, 0.65);
+    font-family: v.$font-primary;
+    margin: 0 0 2.5rem 0;
+}
+
+.cursor{
+    display: inline-block;
+    width: 2px;
+    height: 1.1em;
+    margin-left: 2px;
+    vertical-align: middle;
+    background-color: v.$white-custom;
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+
+.stats-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.stat-card{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    padding: 2rem 1.5rem;
+    border-radius: 24px;
+    border: 1px solid rgba(233, 233, 233, 0.14);
+    background-color: rgba(233, 233, 233, 0.06);
+    background-image:
+        linear-gradient(rgba(233, 233, 233, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(233, 233, 233, 0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+    overflow: hidden;
+}
+
+.stat-value{
+    font-size: 3rem;
+    font-weight: 800;
+    font-family: v.$font-primary;
+    line-height: 1.15;
+}
+
+.stat-label{
+    font-size: 1.2rem;
+    font-weight: 600;
     color: v.$white-custom;
     font-family: v.$font-primary;
-    text-align: left;
-    margin: 0px 0px 2% 0%;
-    text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+    margin: 0.5rem 0 0.75rem;
+}
+
+.stat-description{
+    font-size: 0.9rem;
+    color: rgba(233, 233, 233, 0.55);
+    font-family: v.$font-primary;
+    margin: 0;
+}
+
+.stat-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-top: 1.5rem;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.stat-icon img{
+    width: 18px;
+    height: 18px;
 }
 
 .container-actions{
     display: flex;
-    margin: 1rem 3rem;
+    justify-content: center;
+    margin: 0 auto;
     gap: 5%;
 }
 
@@ -103,20 +201,22 @@
     transition: all ease 0.5s;
 }
 
-.btn-about-us{
+.btn-primary{
     background-color: v.$brand-color;
 }
 
-.btn-about-us:hover{
+.btn-primary:hover{
     background-color: rgba(0, 120, 140, 0.8);
 }
 
-.btn-become-a-teacher{
-    background-color: v.$green-success;
+.btn-secondary{
+    background-color: transparent;
+    border: 2px solid v.$white-custom;
 }
 
-.btn-become-a-teacher:hover{
-    background-color: rgba(0, 150, 50, 0.8);
+.btn-secondary:hover{
+    background-color: v.$white-custom;
+    color: v.$brand-color;
 }
 
 .container iframe{
@@ -131,4 +231,32 @@
     justify-content: center;
     font-family: v.$font-primary;
     color: v.$black-custom;
+}
+
+@media (max-width: 768px) {
+    .container{
+        padding: 12% 6%;
+    }
+
+    .container section{
+        width: 100%;
+    }
+
+    .stats-grid{
+        grid-template-columns: 1fr;
+    }
+
+    .stat-value{
+        font-size: 2.25rem;
+    }
+
+    .container-actions{
+        flex-direction: column;
+        margin: 1rem 0;
+        width: 100%;
+    }
+
+    .container-actions .btn{
+        width: 100%;
+    }
 }

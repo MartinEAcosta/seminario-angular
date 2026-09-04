@@ -1,0 +1,105 @@
+@use '@variables' as v;
+
+.category-marquee {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 3rem;
+}
+
+.marquee-eyebrow {
+    font-family: v.$font-primary;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(233, 233, 233, 0.4);
+    margin-bottom: 1.25rem;
+}
+
+.marquee-viewport {
+    width: 100%;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    mask-composite: intersect;
+}
+
+.marquee-track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    animation: marquee-scroll 36s linear infinite;
+}
+
+.category-marquee:hover .marquee-track {
+    animation-play-state: paused;
+}
+
+.marquee-item {
+    position: relative;
+    flex: 0 0 auto;
+    padding: 0 2.25rem;
+    font-family: v.$font-primary;
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(233, 233, 233, 0.5);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.marquee-item::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: rgba(233, 233, 233, 0.25);
+    transform: translateY(-50%);
+}
+
+.marquee-item:hover {
+    color: v.$white-custom;
+    text-shadow: 0 0 16px rgba(0, 120, 140, 0.8);
+}
+
+.marquee-item:focus-visible {
+    outline: 2px solid v.$brand-color;
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+@keyframes marquee-scroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+        animation: none;
+    }
+
+    .marquee-viewport {
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .category-marquee {
+        margin-top: 2rem;
+    }
+
+    .marquee-item {
+        padding: 0 1.5rem;
+        font-size: 0.9rem;
+    }
+}

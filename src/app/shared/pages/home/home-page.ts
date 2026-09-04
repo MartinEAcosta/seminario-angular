@@ -3,13 +3,16 @@ import { RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 import { CourseService } from '@course/services/course.service';
+import { CategoryService } from '@category/services/category.service';
 import { CartService } from '@cart/state/cart.service';
 import { UIService } from '../../services/ui/ui.service';
 import { CourseListComponent } from "../../../course/components/course-list/course-list.component";
 import { CourseCarouselComponent } from "@course/components/course-carousel/course-carousel.component";
+import { CategoryMarqueeComponent } from "@category/components/category-marquee/category-marquee.component";
 import { ModalErrorMessageComponent } from '../../components/modal-error-message/modal-error-message.component';
 import { CartComponent } from '@cart/components/cart/cart.component';
 import { defaultCourses } from '@utils/defaultCourses';
+import { defaultCategories } from '@utils/defaultCategories';
 import { PageTitleComponent } from "@shared/components/page-title/page-title.component";
 import { HeroCanvasBackgroundDirective } from './hero-canvas-background.directive';
 
@@ -17,11 +20,12 @@ import { HeroCanvasBackgroundDirective } from './hero-canvas-background.directiv
     selector: 'app-home',
     templateUrl: './home-page.html',
     styleUrl: './home-page.scss',
-    imports: [CourseListComponent, CourseCarouselComponent, ModalErrorMessageComponent, CartComponent, PageTitleComponent, RouterLink, HeroCanvasBackgroundDirective]
+    imports: [CourseListComponent, CourseCarouselComponent, CategoryMarqueeComponent, ModalErrorMessageComponent, CartComponent, PageTitleComponent, RouterLink, HeroCanvasBackgroundDirective]
 })
 export class HomeComponent implements OnDestroy {
 
   courseService = inject(CourseService);
+  categoryService = inject(CategoryService);
   cartService = inject(CartService);
   uiService = inject(UIService);
 
@@ -61,6 +65,18 @@ export class HomeComponent implements OnDestroy {
   });
 
   carouselCourses = computed(() => this.coursesToShow().items.slice(0, 10));
+
+  categoriesResource = rxResource({
+    stream: () => this.categoryService.getAllCategories(),
+  });
+
+  categoriesToShow = computed(() => {
+    const value = this.categoriesResource.value();
+    if (!value || value.length === 0) {
+      return defaultCategories;
+    }
+    return value;
+  });
 
   constructor() {
     this.runTypewriter();

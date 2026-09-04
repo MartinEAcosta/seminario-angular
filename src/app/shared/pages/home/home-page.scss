@@ -19,7 +19,8 @@
     background-color: #161616;
     max-width: 100vw;
     height: auto;
-    padding: 6% 5% 5%;
+    --hero-pad-x: 5%;
+    padding: 6% var(--hero-pad-x) 0;
     gap: 1.5rem;
     transition: all 0.4s ease-in-out;
 }
@@ -52,6 +53,16 @@
     justify-content: center;
     width: 100%;
     max-width: 900px;
+}
+
+.container app-category-marquee{
+    display: block;
+    position: relative;
+    z-index: 1;
+    width: calc(100% + (var(--hero-pad-x) * 2));
+    margin-left: calc(var(--hero-pad-x) * -1);
+    margin-right: calc(var(--hero-pad-x) * -1);
+    padding-bottom: 2.5rem;
 }
 
 .badge{
@@ -235,7 +246,12 @@
 
 @media (max-width: 768px) {
     .container{
-        padding: 12% 6%;
+        --hero-pad-x: 6%;
+        padding: 12% var(--hero-pad-x) 0;
+    }
+
+    .container app-category-marquee{
+        padding-bottom: 1.75rem;
     }
 
     .container section{

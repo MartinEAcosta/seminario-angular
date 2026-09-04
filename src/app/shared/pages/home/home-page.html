@@ -30,6 +30,8 @@
                 <button [routerLink]="'/about'" class="btn-secondary btn">Sobre nosotros</button>
             </div>
         </section>
+
+        <app-category-marquee [categories]="this.categoriesToShow()" />
     </div>
 
     <app-course-carousel [courses]='this.carouselCourses()' [isLoading]='this.coursesResource.isLoading()' />

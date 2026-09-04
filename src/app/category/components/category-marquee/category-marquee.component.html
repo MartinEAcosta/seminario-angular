@@ -1,0 +1,16 @@
+@if (categories().length > 0) {
+    <div class="category-marquee">
+        <span class="marquee-eyebrow">Explorá por categoría</span>
+
+        <div class="marquee-viewport">
+            <div class="marquee-track">
+                @for (category of loopCategories(); track $index) {
+                    <a class="marquee-item" [routerLink]="'/explore'"
+                        [queryParams]="{ id_category: category.id }">
+                        {{ category.name }}
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+}

@@ -21,22 +21,6 @@
                     {{ course().price === 0 ? 'Gratis' : (course().price | currency:'USD':'symbol':'1.2-2') }}
                 </p>
                 <div class="extra-details">
-                    <div class="actions">
-
-                        @if( course().capacity != null && course().capacity! > 0 ){  
-                            <p class="quantity">
-                                Cantidad de cupos disponibles: 
-                                <span class="quantity-number"> 
-                                    {{course().capacity}} 
-                                </span>
-                            </p>
-                        }
-                        @else if ( course().capacity === 0 ){
-                            <p class="quantity"> No se encuentra cupo disponible.</p>
-                        }
-
-                    </div>
-
                     <div class="buttons">
                         <app-btn-primary (click)="this.cartService.onAddToCart( course() )" [routerLink]="['/payment/buy']">
                                 Comprar 

@@ -16,31 +16,24 @@ interface EnrollmentStateProps {
 })
 export class EnrollmentState extends State<EnrollmentStateProps> {
 
-  private authService = inject(AuthService);
   private enrollmentService = inject(EnrollmentService);
 
   enrollmentList = computed(() => this.state().data?.enrollmentList);
   selectedEnrollment = computed(() => this.state().data?.selectedEnrollment);
-  user = computed(() => this.authService.user());
 
   constructor( ) {
     super();
-    effect(() => {
-      if (!this.user()) {
-        this.resetState();
-      }
-    });
   }
    
   loadEnrollmentList ( ) : Observable<EnrollmentDetailed[]> {
-    if( !this.user() ) return of([]);
+    if( !this.authService.user() ) return of([]);
 
     if( this.enrollmentList() ) { 
       return of( this.enrollmentList()! );
     }
 
     this.setIsLoading(true);
-    return this.enrollmentService.getEnrollmentsByUserId( this.user()!.id ).pipe( 
+    return this.enrollmentService.getEnrollmentsByUserId( this.authService.user()!.id ).pipe( 
       tap( (enrollments) => {
         this.state.update( (c) => ({ 
           ...c,

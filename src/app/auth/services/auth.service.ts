@@ -60,7 +60,9 @@ export class AuthService {
   public loginUser = ( userRequest : UserDTO ) : Observable<User | false> => {
     return this.http.post<AuthResponse>(`${this.baseURL}/login` , { ...userRequest } )
                       .pipe(
-                        map( ( authResponse ) => this.handleAuthSuccess( authResponse ) ),
+                        map( ( authResponse ) => {
+                          console.log(authResponse);
+                          return this.handleAuthSuccess( authResponse )} ),
                         catchError( ( { error } ) => {
                           return this.handleAuthError( error )
                         } )

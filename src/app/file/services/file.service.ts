@@ -97,7 +97,7 @@ export class FileService {
                                   )
   }
 
-  public onFileChanged = ( event : Event, type : 'lessons' | 'courses' ) => {
+  public onFileChanged = ( event : Event, type : 'lessons' | 'courses' | 'user' ) => {
     const fileChanged = ( event.target as HTMLInputElement ).files;
     if( !fileChanged ) return;
     // En caso de que el el fileList no sea undefined o vacio, permite generar url para utilizar de forma local
@@ -119,6 +119,10 @@ export class FileService {
         this.lessonFormState.setTypeMedia(
           type === 'image' || type === 'video' ? type : null
         );
+        break;
+      case 'user':
+        break;
+      default:
         break;
     }
   }

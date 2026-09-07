@@ -8,6 +8,7 @@ import { UIService } from '@shared/services/ui/ui.service';
 import { AuthResponse, User, UserDTO } from '@auth/models/auth.interfaces';
 import { AuthMapper } from '@mappers/auth.mapper';
 import { ErrorResponse, VerificationEmailResponse } from '@shared/models/api.interfaces';
+import { CartService } from '@cart/state/cart.service';
 
 type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
 
@@ -25,6 +26,7 @@ export class AuthService {
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}auth`;
   private uiService = inject(UIService);
+  private cartService = inject(CartService);
 
   // Se dispara ni bien el servicio es inyectado por primera vez.
   checkStatusResource = rxResource({
@@ -115,6 +117,7 @@ export class AuthService {
     this._user.set(null);
     this._token.set(null);
     this._authStatus.set('not-authenticated');
+    this.cartService.clearCart();
 
     localStorage.clear();
   }

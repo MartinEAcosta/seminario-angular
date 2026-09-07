@@ -99,6 +99,11 @@ export class CartService {
     return this.cart();
   }
 
+  public clearCart = ( ) : void => {
+    this.cart.set( new Cart() );
+    this.total.set(0);
+  }
+
   // Aplica un cupón de descuento: sólo se persiste en el carrito si el back-end
   // responde correctamente (evita dejar un código sin confirmar en el estado).
   public applyDiscountCode = ( code : string ) : Observable<number> => {

@@ -26,7 +26,7 @@ export class LessonViewerPageComponent {
   enrollmentState = inject(EnrollmentState);
   courseState = inject(CourseState);
   lessonState = inject(LessonState);
-
+  
   ngOnInit( ) { 
     const enrollment = this.enrollmentState.selectedEnrollment();
     if( !enrollment ) return;

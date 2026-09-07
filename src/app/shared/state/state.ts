@@ -1,5 +1,6 @@
 import { computed, effect, Inject, Injectable, signal } from '@angular/core';
 import { AuthService } from '@auth/services/auth.service';
+import { Observable } from 'rxjs';
 
 export interface StateData<T> {
   isLoading: boolean;

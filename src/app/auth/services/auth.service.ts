@@ -67,6 +67,16 @@ export class AuthService {
               );
   }
 
+  public updateUser = ( userRequest :  Partial<UserDTO> ) : Observable<User | false> => {
+    return this.http.put<AuthResponse>(`${this.baseURL}/update-user` , { ...userRequest } )
+                      .pipe(
+                        map( ( authResponse ) => this.handleAuthSuccess( authResponse ) ),
+                        catchError( ( { error } ) => {
+                          return this.handleAuthError( error )
+                        })
+                      );
+  }
+
   // Envia (o reenvia) el email con el enlace de validación a la cuenta del usuario logueado.
   public sendVerificationEmail = ( ) : Observable<boolean> => {
     return this.http

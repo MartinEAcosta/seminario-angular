@@ -1,0 +1,545 @@
+@use '@variables' as v;
+
+/* ---------- Page shell ---------- */
+
+.settings-page{
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    min-height: 100vh;
+    padding: 4rem 4% 6rem;
+    font-family: v.$font-primary;
+    background:
+        radial-gradient(120% 100% at 12% 0%, rgba(0, 120, 140, 0.07), transparent 55%),
+        radial-gradient(120% 100% at 88% 100%, rgba(255, 190, 40, 0.09), transparent 55%),
+        v.$white-custom;
+}
+
+.settings-header{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 68rem;
+    margin: 0 auto 3rem;
+}
+
+.settings-eyebrow{
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: v.$brand-color;
+}
+
+.settings-eyebrow::before{
+    content: "";
+    display: block;
+    width: 2rem;
+    height: 2px;
+    background-color: v.$brand-color;
+}
+
+.settings-title{
+    margin: 0 0 0.5rem;
+    font-family: v.$font-brand;
+    font-weight: 400;
+    font-size: 2.25rem;
+    line-height: 1.25;
+    color: v.$black-custom;
+}
+
+.settings-subtitle{
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgba(40, 40, 40, 0.7);
+}
+
+/* ---------- Two column body ---------- */
+
+.settings-body{
+    display: grid;
+    grid-template-columns: 16rem 1fr;
+    gap: 3rem;
+    width: 100%;
+    max-width: 68rem;
+    margin: 0 auto;
+    align-items: start;
+}
+
+/* ---------- Sidebar: the lit rail ---------- */
+
+.settings-nav{
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 2rem;
+    border-left: 1px solid rgba(40, 40, 40, 0.14);
+}
+
+.settings-nav-item{
+    display: flex;
+    position: relative;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.9rem 1.25rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: v.$font-primary;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-align: left;
+    color: rgba(40, 40, 40, 0.6);
+    transition: color 0.25s ease-in-out, background-color 0.25s ease-in-out;
+}
+
+/* Segment of the rail this item owns. Lights up when the section is active. */
+.settings-nav-item::before{
+    content: "";
+    position: absolute;
+    left: -1px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: transparent;
+    transition: background-color 0.25s ease-in-out;
+}
+
+.settings-nav-item:hover{
+    color: v.$black-custom;
+    background-color: rgba(40, 40, 40, 0.04);
+}
+
+.settings-nav-item:focus-visible{
+    outline: 2px solid v.$brand-color;
+    outline-offset: -2px;
+}
+
+.settings-nav-item.active{
+    color: v.$brand-color;
+    font-weight: 600;
+    background-color: rgba(0, 120, 140, 0.07);
+}
+
+.settings-nav-item.active::before{
+    background-color: v.$brand-color;
+}
+
+/* ---------- Panel ---------- */
+
+.settings-panel{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    min-width: 0;
+}
+
+.settings-card{
+    box-sizing: border-box;
+    width: 100%;
+    padding: 2rem 2.25rem 2.25rem;
+    border-radius: 20px;
+    background-color: #fff;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+}
+
+.settings-card-title{
+    display: flex;
+    margin: 0 0 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(40, 40, 40, 0.15);
+    font-family: v.$font-primary;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: v.$black-custom;
+}
+
+.settings-card p{
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(40, 40, 40, 0.7);
+}
+
+/* ---------- Sidebar collapses to a chip row ---------- */
+
+@media (max-width: 48rem){
+    .settings-page{
+        padding: 2.5rem 5% 4rem;
+    }
+
+    .settings-title{
+        font-size: 1.8rem;
+    }
+
+    .settings-body{
+        grid-template-columns: 1fr;
+        gap: 1.75rem;
+    }
+
+    .settings-nav{
+        flex-direction: row;
+        position: static;
+        gap: 0.5rem;
+        overflow-x: auto;
+        border-left: none;
+        border-bottom: 1px solid rgba(40, 40, 40, 0.14);
+    }
+
+    .settings-nav-item{
+        width: auto;
+        flex: 0 0 auto;
+        padding: 0.75rem 1.1rem;
+        border-radius: 12px 12px 0 0;
+    }
+
+    /* Rail turns into an underline under the active chip. */
+    .settings-nav-item::before{
+        left: 0;
+        right: 0;
+        top: auto;
+        bottom: -1px;
+        width: auto;
+        height: 2px;
+    }
+}
+
+@media (max-width: 37.5rem){
+    .settings-card{
+        padding: 1.5rem 1.25rem 1.75rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .settings-nav-item,
+    .settings-nav-item::before{
+        transition: none;
+    }
+}
+
+/* ---------- Avatar ---------- */
+
+.avatar-block{
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+}
+
+.avatar-image{
+    flex: 0 0 auto;
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: rgba(0, 120, 140, 0.07);
+    border: 2px solid rgba(0, 120, 140, 0.25);
+}
+
+.avatar-actions{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 0;
+}
+
+.avatar-hint{
+    max-width: 32ch;
+}
+
+.avatar-buttons{
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.avatar-input{
+    display: none;
+}
+
+.btn-outline{
+    padding: 0.65rem 1.4rem;
+    border: 1px solid v.$brand-color;
+    border-radius: 20px;
+    background-color: transparent;
+    cursor: pointer;
+    font-family: v.$font-primary;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: v.$brand-color;
+    transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+}
+
+.btn-outline:hover{
+    background-color: v.$brand-color;
+    color: #fff;
+}
+
+.btn-quiet{
+    padding: 0.65rem 0.75rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: v.$font-primary;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: rgba(40, 40, 40, 0.6);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.25s ease-in-out;
+}
+
+.btn-quiet:hover{
+    color: v.$red-warning;
+}
+
+.btn-outline:focus-visible,
+.btn-quiet:focus-visible{
+    outline: 2px solid v.$brand-color;
+    outline-offset: 2px;
+}
+
+@media (max-width: 37.5rem){
+    .avatar-block{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.25rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .btn-outline,
+    .btn-quiet{
+        transition: none;
+    }
+}
+
+/* ---------- Forms ----------
+   form-global.scss paints pill inputs for the dark AuthLayout. This page is light and
+   its visual idea is the hairline that lights up where your attention is (see the nav
+   rail), so the fields are rules, not boxes. Everything is scoped under .settings-panel:
+   it outranks form-global by one class and never leaks into form-login/form-register.
+   The floating-label mechanics, .hasError and .btn-sumbit are still reused. */
+
+.settings-form{
+    align-items: stretch;
+    padding-top: 0;
+}
+
+/* Each field owns a positioning context so the label can float without taking up
+   flow space. form-global keeps the label `relative`, which reserves a line box whose
+   height changes with the font-size on focus and shoves the error message around. */
+.settings-panel .field{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    margin-top: 2.25rem;
+}
+
+.settings-panel .field:first-child{
+    margin-top: 0;
+}
+
+.settings-panel .input-username,
+.settings-panel .input-email,
+.settings-panel .input-password{
+    width: 100%;
+    height: 3rem;
+    padding: 0;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    font-family: v.$font-primary;
+    font-size: 1.05rem;
+    color: v.$black-custom;
+    /* The rule under the field. Inset shadow so lighting it up costs no layout shift. */
+    box-shadow: inset 0 -1px 0 rgba(40, 40, 40, 0.25);
+    transition: box-shadow 0.25s ease-in-out;
+}
+
+.settings-panel .input-username:focus,
+.settings-panel .input-email:focus,
+.settings-panel .input-password:focus{
+    outline: none;
+    transform: none;
+    background-color: transparent;
+    color: v.$black-custom;
+    box-shadow: inset 0 -2px 0 v.$brand-color;
+}
+
+.settings-panel .input-username:not(:placeholder-shown),
+.settings-panel .input-email:not(:placeholder-shown),
+.settings-panel .input-password:not(:placeholder-shown){
+    transform: none;
+    background-color: transparent;
+}
+
+/* Resting label: overlays the input, aligned to the same baseline as the typed value. */
+.settings-panel .label-text{
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 3rem;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 0;
+    background-color: transparent;
+    font-size: 1.05rem;
+    color: rgba(40, 40, 40, 0.45);
+    transition: all 0.25s ease-in-out;
+}
+
+/* Floated label: shrinks into the same eyebrow voice used across the page. */
+.settings-panel input:not(:placeholder-shown) + label,
+.settings-panel .input-username:focus + .label-text,
+.settings-panel .input-email:focus + .label-text,
+.settings-panel .input-password:focus + .label-text{
+    transform: translateY(-1.55rem);
+    background-color: transparent;
+    border-radius: 0;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(40, 40, 40, 0.55);
+}
+
+.settings-panel .input-username:focus + .label-text,
+.settings-panel .input-email:focus + .label-text,
+.settings-panel .input-password:focus + .label-text{
+    color: v.$brand-color;
+}
+
+/* No border to tint, so the error state lights the rule red instead. */
+.settings-panel .hasError,
+.settings-panel .hasError:focus{
+    border-color: transparent;
+    box-shadow: inset 0 -2px 0 v.$red-warning;
+}
+
+/* Sits in normal flow right under the rule — no negative margins to compensate. */
+.settings-panel form-error-label{
+    display: block;
+    margin-top: 0.5rem;
+}
+
+.settings-panel .btn-sumbit{
+    width: auto;
+    min-width: 12rem;
+    padding: 0 2rem;
+    margin: 2.5rem 0 0;
+    align-self: flex-start;
+}
+
+.settings-panel .btn-sumbit:disabled{
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.settings-panel .btn-sumbit:disabled:hover{
+    transform: none;
+    animation: none;
+}
+
+.settings-panel .btn-sumbit:focus-visible{
+    outline: 2px solid v.$brand-color;
+    outline-offset: 2px;
+}
+
+@media (max-width: 37.5rem){
+    .settings-panel .btn-sumbit{
+        width: 100%;
+        align-self: stretch;
+    }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .settings-panel .input-username,
+    .settings-panel .input-email,
+    .settings-panel .input-password,
+    .settings-panel .label-text{
+        transition: none;
+    }
+}
+
+/* ---------- Email verification ---------- */
+
+.verification-block{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+}
+
+.status-badge{
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+/* The dot carries the state colour; the text stays dark so it keeps its contrast. */
+.status-badge::before{
+    content: "";
+    display: block;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+}
+
+.status-badge.verified{
+    background-color: rgba(0, 150, 50, 0.1);
+    color: rgb(0, 105, 35);
+}
+
+.status-badge.verified::before{
+    background-color: v.$green-success;
+}
+
+.status-badge.unverified{
+    background-color: rgba(255, 190, 40, 0.16);
+    color: rgb(140, 95, 0);
+}
+
+.status-badge.unverified::before{
+    background-color: v.$yellow-caution;
+}
+
+.verification-email{
+    font-weight: 600;
+    color: v.$black-custom;
+}
+
+.btn-outline:disabled{
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.btn-outline:disabled:hover{
+    background-color: transparent;
+    color: v.$brand-color;
+}
+
+/* Group-level error. form-error-label only reads a single control's errors, so the
+   passwordsMismatch message is rendered directly and matched to its typography. */
+.settings-panel .field-error{
+    margin-top: 0.5rem;
+    font-family: v.$font-primary;
+    font-size: 80%;
+    color: v.$red-warning;
+}

@@ -61,6 +61,13 @@
     color: v.$black-custom;
 }
 
+.details-header{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+}
+
 .details-course .anchor{
     width: fit-content;
     appearance: none;
@@ -133,9 +140,8 @@
 
 .container-extra{
     display: flex;
-    position: absolute;
-    right: 3%;
-    top: -13rem;
+    position: relative;
+    flex-shrink: 0;
     transition: all 0.3s ease 0s;
 }
 
@@ -150,7 +156,7 @@
     flex-direction: column;
     width: 100px;
     position: absolute;
-    bottom: -5rem;
+    top: 100%;
     right: 0rem;
     background-color: v.$white-custom;
     box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.2);
@@ -163,7 +169,7 @@
     overflow: hidden;
     width: 0px;
     position: absolute;
-    bottom: -5rem;
+    top: 100%;
     right: 0rem;
     transition: all 0.3s ease-in-out 0.5s;
 }
@@ -191,7 +197,6 @@
 .ellipsis-svg{
     transition: all 0.3s ease 0s;
     display: flex;
-    position: absolute;
     width: 25px;
     cursor: pointer;
 }

@@ -28,8 +28,9 @@ export class ModulesAccordionComponent {
   }
 
   public goToLesson = ( id_lesson : string ) => {
-    if( this.isClickable() ){
-      this.router.navigateByUrl( `/enrollment/${ this.enrollmentState.selectedEnrollment()?.id }/lesson/${ id_lesson }`);
+    const enrollmentId = this.enrollmentState.selectedEnrollment()?.id;
+    if( this.isClickable() && enrollmentId ){
+      this.router.navigateByUrl( `/enrollment/${ enrollmentId }/lesson/${ id_lesson }`);
     }
   }
 

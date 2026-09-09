@@ -23,38 +23,28 @@ import { TeacherRequestDTO } from '@teacher-request/models/teacher-request.inter
         TeacherRequestStatusComponent,
     ]
 })
-export class BecomeTeacherPageComponent implements OnInit {
+export class BecomeTeacherPageComponent {
 
   public authService = inject(AuthService);
   public teacherRequestState = inject(TeacherRequestState);
-  private uiService = inject(UIService);
 
   public user = this.authService.user;
-  public isLoading = this.teacherRequestState.isLoading;
-  public myRequest = this.teacherRequestState.myRequest;
 
   // Controla si se muestra el formulario (primera solicitud o re-postulación tras un rechazo).
   public showForm = signal<boolean>(false);
-
-  ngOnInit(): void {
-    // Ya es profesor/admin, o el email todavía no fue validado: no hace falta consultar el estado de la solicitud.
-    if( this.user()?.role !== 'student' || !this.user()?.isEmailVerified ) return;
-
-    this.teacherRequestState.loadMyRequest().subscribe();
-  }
 
   onStartRequest = ( ) : void => {
     this.showForm.set(true);
   }
 
   onSubmitRequest = ( teacherRequestDTO : TeacherRequestDTO ) : void => {
-    this.teacherRequestState.submitRequest( teacherRequestDTO )
-                             .subscribe( ( request ) => {
-                               if( request ){
-                                 this.showForm.set(false);
-                                 this.uiService.showToastMessage('¡Tu solicitud fue enviada! Te vamos a avisar cuando sea revisada.');
-                               }
-                             });
+    // this.teacherRequestState.submitRequest( teacherRequestDTO )
+    //                          .subscribe( ( request ) => {
+    //                            if( request ){
+    //                              this.showForm.set(false);
+    //                              this.uiService.showToastMessage('¡Tu solicitud fue enviada! Te vamos a avisar cuando sea revisada.');
+    //                            }
+    //                          });
   }
 
 }

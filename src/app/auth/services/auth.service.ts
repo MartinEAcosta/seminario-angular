@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 
@@ -9,6 +9,7 @@ import { AuthResponse, User, UserDTO } from '@auth/models/auth.interfaces';
 import { AuthMapper } from '@mappers/auth.mapper';
 import { ErrorResponse, VerificationEmailResponse } from '@shared/models/api.interfaces';
 import { CartService } from '@cart/state/cart.service';
+import { Router } from '@angular/router';
 
 type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
 
@@ -25,6 +26,7 @@ export class AuthService {
 
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}auth`;
+  private router = inject(Router);
   private uiService = inject(UIService);
   private cartService = inject(CartService);
 
@@ -47,7 +49,16 @@ export class AuthService {
     return 'not-authenticated';
   });
 
-  constructor( ) { }
+  constructor( ) { 
+    let previousStatus : AuthStatus = this.authStatus();
+    effect( () => {
+      const status = this.authStatus();
+      if( previousStatus === 'authenticated' && status === 'not-authenticated' ){
+        this.router.navigateByUrl('/');
+      }
+      previousStatus = status;
+    });
+  }
 
   public registerUser = ( userRequest : UserDTO ) : Observable<User | false> => {
     return this.http

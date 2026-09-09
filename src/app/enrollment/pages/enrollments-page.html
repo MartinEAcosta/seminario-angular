@@ -6,13 +6,25 @@
         <app-search-bar />
         
         <div class="container-enrollments">
-            @for( enrollment of resolvedEnrollments(); track enrollment.id ){
-                <app-enrollment-mini-card [enrollment]="enrollment" />
-            }
-            @empty {
-                <div class="container-not-found">
-                    <h1 class="text">¡No hemos encontrado inscripciones!</h1>
+            @if( isLoading() ){
+                <div class="container-loading">
+                    <app-loader />
                 </div>
+            }
+            @else if( error() ){
+                <div class="container-not-found">
+                    <h1 class="text">No pudimos cargar tus inscripciones. Intentá de nuevo más tarde.</h1>
+                </div>
+            }
+            @else{
+                @for( enrollment of userEnrollments(); track enrollment.id ){
+                    <app-enrollment-mini-card [enrollment]="enrollment" />
+                }
+                @empty {
+                    <div class="container-not-found">
+                        <h1 class="text">¡No hemos encontrado inscripciones!</h1>
+                    </div>
+                }
             }
         </div>
     </div>

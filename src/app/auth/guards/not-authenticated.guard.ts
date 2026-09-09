@@ -1,22 +1,17 @@
 import { inject } from '@angular/core';
 import { CanMatchFn, Route, Router, UrlSegment } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { firstValueFrom } from 'rxjs';
+import { filter, firstValueFrom } from 'rxjs';
+import { toObservable } from '@angular/core/rxjs-interop';
 
-export const NotAuthenticatedGuard: CanMatchFn = async(
-    route: Route,
-    segments: UrlSegment[]
-) => {
+export const NotAuthenticatedGuard: CanMatchFn = async() => {
 
     const authService = inject(AuthService);
-    const router = inject(Router);
+    // Mismo motivo que en AuthenticatedGuard: esperar a que AuthService termine
+    // de resolver el authStatus en vez de volver a pedir /auth/renew acá.
+    const status = await firstValueFrom(
+        toObservable(authService.authStatus).pipe( filter( (s) => s !== 'checking' ) )
+    );
 
-    // firstValueFrom: permite trabajar con observables, espera la respuesta como si fuera una promesa.
-    const isAuthenticated = await firstValueFrom( authService.checkStatus() );
-
-    if( isAuthenticated ){
-        return false;
-    }
-
-    return true;
+    return status !== 'authenticated';
 }

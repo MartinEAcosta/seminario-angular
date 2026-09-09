@@ -1,83 +1,44 @@
-import { computed, effect, inject, Injectable } from '@angular/core';
-import { catchError, finalize, Observable, of, tap } from 'rxjs';
+import { computed, inject, Injectable, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 import { AuthService } from '@auth/services/auth.service';
-import { EnrollmentDetailed } from '@enrollment/models/enrollment.interfaces';
 import { EnrollmentService } from '@enrollment/services/enrollment.service';
-import { State } from '@shared/state/state';
 
-interface EnrollmentStateProps {
-  selectedEnrollment : EnrollmentDetailed | null,
-  enrollmentList : EnrollmentDetailed[] | null,
-};
 
 @Injectable({
   providedIn: 'root'
 })
-export class EnrollmentState extends State<EnrollmentStateProps> {
+export class EnrollmentState {
 
   private enrollmentService = inject(EnrollmentService);
+  private authService = inject(AuthService);
 
-  enrollmentList = computed(() => this.state().data?.enrollmentList);
-  selectedEnrollment = computed(() => this.state().data?.selectedEnrollment);
+  // Devolver `undefined` es la única forma de que el resource NO dispare la petición.
+  // Con `null` el resource considera el parámetro válido y pega a /enrollments/null.
+  private requestedEnrollmentId = signal<string | undefined>(undefined);
 
-  constructor( ) {
-    super();
-  }
-   
-  loadEnrollmentList ( ) : Observable<EnrollmentDetailed[]> {
-    if( !this.authService.user() ) return of([]);
+  enrollmentListResource = rxResource({
+    params: () => this.authService.authStatus() === 'authenticated'
+      ? this.authService.user()!.id
+      : undefined,
+    stream: ({ params: id }) => this.enrollmentService.getEnrollmentsByUserId(id),
+  });
 
-    if( this.enrollmentList() ) { 
-      return of( this.enrollmentList()! );
-    }
+  enrollmentResource = rxResource({
+    params: () => this.requestedEnrollmentId(),
+    stream: ({ params: id }) => this.enrollmentService.getEnrollmentPopulatedById(id),
+  });
 
-    this.setIsLoading(true);
-    return this.enrollmentService.getEnrollmentsByUserId( this.authService.user()!.id ).pipe( 
-      tap( (enrollments) => {
-        this.state.update( (c) => ({ 
-          ...c,
-          isLoading : false,
-          error: null,
-          data : {
-            ...c.data!,
-            enrollmentList : enrollments,
-          },
-        }));
-      }),
-      catchError( (error) => {
-        this.handleError( error );
-        return of([]);
-      }),
-      finalize(() => this.setIsLoading(false))
-    );
-  }
+  enrollmentList = computed(() => this.enrollmentListResource.value() ?? []);
+  isLoadingList = computed(() => this.enrollmentListResource.isLoading());
+  listError = computed(() => this.enrollmentListResource.error());
+ 
+  selectedEnrollment = computed(() => this.enrollmentResource.value() ?? null);
+  isLoading = computed(() => this.enrollmentResource.isLoading());
+  error = computed(() => this.enrollmentResource.error());
 
-  loadEnrollment ( id_enrollment : string ) : Observable<EnrollmentDetailed | null> {
-    if( this.selectedEnrollment() && (this.selectedEnrollment()?.id === id_enrollment)  ){
-      return of( this.selectedEnrollment()! );
-    }
-    this.setIsLoading(true);
-
-    return this.enrollmentService
-      .getEnrollmentPopulatedById(id_enrollment)
-      .pipe(
-        tap((enrollment) => {
-          this.state.update((c) => ({
-            isLoading : false,
-            error: null,
-            data : {
-              ...c.data!,
-              selectedEnrollment: enrollment,
-            },
-          }));
-        }),
-        catchError((error) => {
-          this.handleError(error);
-          return of(null);
-        }),
-        finalize(() => this.setIsLoading(false))
-      );
+  loadEnrollment(id: string) {
+    this.requestedEnrollmentId.set(id);
   }
 
 }

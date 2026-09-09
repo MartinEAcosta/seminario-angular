@@ -1,16 +1,8 @@
-import { Component, Output, EventEmitter, inject, input } from '@angular/core';
-import { NgClass } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Component, inject, input } from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
-import { AuthService } from '@auth/services/auth.service';
-import { FileService } from '@file/services/file.service';
-import { FormErrorLabelComponent } from "@shared/components/form-error-label/form-error-label.component";
-import { ThumbnailSelectorComponent } from "../thumbnail-selector/thumbnail-selector.component";
 import { CourseFormState } from '../../state/course-form/course-form-state';
-import { SliderContentManagerComponent } from '@lesson/components/slider-content-manager/slider-content-manager.component';
-import { BtnRemoveComponent } from "@shared/components/btns/btn-remove/btn-remove.component";
 import { Course } from '@course/models/course.interfaces';
-import { CategorySelectComponent } from "../../../category/components/category-select/category-select.component";
 import { CollapsiblePageTitleComponent } from "../collapsible-page-title/collapsible-page-title.component";
 
 @Component({
@@ -18,25 +10,14 @@ import { CollapsiblePageTitleComponent } from "../collapsible-page-title/collaps
   templateUrl: './form-course.component.html',
   styleUrl: './form-course.component.scss',
   imports: [
-    ReactiveFormsModule, NgClass, FormErrorLabelComponent,
-    ThumbnailSelectorComponent,
-    SliderContentManagerComponent, BtnRemoveComponent,
-    CategorySelectComponent, CollapsiblePageTitleComponent
-],
+    RouterLink, RouterLinkActive, RouterOutlet, CollapsiblePageTitleComponent
+  ],
 })
 export class FormCourseComponent {
 
-  private authService = inject(AuthService);
-
-  public fileService = inject(FileService);
   public courseFormState = inject(CourseFormState);
 
   course = input.required<Course | null>();
-
-  @Output() 
-  public submitForm = new EventEmitter<Course | null>();
-  @Output()
-  public removeCourse = new EventEmitter();
 
   constructor ( ) { }
 
@@ -52,23 +33,6 @@ export class FormCourseComponent {
 
   ngOnDestroy() {
     this.courseFormState.reset();
-  }
-
-  onSubmit = ( ) : void => {
-    this.courseFormState.courseForm.markAllAsTouched();
-    if( this.courseFormState.courseForm.valid ){
-      
-      const uid = this.authService.id();
-      if( !uid ) return;
-      
-      this.submitForm.emit( this.course() );
-    }
-  }
-
-  onRemoveCourse = ( course : Course ) : void  => {
-    if( course?.id_owner === this.authService.id() ){
-      this.removeCourse.emit( course );
-    }
   }
 
 }

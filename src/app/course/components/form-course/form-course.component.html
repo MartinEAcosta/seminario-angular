@@ -2,120 +2,44 @@
         <div class="container">
 
             <app-collapsible-page-title
-                [title]="this.course()?.id ? 'Editar curso' : 'Crear curso'"
+                [title]="courseFormState.savedCourse()?.id ? 'Editar curso' : 'Crear curso'"
                 [collapsed]="courseFormState.isFormCollapsed()"
                 (toggle)="courseFormState.toggleFormCollapsed()"
             />
 
             <div class="collapse-wrapper" [class.collapsed]="courseFormState.isFormCollapsed()">
                 <div class="collapse-inner">
-                    <form class="form-body-grid" [formGroup]="courseFormState.courseForm" (ngSubmit)="onSubmit()">
+                    <div class="wizard-layout">
 
-                        <div class="container-thumbnail">
-                            <app-thumbnail-selector [folder]="'courses'" />
+                        <nav class="stepper">
+                            <a
+                                routerLink="data"
+                                routerLinkActive="active"
+                                class="stepper-step"
+                                [class.done]="courseFormState.courseId()"
+                            >
+                                <span class="stepper-num">01</span>
+                                <span class="stepper-title">Datos</span>
+                            </a>
+
+                            <a
+                                [routerLink]="courseFormState.courseId() ? 'content' : null"
+                                routerLinkActive="active"
+                                class="stepper-step"
+                                [class.disabled]="!courseFormState.courseId()"
+                            >
+                                <span class="stepper-num">02</span>
+                                <span class="stepper-title">Contenido</span>
+                            </a>
+                        </nav>
+
+                        <div class="wizard-content">
+                            <router-outlet />
                         </div>
 
-                        <div class="form-course">
-
-                            <div class="container-form-top field-float field-float--title">
-                                <input
-                                    formControlName="title"
-                                    class="input input-title"
-                                    type="text"
-                                    placeholder=" "
-                                    id="title"
-                                />
-                                <label for="title">Título del curso</label>
-
-                                <form-error-label [control]="courseFormState.courseForm.get('title')!" [warningSvg]=true />
-                            </div>
-
-                            <div class="container-form-description field-float field-float--description">
-                                <textarea
-                                    formControlName="description"
-                                    class="input input-description"
-                                    placeholder=" "
-                                    id="description">
-                                </textarea>
-                                <label for="description">Descripción del curso</label>
-
-                                <form-error-label [control]="courseFormState.courseForm.get('description')!" [warningSvg]=true />
-                            </div>
-
-                            <div class="container-category-pricing">
-                                <div class="container-category">
-                                    <app-category-select
-                                        [course]="course()"
-                                        (clickCategory)="courseFormState.courseForm.get('id_category')?.setValue($event)"
-                                    />
-
-                                    <label for="file" class="btn btn-thumbnail">
-                                        {{ courseFormState.tempThumbnail() ? 'Reemplazar portada' : 'Agregar portada' }}
-                                    </label>
-                                </div>
-
-                                <div class="container-pricing-actions">
-                                    <div class="container-pricing-capacity">
-                                        <div class="container-capacity field-card field-float">
-                                            <input
-                                                formControlName="capacity"
-                                                type="number"
-                                                id="capacity"
-                                                class="input input-standard input-capacity"
-                                                [ngClass]="{
-                                                        'invalid-border': courseFormState.courseForm.get('capacity')?.errors,
-                                                        'valid-border': courseFormState.courseForm.get('capacity')?.valid && !courseFormState.courseForm.get('capacity')?.errors && courseFormState.courseForm.get('capacity')?.touched,
-                                                    }"
-                                                    placeholder=" "
-                                            />
-                                            <label for="capacity">Capacidad Limitada</label>
-                                            <form-error-label [control]="courseFormState.courseForm.get('capacity')!" />
-                                        </div>
-                                        <div class="container-pricing field-card field-float">
-                                            <input
-                                                formControlName="price"
-                                                class="input input-standard input-pricing"
-                                                type="number"
-                                                id="price"
-                                                [ngClass]="{
-                                                    'invalid-border': courseFormState.courseForm.get('price')?.errors && courseFormState.courseForm.get('price')?.touched ,
-                                                    'valid-border': courseFormState.courseForm.get('price')?.touched && !courseFormState.courseForm.get('price')?.errors
-                                                }"
-                                                placeholder=" "
-                                                />
-                                                <label for="price">Precio del curso</label>
-                                                <form-error-label [control]="courseFormState.courseForm.get('price')!" />
-                                            </div>
-                                    </div>
-
-                                    <div class="container-actions">
-                                        <button
-                                            class="btn btn-create"
-                                            type="submit"
-                                            >
-                                            {{ this.course()?.id  ? 'Editar curso': 'Crear curso'}}
-                                        </button>
-                                        @if( this.course() ){
-                                            <app-btn-remove
-                                                [item]="this.course()"
-                                                [asButton]="true"
-                                                [label]="'Eliminar curso'"
-                                                (onRemove)="this.onRemoveCourse( this.course()! )"
-                                            />
-                                        }
-                                        <button class="btn btn-cancel" type="reset">
-                                            Cancelar
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <!-- <app-slider-content-manager [course]="course()" /> -->
 
     </section>

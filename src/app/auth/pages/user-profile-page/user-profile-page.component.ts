@@ -71,14 +71,7 @@ export class UserProfilePageComponent {
   }
 
   onAvatarSelected( event: Event ): void {
-    const input = event.target as HTMLInputElement;
-    const file = input.files?.[0];
-
-    if( !file ) return;
-
-    const reader = new FileReader();
-    reader.onload = () => this.avatarPreview.set( reader.result as string );
-    reader.readAsDataURL( file );
+    
   }
 
   onRemoveAvatar( input: HTMLInputElement ): void {

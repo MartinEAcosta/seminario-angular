@@ -1,9 +1,7 @@
 <div class="bg-page">
     @if( resolvedCourse() ){
-        <app-form-course 
+        <app-form-course
             [course]="resolvedCourse()!"
-            (submitForm)="this.onUpdateCourse( resolvedCourse()! )"
-            (removeCourse)="this.onRemoveCourse( resolvedCourse()! )"
         />
     }
 </div>

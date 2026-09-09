@@ -24,8 +24,8 @@
                     </li>
                 }
                 @if( this.categorySelected() != undefined ){
-                    <li 
-                        (click)="categorySelected.set(undefined)"
+                    <li
+                        (click)="onClearCategory()"
                         class="option-item option-clear">
                         Limpiar categoria
                         <img 

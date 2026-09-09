@@ -3,8 +3,37 @@
     [formGroup]="lessonFormState.lessonForm"
     class="form-lesson">
     
+    <div class="container-media-preview">
+        <input
+            type="file"
+            id="file"
+            name="file"
+            class="input-file"
+            accept="image/* , video/*"
+            (change)="this.fileService.onFileChanged($event , 'lessons' )"
+        />
+        <figure class="figure-attach">
+            @if( lessonFormState.lessonSelected() === null || lessonFormState.tempMedia() === null ){
+                <img
+                    class="attach-icon"
+                    src="./assets/attach-icon.svg" alt="Attach Icon">
+                <p class="text-simple"> Añade contenido a la lección</p>
+            }
+            @else{
+                @if( this.lessonFormState.typeMedia() === 'image' ){
+                    <img
+                    class="figure"
+                    src="{{ lessonFormState.tempMedia() }}" alt="">
+                }
+                @else{
+                    <video class="figure" src="{{ lessonFormState.tempMedia() }}"></video>
+                }
+            }
+        </figure>
+    </div>
+
     <div class="container-lesson-top">
-        <input 
+        <input
             formControlName="title"
             class="input-title"
             placeholder="Escribé el titulo de la lección"
@@ -71,6 +100,12 @@
             class="btn btn-save">
             <img class="save-icon" src="/assets/save-icon.svg" alt="">
             Guardar
+        </button>
+        <button
+            type="button"
+            class="btn btn-cancel"
+            (click)="onCancel()">
+            Cancelar
         </button>
     </div>
 

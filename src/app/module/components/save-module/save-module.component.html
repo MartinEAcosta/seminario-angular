@@ -7,5 +7,8 @@
         <input type="number" formControlName="unit" placeholder="1">
         <label for="">Nro de Módulo</label>
     </div>
-    <button class="btn-submit" type="submit" (submit)="onSaveModule()"> Guardar Módulo </button>
+    <div class="container-actions">
+        <button class="btn-submit" type="submit"> Guardar Módulo </button>
+        <button class="btn-cancel" type="button" (click)="onCancel()"> Cancelar </button>
+    </div>
 </form>

@@ -4,8 +4,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: fit-content;
-    max-width: 16rem;
+    width: 100%;
+    max-width: 100%;
     font-size: 0.9rem;
     border-radius: 0.5rem;
     font-family: v.$font-primary;
@@ -39,27 +39,36 @@
 
 .option-default{
     display: flex;
+    position: relative;
+    height: 2.5rem;
+    box-sizing: border-box;
     background-color: v.$white-custom;
-    padding: 4%;
-    margin-bottom: 2%;
+    padding: 0 0.9rem;
+    margin-bottom: 0;
     border-radius: 0.5rem;
     box-shadow: inset 1px 5px 15px rgba(255,255,255,0.02);
     box-shadow: 5px 2px 5px rgb(0,0,0 , 0.5);
-    background-color: rgba(2, 15, 30, 1);
+    background-color: rgba(16, 16, 16, 1);
     align-items: center;
 }
 
 .option-default-selected{
     display: flex;
-    width: 90%;
+    width: 100%;
     height: 100%;
     justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 
 .container-icon{
-    width: 10%;
-    height: 100%;
+    position: absolute;
+    right: 0.9rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0.8rem;
+    height: 0.8rem;
 }
 
 
@@ -96,11 +105,11 @@
     padding: 3% 4%;
     color: v.$white-custom;
     box-shadow: 5px 5px 10px rgba(0,0,0,0.7);        
-    background-color: rgb(2, 15, 30);
+    background-color: rgb(16, 16, 16);
 }
 
 .option-item:hover{
-    background-color: rgb(15, 25, 35); 
+    background-color: rgba(36, 36, 36);
     cursor: pointer;
 }
 

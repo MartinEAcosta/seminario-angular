@@ -18,17 +18,32 @@ export class ModuleService {
   constructor() { }
 
   public saveModule = ( moduleRequest : ModuleDTO ) : Observable<Module> => {
-    return this.http
-                  .post<ModuleResponse>(`${this.baseURL}/new` , moduleRequest )
-                  .pipe(
-                  map(( modulesResponse ) => {
-                    console.log(modulesResponse);
-                    return ModuleMapper.mapResponseToModule(modulesResponse.data);
-                  }),
-                  catchError( error => {
-                    return throwError(() => new Error(`${error.errorMessage}`));
-                  }),
-                );
+    const { id , ...rest } = moduleRequest;
+
+    if( id ){
+      return this.http
+                    .put<ModuleResponse>(`${this.baseURL}/update/${id}` , moduleRequest )
+                    .pipe(
+                    map(( modulesResponse ) => {
+                      return ModuleMapper.mapResponseToModule(modulesResponse.data);
+                    }),
+                    catchError( error => {
+                      return throwError(() => new Error(`${error.errorMessage}`));
+                    }),
+                  );
+    }
+    else{
+      return this.http
+                    .post<ModuleResponse>(`${this.baseURL}/new` , rest )
+                    .pipe(
+                    map(( modulesResponse ) => {
+                      return ModuleMapper.mapResponseToModule(modulesResponse.data);
+                    }),
+                    catchError( error => {
+                      return throwError(() => new Error(`${error.errorMessage}`));
+                    }),
+                  );
+    }
   }
 
   public getModulesByCourseId = ( id_course : string ) : Observable<ModulePopulated[]> => {

@@ -3,8 +3,8 @@
 .form-module{
     display: flex;
     flex-direction: column;
-    width: 20rem;
-    height: 6.5rem;
+    width: 100%;
+    gap: 0.5rem;
 }
 
 .container-input{
@@ -44,23 +44,38 @@ label{
     pointer-events: none;
 }
 
-.btn-submit {
+.container-actions{
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.btn-submit,
+.btn-cancel {
     cursor: pointer;
     pointer-events: all;
-    width: 50%;
-    margin: auto;
-    padding: 0.3rem;
-    color: v.$white-custom;
-    border: solid thin v.$brand-color;
+    padding: 0.3rem 1rem;
     border-radius: 1rem;
-    background-color: v.$brand-color;
     font-family: v.$font-primary;
     box-shadow: 5px 8px 25px rgba(0,0,0 ,0.3 );
     transition: all 0.3s ease;
     outline: none;
 }
 
-.btn-submit:hover{
+.btn-submit {
+    color: v.$white-custom;
+    border: solid thin v.$brand-color;
+    background-color: v.$brand-color;
+}
+
+.btn-cancel {
+    color: v.$white-custom;
+    border: solid thin rgb(33, 33, 33, 0.7);
+    background-color: transparent;
+}
+
+.btn-submit:hover,
+.btn-cancel:hover{
     transform: scale(1.05);
     box-shadow: 5px 8px 25px rgba(0,0,0 ,0.4 );
     transition: all 0.3s ease;

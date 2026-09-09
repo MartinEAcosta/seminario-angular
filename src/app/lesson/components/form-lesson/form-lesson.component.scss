@@ -8,6 +8,49 @@
     height: 100%;
 }
 
+.container-media-preview{
+    display: flex;
+    margin: auto;
+    position: relative;
+    z-index: 0;
+    width: 60%;
+    height: 30%;
+    border-radius: 1rem;
+    background-color: rgb(53, 53, 53);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+.input-file{
+    display: flex;
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.figure-attach{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    text-align: center;
+}
+
+.attach-icon{
+    margin: 0 auto;
+    width: 12%;
+}
+
+.text-simple{
+    font-family: v.$font-primary;
+    color: v.$white-custom;
+    margin-top: 1%;
+}
+
 .container-lesson-top{
     display: flex;
     flex-direction: column;
@@ -74,6 +117,7 @@
     display: flex;
     position: absolute;
     align-items: center;
+    gap: 0.5rem;
     right: 0;
     bottom: 22%;
 }
@@ -82,6 +126,12 @@
     color: v.$white-custom;
     gap: 5%;
     background-color: v.$brand-color;
+}
+
+.btn-cancel{
+    color: v.$white-custom;
+    background-color: transparent;
+    border: solid thin rgb(33, 33, 33, 0.7);
 }
 
 .save-icon{

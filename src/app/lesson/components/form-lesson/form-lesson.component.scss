@@ -1,107 +1,312 @@
-@use '../../../../variables.scss' as v;
+@use '@variables' as v;
+@use '../../../course/components/form-course/steps/course-step-content/_module-item.scss';
+
+/*
+ * FormLessonComponent ya no vive inline como una fila más del acordeón:
+ * se abre como tarjeta flotante anclada al módulo (ver .lesson-panel en
+ * course-module-item.component.scss), así que acá se permite una
+ * personalidad tipográfica y de color propia — distinta a la fila plana
+ * de .lesson-row/.module-header — sin salirse de la paleta clara del
+ * resto del acordeón. Ver SPEC 09.
+ */
+
+:host{
+    display: block;
+    width: 100%;
+}
 
 .form-lesson{
     display: flex;
-    position: relative;
     flex-direction: column;
+    gap: 1.1rem;
     width: 100%;
-    height: 100%;
+    box-sizing: border-box;
 }
 
-.container-lesson-top{
+/* --- Encabezado: eyebrow de contexto + acciones rápidas (eliminar / cerrar) --- */
+
+.lesson-panel-head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.eyebrow{
+    font-family: v.$font-primary;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: v.$brand-color;
+}
+
+.head-actions{
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+}
+
+.btn-close{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.8rem;
+    height: 1.8rem;
+    flex-shrink: 0;
+    background: transparent;
+    border: solid 1px rgba(0, 0, 0, 0.15);
+    border-radius: 50%;
+    color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.close-icon{
+    width: 0.85rem;
+    height: 0.85rem;
+}
+
+.btn-close:hover{
+    border-color: v.$brand-color;
+    color: v.$brand-color;
+    transform: rotate(90deg);
+}
+
+/* --- Campos --- */
+
+.lesson-fields{
+    display: flex;
+    align-items: stretch;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+}
+
+/*
+ * En vez de un borde punteado parejo, la caja de medios usa 4 marcas de
+ * esquina tipo "visor" — un guiño a que lo que se adjunta acá es contenido
+ * audiovisual (la app reproduce las lecciones con video.js). Se resuelve
+ * con gradientes en vez de markup extra para no ensuciar el template.
+ * `align-self: stretch` + `min-height` (en vez de una altura fija) hace que
+ * la caja calce con el alto real de `.lesson-main` en vez de quedar corta.
+ */
+
+.lesson-media{
+    position: relative;
+    display: flex;
+    flex: 0 0 10rem;
+    align-self: stretch;
+    min-height: 9rem;
+    border-radius: 1rem;
+    overflow: hidden;
+    background-color: rgba(0, 120, 140, 0.04);
+    background-image:
+        linear-gradient(to right, rgba(0, 120, 140, 0.45) 2px, transparent 2px),
+        linear-gradient(to bottom, rgba(0, 120, 140, 0.45) 2px, transparent 2px),
+        linear-gradient(to left, rgba(0, 120, 140, 0.45) 2px, transparent 2px),
+        linear-gradient(to bottom, rgba(0, 120, 140, 0.45) 2px, transparent 2px),
+        linear-gradient(to left, rgba(0, 120, 140, 0.45) 2px, transparent 2px),
+        linear-gradient(to top, rgba(0, 120, 140, 0.45) 2px, transparent 2px),
+        linear-gradient(to right, rgba(0, 120, 140, 0.45) 2px, transparent 2px),
+        linear-gradient(to top, rgba(0, 120, 140, 0.45) 2px, transparent 2px);
+    background-repeat: no-repeat;
+    background-size:
+        0.9rem 2px, 2px 0.9rem,
+        0.9rem 2px, 2px 0.9rem,
+        0.9rem 2px, 2px 0.9rem,
+        0.9rem 2px, 2px 0.9rem;
+    background-position:
+        top left, top left,
+        top right, top right,
+        bottom right, bottom right,
+        bottom left, bottom left;
+    transition: background-image 0.3s ease;
+}
+
+.lesson-media:has(.figure){
+    background-image: none;
+    border: solid 1px rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 30rem){
+    .lesson-media{
+        flex: 1 1 100%;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        min-height: 0;
+    }
+}
+
+.input-file{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.figure-attach{
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
     width: 100%;
-    height: 20%;
-    margin: 1%;
-    gap: 5%;
+    height: 100%;
+    text-align: center;
+    padding: 0.5rem;
+    margin: 0;
+}
+
+.upload-icon{
+    width: 1.6rem;
+    height: 1.6rem;
+    color: v.$brand-color;
+    opacity: 0.6;
+}
+
+.text-simple{
+    font-family: v.$font-primary;
+    font-size: 0.7rem;
+    color: rgba(0, 120, 140, 0.7);
+    font-weight: 600;
+    margin: 0;
+}
+
+.figure{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.media-hint{
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.45);
+    color: v.$white-custom;
+    font-family: v.$font-primary;
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.lesson-media:hover .media-hint{
+    opacity: 1;
+}
+
+.lesson-main{
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    flex: 1 1 16rem;
+    min-width: 0;
+}
+
+/*
+ * La descripción crece para ocupar el resto de la columna: así su borde
+ * inferior siempre termina a la misma altura que `.lesson-media` (el
+ * stretch de `.lesson-fields` ya iguala el alto de la fila; falta que
+ * el contenido de `.lesson-main` lo use en vez de dejar un hueco abajo).
+ */
+.textarea-desc{
+    flex: 1 1 auto;
 }
 
 .input-title{
-    display: flex;
-    background-color: inherit;
+    width: 100%;
+    box-sizing: border-box;
+    background: transparent;
     border: none;
-    border-bottom: solid thin v.$brand-color;
-    outline: none;
-    width: 60%;
-    height: 55%;
-    font-size: large;
-    color: v.$white-custom;
+    border-bottom: solid 2px transparent;
+    padding: 0.15rem 0.1rem 0.4rem;
     font-family: v.$font-primary;
-    padding: 0% 1%;
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: v.$black-custom;
+    outline: none;
+    transition: border-color 0.3s ease;
 }
 
-.container-lesson-middle{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 35%;
-    margin: 0% 1%;
-    gap: 5%;
+.input-title::placeholder{
+    color: rgba(0, 0, 0, 0.32);
+    font-weight: 700;
+}
+
+.input-title:focus{
+    border-color: v.$brand-color;
 }
 
 .textarea-desc{
-    display: flex;
-    width: 65%;
-    height: 50%;
-    padding: 1%;
-    outline: none;
-    resize: none;
-    border: solid thin v.$black-custom;
-    border-radius: 0.5rem;
-    font-family: v.$font-primary;
-    color: v.$white-custom;
-    background-color: rgba(233,233,233,0.2);
-}
-
-.textarea-desc::placeholder{
-    font-family: v.$font-primary;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 4rem;
+    resize: vertical;
+    border: none;
+    border-radius: 0.65rem;
+    background-color: rgba(0, 0, 0, 0.03);
     color: v.$black-custom;
+    font-family: v.$font-primary;
+    font-size: 0.85rem;
+    padding: 0.55rem 0.7rem;
+    outline: none;
+    box-shadow: inset 0 0 0 1px transparent;
+    transition: box-shadow 0.3s ease;
 }
 
-.container-lesson-bottom{
+.textarea-desc:focus{
+    box-shadow: inset 0 0 0 1px v.$brand-color;
+}
+
+/* --- Acciones: Guardar como pill sólida (acción primaria de esta tarjeta), Cancelar como texto quieto --- */
+
+.lesson-actions{
     display: flex;
-    width: 100%;
-    height: 25%;
     align-items: center;
-    text-align: center;
-    justify-content: space-between;
-    position: absolute;
-    bottom: -2%;
+    gap: 1rem;
+    justify-content: flex-end;
 }
 
-.save{
-    display: flex;
-    position: absolute;
-    align-items: center;
-    right: 0;
-    bottom: 22%;
+.btn-ghost{
+    background: transparent;
+    border: none;
+    padding: 0.35rem 0;
+    font-family: v.$font-primary;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.55);
+    cursor: pointer;
+    transition: color 0.2s ease;
 }
 
-.btn-save{
-    color: v.$white-custom;
-    gap: 5%;
+.btn-ghost:hover{
+    color: v.$black-custom;
+    text-decoration: underline;
+}
+
+.btn-solid{
+    flex-shrink: 0;
     background-color: v.$brand-color;
+    border: solid 2px v.$brand-color;
+    color: v.$white-custom;
+    border-radius: 20rem;
+    padding: 0.4rem 1.2rem;
+    font-family: v.$font-primary;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 0.4rem 0.9rem -0.3rem rgba(0, 120, 140, 0.55);
+    transition: all 0.25s ease;
 }
 
-.save-icon{
-    width: 1.1rem;
-}
-
-
-.start{
-    display: flex;
-    justify-content: start;
-}
-
-.end{
-    display: flex;
-    justify-content: end;
-}
-
-.module-selector{
-    display: flex;
-    width: 100%;
-    bottom: 20%;
-    position: absolute;
+.btn-solid:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 0.55rem 1.1rem -0.3rem rgba(0, 120, 140, 0.65);
 }

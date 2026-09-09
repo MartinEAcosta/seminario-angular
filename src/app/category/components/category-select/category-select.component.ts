@@ -43,4 +43,9 @@ export class CategorySelectComponent {
     return category;
   }
 
+  public onClearCategory ( ) : void {
+    this.categorySelected.set(undefined);
+    this.clickCategory.emit('');
+  }
+
 }

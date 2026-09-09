@@ -55,335 +55,116 @@
     }
 }
 
-.form-body-grid{
-    display: grid;
-    grid-template-columns: minmax(18rem, 32rem) 1fr;
-    align-items: stretch;
-    gap: 2.5rem;
-    width: 100%;
-}
-
-@media (max-width: 48rem){
-    .form-body-grid{
-        grid-template-columns: 1fr;
-    }
-
-    .container-thumbnail{
-        aspect-ratio: 4 / 3;
-        height: auto;
-    }
-}
-
-.container-thumbnail{
+.wizard-layout{
     display: flex;
-    width: 100%;
-    height: 100%;
-}
-
-.form-course{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 1.5rem;
-}
-
-.input{
-    background: transparent;
-    border: none;
-    outline: none;
-    color: v.$black-custom;
-    font-family: v.$font-primary;
-}
-
-.container-form-top{
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-}
-
-.input-title{
-    width: 40%;
-    min-width: 14rem;
-    font-size: 1.5rem;
-    font-weight: 600;
-    font-family: v.$font-primary;
-    text-align: left;
-    padding: 0.5rem 0;
-    border-bottom: solid 2px v.$brand-color;
-    border-radius: 0.5px;
-}
-
-.container-form-description{
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-}
-
-.input-description{
-    display: flex;
-    width: 100%;
-    height: auto;
-    min-height: 5rem;
-    resize: none;
-    overflow: visible;
-    scrollbar-width: none;
-    font-size: 1rem;
-}
-
-.container-category-pricing{
-    display: grid;
-    grid-template-columns: auto 1fr;
     align-items: flex-start;
-    gap: 1.5rem;
     width: 100%;
+    gap: 3rem;
 }
 
-@media (max-width: 37.5rem){
-    .container-category-pricing{
-        grid-template-columns: 1fr;
-    }
+.wizard-content{
+    flex: 1;
+    min-width: 0;
 }
 
-.container-category{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-}
-
-.container-pricing-actions{
+.stepper{
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 1.5rem;
-    width: 100%;
+    width: fit-content;
+    min-width: 10rem;
+    max-width: 100%;
+    margin: 0;
+    gap: 1.75rem;
+    position: sticky;
+    top: 1.5rem;
 }
 
-.container-pricing-capacity{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 1.5rem;
-}
-
-@media (max-width: 37.5rem){
-    .container-pricing-capacity{
-        flex-direction: column;
-    }
-
-    .field-card{
-        flex: 1 1 100%;
-        max-width: 100%;
-    }
-}
-
-.field-card{
-    display: flex;
-    flex: 1 1 10rem;
-    max-width: 14rem;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.container-capacity{
-    color: v.$black-custom;
-    font-size: 1rem;
-}
-
-.input-standard{
-    display: flex;
-    height: 2.5rem;
-    font-size: 1.2rem;
-    font-family: v.$font-primary;
-    text-align: center;
-    background-color: transparent;
-    color: v.$black-custom;
-    border: none;
-    border-bottom: solid 2px rgba(0, 0, 0, 0.2);
-    outline: none;
-    -webkit-appearance: none;
-    -moz-appearance: textfield;
-    appearance: textfield;
-    transition: all 0.3s ease;
-}
-
-.input-capacity{
-    width: 100%;
-}
-
-input::-webkit-inner-spin-button,
-input::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.container-pricing{
-    text-align: center;
-}
-
-.input-pricing{
-    width: 100%;
-}
-
-.invalid-border{
-    border-color: v.$red-warning;
-}
-
-.valid-border{
-    border-color: v.$brand-color;
-}
-
-/* --- Floating label pattern (title, description, capacity, price) --- */
-
-.field-float{
-    position: relative;
+.stepper-step{
     display: flex;
     flex-direction: column;
-    width: 100%;
-    margin-top: 0.75rem;
-    gap: 0.4rem;
-}
-
-.field-float .input{
-    width: 100%;
-    height: auto;
-    background-color: transparent;
-    border: solid 2px rgba(0, 0, 0, 0.2);
-    border-radius: 0.6rem;
-    padding: 1.15rem 0.9rem 0.45rem;
-    font-size: 1rem;
-    font-family: v.$font-primary;
-    color: v.$black-custom;
-    text-align: left;
-    outline: none;
+    justify-content: center;
+    gap: 0.3rem;
+    padding-left: 1rem;
+    border-left: solid 3px rgba(0, 0, 0, 0.12);
+    text-decoration: none;
+    cursor: pointer;
     transition: border-color 0.3s ease;
 }
 
-.field-float .input:focus{
-    border-color: v.$brand-color;
-}
-
-.field-float .input.invalid-border{
-    border-color: v.$red-warning;
-}
-
-.field-float .input.valid-border{
-    border-color: v.$brand-color;
-}
-
-.field-float label{
-    position: absolute;
-    left: 0.9rem;
-    top: 1.15rem;
-    font-size: 1rem;
-    color: rgba(0, 0, 0, 0.55);
-    background-color: v.$white-custom;
-    padding: 0 0.3rem;
+.stepper-num{
+    font-family: v.$font-primary;
+    font-size: 2.1rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
     line-height: 1;
-    pointer-events: none;
-    transition: all 0.2s ease;
+    color: rgba(0, 0, 0, 0.18);
+    transition: color 0.3s ease;
 }
 
-.field-float .input:focus + label,
-.field-float .input:not(:placeholder-shown) + label{
-    top: -0.55rem;
-    left: 0.7rem;
-    font-size: 0.75rem;
-    color: v.$brand-color;
-}
-
-.field-float .input.invalid-border:not(:focus) + label{
-    color: v.$red-warning;
-}
-
-.field-float--title .input-title{
-    font-size: 1.5rem;
+.stepper-title{
+    font-family: v.$font-primary;
+    font-size: 0.72rem;
     font-weight: 600;
-    padding-top: 1.4rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.45);
+    transition: color 0.3s ease;
 }
 
-.field-float--title label{
-    font-size: 1.3rem;
-    top: 1.4rem;
-}
-
-.field-float--title .input-title:focus + label,
-.field-float--title .input-title:not(:placeholder-shown) + label{
-    font-size: 0.85rem;
-    top: -0.55rem;
-}
-
-.field-float--description .input-description{
-    min-height: 6rem;
-    padding-top: 1.4rem;
-}
-
-.field-float--description label{
-    top: 1.4rem;
-}
-
-
-
-.container-actions{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 1rem;
-}
-
-.btn{
-    font-size: 1rem;
-    line-height: 1;
-    padding: 10px 20px;
-    text-align: center;
-    border-radius: 20rem;
-    cursor: pointer;
-    box-shadow: 0px 0px 15px rgba(0,0,0 , 0.2);
-}
-
-.btn-create{
-    background-color: v.$brand-color;
-    color: v.$white-custom;
-    border: solid 2px transparent;
-    transition: all 0.3s ease;
-}
-
-.btn-cancel{
-    background-color: transparent;
-    color: v.$black-custom;
-    border: solid 2px v.$black-custom;
-    transition: all 0.3s ease;
-}
-
-.btn-thumbnail{
-    background-color: transparent;
+.stepper-step.done .stepper-num{
     color: v.$brand-color;
-    border: solid 2px v.$brand-color;
-    border-radius: 0.5rem;
-    padding: 0.6rem 1rem;
-    transition: all 0.3s ease;
+    opacity: 0.55;
 }
 
-.btn-create:hover,
-.btn-cancel:hover,
-.btn-thumbnail:hover{
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
-    transform: scale(1.05);
+.stepper-step.active{
+    border-left: solid 3px transparent;
+    border-image: linear-gradient(180deg, v.$brand-color, color-mix(in srgb, v.$brand-color 45%, white)) 1;
 }
 
-.btn-create:hover{
-    background-color: rgba(0, 120, 140, 0.70);
+.stepper-step.active .stepper-num{
+    color: v.$black-custom;
 }
 
-.btn-cancel:hover{
-    background-color: v.$black-custom;
-    color: v.$white-custom;
+.stepper-step.active .stepper-title{
+    color: v.$brand-color;
+    font-weight: 700;
 }
 
-.btn-thumbnail:hover{
-    background-color: v.$brand-color;
-    color: v.$white-custom;
+.stepper-step.disabled{
+    cursor: not-allowed;
+}
+
+.stepper-step.disabled .stepper-num,
+.stepper-step.disabled .stepper-title{
+    color: rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 48rem){
+    .wizard-layout{
+        flex-direction: column;
+    }
+
+    .stepper{
+        flex-direction: row;
+        width: 100%;
+        min-width: 0;
+        margin: 0 0 1.5rem;
+        gap: 2.75rem;
+        position: static;
+    }
+}
+
+@media (max-width: 30rem){
+    .stepper{
+        gap: 1.5rem;
+    }
+
+    .stepper-num{
+        font-size: 1.6rem;
+    }
+
+    .stepper-title{
+        font-size: 0.65rem;
+    }
 }

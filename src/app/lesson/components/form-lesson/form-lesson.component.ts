@@ -1,30 +1,22 @@
-import { Component, inject, input, linkedSignal } from '@angular/core';
-import { NgClass } from '@angular/common';
+import { Component, inject, input, output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { LessonService } from '@lesson/services/lesson.service';
 import { FormErrorLabelComponent } from "@shared/components/form-error-label/form-error-label.component";
-import { BtnNavigationComponent } from "@shared/components/btns/btn-navigation/btn-navigation.component";
 import { AuthService } from '@auth/services/auth.service';
 import { LessonMapper } from '@mappers/lesson.mapper';
 import { CourseService } from '@course/services/course.service';
 import { FileService } from '@file/services/file.service';
 import { BtnRemoveComponent } from "@shared/components/btns/btn-remove/btn-remove.component";
 import { LessonPopulated } from '@lesson/models/lesson.interfaces';
-import { Course } from '@course/models/course.interfaces';
-import { ModulePopulated } from '@module/models/module.interfaces';
 import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
 
 @Component({
   selector: 'app-form-lesson',
-  imports: [ReactiveFormsModule, FormErrorLabelComponent, BtnNavigationComponent, BtnRemoveComponent, NgClass],
+  imports: [ReactiveFormsModule, FormErrorLabelComponent, BtnRemoveComponent],
   templateUrl: './form-lesson.component.html',
-  styleUrls:[ 
-              '../../../shared/components/btns/btn-navigation/btn-rounded.scss', 
-              '../../../category/components/category-select/item-select.component.scss' ,
-              './form-lesson.component.scss'
-            ]
+  styleUrl: './form-lesson.component.scss'
 })
 export class FormLessonComponent {
   folder = 'lessons';
@@ -37,16 +29,13 @@ export class FormLessonComponent {
   public lessonFormState = inject(LessonFormState);
   public fileService = inject(FileService);
 
-  course = input.required<Course | null>();
-  modules = input.required<ModulePopulated[]>();
-  moduleSelected = linkedSignal<ModulePopulated | null>( () => {
-    const idModule = this.lessonFormState.lessonForm.get('id_module')?.value;
-    console.log(idModule)
-    return this.modules().find( m => m.id === idModule ) || null;
-  });
+  idCourse = input.required<string>();
+
+  saved = output<void>();
+  cancelled = output<void>();
 
   constructor() { }
-  
+
   // formChanges = toSignal(
   //   this.lessonFormState.lessonForm.valueChanges.pipe(debounceTime(1000)),
   //   { initialValue : this.lessonFormState.lessonForm.value }
@@ -72,38 +61,33 @@ export class FormLessonComponent {
       let lessonDto = {
         ...dto,
         id : this.lessonFormState.lessonSelected()?.id,
-        id_course : this.course()?.id!,
-      }; 
-      return this.lessonService.saveLesson( lessonDto , this.lessonFormState.mediaFile() ).subscribe();
+        id_course : this.idCourse(),
+      };
+      return this.lessonService.saveLesson( lessonDto , this.lessonFormState.mediaFile() ).subscribe( () => {
+        this.saved.emit();
+      });
     }
     return;
   }
 
   public onDeleteLesson = ( lesson : LessonPopulated ) => {
     if( lesson.id ){
-        if( this.course()?.id_owner === this.authService.id() ){
-          if( this.lessonFormState.lessonSelected()?.file.id_file ){
-            this.fileService.deleteCourseThumbnail( this.course()?.id! ).subscribe()
-          }
-          this.lessonService.deleteLesson( lesson.id )
-                                .subscribe( ( isLessonDeleted ) => {
-                                    if( isLessonDeleted ) {
-                                      // this.router.navigateByUrl('/');
-                                      return;
-                                    }     
-                                } );
-        }
+      this.lessonService.deleteLesson( lesson.id )
+                            .subscribe( ( isLessonDeleted ) => {
+                                if( isLessonDeleted ) {
+                                  // this.router.navigateByUrl('/');
+                                  return;
+                                }
+                            } );
     }
 
     this.lessonFormState.removeLesson( lesson );
     this.lessonFormState.setLessonSelected(null);
     this.lessonFormState.setIsLessonFormVisible(false);
-  }    
-
-  onSelectModule = ( module : ModulePopulated ) : void => {
-    this.moduleSelected.set( module );
-    this.lessonFormState.lessonForm.get('id_module')?.setValue( module.id );
   }
 
+  onCancel = () => {
+    this.cancelled.emit();
+  }
 
 }

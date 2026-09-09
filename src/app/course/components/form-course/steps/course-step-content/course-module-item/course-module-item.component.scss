@@ -1,0 +1,144 @@
+@use '@variables' as v;
+@use '../_module-item.scss';
+
+.module-toggle{
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.expand-icon{
+    width: 0.9rem;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.expand-icon.rotated{
+    transform: rotate(180deg);
+}
+
+.module-body{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 1.1rem 1.2rem;
+}
+
+.lesson-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.lesson-title{
+    font-family: v.$font-primary;
+    font-size: 0.9rem;
+    color: v.$black-custom;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.lesson-actions{
+    display: flex;
+    gap: 0.75rem;
+    flex-shrink: 0;
+}
+
+.btn-link{
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-family: v.$font-primary;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: v.$brand-color;
+    cursor: pointer;
+}
+
+.btn-link:hover{
+    text-decoration: underline;
+}
+
+.btn-link-danger{
+    color: v.$red-warning;
+}
+
+/*
+ * FormLessonComponent ya no es una fila más del acordeón: se abre como
+ * tarjeta flotante anclada al módulo (elevación + notch apuntando hacia
+ * arriba), para separarse visualmente de .lesson-row/.btn-add-lesson.
+ * Ver SPEC 09.
+ */
+
+.lesson-panel{
+    position: relative;
+    display: flex;
+    width: auto;
+    margin: 0.4rem -0.3rem 0.2rem;
+    padding: 1.1rem 1.2rem;
+    border-radius: 1rem;
+    border: solid 1px rgba(0, 120, 140, 0.25);
+    background-color: #fff;
+    box-shadow:
+        0 1.5rem 2.5rem -1.25rem rgba(0, 120, 140, 0.4),
+        0 0.5rem 1rem -0.5rem rgba(0, 0, 0, 0.16);
+    animation: lesson-panel-pop 0.22s ease;
+}
+
+.lesson-panel::before{
+    content: '';
+    position: absolute;
+    top: -0.4rem;
+    left: 1.6rem;
+    width: 0.8rem;
+    height: 0.8rem;
+    background-color: #fff;
+    border-left: solid 1px rgba(0, 120, 140, 0.25);
+    border-top: solid 1px rgba(0, 120, 140, 0.25);
+    border-radius: 0.2rem 0 0 0;
+    transform: rotate(45deg);
+}
+
+@keyframes lesson-panel-pop{
+    from{ opacity: 0; transform: translateY(-0.5rem) scale(0.97); }
+    to{ opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .lesson-panel{
+        animation: none;
+    }
+}
+
+.btn-add-lesson{
+    align-self: flex-start;
+    width: 100%;
+    margin-top: 0.3rem;
+    background: transparent;
+    border: dashed 2px rgba(0, 0, 0, 0.25);
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-family: v.$font-primary;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.55);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-add-lesson:hover{
+    border-color: v.$brand-color;
+    color: v.$brand-color;
+}

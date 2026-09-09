@@ -1,89 +1,91 @@
-<form 
+<form
     (ngSubmit)="onSaveLesson()"
     [formGroup]="lessonFormState.lessonForm"
     class="form-lesson">
-    
-    <div class="container-lesson-top">
-        <input 
-            formControlName="title"
-            class="input-title"
-            placeholder="Escribé el titulo de la lección"
-            type="text" name="" id=""
-            >
-        <form-error-label [control]="lessonFormState.lessonForm.get('title')!" [warningSvg]="true" />
 
-        @if( lessonFormState.lessonSelected() ){
-            <app-btn-remove [item]="lessonFormState.lessonSelected()" (onRemove)="onDeleteLesson( this.lessonFormState.lessonSelected()! )" />
-        }
-    </div>
-    <div class="container-lesson-middle">
-        <textarea
-            formControlName="description"
-            class="textarea-desc"
-            name="" id=""
-            placeholder="Escribe una descripción en caso de que la necesites..."
-        ></textarea>
+    <header class="lesson-panel-head">
+        <span class="eyebrow">
+            {{ lessonFormState.lessonSelected() ? 'Editando lección' : 'Nueva lección' }}
+        </span>
 
-        <form-error-label [control]="lessonFormState.lessonForm.get('description')!" [warningSvg]="true" />
+        <div class="head-actions">
+            @if( lessonFormState.lessonSelected() ){
+                <app-btn-remove [asButton]="true" [item]="lessonFormState.lessonSelected()" label="Eliminar" (onRemove)="onDeleteLesson( this.lessonFormState.lessonSelected()! )" />
+            }
+            <button type="button" class="btn-close" (click)="onCancel()" aria-label="Cerrar">
+                <svg class="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <line x1="5" y1="5" x2="19" y2="19" />
+                    <line x1="19" y1="5" x2="5" y2="19" />
+                </svg>
+            </button>
+        </div>
+    </header>
 
-        <div class="module-selector">
-            <div class="container-form-item module">
-                <div class="container-form-select">
-                    <div class="option-default">
-                        <p class="option-default-selected">
-                            @if( !this.moduleSelected() ){
-                                Asignar módulo
-                            }
-                            @else{
-                                {{ moduleSelected()?.title }}
-                            }
-
-                        </p>
-                        <div class="container-icon">
-                            <img class="icon option-down-icon" src="assets/down-icon.svg" alt="">
-                        </div>
-                    </div>
-                    <ul class="options">
-                        @for (module of modules(); track module.id) {
-                            <li 
-                                [ngClass]="{ 'selected-item' : this.moduleSelected() === module }"
-                                (click)="onSelectModule( module )"
-                                class="option-item">
-                                {{ module.title }}
-                            </li>
-                        }
-                        @if( this.moduleSelected() != null ){
-                            <li (click)="moduleSelected.set(null)" class="option-item option-clear">
-                                Quitar módulo
-                                <img class="icon" src="assets/clean-icon.svg" alt="">
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </div>
+    <div class="lesson-fields">
+        <div class="lesson-media">
+            <input
+                type="file"
+                id="file"
+                name="file"
+                class="input-file"
+                accept="image/* , video/*"
+                (change)="this.fileService.onFileChanged($event , 'lessons' )"
+            />
+            <figure class="figure-attach">
+                @if( lessonFormState.lessonSelected() === null || lessonFormState.tempMedia() === null ){
+                    <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 15V4" />
+                        <path d="M8 8l4-4 4 4" />
+                        <path d="M5 16v1.5A2.5 2.5 0 0 0 7.5 20h9a2.5 2.5 0 0 0 2.5-2.5V16" />
+                    </svg>
+                    <p class="text-simple"> Añade contenido a la lección</p>
+                }
+                @else{
+                    @if( this.lessonFormState.typeMedia() === 'image' ){
+                        <img
+                        class="figure"
+                        src="{{ lessonFormState.tempMedia() }}" alt="">
+                    }
+                    @else{
+                        <video class="figure" src="{{ lessonFormState.tempMedia() }}"></video>
+                    }
+                    <span class="media-hint">Cambiar archivo</span>
+                }
+            </figure>
         </div>
 
+        <div class="lesson-main">
+            <input
+                formControlName="title"
+                class="input-title"
+                placeholder="Título de la lección"
+                type="text" name="" id=""
+                >
+            <form-error-label [control]="lessonFormState.lessonForm.get('title')!" [warningSvg]="true" />
+
+            <textarea
+                formControlName="description"
+                class="textarea-desc"
+                name="" id=""
+                placeholder="Escribe una descripción en caso de que la necesites..."
+            ></textarea>
+
+            <form-error-label [control]="lessonFormState.lessonForm.get('description')!" [warningSvg]="true" />
+        </div>
     </div>
 
-    <div class="save">
+    <div class="lesson-actions">
+        <button
+            type="button"
+            class="btn-ghost"
+            (click)="onCancel()">
+            Cancelar
+        </button>
         <button
             type="submit"
-            class="btn btn-save">
-            <img class="save-icon" src="/assets/save-icon.svg" alt="">
-            Guardar
+            class="btn-solid">
+            Guardar lección
         </button>
-    </div>
-
-    <div class="container-lesson-bottom">
-        <div class="start">
-            @if( lessonFormState.lessonSelected()?.lesson_number != 0 ){
-                <app-btn-navigation [text]="'Anterior lección'"  [isNextButton]="false" />
-            }
-        </div>
-        <div class="end">
-            <app-btn-navigation [text]="'Siguiente lección'" [isNextButton]="true" />
-        </div>
-    
     </div>
 
 </form>

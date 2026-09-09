@@ -1,0 +1,67 @@
+<div class="module-item" [class.expanded]="isExpanded()">
+
+    @if( !isEditingModule() ){
+        <div class="module-header">
+            <button type="button" class="module-toggle" (click)="toggleExpand()">
+                <img class="expand-icon" [class.rotated]="isExpanded()" src="/assets/expand-icon.svg" alt="">
+                <span class="module-title">Módulo {{ module().unit }} : {{ module().title }}</span>
+            </button>
+
+            <button type="button" class="btn-edit-module" (click)="onEditModule()">
+                Editar
+            </button>
+        </div>
+    }
+    @else {
+        <app-save-module
+            [idCourse]="idCourse()"
+            [moduleToEdit]="module()"
+            [existingModules]="allModules()"
+            (saved)="onModuleSaved($event)"
+            (cancelled)="isEditingModule.set(false)"
+        />
+    }
+
+    @if( isExpanded() ){
+        <div class="module-body">
+
+            @for( lesson of module().lessons ; track lesson.id ){
+                @if( editingLessonId() === lesson.id ){
+                    <div class="lesson-panel">
+                        <app-form-lesson
+                            [idCourse]="idCourse()"
+                            (saved)="onLessonSaved()"
+                            (cancelled)="closeLessonPanel()"
+                        />
+                    </div>
+                }
+                @else {
+                    <div class="lesson-row">
+                        <span class="lesson-title">{{ lesson.title }}</span>
+                        <div class="lesson-actions">
+                            <button type="button" class="btn-link" (click)="onEditLesson(lesson)">Editar</button>
+                            <button type="button" class="btn-link btn-link-danger" (click)="onDeleteLesson(lesson)">Eliminar</button>
+                        </div>
+                    </div>
+                }
+            }
+
+            @if( isAddingLesson() ){
+                <div class="lesson-panel">
+                    <app-form-lesson
+                        [idCourse]="idCourse()"
+                        (saved)="onLessonSaved()"
+                        (cancelled)="closeLessonPanel()"
+                    />
+                </div>
+            }
+            @else {
+                <button type="button" class="btn-add-lesson" (click)="onAddLesson()">
+                    + Agregar lección
+                </button>
+            }
+
+        </div>
+    }
+
+</div>

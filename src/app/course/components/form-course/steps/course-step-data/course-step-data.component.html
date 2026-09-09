@@ -1,0 +1,102 @@
+<form class="form-body-grid" [formGroup]="courseFormState.courseForm" (ngSubmit)="onSubmit()">
+
+    <div class="container-thumbnail">
+        <app-thumbnail-selector [folder]="'courses'" />
+    </div>
+
+    <div class="form-course">
+
+        <div class="container-form-top field-float field-float--title">
+            <input
+                formControlName="title"
+                class="input input-title"
+                type="text"
+                placeholder=" "
+                id="title"
+            />
+            <label for="title">Título del curso</label>
+
+            <form-error-label [control]="courseFormState.courseForm.get('title')!" [warningSvg]=true />
+        </div>
+
+        <div class="container-form-description field-float field-float--description">
+            <textarea
+                formControlName="description"
+                class="input input-description"
+                placeholder=" "
+                id="description">
+            </textarea>
+            <label for="description">Descripción del curso</label>
+
+            <form-error-label [control]="courseFormState.courseForm.get('description')!" [warningSvg]=true />
+        </div>
+
+        <div class="container-pricing-actions">
+            <div class="container-pricing-capacity">
+                <div class="container-capacity field-card field-float">
+                    <input
+                        formControlName="capacity"
+                        type="number"
+                        id="capacity"
+                        class="input input-standard input-capacity"
+                        [ngClass]="{
+                                'invalid-border': courseFormState.courseForm.get('capacity')?.errors,
+                                'valid-border': courseFormState.courseForm.get('capacity')?.valid && !courseFormState.courseForm.get('capacity')?.errors && courseFormState.courseForm.get('capacity')?.touched,
+                            }"
+                            placeholder=" "
+                    />
+                    <label for="capacity">Cupo del curso</label>
+                    <form-error-label [control]="courseFormState.courseForm.get('capacity')!" />
+                </div>
+                <div class="container-pricing field-card field-float">
+                    <input
+                        formControlName="price"
+                        class="input input-standard input-pricing"
+                        type="number"
+                        id="price"
+                        [ngClass]="{
+                            'invalid-border': courseFormState.courseForm.get('price')?.errors && courseFormState.courseForm.get('price')?.touched ,
+                            'valid-border': courseFormState.courseForm.get('price')?.touched && !courseFormState.courseForm.get('price')?.errors
+                        }"
+                        placeholder=" "
+                        />
+                        <label for="price">Precio del curso</label>
+                        <form-error-label [control]="courseFormState.courseForm.get('price')!" />
+                    </div>
+                <div class="container-category field-card">
+                    <app-category-select
+                        [course]="courseFormState.savedCourse()"
+                        (clickCategory)="courseFormState.courseForm.get('id_category')?.setValue($event)"
+                    />
+                </div>
+            </div>
+
+            <div class="container-actions">
+                <button class="btn btn-cancel" type="button" (click)="onCancel()">
+                    Cancelar
+                </button>
+
+                <div class="container-actions-right">
+                    <label for="file" class="btn btn-thumbnail">
+                        {{ courseFormState.tempThumbnail() ? 'Reemplazar portada' : 'Agregar portada' }}
+                    </label>
+                    <button
+                        class="btn btn-create"
+                        type="submit"
+                        >
+                        {{ courseFormState.courseId() ? 'Guardar cambios' : 'Siguiente' }}
+                    </button>
+                    @if( courseFormState.courseId() ){
+                        <app-btn-remove
+                            [item]="courseFormState.savedCourse()"
+                            [asButton]="true"
+                            [label]="'Eliminar curso'"
+                            (onRemove)="onRemoveCourse( courseFormState.savedCourse()! )"
+                        />
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>

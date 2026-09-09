@@ -1,0 +1,47 @@
+<div class="step-content">
+
+    @if( modulesResource.isLoading() ){
+        <app-loader />
+    }
+    @else {
+        <div class="modules-list">
+            @for( module of modulesResource.value() ; track module.id ){
+                <app-course-module-item
+                    [module]="module"
+                    [idCourse]="courseFormState.courseId()!"
+                    [allModules]="modulesResource.value()!"
+                    (contentChanged)="modulesResource.reload()"
+                />
+            }
+
+            @if( isAddingModule() ){
+                <app-save-module
+                    [idCourse]="courseFormState.courseId()!"
+                    [existingModules]="modulesResource.value() ?? []"
+                    (saved)="onModuleSaved()"
+                    (cancelled)="isAddingModule.set(false)"
+                />
+            }
+
+            @if( modulesResource.value()?.length === 0 && !isAddingModule() ){
+                <p class="empty-state">Todavía no hay módulos en este curso.</p>
+            }
+        </div>
+
+        @if( !isAddingModule() ){
+            <button type="button" class="btn-add-module" (click)="onAddModule()">
+                + Agregar módulo
+            </button>
+        }
+    }
+
+    <div class="finish-actions">
+        <a
+            class="btn btn-finish"
+            [routerLink]="['/course', courseFormState.courseId()]"
+        >
+            Ir al curso creado
+        </a>
+    </div>
+
+</div>

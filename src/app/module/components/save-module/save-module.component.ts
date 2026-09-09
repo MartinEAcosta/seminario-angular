@@ -1,7 +1,7 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, computed, effect, inject, input, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Course } from '@course/models/course.interfaces';
 import { ModuleMapper } from '@mappers/module.mapper';
+import { Module, ModulePopulated } from '@module/models/module.interfaces';
 import { ModuleService } from '@module/services/module.service';
 
 @Component({
@@ -15,39 +15,61 @@ export class SaveModuleComponent {
   private fb = inject(FormBuilder);
   public moduleService = inject(ModuleService);
 
-  course = input.required<Course | null >();
+  idCourse = input.required<string>();
+  moduleToEdit = input<ModulePopulated | null>(null);
+  existingModules = input<ModulePopulated[]>([]);
+
+  saved = output<Module>();
+  cancelled = output<void>();
 
   moduleForm = this.fb.nonNullable.group({
     title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
-    unit  : [ 1  , [ Validators.required, Validators.min(1) ] ],
   });
 
-  constructor() { }
+  // Nro de módulo calculado: max(unit existentes) + 1 al crear, fijo al editar.
+  nextUnit = computed( () => {
+    const modules = this.existingModules();
+    return modules.length ? Math.max( ...modules.map( m => m.unit ) ) + 1 : 1;
+  });
+
+  displayUnit = computed( () => this.moduleToEdit()?.unit ?? this.nextUnit() );
+
+  constructor() {
+    effect( () => {
+      const moduleToEdit = this.moduleToEdit();
+      if( moduleToEdit ){
+        this.moduleForm.patchValue({
+          title: moduleToEdit.title,
+        });
+      }
+    });
+  }
 
   onSaveModule = () => {
     this.moduleForm.markAllAsTouched();
     if( this.moduleForm.valid ){
-      
-      const id_course = this.course()?.id;
-      if( !id_course ) return;
-      // Mensaje error se podria lanzar
-      
+
       const formValues = {
         ...this.moduleForm.value,
-        id_course,
+        unit: this.displayUnit(),
+        id_course: this.idCourse(),
+        id: this.moduleToEdit()?.id,
       }
-      console.log( this.moduleForm.value );
 
       const moduleDto = ModuleMapper.mapToModuleDto( formValues );
       this.moduleService.saveModule( moduleDto )
                           .subscribe(
                             (module) => {
-                              console.log(module);
+                              this.saved.emit(module);
+                              this.moduleForm.reset({ title: '' });
                             }
                           );
 
     }
   }
 
+  onCancel = () => {
+    this.cancelled.emit();
+  }
 
 }

@@ -13,7 +13,7 @@
                         <div 
                             [ngClass]="this.lessonFormState.isModulePopUpVisible() ? 'visible' : 'hidden'"
                             class="container-popup">
-                            <app-save-module [idCourse]="course()?.id ?? ''" />
+                            <app-save-module [idCourse]="course()?.id ?? ''" [existingModules]="modulesResource.value() ?? []" />
                         </div>
                     <app-card-action (action)="onAddLesson()" svgPath1="./assets/add-icon.svg" textAction="Añade una nueva lección"/>
                 </div>

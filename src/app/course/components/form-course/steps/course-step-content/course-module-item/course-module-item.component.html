@@ -16,6 +16,7 @@
         <app-save-module
             [idCourse]="idCourse()"
             [moduleToEdit]="module()"
+            [existingModules]="allModules()"
             (saved)="onModuleSaved($event)"
             (cancelled)="isEditingModule.set(false)"
         />
@@ -29,7 +30,6 @@
                     <div class="lesson-panel">
                         <app-form-lesson
                             [idCourse]="idCourse()"
-                            [modules]="allModules()"
                             (saved)="onLessonSaved()"
                             (cancelled)="closeLessonPanel()"
                         />
@@ -50,7 +50,6 @@
                 <div class="lesson-panel">
                     <app-form-lesson
                         [idCourse]="idCourse()"
-                        [modules]="allModules()"
                         (saved)="onLessonSaved()"
                         (cancelled)="closeLessonPanel()"
                     />

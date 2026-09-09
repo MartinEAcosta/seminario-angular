@@ -14,21 +14,21 @@
                 />
             }
 
+            @if( isAddingModule() ){
+                <app-save-module
+                    [idCourse]="courseFormState.courseId()!"
+                    [existingModules]="modulesResource.value() ?? []"
+                    (saved)="onModuleSaved()"
+                    (cancelled)="isAddingModule.set(false)"
+                />
+            }
+
             @if( modulesResource.value()?.length === 0 && !isAddingModule() ){
                 <p class="empty-state">Todavía no hay módulos en este curso.</p>
             }
         </div>
 
-        @if( isAddingModule() ){
-            <div class="add-module-panel">
-                <app-save-module
-                    [idCourse]="courseFormState.courseId()!"
-                    (saved)="onModuleSaved()"
-                    (cancelled)="isAddingModule.set(false)"
-                />
-            </div>
-        }
-        @else {
+        @if( !isAddingModule() ){
             <button type="button" class="btn-add-module" (click)="onAddModule()">
                 + Agregar módulo
             </button>

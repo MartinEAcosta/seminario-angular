@@ -1,29 +1,22 @@
-import { Component, inject, input, linkedSignal, output } from '@angular/core';
-import { NgClass } from '@angular/common';
+import { Component, inject, input, output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { LessonService } from '@lesson/services/lesson.service';
 import { FormErrorLabelComponent } from "@shared/components/form-error-label/form-error-label.component";
-import { BtnNavigationComponent } from "@shared/components/btns/btn-navigation/btn-navigation.component";
 import { AuthService } from '@auth/services/auth.service';
 import { LessonMapper } from '@mappers/lesson.mapper';
 import { CourseService } from '@course/services/course.service';
 import { FileService } from '@file/services/file.service';
 import { BtnRemoveComponent } from "@shared/components/btns/btn-remove/btn-remove.component";
 import { LessonPopulated } from '@lesson/models/lesson.interfaces';
-import { ModulePopulated } from '@module/models/module.interfaces';
 import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
 
 @Component({
   selector: 'app-form-lesson',
-  imports: [ReactiveFormsModule, FormErrorLabelComponent, BtnNavigationComponent, BtnRemoveComponent, NgClass],
+  imports: [ReactiveFormsModule, FormErrorLabelComponent, BtnRemoveComponent],
   templateUrl: './form-lesson.component.html',
-  styleUrls:[
-              '../../../shared/components/btns/btn-navigation/btn-rounded.scss',
-              '../../../category/components/category-select/item-select.component.scss' ,
-              './form-lesson.component.scss'
-            ]
+  styleUrl: './form-lesson.component.scss'
 })
 export class FormLessonComponent {
   folder = 'lessons';
@@ -37,12 +30,6 @@ export class FormLessonComponent {
   public fileService = inject(FileService);
 
   idCourse = input.required<string>();
-  modules = input.required<ModulePopulated[]>();
-  moduleSelected = linkedSignal<ModulePopulated | null>( () => {
-    const idModule = this.lessonFormState.lessonForm.get('id_module')?.value;
-    console.log(idModule)
-    return this.modules().find( m => m.id === idModule ) || null;
-  });
 
   saved = output<void>();
   cancelled = output<void>();
@@ -97,11 +84,6 @@ export class FormLessonComponent {
     this.lessonFormState.removeLesson( lesson );
     this.lessonFormState.setLessonSelected(null);
     this.lessonFormState.setIsLessonFormVisible(false);
-  }
-
-  onSelectModule = ( module : ModulePopulated ) : void => {
-    this.moduleSelected.set( module );
-    this.lessonFormState.lessonForm.get('id_module')?.setValue( module.id );
   }
 
   onCancel = () => {

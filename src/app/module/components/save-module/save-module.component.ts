@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, output } from '@angular/core';
+import { Component, computed, effect, inject, input, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ModuleMapper } from '@mappers/module.mapper';
 import { Module, ModulePopulated } from '@module/models/module.interfaces';
@@ -17,14 +17,22 @@ export class SaveModuleComponent {
 
   idCourse = input.required<string>();
   moduleToEdit = input<ModulePopulated | null>(null);
+  existingModules = input<ModulePopulated[]>([]);
 
   saved = output<Module>();
   cancelled = output<void>();
 
   moduleForm = this.fb.nonNullable.group({
     title : [ '' , [ Validators.required,  Validators.minLength(6) ] ],
-    unit  : [ 1  , [ Validators.required, Validators.min(1) ] ],
   });
+
+  // Nro de módulo calculado: max(unit existentes) + 1 al crear, fijo al editar.
+  nextUnit = computed( () => {
+    const modules = this.existingModules();
+    return modules.length ? Math.max( ...modules.map( m => m.unit ) ) + 1 : 1;
+  });
+
+  displayUnit = computed( () => this.moduleToEdit()?.unit ?? this.nextUnit() );
 
   constructor() {
     effect( () => {
@@ -32,7 +40,6 @@ export class SaveModuleComponent {
       if( moduleToEdit ){
         this.moduleForm.patchValue({
           title: moduleToEdit.title,
-          unit: moduleToEdit.unit,
         });
       }
     });
@@ -44,6 +51,7 @@ export class SaveModuleComponent {
 
       const formValues = {
         ...this.moduleForm.value,
+        unit: this.displayUnit(),
         id_course: this.idCourse(),
         id: this.moduleToEdit()?.id,
       }
@@ -53,7 +61,7 @@ export class SaveModuleComponent {
                           .subscribe(
                             (module) => {
                               this.saved.emit(module);
-                              this.moduleForm.reset({ title: '', unit: 1 });
+                              this.moduleForm.reset({ title: '' });
                             }
                           );
 

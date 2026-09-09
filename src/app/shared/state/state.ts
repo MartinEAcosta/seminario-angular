@@ -1,4 +1,6 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, effect, Inject, Injectable, signal } from '@angular/core';
+import { AuthService } from '@auth/services/auth.service';
+import { Observable } from 'rxjs';
 
 export interface StateData<T> {
   isLoading: boolean;
@@ -10,17 +12,22 @@ export interface StateData<T> {
   providedIn: 'root',
 })
 export class State<T> {
+
+  protected authService = Inject(AuthService);
+
   state = signal<StateData<T>>({
     isLoading: false,
     error: null,
     data: null,
   });
-
-
   isLoading = computed( () => this.state().isLoading ); 
   error = computed( () => this.state().error );
 
-  constructor() {}
+  constructor() {
+    effect(() => {
+      if( !this.authService.user() ) this.resetState();
+    });
+  }
 
   handleError(error: any): StateData<T> {
     const errorMessage = error.message || 'Ocurrio un error inesperado.';

@@ -1,23 +1,21 @@
 import { inject } from '@angular/core';
-import { CanMatchFn, Route, Router, UrlSegment } from '@angular/router';
-import { firstValueFrom } from 'rxjs';
+import { CanMatchFn, Route, Router } from '@angular/router';
+import { filter, firstValueFrom } from 'rxjs';
 
 import { AuthService } from '@auth/services/auth.service';
+import { toObservable } from '@angular/core/rxjs-interop';
 
-export const AuthenticatedGuard: CanMatchFn = async(
-    route: Route,
-    segments: UrlSegment[]
-) => {
-
+export const AuthenticatedGuard: CanMatchFn = async () => {
     const router = inject(Router);
     const authService = inject(AuthService);
-    const isAuthenticated = await firstValueFrom( authService.checkStatus() );
 
-    if( !isAuthenticated ){
-        console.log('sasa')
+    const status = await firstValueFrom(
+        toObservable(authService.authStatus).pipe(filter(s => s !== 'checking'))
+    );
+
+    if (status !== 'authenticated') {
         router.navigateByUrl('/');
         return false;
     }
-
     return true;
 }

@@ -5,6 +5,7 @@ import { AuthLayoutComponent } from "./layout/auth-layout/auth-layout.component"
 import { LoginPageComponent } from "./pages/login-page/login-page.component";
 import { RegisterPageComponent } from "./pages/register-page/register-page.component";
 import { VerifyEmailPageComponent } from "./pages/verify-email-page/verify-email-page.component";
+import { UserProfilePageComponent } from "./pages/user-profile-page/user-profile-page.component";
 
 export const authRoutes : Routes = [
 
@@ -24,8 +25,13 @@ export const authRoutes : Routes = [
             {
                 path: '**',
                 redirectTo: 'login'
-            },
+            }
         ]
+    },
+    {
+        path: 'me',
+        component: UserProfilePageComponent,
+        canMatch: [ AuthenticatedGuard ],
     },
     {
         path: 'verify-email',

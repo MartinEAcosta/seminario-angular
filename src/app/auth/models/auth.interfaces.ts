@@ -10,12 +10,16 @@ export interface User {
     email           : string;
     isEmailVerified : boolean;
     role            : 'student' | 'teacher' | 'admin';
+    avatar_url      : string;
+    id_file         : string;
 }
 
 export interface UserDTO {
     username?: string;
     email?: string;
-    password: string;
+    password?: string;
+    avatar_url      ?: string;
+    id_file         ?: string;
 }
 
 

@@ -9,6 +9,8 @@ export class AuthMapper {
             email           : response.user.email,
             isEmailVerified : response.user.isEmailVerified,
             role            : response.user.role,
+            avatar_url      : response.user.avatar_url,
+            id_file         : response.user.id_file
         };
     }
 

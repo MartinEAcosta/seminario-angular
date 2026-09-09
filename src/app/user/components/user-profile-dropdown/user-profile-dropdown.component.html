@@ -6,7 +6,7 @@
     <div class="dropdown-wrapper" [ngClass]="{ 'open': open() }">
         <div class="dropdown-inner">
             <div class="dropdown-item">
-                <a>Tu perfil</a>
+                <a [routerLink]="['/auth/me']">Tu perfil</a>
             </div>
             @if( !authService.user()?.isEmailVerified ) {
                 <div class="dropdown-item">

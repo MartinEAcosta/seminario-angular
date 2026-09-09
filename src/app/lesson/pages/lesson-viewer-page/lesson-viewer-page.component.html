@@ -4,34 +4,17 @@
             <app-loader />
         </div>
     }
-    @else {
-        <app-list-of-content [courseId]="enrollmentState.selectedEnrollment()?.course?.id_course!" />
+    @else if( enrollmentState.error() ){
+        <div class="container-loader">
+            <h1 class="error-text">No pudimos cargar esta inscripción. Intentá de nuevo más tarde.</h1>
+        </div>
+    }
+    @else if( enrollmentState.selectedEnrollment(); as enrollment ){
+        <app-list-of-content [courseId]="enrollment.course.id_course" />
 
         <div class="container-media">
-            <div class="container-title-lesson box-shadow" [ngClass]="{ 'skeleton-box': !lessonState.selectedLesson() }">
-                @if( lessonState.selectedLesson() ){
-                    <h1> {{ lessonState.selectedLesson()?.title }} </h1>
-                }
-            </div>
-            <div class="container-reserved-space box-shadow">
-                @if( lessonState.selectedLesson()?.file?.resource_type === "video" ) {
-                    <app-vjs-player [options]="{ 
-                            fluid : true,
-                            aspectRatio : '16:9',
-                            autoplay: false, 
-                            sources:[
-                                {
-                                    src : lessonState.selectedLesson()?.file?.url!,
-                                    type: lessonState.selectedLesson()?.file?.resource_type + '/' + lessonState.selectedLesson()?.file?.extension!
-                                }
-                            ],
-                            language: 'es', 
-                        }" />
-                }
-                @else if( lessonState.selectedLesson()?.file?.resource_type === "image" ) {
-                    <img class="content-image" src="{{lessonState.selectedLesson()?.file?.url}}" alt="">
-                }
-            </div>
-        </div>  
+            <!-- TODO: el visor de lecciones queda pendiente: LessonState todavía no expone
+                 `selectedLesson`. Ver lesson/state/lesson-state.ts antes de reactivar esto. -->
+        </div>
     }
 </div>

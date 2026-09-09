@@ -76,3 +76,10 @@
 .container-media-player{
     position: relative;
 }
+.error-text{
+    display: flex;
+    color: rgb(40, 40, 40 , 0.8);
+    font-family: v.$font-primary;
+    font-size: 1.25rem;
+    font-weight: 400;
+}

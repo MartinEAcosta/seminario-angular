@@ -6,12 +6,29 @@
                 </figure>
             </div>
             <div class="details-course">
-                <a 
-                    class="anchor"
-                    [routerLink]="['/course' , course().id]"
-                >
-                    {{course().title}}
-                </a>
+                <div class="details-header">
+                    <a
+                        class="anchor"
+                        [routerLink]="['/course' , course().id]"
+                    >
+                        {{course().title}}
+                    </a>
+                    @if( course().id_owner === authService.user()?.id  ) {
+                        <div class="container-extra">
+                            <div class="ellipsis-icon">
+                                <img class="ellipsis-svg" src="/assets/ellipsis-icon.svg" alt="Ellipsis icon for options">
+                            </div>
+                            <div class="course-options">
+                                <a class="option" [routerLink]="['/course/update' , course().id ]" >
+                                    Editar
+                                </a>
+                                <a class="option" [routerLink]="">
+                                    Eliminar
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
                 <div class="container-desc">
                     <p class="desc">
                         {{course().description}}
@@ -23,26 +40,10 @@
                 <div class="extra-details">
                     <div class="buttons">
                         <app-btn-primary (click)="this.cartService.onAddToCart( course() )" [routerLink]="['/payment/buy']">
-                                Comprar 
+                                Comprar
                         </app-btn-primary>
                         <btn-border-thin (click)="this.cartService.onAddToCart( course() )" />
                     </div>
-
-                    @if( course().id_owner === authService.user()?.id  ) {
-                        <div class="container-extra">
-                            <div class="ellipsis-icon">
-                                <img class="ellipsis-svg" src="/assets/ellipsis-icon.svg" alt="Ellipsis icon for options">
-                            </div>
-                            <div class="course-options">
-                                <a class="option" [routerLink]="['/course/update' , course().id ]" >
-                                    Editar    
-                                </a>
-                                <a class="option" [routerLink]="">
-                                    Eliminar
-                                </a>
-                            </div>
-                        </div>
-                    }
                 </div>
             </div>
         </div>

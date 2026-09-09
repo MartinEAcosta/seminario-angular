@@ -17,6 +17,14 @@ export class EnrollmentService {
 
   constructor() { }
 
+  // Un 500 puede volver sin body JSON: sin el `?.` esto explota con
+  // "Cannot read properties of undefined" y se pierde el error original.
+  private handleError = ( fallbackMessage : string ) => {
+    return ( { error } : any ) => throwError(
+      () => new Error( error?.errorMessage ?? fallbackMessage )
+    );
+  }
+
   public getAllEnrollments = ( ) : Observable<Enrollment[]> => {
     return this.http
                     .get<EnrollmentListResponse>( `${this.baseURL}/` )
@@ -24,9 +32,7 @@ export class EnrollmentService {
                       map( ( enrollmentsResponse ) => {
                         return EnrollmentMapper.mapResponseToEnrollmentArray( enrollmentsResponse );
                       }),
-                      catchError( ({error}) => {
-                        return throwError(() => new Error(`${error.errorMessage}`));
-                      }),
+                      catchError( this.handleError('No pudimos recopilar las inscripciones.') ),
                     );
   }
 
@@ -37,10 +43,7 @@ export class EnrollmentService {
                       map( ( enrollmentResponse ) => { 
                         return EnrollmentMapper.mapResponseToEnrollmentDetailed( enrollmentResponse.data );
                       }),
-                      catchError( ({error}) => {
-                        console.log(error);
-                        return throwError(() => new Error(`${error.errorMessage}`));
-                      }),
+                      catchError( this.handleError('No pudimos recopilar la inscripción.') ),
                     );
   }
 
@@ -51,9 +54,7 @@ export class EnrollmentService {
                       map( ( enrollmentsResponse ) => {
                         return EnrollmentMapper.mapResponseToEnrollmentDetailedArray( enrollmentsResponse );
                       }),
-                      catchError( ({error}) => {
-                        return throwError(() => new Error(`${error.errorMessage}`));
-                      }),
+                      catchError( this.handleError('No pudimos recopilar tus inscripciones.') ),
                     );
   }
 
@@ -64,14 +65,8 @@ export class EnrollmentService {
                       map( ( enrollmentResponse ) => {
                         return EnrollmentMapper.mapResponseToEnrollment( enrollmentResponse.data );
                       }),
-                      catchError( ({error}) => {
-                        console.log(error);
-                        return throwError(() => new Error(`${error.errorMessage}`));
-                      }),
+                      catchError( this.handleError('No pudimos recopilar la inscripción.') ),
                     );
   }
-  
-
 
 }
-  

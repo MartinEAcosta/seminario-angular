@@ -1,47 +1,27 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { Course } from '@course/models/course.interfaces';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { CourseService } from '@course/services/course.service';
-
-import { State } from '@shared/state/state';
-import { catchError, Observable, of, tap } from 'rxjs';
-
-interface CourseStateProps {
-  selectedCourse: Course | null;
-}
 
 @Injectable({
   providedIn: 'root',
 })
-export class CourseState extends State<CourseStateProps> {
+export class CourseState {
   private courseService = inject(CourseService);
 
-  selectedCourse = computed(() => this.state().data?.selectedCourse);
+  private requestedCourseId = signal<string | undefined>(undefined);
+  
+  private courseResource = rxResource({
+    params: () => this.requestedCourseId(),
+    stream: ({ params: id }) => this.courseService.getById(id),
+  });
 
-  constructor() {
-    super();
+  selectedCourse = computed(() => this.courseResource.value() ?? null);
+  isLoading = computed(() => this.courseResource.isLoading());
+  error = computed(() => this.courseResource.error());
+
+  constructor() {}
+
+  loadCourse(id: string) {
+    this.requestedCourseId.set(id);
   }
-
-  loadCourse ( id_course : string ) : Observable<Course | null> {
-    if( this.selectedCourse() && this.selectedCourse()?.id === id_course ) {
-        return of( this.selectedCourse()! );
-    }
-
-    this.setIsLoading(true);
-    return this.courseService.getById( id_course )
-                              .pipe(
-                                tap((course) => {
-                                  this.state.update( (c) => 
-                                    ({ 
-                                      ...c , 
-                                      data : { selectedCourse : course },
-                                    }),
-                                  )
-                                }),
-                                catchError( ( error ) => {
-                                  this.handleError( error );
-                                  return of(null);
-                                })
-                              );
-  }
-
 }

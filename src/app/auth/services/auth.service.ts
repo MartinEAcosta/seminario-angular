@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 
@@ -8,6 +8,8 @@ import { UIService } from '@shared/services/ui/ui.service';
 import { AuthResponse, User, UserDTO } from '@auth/models/auth.interfaces';
 import { AuthMapper } from '@mappers/auth.mapper';
 import { ErrorResponse, VerificationEmailResponse } from '@shared/models/api.interfaces';
+import { CartService } from '@cart/state/cart.service';
+import { Router } from '@angular/router';
 
 type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
 
@@ -24,7 +26,9 @@ export class AuthService {
 
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}auth`;
+  private router = inject(Router);
   private uiService = inject(UIService);
+  private cartService = inject(CartService);
 
   // Se dispara ni bien el servicio es inyectado por primera vez.
   checkStatusResource = rxResource({
@@ -45,7 +49,16 @@ export class AuthService {
     return 'not-authenticated';
   });
 
-  constructor( ) { }
+  constructor( ) { 
+    let previousStatus : AuthStatus = this.authStatus();
+    effect( () => {
+      const status = this.authStatus();
+      if( previousStatus === 'authenticated' && status === 'not-authenticated' ){
+        this.router.navigateByUrl('/');
+      }
+      previousStatus = status;
+    });
+  }
 
   public registerUser = ( userRequest : UserDTO ) : Observable<User | false> => {
     return this.http
@@ -60,11 +73,23 @@ export class AuthService {
   public loginUser = ( userRequest : UserDTO ) : Observable<User | false> => {
     return this.http.post<AuthResponse>(`${this.baseURL}/login` , { ...userRequest } )
                       .pipe(
-                        map( ( authResponse ) => this.handleAuthSuccess( authResponse ) ),
+                        map( ( authResponse ) => {
+                          console.log(authResponse);
+                          return this.handleAuthSuccess( authResponse )} ),
                         catchError( ( { error } ) => {
                           return this.handleAuthError( error )
                         } )
               );
+  }
+
+  public updateUser = ( userRequest :  Partial<UserDTO> ) : Observable<User | false> => {
+    return this.http.put<AuthResponse>(`${this.baseURL}/update-user` , { ...userRequest } )
+                      .pipe(
+                        map( ( authResponse ) => this.handleAuthSuccess( authResponse ) ),
+                        catchError( ( { error } ) => {
+                          return this.handleAuthError( error )
+                        })
+                      );
   }
 
   // Envia (o reenvia) el email con el enlace de validación a la cuenta del usuario logueado.
@@ -103,6 +128,7 @@ export class AuthService {
     this._user.set(null);
     this._token.set(null);
     this._authStatus.set('not-authenticated');
+    this.cartService.clearCart();
 
     localStorage.clear();
   }

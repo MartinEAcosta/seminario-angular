@@ -29,7 +29,7 @@
                 name="file"
                 class="input-file"
                 accept="image/* , video/*"
-                (change)="this.fileService.onFileChanged($event , 'lessons' )"
+                (change)="this.fileService.onFileChanged($event , 'lesson' )"
             />
             <figure class="figure-attach">
                 @if( lessonFormState.lessonSelected() === null || lessonFormState.tempMedia() === null ){

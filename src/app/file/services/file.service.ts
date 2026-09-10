@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 
 import { FileMapper } from '@mappers/file.mapper';
 import { DeleteResponse, FileResponse } from '@shared/models/api.interfaces';
-import { UploadedFile } from '@file/models/file.interfaces';
+import { UploadedFile, UploadFolder } from '@file/models/file.interfaces';
 import { CourseFormState } from '@course/state/course-form/course-form-state';
 import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
 import { UserState } from '@user/state/user-state';
@@ -24,7 +24,7 @@ export class FileService {
 
   constructor ( ) { }
 
-  uploadFiles = ( folder : string , id_entity : string , files : FileList  ) : Observable<UploadedFile[]> => {
+  uploadFiles = ( folder : UploadFolder , id_entity : string , files : FileList  ) : Observable<UploadedFile[]> => {
     if( !files ) return of([]);
 
     const uploadObservable = Array.from( files ).map( ( uniqueFile ) => 
@@ -35,7 +35,7 @@ export class FileService {
     return forkJoin(uploadObservable);
   }
   
-  uploadFile = ( folder : string , id_entity : string, file : File ) : Observable<UploadedFile> => {
+  uploadFile = ( folder : UploadFolder , id_entity : string, file : File ) : Observable<UploadedFile> => {
     
     const formData = new FormData( );
     formData.append( 'files', file );
@@ -99,7 +99,7 @@ export class FileService {
                                   )
   }
 
-  public onFileChanged = ( event : Event, type : 'lessons' | 'courses' | 'user' ) => {
+  public onFileChanged = ( event : Event, type : UploadFolder ) => {
     const fileChanged = ( event.target as HTMLInputElement ).files;
     if( !fileChanged ) return;
     // En caso de que el el fileList no sea undefined o vacio, permite generar url para utilizar de forma local
@@ -109,12 +109,12 @@ export class FileService {
                                                   );
 
     switch (type) {
-      case 'courses':
+      case 'course':
         this.courseFormState.setTempThumbnail(url.shift()!);
         this.courseFormState.setFileThumbnail(fileChanged[0]);
         break;
 
-      case 'lessons':
+      case 'lesson':
         this.lessonFormState.setTempMedia(url.shift()!);
         this.lessonFormState.setMediaFile(fileChanged[0]);
         const type = fileChanged.item(0)?.type.split('/').at(0) as 'image' | 'video' | undefined;

@@ -76,7 +76,7 @@ export class CourseService {
           map((courseResponse) => {
             course = CourseMapper.mapResponseToCourse(courseResponse.data);
             if( file ){
-              this.fileService.uploadFile( 'courses' , course.id , file ).subscribe()
+              this.fileService.uploadFile( 'course' , course.id , file ).subscribe()
             }
             return course;
           }),
@@ -93,7 +93,7 @@ export class CourseService {
           map((courseResponse) => {
             course = CourseMapper.mapResponseToCourse(courseResponse.data);
             if( file ){
-              this.fileService.uploadFile( 'courses' , course.id , file ).subscribe()
+              this.fileService.uploadFile( 'course' , course.id , file ).subscribe()
             }
             return course;
           }),

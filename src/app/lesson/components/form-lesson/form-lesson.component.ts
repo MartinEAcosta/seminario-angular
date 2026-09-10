@@ -19,7 +19,6 @@ import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
   styleUrl: './form-lesson.component.scss'
 })
 export class FormLessonComponent {
-  folder = 'lessons';
 
   private router = inject(Router);
 

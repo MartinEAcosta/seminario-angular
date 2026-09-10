@@ -30,8 +30,9 @@ export class UserProfilePageComponent {
 
   readonly defaultAvatar = 'assets/user-profile.svg';
 
-  public authService = inject(AuthService);
+  private fileService = inject(FileService);
   private uiService = inject(UIService);
+  private userState = inject(UserState);
   private fb = inject(FormBuilder);
   private fileService = inject(FileService);
   public userState = inject(UserState);

@@ -20,6 +20,7 @@
       "@interfaces/*" : ["./src/app/course/models/*" , "./src/app/auth/models/*", 
         "./src/app/module/models/*", "./src/app/lesson/models/*"],
       "@guards/*" : ["./src/app/auth/guards/*"],
+      "@user/*" : ["./src/app/user/*"],
       "@variables" : ["./src/variables.scss"],
     },
     "outDir": "./dist/out-tsc",

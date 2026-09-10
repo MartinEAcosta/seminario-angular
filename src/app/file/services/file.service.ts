@@ -8,6 +8,7 @@ import { DeleteResponse, FileResponse } from '@shared/models/api.interfaces';
 import { UploadedFile } from '@file/models/file.interfaces';
 import { CourseFormState } from '@course/state/course-form/course-form-state';
 import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
+import { UserState } from '@user/state/user-state';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class FileService {
   
   private courseFormState = inject(CourseFormState);
   private lessonFormState = inject(LessonFormState);
+  private userState = inject(UserState);
 
   constructor ( ) { }
 
@@ -121,7 +123,8 @@ export class FileService {
         );
         break;
       case 'user':
-        
+        this.userState.setTempAvatar(url.shift()!);
+        this.userState.setAvatarFile(fileChanged[0]);
         break;
       default:
         break;

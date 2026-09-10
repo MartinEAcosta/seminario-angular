@@ -4,8 +4,11 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validatio
 
 import { FormUtils } from '@utils/form-utils';
 import { AuthService } from '@auth/services/auth.service';
+import { UserDTO } from '@auth/models/auth.interfaces';
 import { UIService } from '@shared/services/ui/ui.service';
 import { FormErrorLabelComponent } from '@shared/components/form-error-label/form-error-label.component';
+import { FileService } from '@file/services/file.service';
+import { UserState } from '@user/state/user-state';
 
 type SettingsSection = 'perfil' | 'cuenta';
 
@@ -30,25 +33,24 @@ export class UserProfilePageComponent {
   public authService = inject(AuthService);
   private uiService = inject(UIService);
   private fb = inject(FormBuilder);
+  private fileService = inject(FileService);
+  public userState = inject(UserState);
 
   activeSection = signal<SettingsSection>('perfil');
 
-  // Data URL of the image picked by the user. null = show the default avatar.
-  avatarPreview = signal<string | null>(null);
+  // Local preview if a new avatar was picked, otherwise fall back to the persisted one.
+  avatarPreview = computed<string | null>(
+    () => this.userState.tempAvatar() ?? this.authService.user()?.avatar_url ?? null
+  );
 
   isEmailVerified = computed<boolean>( () => this.authService.user()?.isEmailVerified ?? false );
   isSendingVerification = signal<boolean>(false);
 
-  public profileForm : FormGroup = this.fb.group({
-    username : [
-                '',
-                [ Validators.required, Validators.minLength(3), Validators.pattern( FormUtils.notOnlySpacesPattern ) ]
-              ],
-    email : [
-              '',
-              [ Validators.required, Validators.pattern( FormUtils.emailPattern ) ]
-            ],
-  });
+  // Owned by UserState so FileService can write the picked avatar into it and
+  // onSaveProfile can read it back without any effect() tying the two together.
+  get profileForm() : FormGroup {
+    return this.userState.profileForm;
+  }
 
   // Never prefilled: always starts empty.
   public passwordForm : FormGroup = this.fb.group({
@@ -58,12 +60,11 @@ export class UserProfilePageComponent {
   }, { validators : passwordsMatchValidator });
 
   constructor() {
+    // Único punto de sync user -> form: se ejecuta una sola vez acá, nunca
+    // dentro de un effect(), así no hay forma de que un guardado dispare
+    // un re-patch que a su vez dispare otro guardado.
     const user = this.authService.user();
-
-    this.profileForm.patchValue({
-      username : user?.username ?? '',
-      email : user?.email ?? '',
-    });
+    if( user ) this.userState.patchValuesForm(user);
   }
 
   onSelectSection( section: SettingsSection ): void {
@@ -71,11 +72,12 @@ export class UserProfilePageComponent {
   }
 
   onAvatarSelected( event: Event ): void {
-    
+    this.fileService.onFileChanged(event, 'user');
   }
 
   onRemoveAvatar( input: HTMLInputElement ): void {
-    this.avatarPreview.set( null );
+    this.userState.setTempAvatar( null );
+    this.userState.setAvatarFile( null );
     // Let the same file be picked again right after removing it.
     input.value = '';
   }
@@ -85,9 +87,20 @@ export class UserProfilePageComponent {
 
     if( !this.profileForm.valid ) return;
 
-    // Mock: no HTTP call yet. Swap this log for the real endpoint when it exists.
-    console.log('[mock] Actualizar perfil', this.profileForm.value);
-    this.uiService.showToastMessage('Perfil actualizado.');
+    const dto : Partial<UserDTO> = { ...this.profileForm.value };
+
+    this.authService.updateUser(dto).subscribe( ( user ) => {
+      if( !user ) return; // AuthService ya mostró el error vía handleAuthError.
+
+      const file = this.userState.avatarFile();
+      if( file ){
+        this.fileService.uploadFile('user', user.id, file).subscribe();
+      }
+
+      this.uiService.showToastMessage('Perfil actualizado.');
+      this.userState.setTempAvatar(null);
+      this.userState.setAvatarFile(null);
+    });
   }
 
   // True once the group-level check fails and the user has reached the confirm field.

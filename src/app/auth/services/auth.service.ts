@@ -10,6 +10,7 @@ import { AuthMapper } from '@mappers/auth.mapper';
 import { ErrorResponse, VerificationEmailResponse } from '@shared/models/api.interfaces';
 import { CartService } from '@cart/state/cart.service';
 import { Router } from '@angular/router';
+import { FileService } from '@file/services/file.service';
 
 type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
 
@@ -29,6 +30,7 @@ export class AuthService {
   private router = inject(Router);
   private uiService = inject(UIService);
   private cartService = inject(CartService);
+  private fileService = inject(FileService);
 
   // Se dispara ni bien el servicio es inyectado por primera vez.
   checkStatusResource = rxResource({
@@ -82,10 +84,15 @@ export class AuthService {
               );
   }
 
-  public updateUser = ( userRequest :  Partial<UserDTO> ) : Observable<User | false> => {
+  public updateUser = ( userRequest :  Partial<UserDTO> , file : File | null ) : Observable<User | false> => {
     return this.http.put<AuthResponse>(`${this.baseURL}/update-user` , { ...userRequest } )
                       .pipe(
-                        map( ( authResponse ) => this.handleAuthSuccess( authResponse ) ),
+                        map( ( authResponse ) => {
+                          if( file ){
+                            this.fileService.uploadFile( 'user' , this.user()?.id! , file ).subscribe()
+                          }
+                          return this.handleAuthSuccess( authResponse )
+                        } ),
                         catchError( ( { error } ) => {
                           return this.handleAuthError( error )
                         })

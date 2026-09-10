@@ -2,6 +2,7 @@ import { Component, inject, input } from '@angular/core';
 
 import { CourseFormState } from '@course/state/course-form/course-form-state';
 import { FileService } from '@file/services/file.service';
+import { UploadFolder } from '@file/models/file.interfaces';
 import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
 
 @Component({
@@ -16,7 +17,7 @@ export class ThumbnailSelectorComponent {
   courseFormState = inject(CourseFormState);
   lessonFormState = inject(LessonFormState);
 
-  folder = input.required<'lessons' | 'courses'>();
+  folder = input.required<Extract<UploadFolder, 'course' | 'lesson'>>();
 
   constructor() { }
 

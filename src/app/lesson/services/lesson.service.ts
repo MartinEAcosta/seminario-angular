@@ -12,7 +12,6 @@ import { FileService } from '@file/services/file.service';
   providedIn: 'root'
 })
 export class LessonService {
-  folder = 'lessons';
 
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}lessons`;
@@ -87,7 +86,7 @@ export class LessonService {
               map( (lessonResponse) =>{
                 const lesson = LessonMapper.mapResponseToLesson( lessonResponse.data );
                 if( file ){
-                  this.fileService.uploadFile( this.folder , id , file ).subscribe();
+                  this.fileService.uploadFile( 'lesson' , id , file ).subscribe();
                 }
                 return lesson;
               }),
@@ -104,7 +103,7 @@ export class LessonService {
                     map( (lessonResponse) =>{
                       const lesson = LessonMapper.mapResponseToLesson( lessonResponse.data );
                       if( file ){
-                        this.fileService.uploadFile( this.folder , lesson.id! , file ).subscribe();
+                        this.fileService.uploadFile( 'lesson' , lesson.id! , file ).subscribe();
                       }
                       return lesson;
                     }),

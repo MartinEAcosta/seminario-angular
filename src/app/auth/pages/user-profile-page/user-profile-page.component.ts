@@ -6,6 +6,9 @@ import { FormUtils } from '@utils/form-utils';
 import { AuthService } from '@auth/services/auth.service';
 import { UIService } from '@shared/services/ui/ui.service';
 import { FormErrorLabelComponent } from '@shared/components/form-error-label/form-error-label.component';
+import { FileService } from '@file/services/file.service';
+import { UploadFolder } from '@file/models/file.interfaces';
+import { UserState } from '@auth/state/user-state';
 
 type SettingsSection = 'perfil' | 'cuenta';
 
@@ -27,9 +30,12 @@ export class UserProfilePageComponent {
 
   readonly defaultAvatar = 'assets/user-profile.svg';
 
-  public authService = inject(AuthService);
+  private fileService = inject(FileService);
   private uiService = inject(UIService);
+  private userState = inject(UserState);
   private fb = inject(FormBuilder);
+  
+  public authService = inject(AuthService);
 
   activeSection = signal<SettingsSection>('perfil');
 
@@ -70,8 +76,9 @@ export class UserProfilePageComponent {
     this.activeSection.set( section );
   }
 
-  onAvatarSelected( event: Event ): void {
-    
+  onAvatarSelected( event: Event , folder : UploadFolder ): void {
+    this.fileService.onFileChanged( event , folder );
+    this.avatarPreview.set( this.userState.tempAvatar() );
   }
 
   onRemoveAvatar( input: HTMLInputElement ): void {
@@ -85,9 +92,12 @@ export class UserProfilePageComponent {
 
     if( !this.profileForm.valid ) return;
 
-    // Mock: no HTTP call yet. Swap this log for the real endpoint when it exists.
-    console.log('[mock] Actualizar perfil', this.profileForm.value);
-    this.uiService.showToastMessage('Perfil actualizado.');
+    this.authService.updateUser( this.profileForm.value , this.userState.avatarFile() )
+                    .subscribe( ( user ) => {
+                      if( user ){
+                        this.uiService.showToastMessage('Perfil actualizado.');
+                      }
+                    });
   }
 
   // True once the group-level check fails and the user has reached the confirm field.

@@ -8,8 +8,7 @@ import { DeleteResponse, FileResponse } from '@shared/models/api.interfaces';
 import { UploadedFile, UploadFolder } from '@file/models/file.interfaces';
 import { CourseFormState } from '@course/state/course-form/course-form-state';
 import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
-import { AuthService } from '@auth/services/auth.service';
-import { UserState } from '@auth/state/user-state';
+import { UserState } from '@user/state/user-state';
 
 @Injectable({
   providedIn: 'root'

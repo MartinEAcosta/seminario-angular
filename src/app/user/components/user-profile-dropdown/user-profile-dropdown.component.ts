@@ -4,6 +4,7 @@ import { filter } from 'rxjs';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 
 import { AuthService } from '@auth/services/auth.service';
+import { UserState } from '@user/state/user-state';
 
 @Component({
   selector: 'app-user-profile-dropdown',
@@ -15,6 +16,7 @@ export class UserProfileDropdownComponent {
 
   router = inject(Router);
   authService = inject(AuthService);
+  userState = inject(UserState);
   open = signal<boolean>(false);
 
 constructor() {

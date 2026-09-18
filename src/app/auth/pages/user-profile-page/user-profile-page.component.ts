@@ -2,13 +2,12 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 
-import { FormUtils } from '@utils/form-utils';
 import { AuthService } from '@auth/services/auth.service';
-import { UserDTO } from '@auth/models/auth.interfaces';
 import { UIService } from '@shared/services/ui/ui.service';
 import { FormErrorLabelComponent } from '@shared/components/form-error-label/form-error-label.component';
 import { FileService } from '@file/services/file.service';
 import { UserState } from '@user/state/user-state';
+import { AuthMapper } from '@mappers/auth.mapper';
 
 type SettingsSection = 'perfil' | 'cuenta';
 
@@ -32,19 +31,18 @@ export class UserProfilePageComponent {
 
   private fileService = inject(FileService);
   private uiService = inject(UIService);
-  private userState = inject(UserState);
-  private fb = inject(FormBuilder);
-  private fileService = inject(FileService);
   public userState = inject(UserState);
+  private fb = inject(FormBuilder);
+  public authService = inject(AuthService);
 
   activeSection = signal<SettingsSection>('perfil');
 
   // Local preview if a new avatar was picked, otherwise fall back to the persisted one.
   avatarPreview = computed<string | null>(
-    () => this.userState.tempAvatar() ?? this.authService.user()?.avatar_url ?? null
+    () => this.userState.tempAvatar() || this.userState.user()?.avatar_url || null
   );
 
-  isEmailVerified = computed<boolean>( () => this.authService.user()?.isEmailVerified ?? false );
+  isEmailVerified = computed<boolean>( () => this.userState.user()?.isEmailVerified ?? false );
   isSendingVerification = signal<boolean>(false);
 
   // Owned by UserState so FileService can write the picked avatar into it and
@@ -64,7 +62,7 @@ export class UserProfilePageComponent {
     // Único punto de sync user -> form: se ejecuta una sola vez acá, nunca
     // dentro de un effect(), así no hay forma de que un guardado dispare
     // un re-patch que a su vez dispare otro guardado.
-    const user = this.authService.user();
+    const user = this.userState.user();
     if( user ) this.userState.patchValuesForm(user);
   }
 
@@ -88,15 +86,11 @@ export class UserProfilePageComponent {
 
     if( !this.profileForm.valid ) return;
 
-    const dto : Partial<UserDTO> = { ...this.profileForm.value };
+    const userToUpdate = AuthMapper.mapFormToUserDTO( this.profileForm );
+    const file = this.userState.avatarFile();
 
-    this.authService.updateUser(dto).subscribe( ( user ) => {
+    this.authService.updateUser(userToUpdate, file).subscribe( ( user ) => {
       if( !user ) return; // AuthService ya mostró el error vía handleAuthError.
-
-      const file = this.userState.avatarFile();
-      if( file ){
-        this.fileService.uploadFile('user', user.id, file).subscribe();
-      }
 
       this.uiService.showToastMessage('Perfil actualizado.');
       this.userState.setTempAvatar(null);

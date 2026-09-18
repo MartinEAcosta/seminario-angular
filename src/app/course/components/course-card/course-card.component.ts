@@ -2,7 +2,7 @@ import { Component, inject, input } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { AuthService } from '@auth/services/auth.service';
+import { UserState } from '@user/state/user-state';
 import { BtnPrimaryComponent } from '@shared/components/btns/btn-primary/btn-primary.component';
 import { BtnBorderThinComponent } from '@shared/components/btns/btn-border-thin/btn-border-thin.component';
 import { Course } from '@course/models/course.interfaces';
@@ -15,11 +15,11 @@ import { CartService } from '@cart/state/cart.service';
     imports: [BtnPrimaryComponent, BtnBorderThinComponent, CurrencyPipe, RouterModule, CommonModule, BtnBorderThinComponent],
 })
 export class CourseCardComponent {
-  
+
   readonly course = input.required<Course>();
-  
+
   cartService = inject(CartService);
-  authService = inject(AuthService);
+  userState = inject(UserState);
 
   constructor () { }
   

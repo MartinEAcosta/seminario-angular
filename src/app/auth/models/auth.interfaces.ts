@@ -1,3 +1,5 @@
+export type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
+
 export interface AuthResponse {
     ok:      boolean;
     user:    User;

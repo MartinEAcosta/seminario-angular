@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { LessonService } from '@lesson/services/lesson.service';
 import { FormErrorLabelComponent } from "@shared/components/form-error-label/form-error-label.component";
-import { AuthService } from '@auth/services/auth.service';
+import { UserState } from '@user/state/user-state';
 import { LessonMapper } from '@mappers/lesson.mapper';
 import { CourseService } from '@course/services/course.service';
 import { FileService } from '@file/services/file.service';
@@ -22,7 +22,7 @@ export class FormLessonComponent {
 
   private router = inject(Router);
 
-  public authService = inject(AuthService);
+  public userState = inject(UserState);
   public courseService = inject(CourseService);
   public lessonService = inject(LessonService);
   public lessonFormState = inject(LessonFormState);
@@ -53,7 +53,7 @@ export class FormLessonComponent {
     this.lessonFormState.lessonForm.markAllAsTouched();
 
     if( this.lessonFormState.lessonForm.valid ){
-      const uid = this.authService.id();
+      const uid = this.userState.id();
       if( !uid ) return;
 
       const dto = LessonMapper.mapToCreateLessonDto( this.lessonFormState.lessonForm );

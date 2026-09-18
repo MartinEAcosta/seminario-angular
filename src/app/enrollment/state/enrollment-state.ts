@@ -1,7 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 
-import { AuthService } from '@auth/services/auth.service';
+import { UserState } from '@user/state/user-state';
 import { EnrollmentService } from '@enrollment/services/enrollment.service';
 
 
@@ -11,15 +11,15 @@ import { EnrollmentService } from '@enrollment/services/enrollment.service';
 export class EnrollmentState {
 
   private enrollmentService = inject(EnrollmentService);
-  private authService = inject(AuthService);
+  private userState = inject(UserState);
 
   // Devolver `undefined` es la única forma de que el resource NO dispare la petición.
   // Con `null` el resource considera el parámetro válido y pega a /enrollments/null.
   private requestedEnrollmentId = signal<string | undefined>(undefined);
 
   enrollmentListResource = rxResource({
-    params: () => this.authService.authStatus() === 'authenticated'
-      ? this.authService.user()!.id
+    params: () => this.userState.authStatus() === 'authenticated'
+      ? this.userState.user()!.id
       : undefined,
     stream: ({ params: id }) => this.enrollmentService.getEnrollmentsByUserId(id),
   });

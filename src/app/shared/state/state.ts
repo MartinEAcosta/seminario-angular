@@ -1,5 +1,5 @@
-import { computed, effect, Inject, Injectable, signal } from '@angular/core';
-import { AuthService } from '@auth/services/auth.service';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
+import { UserState } from '@user/state/user-state';
 import { Observable } from 'rxjs';
 
 export interface StateData<T> {
@@ -13,7 +13,7 @@ export interface StateData<T> {
 })
 export class State<T> {
 
-  protected authService = Inject(AuthService);
+  protected userState = inject(UserState);
 
   state = signal<StateData<T>>({
     isLoading: false,
@@ -25,7 +25,7 @@ export class State<T> {
 
   constructor() {
     effect(() => {
-      if( !this.authService.user() ) this.resetState();
+      if( !this.userState.user() ) this.resetState();
     });
   }
 

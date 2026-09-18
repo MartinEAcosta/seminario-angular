@@ -1,12 +1,12 @@
 import { inject } from "@angular/core";
-import { AuthService } from "../services/auth.service";
+import { UserState } from "@user/state/user-state";
 import { HttpHandlerFn, HttpRequest } from "@angular/common/http";
 
 export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
-    
-    
-    // toma la referencia del authService en caso de que haya, sino la crea y toma el token
-    const token = inject(AuthService).token();
+
+
+    // toma la referencia del userState en caso de que haya, sino la crea y toma el token
+    const token = inject(UserState).token();
     // console.log({token});
     
     if( token ){

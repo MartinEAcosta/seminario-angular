@@ -1,6 +1,7 @@
 import { Component, computed, inject, OnDestroy, signal } from '@angular/core';
 
 import { AuthService } from '@auth/services/auth.service';
+import { UserState } from '@user/state/user-state';
 import { UIService } from '@shared/services/ui/ui.service';
 
 const RESEND_COOLDOWN_SECONDS = 60;
@@ -14,6 +15,7 @@ const RESEND_COOLDOWN_SECONDS = 60;
 export class EmailVerificationBannerComponent implements OnDestroy {
 
   public authService = inject(AuthService);
+  public userState = inject(UserState);
   private uiService = inject(UIService);
 
   public isSending = signal<boolean>(false);
@@ -21,7 +23,7 @@ export class EmailVerificationBannerComponent implements OnDestroy {
 
   private cooldownIntervalId : any;
 
-  public isVerified = computed<boolean>( () => this.authService.user()?.isEmailVerified ?? false );
+  public isVerified = computed<boolean>( () => this.userState.user()?.isEmailVerified ?? false );
 
   onSendVerificationEmail = ( ) : void => {
     if( this.isSending() || this.cooldown() > 0 ) return;

@@ -1,21 +1,25 @@
 <div class="container-user-profile">
     <button type="button" class="profile-trigger" [class.active]="open()" (click)="onClickProfile()">
-        <img src="assets/user-profile.svg" alt="User icon profile" class="user-profile-img">
+        @if( userState.user()?.avatar_url ) {
+            <img [src]="userState.user()?.avatar_url" alt="User icon profile" class="user-profile-img">
+        } @else {
+            <img src="assets/user-profile.svg" alt="User icon profile" class="user-profile-img">
+        }
     </button>
     <div class="overlay" [ngClass]="{ 'open': open() }" (click)="onCloseDropdown($event)"></div>
     <div class="dropdown-wrapper" [ngClass]="{ 'open': open() }">
         <div class="dropdown-inner">
-            <div class="dropdown-item">
-                <a [routerLink]="['/auth/me']">Tu perfil</a>
+            <div [routerLink]="['/auth/me']" class="dropdown-item">
+                <a>Tu perfil</a>
             </div>
-            @if( !authService.user()?.isEmailVerified ) {
-                <div class="dropdown-item">
-                    <a [routerLink]="['/auth/verify-email']">Validar tu email</a>
+            @if( !userState.user()?.isEmailVerified ) {
+                <div [routerLink]="['/auth/verify-email']" class="dropdown-item">
+                    <a>Validar tu email</a>
                 </div>
             }
-            @if( authService.user()?.role === 'student' ) {
-                <div class="dropdown-item">
-                    <a [routerLink]="['/become-teacher']">Conviértete en profesor</a>
+            @if( userState.user()?.role === 'student' ) {
+                <div [routerLink]="['/become-teacher']" class="dropdown-item">
+                    <a>Conviértete en profesor</a>
                 </div>
             }
             <div class="dropdown-item logout" (click)="authService.logoutUser()">

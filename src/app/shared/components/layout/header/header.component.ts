@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { AuthService } from '@auth/services/auth.service';
+import { UserState } from '@user/state/user-state';
 import { SearchService } from '@shared/services/search/search.service';
 import { UserProfileDropdownComponent } from '../../../../user/components/user-profile-dropdown/user-profile-dropdown.component';
 
@@ -13,7 +13,7 @@ import { UserProfileDropdownComponent } from '../../../../user/components/user-p
 })
 export class HeaderComponent {
 
-  authService = inject(AuthService);
+  userState = inject(UserState);
   searchService = inject(SearchService);
 
     

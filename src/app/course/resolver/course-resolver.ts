@@ -5,28 +5,28 @@ import { catchError, map, Observable, of } from "rxjs";
 import { Course } from "@interfaces/course.interfaces";
 import { CourseService } from "../services/course.service";
 import { CourseFormState } from "@course/state/course-form/course-form-state";
-import { AuthService } from "@auth/services/auth.service";
+import { UserState } from "@user/state/user-state";
 
 @Injectable({ providedIn: 'root' })
 export class CourseResolver implements Resolve<Course | null> {
 
     router = inject(Router);
     courseService = inject(CourseService);
-    authService = inject(AuthService)
-    courseFormState = inject(CourseFormState); 
+    userState = inject(UserState)
+    courseFormState = inject(CourseFormState);
 
     resolve( route : ActivatedRouteSnapshot ) : Observable<Course | null> {
         const courseId = route.paramMap.get('id');
 
-        if( !courseId || !this.authService.id() ){
-            // Setear error en el servicio de ui 
+        if( !courseId || !this.userState.id() ){
+            // Setear error en el servicio de ui
             this.router.navigateByUrl('/');
             return of(null);
         }
 
         return this.courseService.getById( courseId! ).pipe(
             map( course => {
-                if( course.id_owner === this.authService.id() ){
+                if( course.id_owner === this.userState.id() ){
                     return course;
                 }
                 // No tienes los permisos suficientes para obtener el curso.

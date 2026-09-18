@@ -1,19 +1,19 @@
 import { inject } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from "@angular/router";
-import { AuthService } from "../services/auth.service";
+import { UserState } from "@user/state/user-state";
 
 export const ValidatePermissionGuard : CanActivateFn = (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
 ) => {
-    
+
     const expectedRoles: string[] = route.data['roles'] || [];
-    const authService = inject( AuthService );
+    const userState = inject( UserState );
     const router = inject( Router );
 
-    if( !authService.user() ) return false;
+    if( !userState.user() ) return false;
 
-    if( expectedRoles.includes( authService.user()?.role! ) ) {
+    if( expectedRoles.includes( userState.user()?.role! ) ) {
         return true;
     }
     else{ 

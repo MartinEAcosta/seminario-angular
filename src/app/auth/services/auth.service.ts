@@ -1,29 +1,22 @@
 import { HttpClient } from '@angular/common/http';
-import { computed, effect, inject, Injectable, signal } from '@angular/core';
+import { effect, inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 import { environment } from '../../../environments/environment';
 import { UIService } from '@shared/services/ui/ui.service';
-import { AuthResponse, User, UserDTO } from '@auth/models/auth.interfaces';
+import { AuthResponse, AuthStatus, User, UserDTO } from '@auth/models/auth.interfaces';
 import { AuthMapper } from '@mappers/auth.mapper';
 import { ErrorResponse, VerificationEmailResponse } from '@shared/models/api.interfaces';
 import { CartService } from '@cart/state/cart.service';
 import { Router } from '@angular/router';
 import { FileService } from '@file/services/file.service';
-
-type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
+import { UserState } from '@user/state/user-state';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  private _authStatus = signal<AuthStatus>('checking');
-  private _user = signal<User | null>(null);
-  private _id = signal<string | null>(null);
-  // Esto ayuda a que si se tiene una sesión ya iniciada y se refresca, se puede mantener la sesión.
-  private _token = signal<string | null>( localStorage.getItem('x-token') );
 
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}auth`;
@@ -31,30 +24,17 @@ export class AuthService {
   private uiService = inject(UIService);
   private cartService = inject(CartService);
   private fileService = inject(FileService);
+  private userState = inject(UserState);
 
   // Se dispara ni bien el servicio es inyectado por primera vez.
   checkStatusResource = rxResource({
     stream: () => this.checkStatus()
   });
-  
-  user = computed( this._user );
-  id = computed( this._id );
-  token = computed(this._token);
 
-  authStatus = computed<AuthStatus>(() => {
-    if( this._authStatus() === 'checking' ) return 'checking';
-
-    if( this._user() ){
-      return 'authenticated';
-    }
-
-    return 'not-authenticated';
-  });
-
-  constructor( ) { 
-    let previousStatus : AuthStatus = this.authStatus();
+  constructor( ) {
+    let previousStatus : AuthStatus = this.userState.authStatus();
     effect( () => {
-      const status = this.authStatus();
+      const status = this.userState.authStatus();
       if( previousStatus === 'authenticated' && status === 'not-authenticated' ){
         this.router.navigateByUrl('/');
       }
@@ -85,11 +65,12 @@ export class AuthService {
   }
 
   public updateUser = ( userRequest :  Partial<UserDTO> , file : File | null ) : Observable<User | false> => {
-    return this.http.put<AuthResponse>(`${this.baseURL}/update-user` , { ...userRequest } )
+    return this.http.put<AuthResponse>(`${this.baseURL}/update/user/${this.userState.user()?.id}` , { ...userRequest } )
                       .pipe(
                         map( ( authResponse ) => {
+                          console.log(authResponse);
                           if( file ){
-                            this.fileService.uploadFile( 'user' , this.user()?.id! , file ).subscribe()
+                            this.fileService.uploadFile( 'user' , this.userState.user()?.id! , file ).subscribe()
                           }
                           return this.handleAuthSuccess( authResponse )
                         } ),
@@ -120,7 +101,7 @@ export class AuthService {
                       map( ( authResponse ) => {
                         if( authResponse.ok ){
                           // Actualiza el flag en la señal de usuario sin necesidad de re-loguear.
-                          this._user.update( ( user ) => user ? { ...user, isEmailVerified : true } : user );
+                          this.userState.setEmailVerified( true );
                         }
                         return authResponse.ok;
                       }),
@@ -132,9 +113,7 @@ export class AuthService {
   }
 
   public logoutUser = ( ) : void => {
-    this._user.set(null);
-    this._token.set(null);
-    this._authStatus.set('not-authenticated');
+    this.userState.logout();
     this.cartService.clearCart();
 
     localStorage.clear();
@@ -158,12 +137,10 @@ export class AuthService {
   }
   
   private handleAuthSuccess = ( authResponse : AuthResponse ) : User  => {
-    this._user.set( authResponse.user );
-    this._id.set( authResponse.user.id );
-    this._token.set( authResponse.token );
-    this._authStatus.set( 'authenticated' );
-  
-    localStorage.setItem('x-token' , authResponse.token);
+    this.userState.setUser( authResponse.user );
+    this.userState.setToken( authResponse.token );
+    this.userState.setAuthStatus( 'authenticated' );
+
     return AuthMapper.mapResponseToUser( authResponse );
   }
   

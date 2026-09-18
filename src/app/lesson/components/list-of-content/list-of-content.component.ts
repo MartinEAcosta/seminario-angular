@@ -2,7 +2,7 @@ import { Component, computed, inject, input } from '@angular/core';
 import { ModulesAccordionComponent } from "../modules-accordion/modules-accordion.component";
 import { rxResource } from '@angular/core/rxjs-interop';
 import { ModuleService } from '@module/services/module.service';
-import { AuthService } from '@auth/services/auth.service';
+import { UserState } from '@user/state/user-state';
 import { LoaderComponent } from "@shared/components/loader/loader.component";
 
 @Component({
@@ -14,10 +14,10 @@ import { LoaderComponent } from "@shared/components/loader/loader.component";
 export class ListOfContentComponent {
 
   private moduleService = inject(ModuleService);
-  private authService = inject(AuthService);
+  private userState = inject(UserState);
 
   courseId = input.required<string>();
-  user = computed( () => this.authService.user() );
+  user = computed( () => this.userState.user() );
 
   modulesResource = rxResource({
     stream : ( ) => {

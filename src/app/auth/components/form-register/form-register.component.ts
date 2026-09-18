@@ -5,6 +5,7 @@ import { Validators, ReactiveFormsModule, FormBuilder, FormGroup } from '@angula
 
 import { FormUtils } from '@utils/form-utils';
 import { AuthService } from '@auth/services/auth.service';
+import { UserState } from '@user/state/user-state';
 import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
 
 @Component({
@@ -17,7 +18,8 @@ export class FormRegisterComponent {
 
   private router = inject(Router);
   private authService = inject(AuthService);
-  public isLoading = computed( () => this.authService.authStatus() );
+  private userState = inject(UserState);
+  public isLoading = computed( () => this.userState.authStatus() );
 
   private fb = inject(FormBuilder);
 

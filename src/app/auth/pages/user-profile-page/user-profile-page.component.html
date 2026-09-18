@@ -47,7 +47,7 @@
                                     type="file"
                                     class="avatar-input"
                                     accept="image/*"
-                                    (change)="onAvatarSelected($event , 'user' )">
+                                    (change)="onAvatarSelected($event)">
 
                                 <button type="button" class="btn-outline" (click)="avatarInput.click()">
                                     Cambiar foto
@@ -121,7 +121,7 @@
                             {{ isEmailVerified() ? 'Email verificado' : 'Email sin verificar' }}
                         </span>
 
-                        <p class="verification-email">{{ authService.user()?.email }}</p>
+                        <p class="verification-email">{{ userState.user()?.email }}</p>
 
                         @if( !isEmailVerified() ) {
                             <p>Validá tu email para solicitar convertirte en profesor y acceder al resto de tu cuenta.</p>

@@ -3,7 +3,7 @@
 */
 import { Component, inject, OnInit, signal } from '@angular/core';
 
-import { AuthService } from '@auth/services/auth.service';
+import { UserState } from '@user/state/user-state';
 import { UIService } from '@shared/services/ui/ui.service';
 import { LoaderComponent } from '@shared/components/loader/loader.component';
 import { EmailVerificationBannerComponent } from '@auth/components/email-verification-banner/email-verification-banner.component';
@@ -25,10 +25,10 @@ import { TeacherRequestDTO } from '@teacher-request/models/teacher-request.inter
 })
 export class BecomeTeacherPageComponent {
 
-  public authService = inject(AuthService);
+  public userState = inject(UserState);
   public teacherRequestState = inject(TeacherRequestState);
 
-  public user = this.authService.user;
+  public user = this.userState.user;
 
   // Controla si se muestra el formulario (primera solicitud o re-postulación tras un rechazo).
   public showForm = signal<boolean>(false);

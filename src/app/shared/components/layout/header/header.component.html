@@ -15,18 +15,18 @@
       <a [routerLink]="['/explore']" (click)="searchService.reset()">
           Explorar
       </a>
-      @if ( authService.authStatus() === "authenticated") {
+      @if ( userState.authStatus() === "authenticated") {
         <a [routerLink]="['/enrollment']">
           Biblioteca
         </a>
 
-        @if( authService.user()?.role === 'teacher' || authService.user()?.role === 'admin' ) {
+        @if( userState.user()?.role === 'teacher' || userState.user()?.role === 'admin' ) {
           <a [routerLink]="['/course/create']">
             Crea tu curso
           </a>
         }
 
-        @if( authService.user()?.role === 'student' ) {
+        @if( userState.user()?.role === 'student' ) {
           <a [routerLink]="['/become-teacher']">
             Conviértete en profesor
           </a>

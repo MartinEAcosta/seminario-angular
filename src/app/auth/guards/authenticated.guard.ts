@@ -2,15 +2,15 @@ import { inject } from '@angular/core';
 import { CanMatchFn, Route, Router } from '@angular/router';
 import { filter, firstValueFrom } from 'rxjs';
 
-import { AuthService } from '@auth/services/auth.service';
+import { UserState } from '@user/state/user-state';
 import { toObservable } from '@angular/core/rxjs-interop';
 
 export const AuthenticatedGuard: CanMatchFn = async () => {
     const router = inject(Router);
-    const authService = inject(AuthService);
+    const userState = inject(UserState);
 
     const status = await firstValueFrom(
-        toObservable(authService.authStatus).pipe(filter(s => s !== 'checking'))
+        toObservable(userState.authStatus).pipe(filter(s => s !== 'checking'))
     );
 
     if (status !== 'authenticated') {

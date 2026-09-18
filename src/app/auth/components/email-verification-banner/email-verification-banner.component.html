@@ -1,7 +1,7 @@
 @if ( isVerified() ) {
     <div class="container-banner verified">
         <span class="icon">✓</span>
-        <p class="text-banner">Tu email <strong>{{ authService.user()?.email }}</strong> ya está validado.</p>
+        <p class="text-banner">Tu email <strong>{{ userState.user()?.email }}</strong> ya está validado.</p>
     </div>
 }
 @else {
@@ -9,7 +9,7 @@
         <span class="icon">!</span>
         <div class="content-banner">
             <p class="text-banner">
-                Tu email <strong>{{ authService.user()?.email }}</strong> todavía no está validado.
+                Tu email <strong>{{ userState.user()?.email }}</strong> todavía no está validado.
             </p>
             <p class="text-banner-secondary">
                 Validalo para poder solicitar convertirte en profesor y acceder a otras funciones de tu cuenta.

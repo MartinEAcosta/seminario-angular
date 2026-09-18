@@ -3,7 +3,7 @@ import { NgClass } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { AuthService } from '@auth/services/auth.service';
+import { UserState } from '@user/state/user-state';
 import { FileService } from '@file/services/file.service';
 import { UIService } from '@shared/services/ui/ui.service';
 import { FormErrorLabelComponent } from '@shared/components/form-error-label/form-error-label.component';
@@ -28,7 +28,7 @@ export class CourseStepDataComponent {
 
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
-  private authService = inject(AuthService);
+  private userState = inject(UserState);
   private courseService = inject(CourseService);
   private uiService = inject(UIService);
 
@@ -39,7 +39,7 @@ export class CourseStepDataComponent {
     this.courseFormState.courseForm.markAllAsTouched();
     if( !this.courseFormState.courseForm.valid ) return;
 
-    const uid = this.authService.id();
+    const uid = this.userState.id();
     if( !uid ) return;
 
     const savedCourse = this.courseFormState.savedCourse();
@@ -75,7 +75,7 @@ export class CourseStepDataComponent {
   }
 
   onRemoveCourse = ( course : Course ) : void  => {
-    if( course.id_owner === this.authService.id() ){
+    if( course.id_owner === this.userState.id() ){
       this.courseService.deleteCourse( course.id )
                             .subscribe( ( isCourseDeleted ) => {
                                 if( isCourseDeleted ) {

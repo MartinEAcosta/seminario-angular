@@ -1,21 +1,73 @@
-<section class="bg-about">
-    <div class="container-about">
-        <h1 class="title">Sobre Nosotros</h1>
-        <div class="container-split">
-            <section class="section-about">
-                <p class="text-about"> 
-                    Bienvenido a UDEMIX, un espacio diseñado para estudiantes, docentes y apasionados del conocimiento que buscan organizar, compartir y acceder a contenido educativo de forma clara y dinámica.
-                    Nuestra plataforma te permitirá grabar tus propios cursos, gestionar tu contenido y compartirlo con quienes desees. Creemos en la colaboración y el acceso abierto al aprendizaje, por eso ofrecemos un sistema intuitivo donde cada usuario puede:
-                </p>
-                <ul>
-                    <li> 📚 Crear y publicar cursos propios </li>
-                    <li> 📁 Subir archivos relevantes como PDFs, presentaciones o materiales complementarios </li>
-                    <li> 🔍 Explorar otros cursos en diversas categorías y niveles </li>
-                </ul>
-            </section>
-            <div class="container-animated">
-                <h2 class="text-animated">Udemix</h2>
+<section class="section-hero" #heroSection>
+    <div class="reveal" [class.is-visible]="visibleSections().has('hero')">
+        <div class="stamp-strip">
+            <span class="stamp"><img src="/assets/about-course-icon.svg" alt="Crear cursos"></span>
+            <span class="stamp"><img src="/assets/about-cart-icon.svg" alt="Explorar y comprar cursos"></span>
+            <span class="stamp"><img src="/assets/about-teacher-icon.svg" alt="Convertirse en profesor"></span>
+        </div>
+        <h1 class="hero-title">Tu acceso a aprender, crear y enseñar sin fricción</h1>
+        <p class="hero-subtitle">
+            Udemix reúne en un solo lugar todo lo que necesitás para publicar tus propios cursos, descubrir nuevos
+            temas y convertirte en profesor cuando estés listo.
+        </p>
+    </div>
+</section>
+
+<section class="section-spotlight" #spotlightSection>
+    <div class="reveal spotlight-content" [class.is-visible]="visibleSections().has('spotlight')">
+        <div class="spotlight-text">
+            <span class="eyebrow">Para quienes enseñan</span>
+            <h2>Creá y publicá tus propios cursos</h2>
+            <p>
+                Grabá tus lecciones, organizá el contenido a tu manera y compartilo con quienes quieras.
+                Udemix te da el espacio; el curso lo armás vos.
+            </p>
+            <ul class="spotlight-list">
+                <li>Subí videos, PDFs y materiales complementarios a cada lección</li>
+                <li>Organizá tu curso en módulos y lecciones, en el orden que tenga sentido</li>
+                <li>Publicalo cuando esté listo y dejá que la comunidad lo descubra</li>
+            </ul>
+        </div>
+        <div class="spotlight-visual">
+            <img
+                class="spotlight-mockup"
+                src="/assets/about-course-builder-mockup.svg"
+                alt="Vista previa del editor de cursos de Udemix, con módulos organizados y progreso de publicación"
+            >
+        </div>
+    </div>
+</section>
+
+<section class="section-grid" #gridSection>
+    <div class="reveal ticket-grid" [class.is-visible]="visibleSections().has('grid')">
+        <article class="ticket-card">
+            <span class="ticket-stamp"><img src="/assets/about-cart-icon.svg" alt=""></span>
+            <div class="ticket-perforation" aria-hidden="true"></div>
+            <div class="ticket-body">
+                <span class="eyebrow">Para quienes aprenden</span>
+                <h3>Explorá y comprá cursos</h3>
+                <p>Recorré el catálogo por categorías, sumá lo que te interesa al carrito y pagá con MercadoPago.</p>
             </div>
+        </article>
+        <article class="ticket-card">
+            <span class="ticket-stamp"><img src="/assets/about-teacher-icon.svg" alt=""></span>
+            <div class="ticket-perforation" aria-hidden="true"></div>
+            <div class="ticket-body">
+                <span class="eyebrow">Para dar el siguiente paso</span>
+                <h3>Convertite en profesor</h3>
+                <p>Pedí tu pase de instructor, y empezá a publicar tus propios cursos en la plataforma.</p>
+            </div>
+        </article>
+    </div>
+</section>
+
+<section class="section-cta" #ctaSection>
+    <div class="reveal" [class.is-visible]="visibleSections().has('cta')">
+        <h2>Empezá cuando quieras</h2>
+        <p>Sin pasos de más: elegí un curso o pedí tu pase de profesor.</p>
+        <div class="cta-actions">
+            <button [routerLink]="'/explore'" class="btn-primary btn">Explorar cursos</button>
+            <button [routerLink]="'/become-teacher'" class="btn-secondary btn">Convertite en profesor</button>
         </div>
     </div>
 </section>

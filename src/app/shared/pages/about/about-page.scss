@@ -1,66 +1,357 @@
 @use '@variables' as v;
 
-.bg-about{
+$about-ink: #0e1a1a;
+
+:host{
+    display: block;
+    overflow-x: hidden;
+}
+
+.reveal{
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.reveal.is-visible{
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce){
+    .reveal{
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+/* ---------- Hero ---------- */
+
+.section-hero{
+    padding: 7% 6% 6%;
+    background-color: $about-ink;
+}
+
+.section-hero .reveal{
     display: flex;
     flex-direction: column;
-    width: 100%;
-    height: 80vh;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+}
+
+.stamp-strip{
+    display: flex;
+    gap: 1rem;
+}
+
+.stamp{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 1px solid rgba(233, 233, 233, 0.16);
+    background-color: rgba(233, 233, 233, 0.05);
+}
+
+.stamp img{
+    width: 24px;
+    height: 24px;
+}
+
+.hero-title{
+    max-width: 900px;
+    margin: 0;
+    font-family: v.$font-primary;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    background: linear-gradient(180deg, v.$white-custom 0%, rgba(150, 150, 150, 1) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero-subtitle{
+    max-width: 640px;
+    margin: 0;
+    font-family: v.$font-primary;
+    font-size: 1.15rem;
+    color: rgba(233, 233, 233, 0.6);
+}
+
+/* ---------- Spotlight ---------- */
+
+.section-spotlight{
+    padding: 6%;
     background-color: v.$white-custom;
 }
 
-.container-about{
-    padding: 4%;
+.spotlight-content{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
-.container-about .title , .text-about , ul{
+.eyebrow{
+    display: inline-block;
+    margin-bottom: 0.75rem;
     font-family: v.$font-primary;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: v.$brand-color;
 }
 
-.container-about .title{
-    font-size: 2rem;
-    margin-bottom: 2%;
+.spotlight-text h2{
+    margin: 0 0 1rem;
+    font-family: v.$font-primary;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    letter-spacing: -0.01em;
     color: v.$black-custom;
 }
 
-.container-about .text-about{
-    font-size: large;
-    color: v.$black-custom;
-    padding-right: 5%;
+.spotlight-text p{
+    margin: 0 0 1.25rem;
+    font-family: v.$font-primary;
+    color: rgba(40, 40, 40, 0.75);
+    line-height: 1.6;
 }
 
-.section-about{
+.spotlight-list{
     display: flex;
     flex-direction: column;
-    width: 60%;
-}
-
-.section-about ul{
-    color: v.$black-custom;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
     list-style: none;
-    margin: 1%;
 }
 
-.container-split {
-    display: flex;
-    flex-direction: row;
+.spotlight-list li{
+    position: relative;
+    padding-left: 1.5rem;
+    font-family: v.$font-primary;
+    font-size: 0.95rem;
+    color: v.$black-custom;
 }
 
-.container-animated{
+.spotlight-list li::before{
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: v.$brand-color;
+}
+
+.spotlight-visual{
+    position: relative;
     display: flex;
-    justify-content: center;
-    margin: 0 auto auto auto;
-    text-align: center;
     align-items: center;
+    justify-content: center;
 }
 
-.text-animated{
+.spotlight-mockup{
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 440px;
+    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.15));
+}
+
+/* ---------- Grid de comodidades (ticket cards) ---------- */
+
+.section-grid{
+    padding: 0 6% 6%;
+    background-color: v.$white-custom;
+}
+
+.ticket-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.ticket-card{
+    position: relative;
     display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 20px;
+    border: 1px solid rgba(40, 40, 40, 0.08);
+    background-color: #ffffff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ticket-card:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.1);
+}
+
+.ticket-stamp{
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: v.$brand-color;
+}
+
+.ticket-stamp img{
+    width: 22px;
+    height: 22px;
+}
+
+.ticket-perforation{
+    position: relative;
+    height: 5.5rem;
+    background-color: v.$brand-color;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+    background-size: 16px 16px;
+}
+
+.ticket-perforation::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -10px;
+    height: 20px;
+    background-image: radial-gradient(circle at 10px 0, transparent 10px, #ffffff 10.5px);
+    background-size: 20px 20px;
+    background-repeat: repeat-x;
+}
+
+.ticket-body{
+    padding: 2.5rem 1.75rem 1.75rem;
+}
+
+.ticket-body h3{
+    margin: 0 0 0.5rem;
+    font-family: v.$font-primary;
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: v.$black-custom;
+}
+
+.ticket-body p{
+    margin: 0;
+    font-family: v.$font-primary;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: rgba(40, 40, 40, 0.7);
+}
+
+/* ---------- CTA final ---------- */
+
+.section-cta{
+    padding: 6%;
+    background-color: $about-ink;
+}
+
+.section-cta .reveal{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+}
+
+.section-cta h2{
+    margin: 0;
+    font-family: v.$font-primary;
+    font-weight: 900;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: v.$white-custom;
+}
+
+.section-cta p{
+    margin: 0 0 0.5rem;
+    font-family: v.$font-primary;
+    color: rgba(233, 233, 233, 0.6);
+}
+
+.cta-actions{
+    display: flex;
+    gap: 1.25rem;
+}
+
+.btn{
+    padding: 0.7rem 1.5rem;
+    align-items: center;
+    border: none;
+    border-radius: 1.5rem;
+    font-family: v.$font-primary;
+    font-weight: 600;
+    color: v.$white-custom;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+    transition: all ease 0.5s;
+}
+
+.btn:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.btn-primary{
+    background-color: v.$brand-color;
+}
+
+.btn-primary:hover{
+    background-color: rgba(0, 120, 140, 0.8);
+}
+
+.btn-secondary{
+    background-color: transparent;
+    border: 2px solid v.$white-custom;
+}
+
+.btn-secondary:hover{
+    background-color: v.$white-custom;
     color: v.$brand-color;
-    font-size: 8vw;
-    font-family: v.$font-brand;
-    transition: transform 0.1s ease;
-    perspective: 1000px;
-    text-shadow: 10px 10px 15px rgba( 0 , 0 , 0 , 0.6);
-    margin-right: 10%;
-    transform: rotate(5deg);
+}
+
+@media (max-width: 768px){
+    .stamp-strip{
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .spotlight-content{
+        grid-template-columns: 1fr;
+    }
+
+    .ticket-grid{
+        grid-template-columns: 1fr;
+    }
+
+    .cta-actions{
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .cta-actions .btn{
+        width: 100%;
+    }
 }

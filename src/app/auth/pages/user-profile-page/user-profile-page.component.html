@@ -35,7 +35,7 @@
                     <div class="avatar-block">
                         <img
                             class="avatar-image"
-                            [src]="avatarPreview() ?? defaultAvatar"
+                            [src]="this.userState.tempAvatar() ?? defaultAvatar"
                             alt="Tu foto de perfil">
 
                         <div class="avatar-actions">
@@ -53,7 +53,7 @@
                                     Cambiar foto
                                 </button>
 
-                                @if( avatarPreview() ) {
+                                @if( this.userState.tempAvatar() ) {
                                     <button type="button" class="btn-quiet" (click)="onRemoveAvatar(avatarInput)">
                                         Quitar foto
                                     </button>

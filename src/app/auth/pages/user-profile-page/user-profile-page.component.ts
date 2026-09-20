@@ -37,11 +37,6 @@ export class UserProfilePageComponent {
 
   activeSection = signal<SettingsSection>('perfil');
 
-  // Local preview if a new avatar was picked, otherwise fall back to the persisted one.
-  avatarPreview = computed<string | null>(
-    () => this.userState.tempAvatar() || this.userState.user()?.avatar_url || null
-  );
-
   isEmailVerified = computed<boolean>( () => this.userState.user()?.isEmailVerified ?? false );
   isSendingVerification = signal<boolean>(false);
 

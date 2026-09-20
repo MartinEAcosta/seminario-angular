@@ -51,6 +51,8 @@ export class UserState {
       email: user.email,
     });
 
+    user.avatar_url ? this.setTempAvatar( user.avatar_url ) : this.setTempAvatar(null);
+
     return this.profileForm;
   }
 

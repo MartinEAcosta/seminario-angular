@@ -69,6 +69,7 @@ export class UserState {
   }
 
   public setToken ( token : string | null ) : void {
+    console.log(token)
     this._token.set( token );
     if ( token ) localStorage.setItem('x-token', token);
     else localStorage.removeItem('x-token');

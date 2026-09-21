@@ -1,20 +1,9 @@
 @use '@variables' as v;
 
-.overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 5;
-
-    &.open {
-        display: block;
-    }
-}
-
 .container-user-profile {
     position: relative;
     display: flex;
-    margin-left: 1rem;
+    margin-left: 10px;
     align-items: center;
     justify-content: center;
 }
@@ -35,7 +24,7 @@
 
     &:hover,
     &.active {
-        box-shadow: 0 0 0 2px rgba(v.$brand-color, 0.45);
+        box-shadow: 0 0 0 2px var(--header-ring-color, rgba(v.$brand-color, 0.45));
     }
 }
 
@@ -45,6 +34,11 @@
     aspect-ratio: 1 / 1;
     border-radius: 50%;
     filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
+}
+
+.fallback-icon {
+    filter: var(--header-icon-filter, none);
+    transition: filter 0.9s ease;
 }
 
 // Grid-rows trick: animates from an intrinsic 0 height to the content's
@@ -63,7 +57,9 @@
     visibility: hidden;
     transform: translateY(-0.5rem);
     border-radius: 0.75rem;
-    background-color: v.$white-custom;
+    background-color: rgba(v.$white-custom, 0.72);
+    backdrop-filter: blur(18px) saturate(1.4);
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
     transition: grid-template-rows 0.25s ease, opacity 0.2s ease,
         transform 0.25s ease, visibility 0s linear 0.25s;
@@ -75,7 +71,9 @@
         right: 0.85rem;
         width: 0.7rem;
         height: 0.7rem;
-        background-color: v.$white-custom;
+        background-color: rgba(v.$white-custom, 0.72);
+        backdrop-filter: blur(18px) saturate(1.4);
+        -webkit-backdrop-filter: blur(18px) saturate(1.4);
         border-radius: 0.15rem 0 0 0;
         transform: rotate(45deg);
     }

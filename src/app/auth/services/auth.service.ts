@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { effect, inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 import { environment } from '../../../environments/environment';
 import { UIService } from '@shared/services/ui/ui.service';
-import { AuthResponse, AuthStatus, User, UserDTO } from '@auth/models/auth.interfaces';
+import { AuthResponse, User, UserDTO } from '@auth/models/auth.interfaces';
 import { AuthMapper } from '@mappers/auth.mapper';
 import { ErrorResponse, VerificationEmailResponse } from '@shared/models/api.interfaces';
 import { CartService } from '@cart/state/cart.service';
@@ -31,17 +31,6 @@ export class AuthService {
     stream: () => this.checkStatus()
   });
 
-  constructor( ) {
-    let previousStatus : AuthStatus = this.userState.authStatus();
-    effect( () => {
-      const status = this.userState.authStatus();
-      if( previousStatus === 'authenticated' && status === 'not-authenticated' ){
-        this.router.navigateByUrl('/');
-      }
-      previousStatus = status;
-    });
-  }
-
   public registerUser = ( userRequest : UserDTO ) : Observable<User | false> => {
     return this.http
                   .post<AuthResponse>(`${this.baseURL}/register` , { ...userRequest } )
@@ -57,7 +46,8 @@ export class AuthService {
                       .pipe(
                         map( ( authResponse ) => {
                           console.log(authResponse);
-                          return this.handleAuthSuccess( authResponse )} ),
+                          return this.handleAuthSuccess( authResponse );
+                        } ),
                         catchError( ( { error } ) => {
                           return this.handleAuthError( error )
                         } )
@@ -72,7 +62,7 @@ export class AuthService {
                           if( file ){
                             this.fileService.uploadFile( 'user' , this.userState.user()?.id! , file ).subscribe()
                           }
-                          return this.handleAuthSuccess( authResponse )
+                          return this.handleAuthSuccess( authResponse );
                         } ),
                         catchError( ( { error } ) => {
                           return this.handleAuthError( error )
@@ -113,10 +103,19 @@ export class AuthService {
   }
 
   public logoutUser = ( ) : void => {
+    const wasAuthenticated = this.userState.authStatus() === 'authenticated';
+
     this.userState.logout();
     this.cartService.clearCart();
 
     localStorage.clear();
+
+    // Solo redirige si había una sesión activa (logout manual o pérdida de sesión).
+    // Evita mandar a "/" cuando login/register/updateUser fallan sin haber estado
+    // nunca autenticado (logoutUser() también se invoca desde handleAuthError()).
+    if( wasAuthenticated ){
+      this.router.navigateByUrl('/');
+    }
   }
   
   public checkStatus = ( ) : Observable<boolean> => {
@@ -137,6 +136,7 @@ export class AuthService {
   }
   
   private handleAuthSuccess = ( authResponse : AuthResponse ) : User  => {
+    console.log(authResponse)
     this.userState.setUser( authResponse.user );
     this.userState.setToken( authResponse.token );
     this.userState.setAuthStatus( 'authenticated' );
@@ -145,13 +145,16 @@ export class AuthService {
   }
   
   private handleAuthError = ( error : any | ErrorResponse ) : Observable<false>  => {
-    this.logoutUser();
-    console.log( error);
+    // Solo cierra sesión ante un error real de autenticación (token inválido/expirado).
+    // Un 400 de validación (ej: email duplicado al actualizar perfil) no debe desloguear.
+    if( error.status === 401 || error.status === 403 ) {
+      this.logoutUser();
+    }
+
     if( error.status === 400 ) {
       this.uiService.showToastMessage( error.error );
     }
-    console.log(this.uiService.errorMessage());
-    
+
     return of(false);
   }
 

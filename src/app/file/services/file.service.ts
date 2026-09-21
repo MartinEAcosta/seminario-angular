@@ -55,6 +55,7 @@ export class FileService {
   }
 
   deleteFile = ( id : string ) : Observable<DeleteResponse> => {
+    console.log(id)
     return this.http
                 .delete<DeleteResponse>(
                                       `${this.baseURL}/${id}`,

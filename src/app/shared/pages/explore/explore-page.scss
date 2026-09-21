@@ -7,6 +7,12 @@
     justify-content: center;
     overflow: hidden;
     background-color: v.$white-custom;
+    // El header sticky reserva 80px de flow antes de esta sección; sin este
+    // margin/padding, esa franja queda sin pintar (fondo del body) y se ve
+    // como una línea clara bajo el header glass. Se extiende el fondo hacia
+    // arriba sin mover el contenido.
+    margin-top: -80px;
+    padding-top: 80px;
 }
 
 .container-content{

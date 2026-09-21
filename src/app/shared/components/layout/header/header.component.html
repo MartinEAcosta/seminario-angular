@@ -1,4 +1,4 @@
-<header>
+<header [class.header-transparent]="isTransparentTop()" [class.header-glass]="!isTransparentTop()" [class.header-overlay]="overlaysDarkHero()">
   <div class="container-brand-icon">
     <a [routerLink]="['']" class="logo">Udemix</a>
   </div>
@@ -12,6 +12,9 @@
     </div>
 
     <div class="container-nav-anchors">
+      <a [routerLink]="['/about']">
+          Nosotros
+      </a>
       <a [routerLink]="['/explore']" (click)="searchService.reset()">
           Explorar
       </a>

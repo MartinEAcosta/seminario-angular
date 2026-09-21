@@ -81,8 +81,20 @@ export class UserProfilePageComponent {
 
     if( !this.profileForm.valid ) return;
 
-    const userToUpdate = AuthMapper.mapFormToUserDTO( this.profileForm );
+    const userDto = AuthMapper.mapFormToUserDTO( this.profileForm );
     const file = this.userState.avatarFile();
+
+    let userToUpdate = userDto;
+    console.log(this.userState.user())
+    console.log(this.userState.tempAvatar() , this.userState.user()?.avatar_url! , this.userState.user()?.id_file)
+    if( (this.userState.user()?.avatar_url! && this.userState.user()?.id_file! ) && this.userState.avatarFile() === null ){
+      this.fileService.deleteFile( this.userState.user()?.id_file! );
+      userToUpdate = {
+        ...userDto,
+        avatar_url : '',
+        id_file : undefined,
+      }
+    }
 
     this.authService.updateUser(userToUpdate, file).subscribe( ( user ) => {
       if( !user ) return; // AuthService ya mostró el error vía handleAuthError.

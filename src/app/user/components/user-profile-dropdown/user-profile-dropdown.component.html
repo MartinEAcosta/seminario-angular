@@ -3,10 +3,9 @@
         @if( userState.user()?.avatar_url ) {
             <img [src]="userState.user()?.avatar_url" alt="User icon profile" class="user-profile-img">
         } @else {
-            <img src="assets/user-profile.svg" alt="User icon profile" class="user-profile-img">
+            <img src="assets/user-profile.svg" alt="User icon profile" class="user-profile-img fallback-icon">
         }
     </button>
-    <div class="overlay" [ngClass]="{ 'open': open() }" (click)="onCloseDropdown($event)"></div>
     <div class="dropdown-wrapper" [ngClass]="{ 'open': open() }">
         <div class="dropdown-inner">
             <div [routerLink]="['/auth/me']" class="dropdown-item">

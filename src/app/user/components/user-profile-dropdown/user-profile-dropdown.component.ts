@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, signal } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { filter } from 'rxjs';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
@@ -17,6 +17,7 @@ export class UserProfileDropdownComponent {
   router = inject(Router);
   authService = inject(AuthService);
   userState = inject(UserState);
+  elementRef = inject(ElementRef);
   open = signal<boolean>(false);
 
 constructor() {
@@ -31,9 +32,9 @@ constructor() {
     this.open.update( open => !open );
   }
 
-  onCloseDropdown ( event: MouseEvent ) : void {
-    const clickedContainer = event.target as HTMLElement;
-    if( clickedContainer.classList.contains('overlay') ){
+  @HostListener('document:click', ['$event'])
+  onDocumentClick ( event: MouseEvent ) : void {
+    if( this.open() && !this.elementRef.nativeElement.contains(event.target as Node) ){
       this.open.set(false);
     }
   }

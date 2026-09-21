@@ -13,6 +13,12 @@
         radial-gradient(120% 100% at 12% 0%, rgba(0, 120, 140, 0.07), transparent 55%),
         radial-gradient(120% 100% at 88% 100%, rgba(255, 190, 40, 0.09), transparent 55%),
         v.$white-custom;
+    // El header sticky reserva 80px de flow antes de esta sección; sin este
+    // margin/padding, esa franja queda sin pintar (fondo del body) y se ve
+    // como una línea clara bajo el header glass. Se extiende el fondo hacia
+    // arriba sin mover el contenido. Mismo patrón que auth-layout.component.scss.
+    margin-top: -80px;
+    padding-top: calc(4rem + 80px);
 }
 
 .settings-header{

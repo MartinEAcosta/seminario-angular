@@ -1,5 +1,5 @@
 import { FormGroup } from "@angular/forms";
-import type { User , AuthResponse } from "@auth/models/auth.interfaces";
+import type { User , AuthResponse, UserDTO } from "@auth/models/auth.interfaces";
 
 export class AuthMapper {
 
@@ -15,7 +15,7 @@ export class AuthMapper {
         };
     }
 
-    static mapFormToUserDTO( form : FormGroup ) : Partial<User> {
+    static mapFormToUserDTO( form : FormGroup ) : UserDTO {
         const formValue = form.value;
         return {
             username : formValue.username,

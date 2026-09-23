@@ -1,0 +1,21 @@
+<nav class="stepper">
+    <a
+        routerLink="cart"
+        routerLinkActive="active"
+        class="stepper-step"
+        [class.done]="!cartEmpty()"
+    >
+        <span class="stepper-num">01</span>
+        <span class="stepper-title">Revisar carrito</span>
+    </a>
+
+    <a
+        [routerLink]="cartEmpty() ? null : 'pay'"
+        routerLinkActive="active"
+        class="stepper-step"
+        [class.disabled]="cartEmpty()"
+    >
+        <span class="stepper-num">02</span>
+        <span class="stepper-title">Pagar</span>
+    </a>
+</nav>

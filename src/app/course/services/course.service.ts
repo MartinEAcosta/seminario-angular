@@ -67,7 +67,6 @@ export class CourseService {
 
   public saveCourse = ( courseRequest: CourseDTO, file: File | null = null ): Observable<Course> => {
     const { id, ...rest } = courseRequest;
-
     let course;
     if (id) {
       course = this.http

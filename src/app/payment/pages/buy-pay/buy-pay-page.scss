@@ -1,0 +1,50 @@
+@use '../../../../variables.scss' as v;
+
+.pay-layout{
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+}
+
+.container-resume{
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 380px;
+    min-width: 320px;
+    max-width: 380px;
+    align-items: stretch;
+    font-family: v.$font-primary;
+    color: v.$black-custom;
+}
+
+.pay-form{
+    flex: 1 1 0%;
+    min-width: 320px;
+}
+
+.back-link{
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: v.$brand-color;
+    font-family: v.$font-primary;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.back-link:hover{
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .pay-layout{
+        flex-direction: column;
+    }
+
+    .container-resume,
+    .pay-form{
+        flex-basis: 100%;
+        min-width: 0;
+        width: 100%;
+    }
+}

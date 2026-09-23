@@ -1,15 +1,12 @@
 /*
     Path:PORT/become-teacher
 */
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 
 import { UserState } from '@user/state/user-state';
-import { UIService } from '@shared/services/ui/ui.service';
-import { LoaderComponent } from '@shared/components/loader/loader.component';
 import { EmailVerificationBannerComponent } from '@auth/components/email-verification-banner/email-verification-banner.component';
 import { TeacherRequestState } from '@teacher-request/state/teacher-request-state';
 import { TeacherRequestFormComponent } from '@teacher-request/components/teacher-request-form/teacher-request-form.component';
-import { TeacherRequestStatusComponent } from '@teacher-request/components/teacher-request-status/teacher-request-status.component';
 import { TeacherRequestDTO } from '@teacher-request/models/teacher-request.interfaces';
 
 @Component({
@@ -17,10 +14,8 @@ import { TeacherRequestDTO } from '@teacher-request/models/teacher-request.inter
     templateUrl: './become-teacher-page.component.html',
     styleUrl: './become-teacher-page.component.scss',
     imports: [
-        LoaderComponent,
         EmailVerificationBannerComponent,
         TeacherRequestFormComponent,
-        TeacherRequestStatusComponent,
     ]
 })
 export class BecomeTeacherPageComponent {

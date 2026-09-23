@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of, switchMap } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 import { environment } from '../../../environments/environment';
@@ -57,13 +57,23 @@ export class AuthService {
   public updateUser = ( userRequest :  Partial<UserDTO> , file : File | null ) : Observable<User | false> => {
     return this.http.put<AuthResponse>(`${this.baseURL}/update/user/${this.userState.user()?.id}` , { ...userRequest } )
                       .pipe(
-                        map( ( authResponse ) => {
-                          console.log(authResponse);
-                          if( file ){
-                            this.fileService.uploadFile( 'user' , this.userState.user()?.id! , file ).subscribe()
-                          }
-                          return this.handleAuthSuccess( authResponse );
-                        } ),
+                        map( ( authResponse ) => this.handleAuthSuccess( authResponse ) ),
+                        switchMap( ( user ) => {
+                          if( !file ) return of( user );
+
+                          return this.fileService.uploadFile( 'user' , user.id , file )
+                                                    .pipe(
+                                                      map( ( uploadedFile ) => {
+                                                        const updatedUser : User = {
+                                                          ...user,
+                                                          avatar_url : uploadedFile.url ?? user.avatar_url,
+                                                          id_file : uploadedFile.id,
+                                                        };
+                                                        this.userState.setUser( updatedUser );
+                                                        return updatedUser;
+                                                      })
+                                                    );
+                        }),
                         catchError( ( { error } ) => {
                           return this.handleAuthError( error )
                         })

@@ -1,3 +1,5 @@
+@use '@variables' as v;
+
 *,body{
     margin: 0px;
     padding: 0px;
@@ -9,5 +11,6 @@ html{
 }
 
 body{
+    background-color: v.$white-custom;
     background-size: 100vw 100vh;
 }

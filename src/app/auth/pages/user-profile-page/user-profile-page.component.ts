@@ -85,23 +85,21 @@ export class UserProfilePageComponent {
     const file = this.userState.avatarFile();
 
     let userToUpdate = userDto;
-    console.log(this.userState.user())
-    console.log(this.userState.tempAvatar() , this.userState.user()?.avatar_url! , this.userState.user()?.id_file)
     if( (this.userState.user()?.avatar_url! && this.userState.user()?.id_file! ) && this.userState.avatarFile() === null ){
       this.fileService.deleteFile( this.userState.user()?.id_file! );
       userToUpdate = {
         ...userDto,
         avatar_url : '',
         id_file : undefined,
-      }
+      };
+      this.userState.setTempAvatar(null);
+      this.userState.setAvatarFile(null);
     }
 
     this.authService.updateUser(userToUpdate, file).subscribe( ( user ) => {
       if( !user ) return; // AuthService ya mostró el error vía handleAuthError.
-
+      this.userState.setUser(user);
       this.uiService.showToastMessage('Perfil actualizado.');
-      this.userState.setTempAvatar(null);
-      this.userState.setAvatarFile(null);
     });
   }
 

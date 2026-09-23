@@ -8,9 +8,9 @@ $input-shadow: 2px 4px 15px rgba(v.$black-custom, 0.15);
 $input-radius: 0.5rem;
 
 .container-payment{
-    width: 50%;
+    width: 100%;
+    box-sizing: border-box;
     justify-content: center;
-    margin: 0% 5%;
     padding: 2% 0;
 }
 

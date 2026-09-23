@@ -22,7 +22,7 @@ The `frontend-design` skill auto-applies when implementing changes to the user i
 
 **API/DTO boundary**: raw HTTP responses are never used directly in components — each feature that talks to the backend has a corresponding class in `src/app/mappers/` (e.g. `CourseMapper`) that translates between backend response shapes (`*Response`/`*DTO` types in feature `models/`) and the app-internal model types. Follow this mapper pattern when adding new API integrations rather than consuming HTTP responses inline.
 
-**HTTP**: `provideHttpClient(withFetch(), withInterceptors([authInterceptor]))` in `app.config.ts`. `authInterceptor` (`auth/interceptors/auth.interceptor.ts`) attaches `Authorization: Bearer <token>` from `AuthService`'s token signal to outgoing requests when present. `environment.ts` / `environment.development.ts` hold `apiURL` and `MERCADOPAGO_PUBLIC_KEY`; the dev build swaps in the development environment via `fileReplacements`.
+**HTTP**: `provideHttpClient(withFetch(), withInterceptors([authInterceptor]))` in `app.config.ts`. `authInterceptor` (`auth/interceptors/auth.interceptor.ts`) attaches `Authorization: Bearer <token>` from `UserState`'s token signal (`@user/state/user-state.ts`) to outgoing requests when present. `environment.ts` / `environment.development.ts` hold `apiURL` and `MERCADOPAGO_PUBLIC_KEY`; the dev build swaps in the development environment via `fileReplacements`.
 
 **Cart/Payment**: `CartService` (`cart/state/cart.service.ts`) persists cart contents to `localStorage` via an `effect`, and reactively recomputes the total by calling `PaymentService.calculateTotal` in another `effect` whenever cart items or the applied discount code change.
 

@@ -1,0 +1,16 @@
+<div class="ticket">
+    <h2 class="title-resume">Resumen de la compra</h2>
+    <div class="detailed-resume">
+        @for (item of cart().items.values(); track item) {
+            <div class="item-reserved">
+                <small class="course-title"> {{ item.course.title }}</small>
+                <small> <span class="text-bold"> Cantidad: </span> {{ item.quantity }}</small>
+                <small> <span class="text-bold"> Precio unitario: </span> {{ item.course.price | currency}}</small>
+            </div>
+        }
+        <div class="ticket-total">
+            <small class="text-bold">Total a pagar: {{ total() | currency }}</small>
+        </div>
+    </div>
+    <ng-content />
+</div>

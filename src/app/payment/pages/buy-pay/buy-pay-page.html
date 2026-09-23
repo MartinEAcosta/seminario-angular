@@ -1,0 +1,11 @@
+<a class="back-link" routerLink="../cart">Volver al carrito</a>
+
+<div class="pay-layout">
+    <div class="pay-form">
+        <app-form-card-checkout [amount]="cartService.total()" />
+    </div>
+
+    <aside class="container-resume" aria-label="Resumen de la compra">
+        <app-purchase-summary [cart]="cartService.cart()" [total]="cartService.total()" />
+    </aside>
+</div>

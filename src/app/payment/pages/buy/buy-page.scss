@@ -1,14 +1,5 @@
 @use '../../../../variables.scss' as v;
 
-// Tokens locales derivados de variables.scss (no se toca el archivo global).
-// El "ticket" necesita despegarse del fondo gris de la página ($white-custom),
-// por eso usa blanco puro + sombra, con el acento de marca reservado para la franja.
-$ticket-bg: #fff;
-$ticket-shadow: 0 10px 30px rgba(v.$black-custom, 0.12);
-$ticket-accent: v.$brand-color;
-$ticket-radius: 12px;
-$content-gap: 2.5rem;
-
 .container-bg {
     width: 100%;
     overflow: hidden;
@@ -19,85 +10,18 @@ $content-gap: 2.5rem;
     padding: 4% 5% 1%;
 }
 
-.container-content{
+.wizard-layout{
     display: flex;
     align-items: flex-start;
-    flex-wrap: wrap;
-    gap: $content-gap;
+    gap: 4rem;
     margin: 0 5% 2%;
 }
 
-app-cart-checkout{
-    flex: 1 1 55%;
-    min-width: 320px;
-}
-
-.container-resume{
-    display: flex;
-    flex-direction: column;
-    flex: 1 1 40%;
-    min-width: 280px;
-    align-items: center;
-    justify-content: center;
-    font-family: v.$font-primary;
-    color: v.$black-custom;
-}
-
-// El "ticket": card del resumen de compra, con franja de acento arriba.
-.ticket{
-    box-sizing: border-box;
-    width: 100%;
-    background-color: $ticket-bg;
-    border-radius: $ticket-radius;
-    box-shadow: $ticket-shadow;
-    border-top: 4px solid $ticket-accent;
-    padding: 1.75rem 1.5rem;
-}
-
-.text-bold{
-    font-weight: bold;
-}
-
-.title-resume{
-    margin: 0 0 1.25rem;
-    font-size: 1.35rem;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    text-align: center;
-}
-
-.detailed-resume{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    text-align: center;
-    font-variant-numeric: tabular-nums;
-}
-
-.item-reserved{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding: 0.5rem;
-    margin: auto;
-    border-bottom: dashed thin rgba(v.$black-custom, 0.25);
-}
-
-.ticket-total{
-    width: 100%;
-    margin-top: 0.5rem;
-    padding-top: 0.75rem;
-    border-top: 2px solid $ticket-accent;
-    font-size: 1.1rem;
-    color: $ticket-accent;
-}
-
-.course-title{
-    display: flex;
-    justify-content: center;
-    width: 100%;
+.wizard-content{
+    flex: 1;
+    min-width: 0;
+    padding-left: 2rem;
+    border-left: 1px solid rgba(v.$black-custom, 0.08);
 }
 
 @media (max-width: 768px) {
@@ -105,20 +29,13 @@ app-cart-checkout{
         padding: 6% 6% 2%;
     }
 
-    .container-content{
+    .wizard-layout{
         flex-direction: column;
         margin: 0 5% 6%;
     }
 
-    app-cart-checkout,
-    .container-resume{
-        flex-basis: 100%;
-        min-width: 0;
-        width: 100%;
-    }
-
-    .ticket{
-        padding: 1.25rem 1rem;
+    .wizard-content{
+        padding-left: 0;
+        border-left: none;
     }
 }
-

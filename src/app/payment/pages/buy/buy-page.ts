@@ -1,31 +1,23 @@
 import { Component, computed, inject } from '@angular/core';
-import { CurrencyPipe } from '@angular/common';
-import { rxResource } from '@angular/core/rxjs-interop';
+import { RouterOutlet } from '@angular/router';
 
 import { PageTitleComponent } from "@shared/components/page-title/page-title.component";
-import { CartCheckoutComponent } from "@cart/components/cart-checkout/cart-checkout.component";
-import { PaymentService } from '../../services/payment.service';
 import { CartService } from '@cart/state/cart.service';
-import { FormCardCheckoutComponent } from "../../components/form-card-checkout/form-card-checkout.component";
+import { CheckoutStepsComponent } from "../../components/checkout-steps/checkout-steps.component";
 
 @Component({
   selector: 'app-buy-page',
-  imports: [PageTitleComponent, CartCheckoutComponent,  CurrencyPipe, FormCardCheckoutComponent],
+  imports: [PageTitleComponent, CheckoutStepsComponent, RouterOutlet],
   templateUrl: './buy-page.html',
   styleUrl: './buy-page.scss'
 })
 export class BuyPage {
 
   cartService = inject(CartService);
-  paymentService = inject(PaymentService);
 
-  shoppingList = computed( () => this.cartService.cart()); 
+  shoppingList = computed( () => this.cartService.cart());
 
-  paymentMethodsResource = rxResource({
-    stream: () => { 
-      return this.paymentService.getAllPaymentMethods(); 
-    }
-  });
+  isEmpty = computed(() => this.shoppingList().items.size === 0);
 
   constructor ( ) { }
 

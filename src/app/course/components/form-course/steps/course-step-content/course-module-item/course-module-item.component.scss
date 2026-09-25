@@ -1,6 +1,20 @@
 @use '@variables' as v;
 @use '../_module-item.scss';
 
+.module-drag-handle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.1rem;
+    flex-shrink: 0;
+    color: rgba(0, 0, 0, 0.3);
+    cursor: grab;
+
+    svg{
+        width: 100%;
+    }
+}
+
 .module-toggle{
     display: flex;
     align-items: center;
@@ -41,6 +55,58 @@
     background-color: rgba(0, 0, 0, 0.03);
 }
 
+.lesson-drag-handle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.1rem;
+    flex-shrink: 0;
+    color: rgba(0, 0, 0, 0.3);
+    cursor: grab;
+
+    svg{
+        width: 100%;
+    }
+}
+
+.lesson-info{
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+/*
+ * Miniatura puramente decorativa — no reproduce nada al hacer click.
+ * `Lesson`/`LessonPopulated` no traen duración real ni thumbnail propio,
+ * así que se usa un ícono de play fijo en vez de leer datos que no existen.
+ */
+.lesson-thumb{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: v.$brand-color;
+    color: v.$white-custom;
+}
+
+.lesson-thumb-icon{
+    width: 0.85rem;
+    height: 0.85rem;
+    margin-left: 0.1rem;
+}
+
+.lesson-text{
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+}
+
 .lesson-title{
     font-family: v.$font-primary;
     font-size: 0.9rem;
@@ -50,29 +116,162 @@
     white-space: nowrap;
 }
 
-.lesson-actions{
+.lesson-duration{
+    font-family: v.$font-primary;
+    font-size: 0.72rem;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.lesson-status{
     display: flex;
-    gap: 0.75rem;
+    align-items: center;
+    gap: 0.6rem;
     flex-shrink: 0;
 }
 
-.btn-link{
-    background: transparent;
-    border: none;
-    padding: 0;
+.status-badge{
+    padding: 0.25rem 0.65rem;
+    border-radius: 20rem;
     font-family: v.$font-primary;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: v.$brand-color;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+
+    &.published{
+        background-color: rgba(v.$green-success, 0.12);
+        color: v.$green-success;
+    }
+
+    &.draft{
+        background-color: rgba(v.$yellow-caution, 0.25);
+        color: rgb(140, 100, 0);
+    }
+}
+
+.status-switch{
+    position: relative;
+    width: 2rem;
+    height: 1.1rem;
+    flex-shrink: 0;
+    padding: 0;
+    border: none;
+    border-radius: 20rem;
+    background-color: rgba(0, 0, 0, 0.18);
     cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &.active{
+        background-color: v.$green-success;
+    }
 }
 
-.btn-link:hover{
-    text-decoration: underline;
+.switch-knob{
+    position: absolute;
+    top: 0.15rem;
+    left: 0.15rem;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
 }
 
-.btn-link-danger{
+.status-switch.active .switch-knob{
+    transform: translateX(0.9rem);
+}
+
+.lesson-menu-wrapper{
+    position: relative;
+    flex-shrink: 0;
+}
+
+.btn-lesson-menu{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.8rem;
+    height: 1.8rem;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    font-size: 1.1rem;
+    line-height: 1;
+    color: v.$black-custom;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.btn-lesson-menu:hover{
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+.lesson-menu{
+    position: absolute;
+    top: calc(100% + 0.3rem);
+    right: 0;
+    z-index: 10;
+    width: 11rem;
+    padding: 0.4rem;
+    border-radius: 0.75rem;
+    background-color: #fff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    animation: lesson-menu-pop 0.15s ease;
+}
+
+@keyframes lesson-menu-pop{
+    from{ opacity: 0; transform: translateY(-0.3rem); }
+    to{ opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .lesson-menu{
+        animation: none;
+    }
+}
+
+.lesson-menu-item{
+    display: block;
+    width: 100%;
+    padding: 0.55rem 0.65rem;
+    border: none;
+    border-radius: 0.5rem;
+    background: transparent;
+    text-align: left;
+    font-family: v.$font-primary;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: v.$black-custom;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+
+    & + .lesson-menu-item{
+        margin-top: 0.15rem;
+    }
+
+    &:hover{
+        background-color: rgba(v.$brand-color, 0.08);
+    }
+}
+
+.lesson-menu-item-danger{
     color: v.$red-warning;
+
+    &:hover{
+        background-color: rgba(v.$red-warning, 0.08);
+    }
+}
+
+@media (max-width: 48rem){
+    .lesson-row{
+        flex-wrap: wrap;
+    }
+
+    .lesson-info{
+        flex: 1 1 100%;
+    }
 }
 
 /*
@@ -95,6 +294,10 @@
         0 1.5rem 2.5rem -1.25rem rgba(0, 120, 140, 0.4),
         0 0.5rem 1rem -0.5rem rgba(0, 0, 0, 0.16);
     animation: lesson-panel-pop 0.22s ease;
+}
+
+.lesson-panel.no-notch::before{
+    content: none;
 }
 
 .lesson-panel::before{

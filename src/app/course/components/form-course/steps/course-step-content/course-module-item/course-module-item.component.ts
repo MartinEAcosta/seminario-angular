@@ -1,4 +1,4 @@
-import { Component, inject, input, output, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, input, output, signal } from '@angular/core';
 
 import { LessonService } from '@lesson/services/lesson.service';
 import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
@@ -16,6 +16,7 @@ export class CourseModuleItemComponent {
 
   private lessonService = inject(LessonService);
   public lessonFormState = inject(LessonFormState);
+  private elementRef = inject(ElementRef);
 
   module = input.required<ModulePopulated>();
   idCourse = input.required<string>();
@@ -27,6 +28,7 @@ export class CourseModuleItemComponent {
   isEditingModule = signal(false);
   isAddingLesson = signal(false);
   editingLessonId = signal<string | null>(null);
+  openMenuLessonId = signal<string | null>(null);
 
   toggleExpand = () => {
     this.isExpanded.set( !this.isExpanded() );
@@ -76,6 +78,21 @@ export class CourseModuleItemComponent {
     this.isAddingLesson.set(false);
     this.editingLessonId.set(null);
     this.lessonFormState.setLessonSelected(null);
+  }
+
+  toggleLessonMenu = ( lessonId : string ) => {
+    this.openMenuLessonId.set( this.openMenuLessonId() === lessonId ? null : lessonId );
+  }
+
+  closeLessonMenu = () => {
+    this.openMenuLessonId.set(null);
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick ( event : MouseEvent ) : void {
+    if( this.openMenuLessonId() && !this.elementRef.nativeElement.contains(event.target as Node) ){
+      this.closeLessonMenu();
+    }
   }
 
 }

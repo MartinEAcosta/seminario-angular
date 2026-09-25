@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 import { LessonMapper } from '@mappers/lesson.mapper';
@@ -84,11 +84,13 @@ export class LessonService {
             .put<LessonResponse>(`${this.baseURL}/update/${id}` , lessonRequest )
             .pipe(
               map( (lessonResponse) =>{
-                const lesson = LessonMapper.mapResponseToLesson( lessonResponse.data );
+                return LessonMapper.mapResponseToLesson( lessonResponse.data );
+              }),
+              switchMap( (lesson) => {
                 if( file ){
-                  this.fileService.uploadFile( 'lesson' , id , file ).subscribe();
+                  return this.fileService.uploadFile( 'lesson' , id , file ).pipe( map( () => lesson ) );
                 }
-                return lesson;
+                return of( lesson );
               }),
               catchError( ({ error }) => {
                 console.log(error)
@@ -101,11 +103,13 @@ export class LessonService {
                   .post<LessonResponse>(`${this.baseURL}/new` , rest )
                   .pipe(
                     map( (lessonResponse) =>{
-                      const lesson = LessonMapper.mapResponseToLesson( lessonResponse.data );
+                      return LessonMapper.mapResponseToLesson( lessonResponse.data );
+                    }),
+                    switchMap( (lesson) => {
                       if( file ){
-                        this.fileService.uploadFile( 'lesson' , lesson.id! , file ).subscribe();
+                        return this.fileService.uploadFile( 'lesson' , lesson.id! , file ).pipe( map( () => lesson ) );
                       }
-                      return lesson;
+                      return of( lesson );
                     }),
                     catchError( ({ error }) => {
                       console.log(error)

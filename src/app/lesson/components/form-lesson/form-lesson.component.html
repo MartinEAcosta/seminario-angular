@@ -8,69 +8,98 @@
             {{ lessonFormState.lessonSelected() ? 'Editando lección' : 'Nueva lección' }}
         </span>
 
-        <div class="head-actions">
-            @if( lessonFormState.lessonSelected() ){
-                <app-btn-remove [asButton]="true" [item]="lessonFormState.lessonSelected()" label="Eliminar" (onRemove)="onDeleteLesson( this.lessonFormState.lessonSelected()! )" />
-            }
-            <button type="button" class="btn-close" (click)="onCancel()" aria-label="Cerrar">
-                <svg class="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                    <line x1="5" y1="5" x2="19" y2="19" />
-                    <line x1="19" y1="5" x2="5" y2="19" />
-                </svg>
-            </button>
-        </div>
+        <button type="button" class="btn-close" (click)="onCancel()" aria-label="Cerrar">
+            <svg class="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <line x1="5" y1="5" x2="19" y2="19" />
+                <line x1="19" y1="5" x2="5" y2="19" />
+            </svg>
+        </button>
     </header>
 
     <div class="lesson-fields">
-        <div class="lesson-media">
-            <input
-                type="file"
-                id="file"
-                name="file"
-                class="input-file"
-                accept="image/* , video/*"
-                (change)="this.fileService.onFileChanged($event , 'lesson' )"
-            />
-            <figure class="figure-attach">
-                @if( lessonFormState.lessonSelected() === null || lessonFormState.tempMedia() === null ){
-                    <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 15V4" />
-                        <path d="M8 8l4-4 4 4" />
-                        <path d="M5 16v1.5A2.5 2.5 0 0 0 7.5 20h9a2.5 2.5 0 0 0 2.5-2.5V16" />
-                    </svg>
-                    <p class="text-simple"> Añade contenido a la lección</p>
-                }
-                @else{
-                    @if( this.lessonFormState.typeMedia() === 'image' ){
-                        <img
-                        class="figure"
-                        src="{{ lessonFormState.tempMedia() }}" alt="">
+        <div class="lesson-media-wrap">
+            <div class="lesson-media">
+                <input
+                    type="file"
+                    id="file"
+                    name="file"
+                    class="input-file"
+                    accept="image/* , video/*"
+                    (change)="this.fileService.onFileChanged($event , 'lesson' )"
+                />
+                <figure class="figure-attach">
+                    @if( lessonFormState.tempMedia() === null ){
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 15V4" />
+                            <path d="M8 8l4-4 4 4" />
+                            <path d="M5 16v1.5A2.5 2.5 0 0 0 7.5 20h9a2.5 2.5 0 0 0 2.5-2.5V16" />
+                        </svg>
+                        <p class="text-simple"> Añade contenido a la lección</p>
                     }
                     @else{
-                        <video class="figure" src="{{ lessonFormState.tempMedia() }}"></video>
+                        @if( this.lessonFormState.typeMedia() === 'image' ){
+                            <img
+                            class="figure"
+                            src="{{ lessonFormState.tempMedia() }}" alt="">
+                        }
+                        @else{
+                            <video class="figure" src="{{ lessonFormState.tempMedia() }}"></video>
+                        }
+                        <span class="media-play-badge" aria-hidden="true">
+                            <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                        </span>
+                        <span class="media-hint">Cambiar archivo</span>
                     }
-                    <span class="media-hint">Cambiar archivo</span>
-                }
-            </figure>
+                </figure>
+            </div>
+
+            @if( lessonFormState.tempMedia() !== null ){
+                <div class="media-actions">
+                    <label for="file" class="btn-replace">
+                        <svg class="replace-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 11a8 8 0 0 0-14.93-3.36M4 13a8 8 0 0 0 14.93 3.36" />
+                            <path d="M4 4v5h5" />
+                            <path d="M20 20v-5h-5" />
+                        </svg>
+                        Reemplazar
+                    </label>
+                    <button type="button" class="btn-preview">
+                        <svg class="preview-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                        Previsualizar
+                    </button>
+                </div>
+            }
         </div>
 
         <div class="lesson-main">
-            <input
-                formControlName="title"
-                class="input-title"
-                placeholder="Título de la lección"
-                type="text" name="" id=""
-                >
-            <form-error-label [control]="lessonFormState.lessonForm.get('title')!" [warningSvg]="true" />
+            <div class="field-group">
+                <label class="field-label" for="lesson-title">Título de la lección <span class="required-mark">*</span></label>
+                <input
+                    formControlName="title"
+                    class="input-title"
+                    id="lesson-title"
+                    placeholder="Ej.: Instalación de Node.js"
+                    type="text"
+                    >
+                <form-error-label [control]="lessonFormState.lessonForm.get('title')!" [warningSvg]="true" />
+            </div>
 
-            <textarea
-                formControlName="description"
-                class="textarea-desc"
-                name="" id=""
-                placeholder="Escribe una descripción en caso de que la necesites..."
-            ></textarea>
+            <div class="field-group field-group-grow">
+                <label class="field-label" for="lesson-description">Descripción (opcional)</label>
+                <textarea
+                    formControlName="description"
+                    class="textarea-desc"
+                    id="lesson-description"
+                    placeholder="Contá de qué trata la lección..."
+                ></textarea>
 
-            <form-error-label [control]="lessonFormState.lessonForm.get('description')!" [warningSvg]="true" />
+                <form-error-label [control]="lessonFormState.lessonForm.get('description')!" [warningSvg]="true" />
+            </div>
         </div>
     </div>
 
@@ -83,7 +112,8 @@
         </button>
         <button
             type="submit"
-            class="btn-solid">
+            class="btn-solid"
+        >
             Guardar lección
         </button>
     </div>

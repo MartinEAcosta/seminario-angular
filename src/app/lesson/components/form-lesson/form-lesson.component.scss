@@ -41,13 +41,6 @@
     color: v.$brand-color;
 }
 
-.head-actions{
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    flex-shrink: 0;
-}
-
 .btn-close{
     display: flex;
     align-items: center;
@@ -92,12 +85,19 @@
  * la caja calce con el alto real de `.lesson-main` en vez de quedar corta.
  */
 
+.lesson-media-wrap{
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 13rem;
+    width: 13rem;
+    gap: 0.5rem;
+}
+
 .lesson-media{
     position: relative;
     display: flex;
-    flex: 0 0 10rem;
-    align-self: stretch;
-    min-height: 9rem;
+    width: 100%;
+    height: 10rem;
     border-radius: 1rem;
     overflow: hidden;
     background-color: rgba(0, 120, 140, 0.04);
@@ -130,11 +130,15 @@
 }
 
 @media (max-width: 30rem){
-    .lesson-media{
+    .lesson-media-wrap{
         flex: 1 1 100%;
         width: 100%;
+    }
+
+    .lesson-media{
+        width: 100%;
+        height: auto;
         aspect-ratio: 16 / 9;
-        min-height: 0;
     }
 }
 
@@ -178,7 +182,8 @@
 .figure{
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    background-color: rgba(0, 0, 0, 0.04);
 }
 
 .media-hint{
@@ -201,12 +206,149 @@
     opacity: 1;
 }
 
+/*
+ * Badge de play centrado sobre la miniatura ya adjunta — mismo lenguaje
+ * visual que `.lesson-thumb` de `course-module-item`, para que el "esto
+ * es un video" se lea igual en el panel de edición y en la fila de la lista.
+ */
+.media-play-badge{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: v.$white-custom;
+    pointer-events: none;
+}
+
+.play-icon{
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-left: 0.15rem;
+}
+
+/*
+ * Hint de hover en `.media-hint` no alcanza en touch (sin :hover): este
+ * botón da una vía explícita y visible para reemplazar el archivo ya
+ * adjunto. `label[for="file"]` dispara el input nativo sin JS extra.
+ */
+.media-actions{
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.btn-replace,
+.btn-preview{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    flex: 1 1 0;
+    box-sizing: border-box;
+    padding: 0.45rem 0.3rem;
+    border: none;
+    border-radius: 0.6rem;
+    background-color: rgba(0, 0, 0, 0.06);
+    color: v.$black-custom;
+    font-family: v.$font-primary;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.replace-icon,
+.preview-icon{
+    width: 0.8rem;
+    height: 0.8rem;
+    flex-shrink: 0;
+}
+
+.btn-replace:hover,
+.btn-preview:hover{
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.upload-progress{
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    width: 100%;
+}
+
+.upload-progress-head{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.4rem;
+}
+
+.upload-progress-label{
+    font-family: v.$font-primary;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: rgba(0, 120, 140, 0.85);
+}
+
+.upload-progress-percent{
+    font-family: v.$font-primary;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: v.$brand-color;
+    flex-shrink: 0;
+}
+
+.upload-progress-bar{
+    width: 100%;
+    height: 0.35rem;
+    border-radius: 20rem;
+    background-color: rgba(0, 120, 140, 0.12);
+    overflow: hidden;
+}
+
+.upload-progress-fill{
+    height: 100%;
+    border-radius: 20rem;
+    background-color: v.$brand-color;
+    transition: width 0.2s ease;
+}
+
+.upload-progress-filename{
+    font-family: v.$font-primary;
+    font-size: 0.65rem;
+    color: rgba(0, 0, 0, 0.55);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media (max-width: 30rem){
+    .upload-progress{
+        width: 100%;
+    }
+}
+
 .lesson-main{
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
+    gap: 0.9rem;
     flex: 1 1 16rem;
     min-width: 0;
+}
+
+.field-group{
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
 }
 
 /*
@@ -215,33 +357,53 @@
  * stretch de `.lesson-fields` ya iguala el alto de la fila; falta que
  * el contenido de `.lesson-main` lo use en vez de dejar un hueco abajo).
  */
-.textarea-desc{
+.field-group-grow{
     flex: 1 1 auto;
+}
+
+.field-group-grow .textarea-desc{
+    flex: 1 1 auto;
+}
+
+.field-label{
+    font-family: v.$font-primary;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: v.$black-custom;
+}
+
+.required-mark{
+    color: v.$red-warning;
 }
 
 .input-title{
     width: 100%;
     box-sizing: border-box;
-    background: transparent;
-    border: none;
-    border-bottom: solid 2px transparent;
-    padding: 0.15rem 0.1rem 0.4rem;
+    background-color: rgba(0, 0, 0, 0.03);
+    border: solid 1.5px rgba(0, 0, 0, 0.12);
+    border-radius: 0.6rem;
+    padding: 0.6rem 0.8rem;
     font-family: v.$font-primary;
-    font-size: 1.4rem;
-    font-weight: 800;
-    letter-spacing: -0.01em;
+    font-size: 0.9rem;
+    font-weight: 500;
     color: v.$black-custom;
     outline: none;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .input-title::placeholder{
-    color: rgba(0, 0, 0, 0.32);
-    font-weight: 700;
+    color: rgba(0, 0, 0, 0.35);
+    font-weight: 400;
 }
 
 .input-title:focus{
     border-color: v.$brand-color;
+    background-color: #fff;
+}
+
+.input-title.ng-invalid.ng-touched{
+    border-color: v.$red-warning;
+    background-color: rgba(197, 14, 14, 0.05);
 }
 
 .textarea-desc{
@@ -249,20 +411,25 @@
     width: 100%;
     min-height: 4rem;
     resize: vertical;
-    border: none;
-    border-radius: 0.65rem;
+    border: solid 1.5px transparent;
+    border-radius: 0.6rem;
     background-color: rgba(0, 0, 0, 0.03);
     color: v.$black-custom;
     font-family: v.$font-primary;
     font-size: 0.85rem;
-    padding: 0.55rem 0.7rem;
+    padding: 0.6rem 0.8rem;
     outline: none;
-    box-shadow: inset 0 0 0 1px transparent;
-    transition: box-shadow 0.3s ease;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .textarea-desc:focus{
-    box-shadow: inset 0 0 0 1px v.$brand-color;
+    border-color: v.$brand-color;
+    background-color: #fff;
+}
+
+.textarea-desc.ng-invalid.ng-touched{
+    border-color: v.$red-warning;
+    background-color: rgba(197, 14, 14, 0.05);
 }
 
 /* --- Acciones: Guardar como pill sólida (acción primaria de esta tarjeta), Cancelar como texto quieto --- */
@@ -309,4 +476,15 @@
 .btn-solid:hover{
     transform: translateY(-1px);
     box-shadow: 0 0.55rem 1.1rem -0.3rem rgba(0, 120, 140, 0.65);
+}
+
+.btn-solid:disabled{
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.btn-solid:disabled:hover{
+    transform: none;
+    box-shadow: none;
 }

@@ -2,6 +2,16 @@
 
     @if( !isEditingModule() ){
         <div class="module-header">
+            <span class="module-drag-handle" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <circle cx="9" cy="6" r="1.5" />
+                    <circle cx="15" cy="6" r="1.5" />
+                    <circle cx="9" cy="12" r="1.5" />
+                    <circle cx="15" cy="12" r="1.5" />
+                    <circle cx="9" cy="18" r="1.5" />
+                    <circle cx="15" cy="18" r="1.5" />
+                </svg>
+            </span>
             <button type="button" class="module-toggle" (click)="toggleExpand()">
                 <img class="expand-icon" [class.rotated]="isExpanded()" src="/assets/expand-icon.svg" alt="">
                 <span class="module-title">Módulo {{ module().unit }} : {{ module().title }}</span>
@@ -37,17 +47,59 @@
                 }
                 @else {
                     <div class="lesson-row">
-                        <span class="lesson-title">{{ lesson.title }}</span>
-                        <div class="lesson-actions">
-                            <button type="button" class="btn-link" (click)="onEditLesson(lesson)">Editar</button>
-                            <button type="button" class="btn-link btn-link-danger" (click)="onDeleteLesson(lesson)">Eliminar</button>
+                        <span class="lesson-drag-handle" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <circle cx="9" cy="6" r="1.5" />
+                                <circle cx="15" cy="6" r="1.5" />
+                                <circle cx="9" cy="12" r="1.5" />
+                                <circle cx="15" cy="12" r="1.5" />
+                                <circle cx="9" cy="18" r="1.5" />
+                                <circle cx="15" cy="18" r="1.5" />
+                            </svg>
+                        </span>
+                        <div class="lesson-info">
+                            <span class="lesson-thumb" aria-hidden="true">
+                                <svg class="lesson-thumb-icon" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                            </span>
+                            <div class="lesson-text">
+                                <span class="lesson-title">{{ lesson.title }}</span>
+                                <span class="lesson-duration">Video · --:--</span>
+                            </div>
+                        </div>
+                        <div class="lesson-status">
+                            <span class="status-badge" [class.published]="!lessonFormState.isLessonHidden(lesson.id)" [class.draft]="lessonFormState.isLessonHidden(lesson.id)">
+                                {{ lessonFormState.isLessonHidden(lesson.id) ? 'Borrador' : 'Publicada' }}
+                            </span>
+                            <button
+                                type="button"
+                                class="status-switch"
+                                [class.active]="!lessonFormState.isLessonHidden(lesson.id)"
+                                (click)="lessonFormState.toggleLessonVisibility(lesson.id)"
+                                [attr.aria-label]="lessonFormState.isLessonHidden(lesson.id) ? 'Publicar lección' : 'Ocultar lección'"
+                            >
+                                <span class="switch-knob"></span>
+                            </button>
+                            <div class="lesson-menu-wrapper">
+                                <button type="button" class="btn-lesson-menu" (click)="toggleLessonMenu(lesson.id)" aria-label="Más opciones">⋮</button>
+                                @if( openMenuLessonId() === lesson.id ){
+                                    <div class="lesson-menu">
+                                        <button type="button" class="lesson-menu-item" (click)="onEditLesson(lesson); closeLessonMenu()">Editar</button>
+                                        <button type="button" class="lesson-menu-item" (click)="lessonFormState.toggleLessonVisibility(lesson.id); closeLessonMenu()">
+                                            {{ lessonFormState.isLessonHidden(lesson.id) ? 'Mostrar a alumnos' : 'Ocultar a alumnos' }}
+                                        </button>
+                                        <button type="button" class="lesson-menu-item lesson-menu-item-danger" (click)="onDeleteLesson(lesson); closeLessonMenu()">Eliminar</button>
+                                    </div>
+                                }
+                            </div>
                         </div>
                     </div>
                 }
             }
 
             @if( isAddingLesson() ){
-                <div class="lesson-panel">
+                <div class="lesson-panel no-notch">
                     <app-form-lesson
                         [idCourse]="idCourse()"
                         (saved)="onLessonSaved()"

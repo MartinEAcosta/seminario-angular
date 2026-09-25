@@ -12,7 +12,6 @@
     width: 100%;
     border: solid 1px rgba(0, 0, 0, 0.12);
     border-radius: 0.75rem;
-    overflow: hidden;
     transition: border-color 0.3s ease;
 }
 
@@ -20,6 +19,14 @@
     border-color: v.$brand-color;
 }
 
+/*
+ * Antes el redondeo salía de `overflow: hidden` en `.module-item`, pero
+ * eso también recortaba el dropdown `.lesson-menu` (position: absolute)
+ * dentro de `.module-body`. Se saca el overflow y el header redondea sus
+ * propias esquinas: las 4 si el módulo está colapsado (es todo el borde
+ * visible de la tarjeta), solo las de arriba si está expandido (abajo
+ * sigue `.module-body`).
+ */
 .module-header{
     display: flex;
     align-items: center;
@@ -27,6 +34,11 @@
     gap: 1rem;
     padding: 0.9rem 1.1rem;
     background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 0.75rem;
+}
+
+.module-item.expanded .module-header{
+    border-radius: 0.75rem 0.75rem 0 0;
 }
 
 .module-title{

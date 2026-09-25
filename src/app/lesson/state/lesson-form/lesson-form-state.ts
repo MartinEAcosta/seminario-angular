@@ -21,9 +21,10 @@ export class LessonFormState {
   public mediaFile = signal<File | null>(null);
   public tempMedia = signal<string | null>(null);
   public typeMedia = signal<'image' | 'video' | null>(null);
-  public isLessonFormVisible = signal<boolean>( false ); 
+  public isLessonFormVisible = signal<boolean>( false );
   public isModulePopUpVisible = signal<boolean>( false );
-  
+  public hiddenLessonIds = signal<Set<string>>(new Set());
+
   public reset () : void  {
     this.lessons.set([]);
     this.lessonForm.reset();
@@ -50,6 +51,16 @@ export class LessonFormState {
 
   public setIsModulePopUpVisible = ( bol : boolean ) => {
     this.isModulePopUpVisible.set( bol );
+  }
+
+  public isLessonHidden = ( id : string ) : boolean => {
+    return this.hiddenLessonIds().has( id );
+  }
+
+  public toggleLessonVisibility = ( id : string ) : void => {
+    const next = new Set( this.hiddenLessonIds() );
+    next.has( id ) ? next.delete( id ) : next.add( id );
+    this.hiddenLessonIds.set( next );
   }
 
   public setTempMedia ( url : string | null ) : void {

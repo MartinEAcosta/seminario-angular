@@ -4,11 +4,15 @@
             <app-collapsible-page-title
                 [title]="courseFormState.savedCourse()?.id ? 'Editar curso' : 'Crear curso'"
                 [collapsed]="courseFormState.isFormCollapsed()"
-                (toggle)="courseFormState.toggleFormCollapsed()"
+                (toggle)="onToggleCollapse()"
             />
 
-            <div class="collapse-wrapper" [class.collapsed]="courseFormState.isFormCollapsed()">
-                <div class="collapse-inner">
+            <div
+                class="collapse-wrapper"
+                [class.collapsed]="courseFormState.isFormCollapsed()"
+                (transitionend)="onCollapseTransitionEnd($event)"
+            >
+                <div class="collapse-inner" [class.overflow-visible]="settled()">
                     <div class="wizard-layout">
 
                         <nav class="stepper">

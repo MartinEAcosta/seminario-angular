@@ -1,40 +1,43 @@
 <div class="container-form-item">
-    <div class="container-form-select">
+    <div class="container-form-select" [ngClass]="{ open : open() }">
         @if( categoriesResource.hasValue() ){
-            <div class="option-default"> 
+            <div class="option-default" (click)="toggle()">
                 <p class="option-default-selected">
-                    @if( categorySelected() === undefined ){
-                        Elige una categoria 
-                    }@else {
-                        {{ categorySelected()?.name }}
-                    }
+                    {{ categorySelected()?.name }}
                 </p>
                 <div
                     class="container-icon">
-                    <img class="icon option-down-icon" src="assets/down-icon.svg" alt="">
+                    <div class="icon option-down-icon"></div>
                 </div>
             </div>
-            <ul class="options">
-                @for (category of categoriesResource.value(); track category) {
-                    <li 
-                        [ngClass]="{ 'selected-item' : this.categorySelected() === category }"
-                        (click)="onSelectCategory( category )" 
-                        class="option-item">
-                        {{ category.name }}
+            <label class="field-label" [ngClass]="{ floated : open() || categorySelected() !== undefined }">Categoría del curso</label>
+            @if( open() ){
+                <ul class="options">
+                    <li class="search-wrap">
+                        <input #searchInputRef class="search-input" type="text" placeholder="Buscar..."
+                            (click)="$event.stopPropagation()"
+                            (input)="onSearchInput( searchInputRef.value )" autocomplete="off" />
                     </li>
-                }
-                @if( this.categorySelected() != undefined ){
-                    <li
-                        (click)="onClearCategory()"
-                        class="option-item option-clear">
-                        Limpiar categoria
-                        <img 
-                            class="icon"
-                            src="assets/clean-icon.svg" 
-                            alt="">
-                    </li>
-                }
-            </ul>
+                    <div class="list-filters">
+                        @for (category of filteredCategories; track category.id) {
+                            <li
+                                [ngClass]="{ 'selected-item' : this.categorySelected() === category }"
+                                (click)="onSelectCategory( category )"
+                                class="option-item">
+                                {{ category.name }}
+                            </li>
+                        }
+                    </div>
+                    @if( this.categorySelected() != undefined ){
+                        <li
+                            (click)="onClearCategory()"
+                            class="option-item option-clear">
+                            Limpiar categoria
+                            <div class="icon option-clear-icon"></div>
+                        </li>
+                    }
+                </ul>
+            }
         }
     </div>
 </div>

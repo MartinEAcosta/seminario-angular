@@ -49,6 +49,10 @@
     margin: -1rem;
 }
 
+.collapse-inner.overflow-visible{
+    overflow: visible;
+}
+
 @media (prefers-reduced-motion: reduce){
     .collapse-wrapper{
         transition: none;

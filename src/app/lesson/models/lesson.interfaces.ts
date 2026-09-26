@@ -29,10 +29,10 @@ export interface LessonPopulated {
 export interface SaveLessonDto{
     id            ?: string;
     id_file       ?: string;
+    lesson_number ?: number;
     id_module      : string;
     title          : string;
     description    : string;
-    lesson_number ?: number;
 }
 
 export interface LessonDto{

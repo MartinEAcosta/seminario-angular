@@ -35,7 +35,6 @@ export class FormLessonComponent {
 
   public onSaveLesson = () => {
     this.lessonFormState.lessonForm.markAllAsTouched();
-
     if( this.lessonFormState.lessonForm.valid ){
       const uid = this.userState.id();
       if( !uid ) return;
@@ -45,6 +44,7 @@ export class FormLessonComponent {
         ...dto,
         id : this.lessonFormState.lessonSelected()?.id,
         id_course : this.idCourse(),
+        id_file : this.lessonFormState.lessonSelected()?.file.id_file ?? undefined,
       };
       return this.lessonService.saveLesson( lessonDto , this.lessonFormState.mediaFile() ).subscribe( () => {
         this.saved.emit();

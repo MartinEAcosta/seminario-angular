@@ -35,24 +35,7 @@ export class FileService {
     return forkJoin(uploadObservable);
   }
   
-  uploadFile = ( folder : UploadFolder , id_entity : string, file : File ) : Observable<UploadedFile> => {
-    
-    const formData = new FormData( );
-    formData.append( 'files', file );
-    return this.http
-                .post<FileResponse>(
-                                    `${this.baseURL}/upload/single/${folder}/${id_entity}`, 
-                                    formData,
-                                  )
-                                  .pipe(
-                                    map( fileResponse => {
-                                      return FileMapper.mapResponseToFile( fileResponse.data );
-                                    }),
-                                    catchError( ({ error }) => {
-                                      return throwError(() => new Error(`${error}`));
-                                    }),
-                                  );
-  }
+kf
 
   deleteFile = ( id : string ) : Observable<DeleteResponse> => {
     console.log(id)

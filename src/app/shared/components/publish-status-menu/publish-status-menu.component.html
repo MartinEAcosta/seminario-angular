@@ -1,0 +1,28 @@
+<div class="lesson-status">
+    <span class="status-badge" [class.published]="!isHidden()" [class.draft]="isHidden()">
+        {{ isHidden() ? draftLabel() : publishedLabel() }}
+    </span>
+    <button
+        type="button"
+        class="status-switch"
+        [class.active]="!isHidden()"
+        (click)="toggleVisibility.emit()"
+        [attr.aria-label]="isHidden() ? 'Publicar ' + entityLabel() : 'Ocultar ' + entityLabel()"
+    >
+        <span class="switch-knob"></span>
+    </button>
+    <div class="lesson-menu-wrapper">
+        <button type="button" class="btn-lesson-menu" (click)="toggleMenu()" aria-label="Más opciones">⋮</button>
+        @if( isMenuOpen() ){
+            <div class="lesson-menu">
+                <button type="button" class="lesson-menu-item" (click)="edit.emit(); closeMenu()">Editar</button>
+                <button type="button" class="lesson-menu-item" (click)="toggleVisibility.emit(); closeMenu()">
+                    {{ isHidden() ? 'Mostrar a alumnos' : 'Ocultar a alumnos' }}
+                </button>
+                @if( showDelete() ){
+                    <button type="button" class="lesson-menu-item lesson-menu-item-danger" (click)="deleteItem.emit(); closeMenu()">Eliminar</button>
+                }
+            </div>
+        }
+    </div>
+</div>

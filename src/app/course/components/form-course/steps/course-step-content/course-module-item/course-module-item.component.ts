@@ -1,14 +1,15 @@
-import { Component, ElementRef, HostListener, inject, input, output, signal } from '@angular/core';
+import { Component, inject, input, output, signal } from '@angular/core';
 
 import { LessonService } from '@lesson/services/lesson.service';
 import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
 import { ModulePopulated, Module } from '@module/models/module.interfaces';
 import { SaveModuleComponent } from '@module/components/save-module/save-module.component';
 import { FormLessonComponent } from '@lesson/components/form-lesson/form-lesson.component';
+import { PublishStatusMenuComponent } from '@shared/components/publish-status-menu/publish-status-menu.component';
 
 @Component({
   selector: 'app-course-module-item',
-  imports: [SaveModuleComponent, FormLessonComponent],
+  imports: [SaveModuleComponent, FormLessonComponent, PublishStatusMenuComponent],
   templateUrl: './course-module-item.component.html',
   styleUrl: './course-module-item.component.scss'
 })
@@ -16,7 +17,6 @@ export class CourseModuleItemComponent {
 
   private lessonService = inject(LessonService);
   public lessonFormState = inject(LessonFormState);
-  private elementRef = inject(ElementRef);
 
   module = input.required<ModulePopulated>();
   idCourse = input.required<string>();
@@ -28,9 +28,10 @@ export class CourseModuleItemComponent {
   isEditingModule = signal(false);
   isAddingLesson = signal(false);
   editingLessonId = signal<string | null>(null);
-  openMenuLessonId = signal<string | null>(null);
+  isModuleHidden = signal(false);
 
   toggleExpand = () => {
+    if( this.isExpanded() ) this.editingLessonId.set(null);
     this.isExpanded.set( !this.isExpanded() );
   }
 
@@ -80,19 +81,8 @@ export class CourseModuleItemComponent {
     this.lessonFormState.setLessonSelected(null);
   }
 
-  toggleLessonMenu = ( lessonId : string ) => {
-    this.openMenuLessonId.set( this.openMenuLessonId() === lessonId ? null : lessonId );
-  }
-
-  closeLessonMenu = () => {
-    this.openMenuLessonId.set(null);
-  }
-
-  @HostListener('document:click', ['$event'])
-  onDocumentClick ( event : MouseEvent ) : void {
-    if( this.openMenuLessonId() && !this.elementRef.nativeElement.contains(event.target as Node) ){
-      this.closeLessonMenu();
-    }
+  toggleModuleVisibility = () => {
+    this.isModuleHidden.set( !this.isModuleHidden() );
   }
 
 }

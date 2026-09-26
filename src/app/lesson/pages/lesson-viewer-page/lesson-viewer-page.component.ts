@@ -1,12 +1,10 @@
-import { ActivatedRoute } from '@angular/router';
 import { Component, effect, inject, input } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs';
 
 import { EnrollmentState } from '@enrollment/state/enrollment-state';
 import { ListOfContentComponent } from "@lesson/components/list-of-content/list-of-content.component";
 import { LoaderComponent } from "@shared/components/loader/loader.component";
 import { LessonState } from '@lesson/state/lesson-state';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-lesson-viewer-page',
@@ -16,17 +14,15 @@ import { LessonState } from '@lesson/state/lesson-state';
 })
 export class LessonViewerPageComponent {
 
-  private activatedRoute = inject(ActivatedRoute);
-
-  // Llega por `withComponentInputBinding()` desde el parámetro de ruta :id_enrollment.
-  id_enrollment = input.required<string>();
-
-  lessonId = toSignal<string>(this.activatedRoute.params.pipe( map( (p) => p['id_lesson'] )));
+  activatedRoute = inject(ActivatedRoute);
   enrollmentState = inject(EnrollmentState);
   lessonState = inject(LessonState);
 
+  // debido al withInputBinding() toma desde los params de la url el campo ':id_enrollment <- /lesson:id_lesson'
+  id_enrollment = input<string>();
+
   constructor( ) {
-    effect( () => this.enrollmentState.loadEnrollment( this.id_enrollment() ) );
+    effect( () => this.enrollmentState.loadEnrollment( this.id_enrollment()! )) 
   }
 
 }

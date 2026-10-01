@@ -34,11 +34,12 @@ export class EnrollmentState {
   listError = computed(() => this.enrollmentListResource.error());
  
   selectedEnrollment = computed(() => this.enrollmentResource.value() ?? null);
-  isLoading = computed(() => this.enrollmentResource.isLoading());
+  isLoadingEnrollment = computed(() => this.enrollmentResource.isLoading());
   error = computed(() => this.enrollmentResource.error());
 
   loadEnrollment(id: string) {
     this.requestedEnrollmentId.set(id);
-  }
+  };
+
 
 }

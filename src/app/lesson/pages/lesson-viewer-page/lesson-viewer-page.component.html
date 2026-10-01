@@ -1,5 +1,5 @@
 <div class="container-content">
-    @if( enrollmentState.isLoading() ){
+    @if( enrollmentState.isLoadingEnrollment() ){
         <div class="container-loader">
             <app-loader />
         </div>
@@ -10,11 +10,26 @@
         </div>
     }
     @else if( enrollmentState.selectedEnrollment() ){
-        <app-list-of-content [courseId]="enrollmentState.selectedEnrollment()?.course.id_course!" />
+        <app-list-of-content [courseId]="enrollmentState.selectedEnrollment()!.course.id_course!" />
 
         <div class="container-media">
-            <!-- TODO: el visor de lecciones queda pendiente: LessonState todavía no expone
-                 `selectedLesson`. Ver lesson/state/lesson-state.ts antes de reactivar esto. -->
+            @if( isLoadingLesson() ){
+                <app-loader />
+            }
+            @else if( selectedLesson() ){
+                <app-vjs-player [options]="{
+                    fluid: true,
+                    aspectRatio: '16:9',
+                    autoplay: true,
+                    sources: [
+                        {
+                            src: selectedLesson()!.file.url ?? '',
+                            type: 'video/webm'
+                        }
+                    ],
+                    language: 'es'
+                }" />
+            }
         </div>
     }
 </div>

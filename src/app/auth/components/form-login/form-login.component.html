@@ -15,7 +15,7 @@
             required
             [ngClass]="{'hasError': ( loginForm.get('email')?.errors && loginForm.get('email')?.touched ) ?? false }">
         <label class="label-text">Correo Electronico</label>
-        
+
         <form-error-label class="error error-password" [control]="loginForm.get('password')!" />
         <input type="password" placeholder="unaContraseñaSegur@123" class="input-password" required name="password"
             formControlName="password"
@@ -25,6 +25,18 @@
         <button class="btn-sumbit" type="submit" (submit)="onLogin()">
             Ingresar
         </button>
+
+        <span class="oauth-divider">o continuá con</span>
+        <div class="btns-oauth">
+            <button type="button" class="btn-oauth btn-oauth-google">
+                <img src="assets/google-icon.svg" alt="">
+                Continuar con Google
+            </button>
+            <button type="button" class="btn-oauth btn-oauth-github">
+                <img src="assets/github-icon.svg" alt="">
+                Continuar con GitHub
+            </button>
+        </div>
 
         <a class="text-forgot-pass underline" href="">
             ¿Olvidaste tu contraseña?

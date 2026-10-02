@@ -16,19 +16,23 @@
             @if( isLoadingLesson() ){
                 <app-loader />
             }
-            @else if( selectedLesson() ){
+            @else if( selectedLesson() && selectedLesson()?.file?.resource_type === 'video' ){
                 <app-vjs-player [options]="{
-                    fluid: true,
-                    aspectRatio: '16:9',
-                    autoplay: true,
-                    sources: [
-                        {
-                            src: selectedLesson()!.file.url ?? '',
-                            type: 'video/webm'
-                        }
-                    ],
-                    language: 'es'
-                }" />
+                        fluid: true,
+                        aspectRatio: '16:9',
+                        autoplay: true,
+                        sources: [
+                            {
+                                src: selectedLesson()!.file.url ?? '',
+                                type: 'video/webm'
+                            }
+                        ],
+                        language: 'es'
+                    }" 
+                />
+            }
+            @else if( selectedLesson() && selectedLesson()?.file?.resource_type === 'image' ){
+                <img class="lesson-image" [src]="selectedLesson()!.file.url" />                
             }
         </div>
     }

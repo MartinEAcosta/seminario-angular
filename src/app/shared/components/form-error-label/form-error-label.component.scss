@@ -4,6 +4,7 @@
     display: flex;
     align-items: center;
     width: 100%;
+    min-height: 1.4em;
 }
 
 .centered{
@@ -11,6 +12,10 @@
 }
 
 .errorMessage{
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     font-family: v.$font-primary;
     font-size: 80%;
     color: v.$red-warning;

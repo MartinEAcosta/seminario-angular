@@ -17,8 +17,8 @@
     font-family: v.$font-primary;
     color: v.$white-custom;
     justify-content: center;
-    font-size: 2rem;
-    margin: 4% auto;
+    font-size: v.$text-xl;
+    margin: 4% auto 2%;
 }
 
 .form-auth{
@@ -27,7 +27,6 @@
     width: 100%;
     height: auto;
     align-items: center;
-    padding-top: 2%;
 }
 
 .input-email , .input-password , .input-username{
@@ -35,9 +34,9 @@
     align-items: center;
     box-sizing: border-box;
     width: 50%;
-    height: 3.25rem;
+    height: 3rem;
     padding: 0 1rem;
-    margin: 4% auto 0%;
+    margin: v.$space-sm auto 0;
     color: v.$white-custom;
     background-color: rgb(50, 50, 50);
     border-radius: 20px;
@@ -45,10 +44,6 @@
     box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
     border: 2px solid v.$brand-color;
     transition: all 0.3s ease-in-out;
-}
-
-.form-auth > input:first-child{
-    margin-top: 0%;
 }
 
 .input-email:focus , .input-password:focus , .input-username:focus , .label-text:focus{
@@ -96,7 +91,7 @@ input:not(:placeholder-shown) + label{
     display: flex;
     position: relative;
     z-index: 100;
-    top: -2.47rem;
+    top: -2.2rem;
     margin: 0;
     padding: 0 10px 0 10px;
     justify-content: center;
@@ -116,8 +111,9 @@ input:not(:placeholder-shown) + label{
 
 .text-forgot-pass , .text-register , .text-login{
     display: flex;
-    margin: 3% auto 0%;
+    margin: v.$space-sm auto 0;
     font-family: v.$font-primary;
+    font-size: v.$text-base;
     color: v.$white-custom;
 }
 
@@ -138,7 +134,7 @@ input:not(:placeholder-shown) + label{
     font-weight: bold;
     font-family: v.$font-primary;
     color: v.$white-custom;
-    margin: 1% auto;
+    margin: v.$space-xs auto;
     align-items: center;
     justify-content: center;
     box-shadow: 0px 0px 15px rgba( 255,255,255, 0.2);
@@ -174,15 +170,107 @@ input:not(:placeholder-shown) + label{
     border-color: v.$red-warning;
 }
 
-@media (max-width: 48rem){
+.oauth-divider{
+    display: flex;
+    align-items: center;
+    width: 50%;
+    margin: v.$space-sm auto 0;
+    color: rgba( 233,233,233, 0.5);
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    text-align: center;
+}
+
+.oauth-divider::before,
+.oauth-divider::after{
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: rgba( 233,233,233, 0.2);
+}
+
+.oauth-divider::before{
+    margin-right: v.$space-xs;
+}
+
+.oauth-divider::after{
+    margin-left: v.$space-xs;
+}
+
+.btns-oauth{
+    display: flex;
+    width: 50%;
+    gap: v.$space-xs;
+    margin: v.$space-xs auto 0;
+    justify-content: center;
+}
+
+.btn-oauth{
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    height: 2.75rem;
+    padding: 0 0.75rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    border-radius: 20px;
+    border: 1px solid rgba( 40,40,40, 0.15);
+    background-color: v.$white-custom;
+    color: v.$black-custom;
+    font-family: v.$font-primary;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    white-space: nowrap;
+}
+
+.btn-oauth img{
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+}
+
+.btn-oauth:hover{
+    transform: translateY(-3px);
+    box-shadow: 0px 4px 12px rgba( 0,0,0, 0.25);
+}
+
+@include v.bp-down('laptop'){
+    .container-form{
+        padding: 2% 0%;
+    }
+
+    .title-form{
+        margin: 2% auto 1%;
+    }
+
+    .form-auth{
+        padding-top: 1%;
+    }
+}
+
+@include v.bp-down('md'){
     .input-email , .input-password , .input-username , .btn-sumbit{
         width: 70%;
     }
 }
 
-@media (max-width: 37.5rem){
+@include v.bp-down('sm'){
     .input-email , .input-password , .input-username , .btn-sumbit{
         width: 90%;
+    }
+
+    .oauth-divider , .btns-oauth{
+        width: 90%;
+    }
+
+    .btns-oauth{
+        flex-direction: column;
+    }
+
+    .btn-oauth{
+        width: 100%;
     }
 }
 

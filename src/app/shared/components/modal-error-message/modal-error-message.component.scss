@@ -1,5 +1,9 @@
 @use '@variables' as v;
 
+:host{
+    display: contents;
+}
+
 .modal-error-message{
     display: flex;
     width: 30%;

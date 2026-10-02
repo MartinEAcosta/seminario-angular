@@ -6,3 +6,33 @@ $brand-color: rgb(0, 120, 140);
 $red-warning: rgb(197, 14, 14);
 $green-success: rgb(0, 150, 50);
 $yellow-caution: rgb(255, 190, 40);
+
+$breakpoints: (
+  'sm': 640px,
+  'md': 768px,
+  'lg': 1024px,
+  'xl': 1280px,
+  'laptop': 1366px,
+);
+
+@mixin bp-up($name) {
+  @media (min-width: map-get($breakpoints, $name)) { @content; }
+}
+
+@mixin bp-down($name) {
+  @media (max-width: map-get($breakpoints, $name)) { @content; }
+}
+
+// Escala fluida de tipografía (interpolada entre 320px y 1280px de viewport)
+$text-sm: clamp(0.8rem, 0.75rem + 0.2vw, 0.9rem);
+$text-base: clamp(0.95rem, 0.9rem + 0.3vw, 1.1rem);
+$text-lg: clamp(1.05rem, 0.95rem + 0.5vw, 1.25rem);
+$text-xl: clamp(1.4rem, 1.2rem + 1vw, 2rem);
+$text-2xl: clamp(1.75rem, 1.4rem + 1.75vw, 2.5rem);
+$text-display: clamp(2rem, 1.5rem + 2.5vw, 3rem);
+
+// Escala fluida de espaciado
+$space-xs: clamp(0.5rem, 0.4rem + 0.5vw, 0.75rem);
+$space-sm: clamp(1rem, 0.8rem + 1vw, 1.5rem);
+$space-md: clamp(1.5rem, 1.1rem + 2vw, 2.5rem);
+$space-lg: clamp(2rem, 1.4rem + 3vw, 4rem);

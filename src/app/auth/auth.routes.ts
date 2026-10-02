@@ -2,8 +2,8 @@ import { Routes } from "@angular/router";
 import { NotAuthenticatedGuard } from "@guards/not-authenticated.guard";
 import { AuthenticatedGuard } from "@guards/authenticated.guard";
 import { AuthLayoutComponent } from "./layout/auth-layout/auth-layout.component";
-import { LoginPageComponent } from "./pages/login-page/login-page.component";
-import { RegisterPageComponent } from "./pages/register-page/register-page.component";
+import { FormLoginComponent } from "./components/form-login/form-login.component";
+import { FormRegisterComponent } from "./components/form-register/form-register.component";
 import { VerifyEmailPageComponent } from "./pages/verify-email-page/verify-email-page.component";
 import { UserProfilePageComponent } from "./pages/user-profile-page/user-profile-page.component";
 
@@ -16,11 +16,11 @@ export const authRoutes : Routes = [
         children: [
             {
                 path: 'login',
-                component: LoginPageComponent,
+                component: FormLoginComponent,
             },
             {
                 path: 'register',
-                component: RegisterPageComponent,
+                component: FormRegisterComponent,
             },
             {
                 path: '**',

@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, ElementRef, input, OnDestroy, OnInit, viewChild, ViewEncapsulation} from '@angular/core';
 import videojs from 'video.js';
 import Player from 'video.js/dist/types/player';
 
@@ -10,10 +10,10 @@ import Player from 'video.js/dist/types/player';
 })
 
 export class VjsPlayerComponent implements OnInit, OnDestroy {
-  @ViewChild('target', {static: true}) target!: ElementRef;
+  target = viewChild.required<ElementRef>('target');
 
   // See options: https://videojs.com/guides/options
-  @Input() options!: {
+  options = input.required<{
       fluid: boolean,
       aspectRatio: string,
       autoplay: boolean,
@@ -22,7 +22,7 @@ export class VjsPlayerComponent implements OnInit, OnDestroy {
           type: string,
       }[],
       language: string,
-  };
+  }>();
 
   player!: Player;
 
@@ -32,7 +32,7 @@ export class VjsPlayerComponent implements OnInit, OnDestroy {
 
   // Instantiate a Video.js player OnInit
   ngOnInit() {
-    this.player = videojs(this.target.nativeElement, this.options, function onPlayerReady() {
+    this.player = videojs(this.target().nativeElement, this.options(), function onPlayerReady() {
       console.log('onPlayerReady', this);
     });
   }

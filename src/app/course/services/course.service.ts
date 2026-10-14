@@ -56,10 +56,13 @@ export class CourseService {
 
   public getById = (id: string): Observable<Course> => {
     return this.http.get<CourseResponse>(`${this.baseURL}/${id}`).pipe(
-      map((courseResponse) =>
-        CourseMapper.mapResponseToCourse(courseResponse.data)
+      map((courseResponse) => {
+
+        return CourseMapper.mapResponseToCourse(courseResponse.data);
+      }
       ),
       catchError(({ error }) => {
+        console.log(error);
         return throwError(() => new Error(`${error.errorMessage}`));
       })
     );

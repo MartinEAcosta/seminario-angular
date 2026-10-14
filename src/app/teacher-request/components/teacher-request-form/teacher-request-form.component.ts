@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { NgClass } from '@angular/common';
@@ -20,8 +20,7 @@ export class TeacherRequestFormComponent {
   private fb = inject(FormBuilder);
   private categoryService = inject(CategoryService);
 
-  @Output()
-  public submitRequest = new EventEmitter<TeacherRequestDTO>();
+  public submitRequest = output<TeacherRequestDTO>();
 
   // Temas/categorías disponibles para que el usuario elija en qué le gustaría dictar cursos.
   public categoriesResource = rxResource({

@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, EventEmitter, input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-card-action',
@@ -9,8 +9,7 @@ import { Component, EventEmitter, input, Output } from '@angular/core';
 })
 export class CardActionComponent {
 
-  @Output()
-  action = new EventEmitter<void>();
+  action = output<void>();
 
   svgPath1 = input<string | null>();
   svgPath2 = input<string | null>();

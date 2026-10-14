@@ -28,7 +28,9 @@
 
         <span class="oauth-divider">o continuá con</span>
         <div class="btns-oauth">
-            <button type="button" class="btn-oauth btn-oauth-google">
+            <button type="button" class="btn-oauth btn-oauth-google" 
+                (click)="this.onLoginWithGoogle()">
+
                 <img src="assets/google-icon.svg" alt="">
                 Continuar con Google
             </button>

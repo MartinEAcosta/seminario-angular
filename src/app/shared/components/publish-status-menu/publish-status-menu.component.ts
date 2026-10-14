@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Output, inject, input, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, input, output, signal } from '@angular/core';
 
 @Component({
   selector: 'app-publish-status-menu',
@@ -16,14 +16,11 @@ export class PublishStatusMenuComponent {
   entityLabel = input('elemento');
   showDelete = input(false);
 
-  @Output()
-  toggleVisibility = new EventEmitter<void>();
+  toggleVisibility = output<void>();
 
-  @Output()
-  edit = new EventEmitter<void>();
+  edit = output<void>();
 
-  @Output()
-  deleteItem = new EventEmitter<void>();
+  deleteItem = output<void>();
 
   isMenuOpen = signal(false);
 

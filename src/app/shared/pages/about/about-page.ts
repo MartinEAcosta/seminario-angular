@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, signal, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 type AboutSectionId = 'hero' | 'spotlight' | 'grid' | 'cta';
@@ -11,10 +11,10 @@ type AboutSectionId = 'hero' | 'spotlight' | 'grid' | 'cta';
 })
 export default class AboutComponent implements AfterViewInit, OnDestroy {
 
-    @ViewChild('heroSection') heroSection!: ElementRef<HTMLElement>;
-    @ViewChild('spotlightSection') spotlightSection!: ElementRef<HTMLElement>;
-    @ViewChild('gridSection') gridSection!: ElementRef<HTMLElement>;
-    @ViewChild('ctaSection') ctaSection!: ElementRef<HTMLElement>;
+    heroSection = viewChild.required<ElementRef<HTMLElement>>('heroSection');
+    spotlightSection = viewChild.required<ElementRef<HTMLElement>>('spotlightSection');
+    gridSection = viewChild.required<ElementRef<HTMLElement>>('gridSection');
+    ctaSection = viewChild.required<ElementRef<HTMLElement>>('ctaSection');
 
     visibleSections = signal<Set<AboutSectionId>>(new Set());
 
@@ -22,10 +22,10 @@ export default class AboutComponent implements AfterViewInit, OnDestroy {
 
     ngAfterViewInit(): void {
         const sections: [AboutSectionId, ElementRef<HTMLElement>][] = [
-            ['hero', this.heroSection],
-            ['spotlight', this.spotlightSection],
-            ['grid', this.gridSection],
-            ['cta', this.ctaSection],
+            ['hero', this.heroSection()],
+            ['spotlight', this.spotlightSection()],
+            ['grid', this.gridSection()],
+            ['cta', this.ctaSection()],
         ];
 
         this.observer = new IntersectionObserver((entries) => {

@@ -1,4 +1,4 @@
-import { Component, effect, ElementRef, EventEmitter, HostListener, inject, input, Output, signal } from '@angular/core';
+import { Component, effect, ElementRef, HostListener, inject, input, output, signal } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Category } from '../../models/category.interfaces';
@@ -16,8 +16,7 @@ export class CategorySelectComponent {
   private categoryService = inject(CategoryService);
   private elementRef = inject(ElementRef);
 
-  @Output()
-  clickCategory = new EventEmitter<string>();
+  clickCategory = output<string>();
   course = input.required<Course | null>();
 
   open = signal<boolean>( false );

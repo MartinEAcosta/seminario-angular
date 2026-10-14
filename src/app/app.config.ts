@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig } from '@angular/core';
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -9,12 +9,11 @@ import {
 } from '@angular/common/http';
 
 import { authInterceptor } from '@auth/interceptors/auth.interceptor';
-import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { GoogleAuthService } from '@auth/services/google-auth.service';
+import { AUTH_PROVIDER } from '@auth/auth.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    importProvidersFrom(BrowserModule, ReactiveFormsModule),
     provideRouter(
                   routes,
                   withInMemoryScrolling({
@@ -28,5 +27,6 @@ export const appConfig: ApplicationConfig = {
         authInterceptor,
       ])
     ),
+    { provide: AUTH_PROVIDER , useExisting : GoogleAuthService }
   ],
 };

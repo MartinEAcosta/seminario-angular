@@ -1,17 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, of, switchMap } from 'rxjs';
+import { Router } from '@angular/router';
+import { catchError, from, map, Observable, of, switchMap } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 import { environment } from '../../../environments/environment';
 import { UIService } from '@shared/services/ui/ui.service';
-import { AuthResponse, User, UserDTO } from '@auth/models/auth.interfaces';
-import { AuthMapper } from '@mappers/auth.mapper';
-import { ErrorResponse, VerificationEmailResponse } from '@shared/models/api.interfaces';
+import { GoogleAuthService } from '@auth/services/google-auth.service';
 import { CartService } from '@cart/state/cart.service';
-import { Router } from '@angular/router';
 import { FileService } from '@file/services/file.service';
+import { AuthResponse, User, UserDTO } from '@auth/models/auth.interfaces';
+import { ErrorResponse, VerificationEmailResponse } from '@shared/models/api.interfaces';
+import { AuthMapper } from '@mappers/auth.mapper';
 import { UserState } from '@user/state/user-state';
+import { AUTH_PROVIDER } from '@auth/auth.provider';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +23,9 @@ export class AuthService {
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}auth`;
   private router = inject(Router);
+  private provider = inject(AUTH_PROVIDER);
+  
+  readonly googleReady = this.provider.ready;
   private uiService = inject(UIService);
   private cartService = inject(CartService);
   private fileService = inject(FileService);
@@ -30,6 +35,30 @@ export class AuthService {
   checkStatusResource = rxResource({
     stream: () => this.checkStatus()
   });
+
+  constructor() {
+    this.provider.onCode(
+      code => this.exchangeCode(code).subscribe(),
+      err => console.warn('Login cancelado o fallido', err),
+    );
+  }
+  
+  private exchangeCode = ( code : string ) : Observable<User | false> => {
+    return this.http
+            .post<AuthResponse>(`${this.baseURL}/login/google`, { code })
+              .pipe(
+                map( ( authResponse : AuthResponse ) => {
+                  this.router.navigateByUrl('');
+                  return this.handleAuthSuccess( authResponse ) }),
+                catchError( (error : any ) => { console.log(error); return this.handleAuthError( error.error )} )
+                );
+  }
+
+  public prepareGoogle() { return this.provider.prepare(); }
+    
+  public loginWithGoogle() { 
+    this.provider.signIn(); 
+  }
 
   public registerUser = ( userRequest : UserDTO ) : Observable<User | false> => {
     return this.http
@@ -146,7 +175,6 @@ export class AuthService {
   }
   
   private handleAuthSuccess = ( authResponse : AuthResponse ) : User  => {
-    console.log(authResponse)
     this.userState.setUser( authResponse.user );
     this.userState.setToken( authResponse.token );
     this.userState.setAuthStatus( 'authenticated' );

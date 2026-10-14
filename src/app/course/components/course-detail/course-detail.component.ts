@@ -11,6 +11,6 @@ export class CourseDetailComponent {
 
   course = input.required<Course>();
 
-  constructor(){ }
+  constructor(){}
 
 }

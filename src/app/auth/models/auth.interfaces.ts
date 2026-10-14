@@ -19,7 +19,7 @@ export interface User {
 export interface UserDTO {
     username?: string;
     email?: string;
-    password?: string;
+    password?: string | null;
     avatar_url      ?: string;
     id_file         ?: string;
 }

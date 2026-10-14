@@ -1,4 +1,4 @@
-import { Component, EventEmitter, input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Course } from '@interfaces/course.interfaces';
 import { LessonPopulated } from '@lesson/models/lesson.interfaces';
 
@@ -14,8 +14,7 @@ export class BtnRemoveComponent {
   asButton = input<boolean>( false );
   label = input<string>( 'Eliminar' );
 
-  @Output()
-  onRemove = new EventEmitter();
+  onRemove = output<void>();
 
   constructor(){ }
 

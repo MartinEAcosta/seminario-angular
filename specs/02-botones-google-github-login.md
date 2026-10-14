@@ -1,6 +1,6 @@
 # SPEC 02 — Botones de "Continuar con Google/GitHub" en login y registro
 
-> **Status:** Implementado
+> **Status:** Implementado  
 > **Depends on:** SPEC 01 (breakpoints y escala fluida)
 > **Date:** 2026-10-02
 > **Objective:** Agregar, debajo del botón de submit en los formularios de login y registro, un separador y dos botones "Continuar con Google" / "Continuar con GitHub" con estilo limpio tipo Apple (blanco, borde fino, icono + texto), puramente visuales y sin integración real de OAuth todavía.

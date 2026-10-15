@@ -51,7 +51,7 @@ export class AuthService {
                   this.router.navigateByUrl('');
                   return this.handleAuthSuccess( authResponse ) }),
                 catchError( (error : any ) => { console.log(error); return this.handleAuthError( error.error )} )
-                );
+              );
   }
 
   public prepareGoogle() { return this.provider.prepare(); }
@@ -185,12 +185,18 @@ export class AuthService {
   private handleAuthError = ( error : any | ErrorResponse ) : Observable<false>  => {
     // Solo cierra sesión ante un error real de autenticación (token inválido/expirado).
     // Un 400 de validación (ej: email duplicado al actualizar perfil) no debe desloguear.
-    if( error.status === 401 || error.status === 403 ) {
+    if( error?.status === 401 || error?.status === 403 ) {
       this.logoutUser();
     }
 
-    if( error.status === 400 ) {
+    if( error?.status === 400 ) {
       this.uiService.showToastMessage( error.error );
+    }
+
+    // Error no identificado (ej. backend inalcanzable) durante el chequeo inicial:
+    // destraba authStatus sin tocar el token, para no dejar la app colgada en 'checking'.
+    else if( this.userState.authStatus() === 'checking' ) {
+      this.userState.setAuthStatus('not-authenticated');
     }
 
     return of(false);

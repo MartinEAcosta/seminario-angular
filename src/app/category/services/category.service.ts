@@ -24,6 +24,10 @@ export class CategoryService {
                           // console.log(categoryResponse);
                           return CategoryMapper.mapResponseToCategoriesArray( categoryResponse );
                       }),
+                      catchError( (error) => {
+                        console.log(error);
+                        return of([]);
+                      }),
                     );
   }
 

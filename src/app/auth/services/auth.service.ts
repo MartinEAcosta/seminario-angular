@@ -56,8 +56,8 @@ export class AuthService {
 
   public prepareGoogle() { return this.provider.prepare(); }
     
-  public loginWithGoogle() { 
-    this.provider.signIn(); 
+  public continueWithGoogle() {
+    this.provider.signIn();
   }
 
   public registerUser = ( userRequest : UserDTO ) : Observable<User | false> => {

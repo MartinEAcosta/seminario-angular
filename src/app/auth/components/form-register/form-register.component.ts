@@ -7,12 +7,13 @@ import { FormUtils } from '@utils/form-utils';
 import { AuthService } from '@auth/services/auth.service';
 import { UserState } from '@user/state/user-state';
 import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
+import { GoogleAuthButtonComponent } from '@auth/components/google-auth-button/google-auth-button.component';
 
 @Component({
     selector: 'app-form-register',
     templateUrl: './form-register.component.html',
     styleUrls: ['../../form-global.scss', './form-register.component.scss'],
-    imports: [ReactiveFormsModule, FormErrorLabelComponent , NgClass , RouterLink ]
+    imports: [ReactiveFormsModule, FormErrorLabelComponent , NgClass , RouterLink, GoogleAuthButtonComponent]
 })
 export class FormRegisterComponent {
 

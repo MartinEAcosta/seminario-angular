@@ -3,6 +3,10 @@ $font-primary: "Montserrat", sans-serif;
 $white-custom: rgb(233, 233, 233);
 $black-custom: rgb(40, 40, 40);
 $brand-color: rgb(0, 120, 140);
+// Variante del acento para TEXTO sobre papel hueso: el teal de marca mide
+// 4.2:1 contra rgb(233,233,233) y no llega a AA en tamaño de interfaz.
+// Mismo tono, 6.3:1. Para fondos y bordes se sigue usando $brand-color.
+$brand-color-deep: rgb(0, 92, 108);
 $red-warning: rgb(197, 14, 14);
 $green-success: rgb(0, 150, 50);
 $yellow-caution: rgb(255, 190, 40);

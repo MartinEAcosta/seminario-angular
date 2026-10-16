@@ -1,19 +1,24 @@
 @use '../../../../variables.scss' as v;
 
+// Altura por variable: el loader de página ocupa media pantalla, y quien lo
+// monta dentro de una sección (una estantería, un panel) baja el valor en vez
+// de reservar un viewport entero y provocar un reflow completo.
 .container-loader{
     display: flex;
     flex-direction: column;
     max-width: 100vw;
-    height: 100vh;
+    min-height: var(--loader-min-height, 50vh);
     margin: auto;
     justify-content: center;
     align-items: center;
 }
 
-.container-loader h1{
+.loader-text{
     font-family: v.$font-primary;
-    color: v.$brand-color;
-    margin-bottom: 15px;
+    font-size: v.$text-lg;
+    font-weight: 600;
+    color: v.$brand-color-deep;
+    margin: 0 0 15px;
 }
 
 .loader {
@@ -37,4 +42,10 @@
 @keyframes rotate {
   0% {  transform: rotate(0)}
   100% { transform: rotate(360deg)}
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader:after {
+    animation-duration: 6s;
+  }
 }

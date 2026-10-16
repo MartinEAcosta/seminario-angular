@@ -5,5 +5,29 @@
       "maxFindings": 5,
       "maxChars": 8000
     }
+  },
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/app/course/components/course-mini-card/course-mini-card.component.html"
+        ],
+        "createdAt": "2026-10-16T15:39:33.723Z",
+        "reason": "Angular [src] binding with /assets/thumbnail-icon.svg fallback; static parser cannot resolve bindings (same false positive recorded in the 2026-10-16 critique for course-card)"
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/app/course/components/course-card/course-card.component.html"
+        ],
+        "createdAt": "2026-10-16T15:45:48.737Z",
+        "reason": "Angular [src] binding with /assets/thumbnail-icon.svg fallback; static parser cannot resolve bindings (false positive already recorded in the 2026-10-16 critique for this exact file)"
+      }
+    ]
   }
 }

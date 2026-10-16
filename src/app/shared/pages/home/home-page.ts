@@ -1,33 +1,27 @@
-import { Component, computed, effect, inject, OnDestroy, signal } from '@angular/core';
+import { Component, computed, inject, OnDestroy, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 import { CourseService } from '@course/services/course.service';
 import { CategoryService } from '@category/services/category.service';
-import { CartService } from '@cart/state/cart.service';
-import { UIService } from '../../services/ui/ui.service';
-import { CourseListComponent } from "../../../course/components/course-list/course-list.component";
 import { CourseCarouselComponent } from "@course/components/course-carousel/course-carousel.component";
 import { CategoryMarqueeComponent } from "@category/components/category-marquee/category-marquee.component";
 import { ModalErrorMessageComponent } from '../../components/modal-error-message/modal-error-message.component';
 import { CartComponent } from '@cart/components/cart/cart.component';
 import { defaultCourses } from '@utils/defaultCourses';
 import { defaultCategories } from '@utils/defaultCategories';
-import { PageTitleComponent } from "@shared/components/page-title/page-title.component";
 import { HeroCanvasBackgroundDirective } from './hero-canvas-background.directive';
 
 @Component({
     selector: 'app-home',
     templateUrl: './home-page.html',
     styleUrl: './home-page.scss',
-    imports: [CourseListComponent, CourseCarouselComponent, CategoryMarqueeComponent, ModalErrorMessageComponent, CartComponent, PageTitleComponent, RouterLink, HeroCanvasBackgroundDirective]
+    imports: [CourseCarouselComponent, CategoryMarqueeComponent, ModalErrorMessageComponent, CartComponent, RouterLink, HeroCanvasBackgroundDirective]
 })
 export class HomeComponent implements OnDestroy {
 
   courseService = inject(CourseService);
   categoryService = inject(CategoryService);
-  cartService = inject(CartService);
-  uiService = inject(UIService);
 
   private readonly heroPhrases: string[] = [
     'a tu ritmo, sin excusas',
@@ -56,6 +50,14 @@ export class HomeComponent implements OnDestroy {
     stream: () => this.courseService.getAll(),
   });
 
+  // El reemplazo por datos mockeados tiene que ser visible: si el backend no
+  // responde, la página lo dice en vez de disfrazar el ejemplo de catálogo real.
+  isUsingFallbackData = computed(() => {
+    if (this.coursesResource.isLoading()) return false;
+    const value = this.coursesResource.value();
+    return !value || value.items.length === 0;
+  });
+
   coursesToShow = computed(() => {
     const value = this.coursesResource.value();
     if (!value || value.items.length === 0) {
@@ -79,6 +81,11 @@ export class HomeComponent implements OnDestroy {
   });
 
   constructor() {
+    // WCAG 2.2.2: con movimiento reducido la frase se muestra entera y quieta.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      this.typewriterText.set(this.heroPhrases[0]);
+      return;
+    }
     this.runTypewriter();
   }
 

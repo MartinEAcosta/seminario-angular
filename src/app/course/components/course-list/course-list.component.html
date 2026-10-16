@@ -1,10 +1,26 @@
 @if( this.isLoading() ){
     <app-loader />
 }
+@else if( this.errorMessage() ){
+    <div class="list-feedback" role="alert">
+        <p class="list-feedback-title">No pudimos traer los cursos</p>
+        <p class="list-feedback-copy">
+            El catálogo no respondió. Revisá tu conexión y volvé a intentar en unos segundos.
+        </p>
+    </div>
+}
 @else{
     <div class="container-card">
-        @for ( course of this.courses() ; track course) {
+        @for ( course of this.courses() ; track course.id) {
             <course-card [course]="course" />
+        }
+        @empty {
+            <div class="list-feedback">
+                <p class="list-feedback-title">Todavía no hay cursos acá</p>
+                <p class="list-feedback-copy">
+                    Probá con otra categoría o explorá el catálogo completo.
+                </p>
+            </div>
         }
     </div>
 }

@@ -13,12 +13,15 @@ export class CourseCarouselComponent {
 
   courses = input.required<Course[]>();
   isLoading = input<boolean>(false);
-  title = input<string>('Recomendados para ti');
 
   track = viewChild<ElementRef<HTMLDivElement>>('track');
 
   canScrollPrev = signal(false);
   canScrollNext = signal(false);
+
+  // Abajo de 640px los botones de navegación se esconden: el riel de progreso
+  // es la única pista de que la estantería scrollea, así que no es decorativo.
+  scrollProgress = signal(0);
 
   constructor() {
     afterNextRender(() => this.onScroll());
@@ -30,6 +33,12 @@ export class CourseCarouselComponent {
 
     this.canScrollPrev.set(el.scrollLeft > 8);
     this.canScrollNext.set(el.scrollLeft + el.clientWidth < el.scrollWidth - 8);
+
+    const visibleRatio = el.scrollWidth > 0 ? el.clientWidth / el.scrollWidth : 1;
+    const scrollable = el.scrollWidth - el.clientWidth;
+    const travelled = scrollable > 0 ? el.scrollLeft / scrollable : 0;
+
+    this.scrollProgress.set(Math.min(100, (visibleRatio + travelled * (1 - visibleRatio)) * 100));
   }
 
   scrollByCard(direction: 1 | -1): void {

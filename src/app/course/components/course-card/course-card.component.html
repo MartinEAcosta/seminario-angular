@@ -1,51 +1,49 @@
-    <div class="card-course">
-        <div class="content-card">
-            <div class="container-thumbnail-course">
+<div class="card-course">
+    <div class="content-card">
+        <div class="container-thumbnail-course">
+            <a class="thumbnail-link" [routerLink]="['/course' , course().id]" tabindex="-1" aria-hidden="true">
                 <figure>
-                    <img [ngClass]="course().thumbnail_url ? 'course-img' : 'image-icon'" [routerLink]="['/course' , course().id]" [src]="course().thumbnail_url || '/assets/thumbnail-icon.svg'" alt="Course Image"/>
+                    <img [ngClass]="course().thumbnail_url ? 'course-img' : 'image-icon'" [src]="course().thumbnail_url || '/assets/thumbnail-icon.svg'" alt=""/>
                 </figure>
-            </div>
-            <div class="details-course">
-                <div class="details-header">
-                    <a
-                        class="anchor"
-                        [routerLink]="['/course' , course().id]"
-                    >
-                        {{course().title}}
-                    </a>
-                    @if( course().id_owner === userState.user()?.id  ) {
-                        <div class="container-extra">
-                            <div class="ellipsis-icon">
-                                <img class="ellipsis-svg" src="/assets/ellipsis-icon.svg" alt="Ellipsis icon for options">
-                            </div>
-                            <div class="course-options">
-                                <a class="option" [routerLink]="['/course/update' , course().id ]" >
-                                    Editar
-                                </a>
-                                <a class="option" [routerLink]="">
-                                    Eliminar
-                                </a>
-                            </div>
+            </a>
+        </div>
+        <div class="details-course">
+            <div class="details-header">
+                <a
+                    class="anchor"
+                    [routerLink]="['/course' , course().id]"
+                >
+                    {{course().title}}
+                </a>
+                @if( course().id_owner === userState.user()?.id  ) {
+                    <div class="container-extra">
+                        <div class="ellipsis-icon">
+                            <img class="ellipsis-svg" src="/assets/ellipsis-icon.svg" alt="Opciones del curso">
                         </div>
-                    }
-                </div>
-                <div class="container-desc">
-                    <p class="desc">
-                        {{course().description}}
-                    </p>
-                </div>
-                <p class="price">
-                    {{ course().price === 0 ? 'Gratis' : (course().price | currency:'USD':'symbol':'1.2-2') }}
-                </p>
-                <div class="extra-details">
-                    <div class="buttons">
-                        <app-btn-primary (click)="this.cartService.onAddToCart( course() )" [routerLink]="['/payment/buy']">
-                                Comprar
-                        </app-btn-primary>
-                        <btn-border-thin (click)="this.cartService.onAddToCart( course() )" />
+                        <div class="course-options">
+                            <a class="option" [routerLink]="['/course/update' , course().id ]" >
+                                Editar
+                            </a>
+                        </div>
                     </div>
+                }
+            </div>
+            <div class="container-desc">
+                <p class="desc">
+                    {{course().description}}
+                </p>
+            </div>
+            <div class="card-actions">
+                <p class="price">
+                    {{ course().price === 0 ? 'Gratis' : (course().price | currency:'ARS':'symbol':'1.0-0') }}
+                </p>
+                <div class="buttons">
+                    <app-btn-primary (click)="this.cartService.onAddToCart( course() )" [routerLink]="['/payment/buy']">
+                            Comprar
+                    </app-btn-primary>
+                    <btn-border-thin (click)="this.cartService.onAddToCart( course() )" />
                 </div>
             </div>
         </div>
     </div>
-
+</div>

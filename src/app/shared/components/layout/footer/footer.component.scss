@@ -1,74 +1,145 @@
 @use '@variables' as v;
 
+// El footer era un slab a sangre completa de $brand-color: el área de color
+// más grande del sitio era el acento que saca su peso de aparecer poco.
+// Ahora es una sala oscura de cierre, con el teal reservado al CTA.
 footer{
     display: flex;
     flex-direction: column;
     width: 100%;
-    background-color: v.$brand-color;
+    background-color: #0e1a1a;
     color: v.$white-custom;
     font-family: v.$font-primary;
 }
 
 .footer{
-    padding: 20px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: v.$space-md;
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    padding: v.$space-lg 6%;
+    box-sizing: border-box;
 }
 
-.footer .logo{
-    font-family: v.$font-brand;
-    color: v.$white-custom;
-    margin-bottom: 5px;
+.closing{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: v.$space-xs;
+    max-width: 640px;
+}
+
+.closing-title{
+    margin: 0;
+    font-size: v.$text-2xl;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
 }
 
 .footer .text{
-    font-size: 1.2rem;
-    margin-bottom: 5px;
+    max-width: 58ch;
+    margin: 0;
+    font-size: v.$text-base;
+    line-height: 1.6;
+    color: rgba(233, 233, 233, 0.75);
 }
 
-.footer-content{
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: 3%;
-    margin-bottom: 3%;
+.closing-cta{
+    display: inline-flex;
+    align-items: center;
+    margin-top: v.$space-xs;
+    padding: 0.7rem 1.5rem;
+    border-radius: 1.5rem;
+    background-color: v.$brand-color;
+    color: #ffffff;
+    font-size: v.$text-base;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.links , .contact{
+.closing-cta:hover{
+    background-color: rgba(0, 120, 140, 0.8);
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+}
+
+.links{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    flex-shrink: 0;
+    align-items: flex-start;
+    gap: 0.5rem;
 }
 
-.links h2 , .contact h2{
-    font-size: 1.5rem;
-    text-align: center;
-    margin-bottom: 15px;
+.links h3{
+    margin: 0 0 0.25rem;
+    font-size: v.$text-sm;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(233, 233, 233, 0.55);
 }
 
-.links a , .contact a {
+.links a{
     text-decoration: none;
-    margin: 5px;
-    font-weight: bold;
+    text-underline-offset: 0.3em;
+    font-size: v.$text-base;
+    font-weight: 500;
     color: v.$white-custom;
+    transition: opacity 0.3s ease;
 }
 
-.links a:hover , .contact a:hover{
-    color: v.$black-custom
+.links a:hover{
+    opacity: 0.7;
+    text-decoration: underline;
 }
 
-.contact a{
-    display: flex;
-    align-items: center;
-}
-
-.contact a img{
-    margin-right: 5px;
+.closing-cta:focus-visible,
+.links a:focus-visible{
+    outline: 2px solid v.$white-custom;
+    outline-offset: 4px;
+    border-radius: 6px;
 }
 
 .copyright{
-    background-color: v.$black-custom;
     display: flex;
     justify-content: center;
     text-align: center;
     flex-direction: column;
     align-items: center;
+    gap: 0.15rem;
     width: 100%;
+    padding: v.$space-sm 6%;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(233, 233, 233, 0.1);
+    background-color: v.$black-custom;
+    font-size: v.$text-sm;
+    color: rgba(233, 233, 233, 0.7);
+}
+
+.copyright p{
+    margin: 0;
+}
+
+@include v.bp-down('md') {
+    .footer{
+        flex-direction: column;
+        gap: v.$space-md;
+        padding: v.$space-md 6%;
+    }
+
+    .links{
+        align-items: flex-start;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .closing-cta:hover{
+        transform: none;
+    }
 }

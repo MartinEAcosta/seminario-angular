@@ -7,47 +7,64 @@
     position: relative;
     overflow: hidden;
     flex-direction: column;
-    padding: 5% 2.5%;
+    padding: 1.25rem 1rem 1rem;
     border-radius: 0.2rem;
     margin-bottom: 10%;
     background-color: rgb(40, 40, 40);
-    box-shadow: var(--mini-card-shadow, 5px 7px 20px rgba(0, 0, 0, 0.8));
-    transition: all 0.5s ease;
-    cursor: pointer;
+    border: 1px solid rgba(233, 233, 233, 0.1);
+    box-shadow: var(--mini-card-shadow, 0 10px 30px rgba(40, 40, 40, 0.18));
+    transition: background-color 0.3s ease, border-color 0.3s ease,
+        box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .mini-card:hover{
-    background-color: var(--mini-card-hover-bg, rgba(0, 0, 0, 0.9));
-    box-shadow: var(--mini-card-hover-shadow, 5px 7px 20px rgba(0, 0, 0, 0.9));
+    background-color: var(--mini-card-hover-bg, #333333);
+    border-color: rgba(0, 120, 140, 0.55);
+    box-shadow: var(--mini-card-hover-shadow, 0 16px 36px rgba(0, 0, 0, 0.1));
     transform: translateY(-10px);
-    transition: all 0.5s ease;
+}
+
+.mini-card:focus-within{
+    border-color: v.$brand-color;
 }
 
 .title{
-    display: flex;
+    display: block;
     width: 100%;
     font-family: v.$font-primary;
-    font-weight: 500;
+    font-weight: 800;
     font-size: var(--mini-card-title-font-size, 1.4rem);
-    padding: 2% 0;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    margin: 0;
+    padding: 0;
     text-align: center;
-    justify-content: center;
     color: v.$white-custom;
+}
 
-
+figure{
+    margin: 0;
+    padding: 0;
 }
 
 figure .thumbnail-course{
-    display: flex;
-    width: 95%;
+    display: block;
+    width: 100%;
     /* fixed ratio: image never dictates the figure's height, so
        cards with differently-shaped thumbnails still line up */
     aspect-ratio: 16 / 9;
     object-fit: cover;
-    margin: 1.5% auto;
+    border-radius: 0.2rem;
+    margin: 0.75rem auto;
     mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent),
                 linear-gradient(to bottom, transparent, black 3%, black 97%, transparent);
     mask-composite: intersect;
     mask-repeat: no-repeat;
     mask-size: cover;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mini-card:hover{
+        transform: none;
+    }
 }

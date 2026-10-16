@@ -1,60 +1,53 @@
 @use '@variables' as v;
 
-.carousel-shelf {
+:host{
+    display: block;
+    --loader-min-height: 22rem;
+}
+
+.shelf{
     display: flex;
     flex-direction: column;
-    margin: 3rem 5%;
-    padding: 2.5rem 0;
-    border-radius: 1rem;
-    background-color: #161616;
 }
 
-.shelf-title {
-    padding: 0 2rem;
-    margin-bottom: 1.5rem;
-    font-family: v.$font-primary;
-    font-weight: 500;
-    font-size: 1.8rem;
-    color: v.$white-custom;
-}
-
-.shelf-viewport {
+// Los controles viven arriba de la estantería y no encima de las tarjetas:
+// así las tarjetas quedan alineadas con el título de la sección y ningún
+// botón flotante tapa el borde de la primera.
+.shelf-controls{
     display: flex;
-    position: relative;
-    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
 }
 
-.track {
+.track{
     display: flex;
     overflow-x: auto;
     gap: 2.25rem;
-    padding: 2rem 3rem 1.5rem;
+    padding: 1.25rem 0.25rem 2rem;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
-    mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
-    mask-composite: intersect;
 }
 
-.track::-webkit-scrollbar {
+.track::-webkit-scrollbar{
     display: none;
 }
 
-.track-item {
+.track:focus-visible{
+    outline: 2px solid v.$brand-color;
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+}
+
+.track-item{
     --mini-card-width: 16rem;
     --mini-card-height: 20rem;
     --mini-card-title-font-size: 1.15rem;
-    --mini-card-hover-bg: #333333;
-    --mini-card-shadow: 5px 7px 20px rgba(0, 0, 0, 0.8), 0 0 0 rgba(220, 220, 240, 0);
-    --mini-card-hover-shadow: 0 14px 30px rgba(0, 0, 0, 0.6), 0 0 22px rgba(220, 220, 240, 0.12);
     flex: 0 0 auto;
     scroll-snap-align: start;
 }
 
-.nav-btn {
+.nav-btn{
     display: flex;
-    position: absolute;
-    z-index: 10;
-    top: 50%;
     align-items: center;
     justify-content: center;
     width: 2.75rem;
@@ -62,40 +55,60 @@
     border: none;
     border-radius: 50%;
     background-color: v.$brand-color;
-    color: v.$white-custom;
-    font-size: 1.6rem;
-    line-height: 1;
+    color: #ffffff;
     cursor: pointer;
-    transform: translateY(-50%);
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.6);
-    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(40, 40, 40, 0.18);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
 }
 
-.nav-btn:hover:not(:disabled) {
+.nav-btn:hover:not(:disabled){
     background-color: rgba(0, 120, 140, 0.8);
-    transform: translateY(-50%) scale(1.08);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
 }
 
-.nav-btn:disabled {
+.nav-btn:focus-visible{
+    outline: 2px solid v.$brand-color;
+    outline-offset: 3px;
+}
+
+.nav-btn:disabled{
     opacity: 0.3;
     cursor: default;
     pointer-events: none;
 }
 
-.nav-prev {
-    left: 0.75rem;
+.scroll-rail{
+    position: relative;
+    width: 100%;
+    height: 3px;
+    border-radius: 999px;
+    background-color: rgba(40, 40, 40, 0.1);
+    overflow: hidden;
 }
 
-.nav-next {
-    right: 0.75rem;
+.scroll-thumb{
+    display: block;
+    height: 100%;
+    min-width: 8%;
+    border-radius: 999px;
+    background-color: v.$brand-color;
+    transition: width 0.2s ease;
 }
 
-@media (max-width: 640px) {
-    .nav-btn {
+@include v.bp-down('sm') {
+    .shelf-controls{
         display: none;
     }
 
-    .track {
-        padding: 0.5rem 1rem 1rem;
+    .track{
+        gap: 1.25rem;
+        padding: 1rem 0 1.5rem;
+        scroll-padding-left: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scroll-thumb{
+        transition: none;
     }
 }

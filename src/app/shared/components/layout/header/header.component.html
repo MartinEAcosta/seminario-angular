@@ -1,50 +1,84 @@
-<header [class.header-transparent]="isTransparentTop()" [class.header-glass]="!isTransparentTop()" [class.header-overlay]="overlaysDarkHero()">
+<header [class.header-transparent]="isTransparentTop()" [class.header-glass]="!isTransparentTop()"
+  [class.header-overlay]="overlaysDarkHero()" [class.menu-open]="isMenuOpen()">
+
   <div class="container-brand-icon">
-    <a [routerLink]="['']" class="logo">Udemix</a>
+    <a [routerLink]="['']" class="logo" (click)="closeMenu()">Udemix</a>
   </div>
 
-  <nav>
-    <div class="container-search">
+  <button
+    type="button"
+    class="menu-toggle"
+    id="header-menu-toggle"
+    aria-controls="header-nav"
+    [attr.aria-expanded]="isMenuOpen()"
+    [attr.aria-label]="isMenuOpen() ? 'Cerrar menú' : 'Abrir menú'"
+    (click)="toggleMenu()">
+    @if (isMenuOpen()) {
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
+        stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18"/>
+      </svg>
+    }
+    @else {
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
+        stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16"/>
+      </svg>
+    }
+  </button>
+
+  <nav id="header-nav" [class.is-open]="isMenuOpen()">
+    <form class="container-search" (submit)="onSearch(searchInput.value, $event)">
       <div class="container-input-svg">
-        <img src="/assets/search-icon.svg" alt="Search icon" class="search-icon">
-        <input type="text" placeholder="Busca un tema que te interese..." name="" id="" class="search-input">
+        <button type="submit" class="search-submit" aria-label="Buscar cursos">
+          <img src="/assets/search-icon.svg" alt="" class="search-icon">
+        </button>
+        <input
+          #searchInput
+          type="search"
+          [value]="searchService.textSearch()"
+          placeholder="Buscá un tema que te interese…"
+          name="title"
+          id="header-search"
+          aria-label="Buscar cursos"
+          class="search-input">
       </div>
-    </div>
+    </form>
 
     <div class="container-nav-anchors">
-      <a [routerLink]="['/about']">
+      <a [routerLink]="['/about']" (click)="closeMenu()">
           Nosotros
       </a>
-      <a [routerLink]="['/explore']" (click)="searchService.reset()">
+      <a [routerLink]="['/explore']" (click)="onExploreClick()">
           Explorar
       </a>
       @if ( userState.authStatus() === "authenticated") {
-        <a [routerLink]="['/enrollment']">
+        <a [routerLink]="['/enrollment']" (click)="closeMenu()">
           Biblioteca
         </a>
 
         @if( userState.user()?.role === 'teacher' || userState.user()?.role === 'admin' ) {
-          <a [routerLink]="['/course/create']">
-            Crea tu curso
+          <a [routerLink]="['/course/create']" (click)="closeMenu()">
+            Creá tu curso
           </a>
         }
 
         @if( userState.user()?.role === 'student' ) {
-          <a [routerLink]="['/become-teacher']">
-            Conviértete en profesor
+          <a [routerLink]="['/become-teacher']" (click)="closeMenu()">
+            Convertite en profesor
           </a>
         }
 
         <app-user-profile-dropdown />
-        
+
       }
       @else{
-        <a [routerLink]="['/auth/login']" class="last-element">
+        <a [routerLink]="['/auth/login']" class="last-element" (click)="closeMenu()">
           Iniciar sesión
         </a>
       }
     </div>
-    
+
   </nav>
 
 </header>

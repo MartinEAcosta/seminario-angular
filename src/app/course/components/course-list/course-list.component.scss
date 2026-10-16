@@ -1,1 +1,36 @@
+@use '@variables' as v;
 
+:host{
+    display: block;
+    --loader-min-height: 24rem;
+}
+
+.container-card{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.list-feedback{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    padding: v.$space-md 0;
+    font-family: v.$font-primary;
+}
+
+.list-feedback-title{
+    margin: 0;
+    font-size: v.$text-lg;
+    font-weight: 700;
+    color: v.$black-custom;
+}
+
+.list-feedback-copy{
+    max-width: 48ch;
+    margin: 0;
+    font-size: v.$text-base;
+    line-height: 1.6;
+    color: rgba(40, 40, 40, 0.75);
+}

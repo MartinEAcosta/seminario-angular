@@ -27,7 +27,11 @@ export class HeaderComponent {
   private currentUrl = signal(this.router.url);
   private isScrolled = signal(window.scrollY > SCROLL_THRESHOLD);
 
-  private hasDarkHero = computed(() => DARK_HERO_ROUTES.includes(this.currentUrl()));
+  // Sin recortar query y fragmento, `/?page=2` o `/#algo` dejaban de contar
+  // como hero oscuro y el header arrancaba en modo vidrio sobre la sala negra.
+  private hasDarkHero = computed(() =>
+    DARK_HERO_ROUTES.includes(this.currentUrl().split(/[?#]/)[0])
+  );
 
   isTransparentTop = computed(() => this.hasDarkHero() && !this.isScrolled());
 
@@ -36,14 +40,45 @@ export class HeaderComponent {
   // quede visible detrás del header transparente/glass sin tocar esas páginas.
   overlaysDarkHero = computed(() => this.hasDarkHero());
 
+  // Abajo de 768px la búsqueda y los enlaces no caben en la píldora: se
+  // repliegan en un panel desplegable en vez de apilarse sobre el wordmark.
+  isMenuOpen = signal(false);
+
   constructor() {
     this.router.events
       .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
-      .subscribe(() => this.currentUrl.set(this.router.url));
+      .subscribe(() => {
+        this.currentUrl.set(this.router.url);
+        this.closeMenu();
+      });
 
     const onScroll = () => this.ngZone.run(() => this.isScrolled.set(window.scrollY > SCROLL_THRESHOLD));
     this.ngZone.runOutsideAngular(() => window.addEventListener('scroll', onScroll, { passive: true }));
     this.destroyRef.onDestroy(() => window.removeEventListener('scroll', onScroll));
   }
-}
 
+  toggleMenu(): void {
+    this.isMenuOpen.update((open) => !open);
+  }
+
+  closeMenu(): void {
+    this.isMenuOpen.set(false);
+  }
+
+  onExploreClick(): void {
+    this.searchService.reset();
+    this.closeMenu();
+  }
+
+  onSearch(value: string, event: Event): void {
+    event.preventDefault();
+
+    const query = value.trim();
+    this.searchService.textSearch.set(query);
+    this.closeMenu();
+
+    this.router.navigate(['/explore'], {
+      queryParams: { title: query || undefined },
+    });
+  }
+}

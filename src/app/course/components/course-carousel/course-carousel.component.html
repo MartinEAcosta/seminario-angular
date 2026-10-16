@@ -2,27 +2,36 @@
     <app-loader />
 }
 @else if (courses().length > 0) {
-    <section class="carousel-shelf">
-        <h2 class="shelf-title">{{ title() }}</h2>
-
-        <div class="shelf-viewport">
-            <button type="button" class="nav-btn nav-prev" [disabled]="!canScrollPrev()"
+    <div class="shelf">
+        <div class="shelf-controls">
+            <button type="button" class="nav-btn" [disabled]="!canScrollPrev()"
                 (click)="scrollByCard(-1)" aria-label="Ver cursos anteriores">
-                ‹
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M15 6l-6 6 6 6"/>
+                </svg>
             </button>
 
-            <div class="track" #track (scroll)="onScroll()">
-                @for (course of courses(); track course.id) {
-                    <div class="track-item">
-                        <app-course-mini-card [course]="course" />
-                    </div>
-                }
-            </div>
-
-            <button type="button" class="nav-btn nav-next" [disabled]="!canScrollNext()"
+            <button type="button" class="nav-btn" [disabled]="!canScrollNext()"
                 (click)="scrollByCard(1)" aria-label="Ver más cursos">
-                ›
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M9 6l6 6-6 6"/>
+                </svg>
             </button>
         </div>
-    </section>
+
+        <div class="track" #track (scroll)="onScroll()" tabindex="0" role="group"
+            aria-label="Cursos del catálogo">
+            @for (course of courses(); track course.id) {
+                <div class="track-item">
+                    <app-course-mini-card [course]="course" />
+                </div>
+            }
+        </div>
+
+        <div class="scroll-rail" aria-hidden="true">
+            <span class="scroll-thumb" [style.width.%]="scrollProgress()"></span>
+        </div>
+    </div>
 }

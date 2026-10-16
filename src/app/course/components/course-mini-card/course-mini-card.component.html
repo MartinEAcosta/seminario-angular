@@ -1,32 +1,56 @@
 <div class="mini-card">
-    <div class="container-title">
-        <h3 class="title">{{course().title}}</h3>
-    </div>
-    <figure>
-        <img
-        class="thumbnail-course"
-        src="{{ course().thumbnail_url }}" [alt]="course().title">
+    <!-- El enlace cubre toda la tarjeta: un tap sobre el contenido navega al
+         detalle en vez de mutar el carrito (el botón vive por encima). -->
+    <a class="card-link" [routerLink]="['/course', id_course()]">
+        <span class="sr-only">Ver el curso {{ course().title }}</span>
+    </a>
+
+    <h3 class="title">{{ course().title }}</h3>
+
+    <figure [class.is-placeholder]="!course().thumbnail_url">
+        <img class="thumbnail-course" [src]="course().thumbnail_url || '/assets/thumbnail-icon.svg'" alt="">
     </figure>
-    <div class="container-details">
-        <h4 class="text text-details">Descripción</h4>
-        <p class="text text-desc">{{ course().description }} </p>
-    </div>
-    <div class="container-pricing">
+
+    <p class="text text-desc">{{ course().description }}</p>
+
+    <div class="card-footer">
         <p class="price">
             @if( course().price !== 0 ){
-                {{ course().price | currency:'USD':'symbol':'1.2-2' }}
+                {{ course().price | currency:'ARS':'symbol':'1.0-0' }}
             }
             @else {
                 Gratis
             }
         </p>
-    </div>
-    <div class="container-hover">
-        <button class="btn" [routerLink]="['/course', id_course()]">
-            Ver curso
+
+        <button
+            type="button"
+            class="btn-add"
+            [class.is-added]="justAdded()"
+            [attr.aria-label]="'Añadir ' + course().title + ' al carrito'"
+            (click)="onAddToCart()">
+            @if (justAdded()) {
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M4 12.5l5 5L20 6.5"/>
+                </svg>
+                <span>Agregado</span>
+            }
+            @else {
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M3 4h2l1.4 10.6a2 2 0 0 0 2 1.7h8.2a2 2 0 0 0 2-1.6L20 8H6.2"/>
+                    <circle cx="9.5" cy="20" r="1.4" fill="currentColor"/>
+                    <circle cx="17" cy="20" r="1.4" fill="currentColor"/>
+                </svg>
+                <span>Al carrito</span>
+            }
         </button>
-        <button class="btn btn-add-to-cart" (click)="cartService.onAddToCart( course() )">
-            Añadir al carrito
-        </button>
     </div>
+
+    <p class="sr-only" role="status" aria-live="polite">
+        @if (justAdded()) {
+            {{ course().title }} se agregó al carrito.
+        }
+    </p>
 </div>

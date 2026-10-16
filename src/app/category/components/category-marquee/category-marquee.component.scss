@@ -10,19 +10,22 @@
 
 .marquee-eyebrow {
     font-family: v.$font-primary;
-    font-size: 0.78rem;
+    font-size: v.$text-sm;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(233, 233, 233, 0.4);
+    color: rgba(233, 233, 233, 0.65);
     margin-bottom: 1.25rem;
 }
 
 .marquee-viewport {
     width: 100%;
     overflow: hidden;
+    // Una sola capa de máscara: con `mask-composite: intersect` declarado acá
+    // el degradado izquierdo se cortaba en seco en x=0.
     mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-    mask-composite: intersect;
+    mask-repeat: no-repeat;
+    mask-size: 100% 100%;
 }
 
 .marquee-track {
@@ -45,7 +48,7 @@
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: rgba(233, 233, 233, 0.5);
+    color: rgba(233, 233, 233, 0.7);
     text-decoration: none;
     white-space: nowrap;
     transition: color 0.3s ease, text-shadow 0.3s ease;

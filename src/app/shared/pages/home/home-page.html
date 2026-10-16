@@ -34,9 +34,13 @@
     </div>
 
     <section class="catalog">
+        @if (featuredCourse(); as featured) {
+            <app-course-featured [course]="featured" [categoryName]="featuredCategoryName()" />
+        }
+
         <div class="catalog-head">
             <div class="catalog-heading-row">
-                <h2 class="catalog-title">El catálogo</h2>
+                <h2 class="catalog-title">Cursos disponibles</h2>
                 @if (isUsingFallbackData()) {
                     <span class="demo-pill">Modo demo · el backend no está conectado</span>
                 }
@@ -61,7 +65,8 @@
             <a class="catalog-link" [routerLink]="'/explore'">Explorá el catálogo completo</a>
         </div>
 
-        <app-course-carousel [courses]='this.carouselCourses()' [isLoading]='this.coursesResource.isLoading()' />
+        <app-course-carousel [courses]='this.carouselCourses()' [isLoading]='this.coursesResource.isLoading()'
+            [categoryNameById]="carouselCategoryNameById()" />
     </section>
 
     <app-modal-error-message />

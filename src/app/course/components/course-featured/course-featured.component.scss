@@ -1,0 +1,263 @@
+@use '@variables' as v;
+
+:host{
+    display: block;
+}
+
+// Sin max-width propio: la banda `.catalog` ya define el ancho de contenido
+// con su padding de 5%, y el ticket arranca en la misma vertical que el
+// título de sección y que la estantería de abajo.
+.featured{
+    margin: 0 0 v.$space-md;
+    font-family: v.$font-primary;
+}
+
+// Ticket rotado 90°: en /about la banda teal está arriba y el festón corta en
+// horizontal. Acá el talón es el thumbnail y el corte es vertical, que es como
+// se rompe una entrada de verdad. Sin banda teal: el área de color de esta
+// pieza es la imagen del curso, y dos áreas de color competirían.
+.ticket{
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    overflow: hidden;
+    border-radius: 20px;
+    border: 1px solid rgba(40, 40, 40, 0.08);
+    background-color: #ffffff;
+    box-shadow: v.$shadow-surface-rest;
+}
+
+.ticket-stub{
+    position: relative;
+    min-height: 18rem;
+    background-color: rgba(0, 120, 140, 0.06);
+}
+
+.ticket-thumbnail{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ticket-stub.is-placeholder{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ticket-stub.is-placeholder .ticket-thumbnail{
+    width: 3.5rem;
+    height: auto;
+    opacity: 0.35;
+}
+
+.ticket-stamp{
+    display: flex;
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    z-index: 1;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: v.$brand-color;
+}
+
+.ticket-stamp img{
+    width: 26px;
+    height: 26px;
+}
+
+.ticket-body{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: v.$space-xs;
+    padding: v.$space-md v.$space-sm v.$space-sm;
+}
+
+// El festón: semicírculos transparentes que dejan ver el thumbnail por
+// detrás, blanco alrededor. Misma receta que la tarjeta-ticket de /about,
+// girada a `repeat-y`.
+.ticket-body::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -10px;
+    width: 20px;
+    background-image: radial-gradient(circle at 0 10px, transparent 10px, #ffffff 10.5px);
+    background-size: 20px 20px;
+    background-repeat: repeat-y;
+}
+
+.eyebrow{
+    font-size: v.$text-sm;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: v.$brand-color-deep;
+}
+
+.ticket-meta{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.meta-pill{
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid rgba(40, 40, 40, 0.18);
+    background-color: rgba(40, 40, 40, 0.05);
+    font-size: v.$text-sm;
+    font-weight: 600;
+    color: rgba(40, 40, 40, 0.8);
+}
+
+.ticket-title{
+    margin: 0;
+    font-size: v.$text-xl;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: v.$black-custom;
+}
+
+.ticket-desc{
+    display: -webkit-box;
+    max-width: 50ch;
+    margin: 0;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    font-size: v.$text-base;
+    line-height: 1.6;
+    color: rgba(40, 40, 40, 0.75);
+}
+
+// El precio no es un estado: va en tinta plena y el énfasis lo carga el peso,
+// no el verde (DESIGN.md reserva el trío semántico para estado).
+.ticket-price{
+    margin: v.$space-xs 0 0;
+    font-size: v.$text-xl;
+    font-weight: 800;
+    color: v.$black-custom;
+}
+
+.ticket-actions{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: auto;
+    padding-top: v.$space-xs;
+}
+
+.btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease,
+        color 0.3s ease, transform 0.3s ease;
+}
+
+.btn:hover{
+    transform: translateY(v.$lift-control);
+}
+
+.btn-view{
+    border: 1px solid v.$brand-color;
+    background-color: v.$brand-color;
+    color: #ffffff;
+}
+
+.btn-view:hover{
+    background-color: rgba(0, 120, 140, 0.8);
+    border-color: transparent;
+}
+
+.btn-cart{
+    border: 1px solid v.$brand-color-deep;
+    background-color: transparent;
+    color: v.$brand-color-deep;
+}
+
+.btn-cart:hover{
+    background-color: v.$brand-color;
+    border-color: v.$brand-color;
+    color: #ffffff;
+}
+
+.btn-cart.is-added{
+    border-color: v.$green-success;
+    color: v.$green-success;
+}
+
+.btn-cart.is-added:hover{
+    background-color: rgba(0, 150, 50, 0.1);
+    border-color: v.$green-success;
+    color: v.$green-success;
+}
+
+.btn-view{ @include v.focus-ring(v.$brand-color-deep, 3px); }
+.btn-cart{ @include v.focus-ring(v.$brand-color-deep, 3px); }
+
+@include v.bp-down('md') {
+    // Columna única: el talón vuelve arriba y el festón gira a horizontal,
+    // que es la orientación original de la tarjeta-ticket de /about.
+    .ticket{
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .ticket-stub{
+        aspect-ratio: 16 / 9;
+        min-height: 0;
+    }
+
+    .ticket-body::before{
+        top: -10px;
+        right: 0;
+        bottom: auto;
+        left: 0;
+        width: auto;
+        height: 20px;
+        background-image: radial-gradient(circle at 10px 0, transparent 10px, #ffffff 10.5px);
+        background-repeat: repeat-x;
+    }
+
+    .ticket-actions{
+        width: 100%;
+    }
+
+    .btn{
+        flex: 1 1 100%;
+    }
+}
+
+@media (pointer: coarse) {
+    .btn{
+        min-height: 2.75rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn:hover{
+        transform: none;
+    }
+}

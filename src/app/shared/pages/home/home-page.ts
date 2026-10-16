@@ -4,7 +4,9 @@ import { rxResource } from '@angular/core/rxjs-interop';
 
 import { CourseService } from '@course/services/course.service';
 import { CategoryService } from '@category/services/category.service';
+import { resolveCategoryName } from '@category/utils/resolve-category-name';
 import { CourseCarouselComponent } from "@course/components/course-carousel/course-carousel.component";
+import { CourseFeaturedComponent } from '@course/components/course-featured/course-featured.component';
 import { CategoryMarqueeComponent } from "@category/components/category-marquee/category-marquee.component";
 import { ModalErrorMessageComponent } from '../../components/modal-error-message/modal-error-message.component';
 import { CartComponent } from '@cart/components/cart/cart.component';
@@ -16,7 +18,7 @@ import { HeroCanvasBackgroundDirective } from './hero-canvas-background.directiv
     selector: 'app-home',
     templateUrl: './home-page.html',
     styleUrl: './home-page.scss',
-    imports: [CourseCarouselComponent, CategoryMarqueeComponent, ModalErrorMessageComponent, CartComponent, RouterLink, HeroCanvasBackgroundDirective]
+    imports: [CourseCarouselComponent, CourseFeaturedComponent, CategoryMarqueeComponent, ModalErrorMessageComponent, CartComponent, RouterLink, HeroCanvasBackgroundDirective]
 })
 export class HomeComponent implements OnDestroy {
 
@@ -66,7 +68,19 @@ export class HomeComponent implements OnDestroy {
     return value;
   });
 
-  carouselCourses = computed(() => this.coursesToShow().items.slice(0, 10));
+  // El destacado no se elige: es el primero del catálogo. Sin un flag en el
+  // backend, cualquier otro criterio sería una promesa que el dato no sostiene.
+  // Durante la carga devuelve null: `coursesToShow()` ya cae al mock de
+  // respaldo, y mostrar un curso para pisarlo un segundo después es peor que
+  // el hueco.
+  featuredCourse = computed(() => {
+    if (this.coursesResource.isLoading()) return null;
+    return this.coursesToShow().items[0] ?? null;
+  });
+
+  // El destacado sale de la estantería: mostrarlo dos veces parte al medio el
+  // catálogo percibido y hace que las dos secciones parezcan relleno.
+  carouselCourses = computed(() => this.coursesToShow().items.slice(1, 11));
 
   categoriesResource = rxResource({
     stream: () => this.categoryService.getAllCategories(),
@@ -78,6 +92,21 @@ export class HomeComponent implements OnDestroy {
       return defaultCategories;
     }
     return value;
+  });
+
+  featuredCategoryName = computed<string | null>(() =>
+    resolveCategoryName(this.featuredCourse()?.id_category, this.categoriesToShow())
+  );
+
+  // Mismo criterio que el destacado, pero uno por curso: el carrusel ahora
+  // muestra pastilla de categoría en cada item.
+  carouselCategoryNameById = computed<Record<string, string | null>>(() => {
+    const categories = this.categoriesToShow();
+    const result: Record<string, string | null> = {};
+    for (const course of this.carouselCourses()) {
+      result[course.id] = resolveCategoryName(course.id_category, categories);
+    }
+    return result;
   });
 
   constructor() {

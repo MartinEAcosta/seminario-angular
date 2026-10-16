@@ -39,9 +39,6 @@
 }
 
 .track-item{
-    --mini-card-width: 16rem;
-    --mini-card-height: 20rem;
-    --mini-card-title-font-size: 1.15rem;
     flex: 0 0 auto;
     scroll-snap-align: start;
 }
@@ -75,6 +72,15 @@
     opacity: 0.3;
     cursor: default;
     pointer-events: none;
+}
+
+.shelf-empty{
+    margin: 0;
+    padding: v.$space-sm 0 0;
+    font-family: v.$font-primary;
+    font-size: v.$text-base;
+    line-height: 1.6;
+    color: rgba(40, 40, 40, 0.75);
 }
 
 .scroll-rail{

@@ -1,0 +1,75 @@
+<section class="featured" aria-labelledby="featured-title">
+    <article class="ticket">
+
+        <div class="ticket-stub" [class.is-placeholder]="!course().thumbnail_url">
+            <span class="ticket-stamp">
+                <img src="/assets/about-course-icon.svg" alt="" aria-hidden="true">
+            </span>
+            <img class="ticket-thumbnail"
+                [src]="course().thumbnail_url || '/assets/thumbnail-icon.svg'" alt="">
+        </div>
+
+        <div class="ticket-body">
+            <span class="eyebrow">Curso destacado</span>
+
+            @if (categoryName() || capacity()) {
+                <ul class="ticket-meta">
+                    @if (categoryName(); as category) {
+                        <li class="meta-pill">{{ category }}</li>
+                    }
+                    @if (capacity(); as cupos) {
+                        <li class="meta-pill">{{ cupos }} cupos</li>
+                    }
+                </ul>
+            }
+
+            <h3 class="ticket-title" id="featured-title">{{ course().title }}</h3>
+
+            <p class="ticket-desc">{{ course().description }}</p>
+
+            <p class="ticket-price">
+                @if (course().price !== 0) {
+                    {{ course().price | currency:'ARS':'symbol':'1.0-0' }}
+                }
+                @else {
+                    Gratis
+                }
+            </p>
+
+            <div class="ticket-actions">
+                <a class="btn btn-view" [routerLink]="['/course', course().id]">Ver el curso</a>
+
+                <button
+                    type="button"
+                    class="btn btn-cart"
+                    [class.is-added]="justAdded()"
+                    [attr.aria-label]="'Añadir ' + course().title + ' al carrito'"
+                    (click)="onAddToCart()">
+                    @if (justAdded()) {
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M4 12.5l5 5L20 6.5"/>
+                        </svg>
+                        <span>Agregado</span>
+                    }
+                    @else {
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M3 4h2l1.4 10.6a2 2 0 0 0 2 1.7h8.2a2 2 0 0 0 2-1.6L20 8H6.2"/>
+                            <circle cx="9.5" cy="20" r="1.4" fill="currentColor"/>
+                            <circle cx="17" cy="20" r="1.4" fill="currentColor"/>
+                        </svg>
+                        <span>Al carrito</span>
+                    }
+                </button>
+            </div>
+
+            <p class="sr-only" role="status" aria-live="polite">
+                @if (justAdded()) {
+                    {{ course().title }} se agregó al carrito.
+                }
+            </p>
+        </div>
+
+    </article>
+</section>

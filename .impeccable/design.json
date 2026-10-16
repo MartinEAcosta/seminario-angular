@@ -1,0 +1,400 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-16T00:00:00.000Z",
+  "title": "Design System: Udemix Learning",
+  "extensions": {
+    "colorMeta": {
+      "brand-teal": {
+        "role": "primary",
+        "displayName": "Teal Profundo de Pizarra",
+        "canonical": "oklch(50% 0.085 213)",
+        "tonalRamp": [
+          "oklch(15% 0.03 213)",
+          "oklch(26% 0.05 213)",
+          "oklch(37% 0.07 213)",
+          "oklch(50% 0.085 213)",
+          "oklch(61% 0.08 213)",
+          "oklch(72% 0.06 213)",
+          "oklch(84% 0.04 213)",
+          "oklch(95% 0.015 213)"
+        ]
+      },
+      "paper": {
+        "role": "secondary",
+        "displayName": "Papel Hueso",
+        "canonical": "oklch(93% 0 0)",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(37% 0 0)",
+          "oklch(48% 0 0)",
+          "oklch(59% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "ink": {
+        "role": "tertiary",
+        "displayName": "Tinta Grafito",
+        "canonical": "oklch(26% 0 0)",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(37% 0 0)",
+          "oklch(48% 0 0)",
+          "oklch(59% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "night": {
+        "role": "tertiary",
+        "displayName": "Negro Vitrina",
+        "canonical": "oklch(17% 0 0)",
+        "tonalRamp": [
+          "oklch(13% 0 0)",
+          "oklch(17% 0 0)",
+          "oklch(28% 0 0)",
+          "oklch(39% 0 0)",
+          "oklch(52% 0 0)",
+          "oklch(66% 0 0)",
+          "oklch(80% 0 0)",
+          "oklch(93% 0 0)"
+        ]
+      },
+      "night-teal": {
+        "role": "tertiary",
+        "displayName": "Verdinegro de Sala",
+        "canonical": "oklch(16% 0.012 190)",
+        "tonalRamp": [
+          "oklch(13% 0.012 190)",
+          "oklch(16% 0.012 190)",
+          "oklch(27% 0.02 190)",
+          "oklch(38% 0.03 190)",
+          "oklch(51% 0.035 190)",
+          "oklch(65% 0.03 190)",
+          "oklch(80% 0.02 190)",
+          "oklch(93% 0.01 190)"
+        ]
+      },
+      "card-white": {
+        "role": "secondary",
+        "displayName": "Blanco Ficha",
+        "canonical": "oklch(100% 0 0)",
+        "tonalRamp": [
+          "oklch(20% 0 0)",
+          "oklch(32% 0 0)",
+          "oklch(44% 0 0)",
+          "oklch(56% 0 0)",
+          "oklch(68% 0 0)",
+          "oklch(80% 0 0)",
+          "oklch(92% 0 0)",
+          "oklch(100% 0 0)"
+        ]
+      },
+      "red-warning": {
+        "role": "neutral",
+        "displayName": "Rojo Aviso",
+        "canonical": "oklch(51% 0.21 28)",
+        "tonalRamp": [
+          "oklch(15% 0.07 28)",
+          "oklch(26% 0.12 28)",
+          "oklch(38% 0.17 28)",
+          "oklch(51% 0.21 28)",
+          "oklch(62% 0.18 28)",
+          "oklch(73% 0.13 28)",
+          "oklch(85% 0.08 28)",
+          "oklch(95% 0.03 28)"
+        ]
+      },
+      "green-success": {
+        "role": "neutral",
+        "displayName": "Verde Confirmación",
+        "canonical": "oklch(56% 0.16 148)",
+        "tonalRamp": [
+          "oklch(15% 0.05 148)",
+          "oklch(26% 0.09 148)",
+          "oklch(38% 0.13 148)",
+          "oklch(56% 0.16 148)",
+          "oklch(66% 0.14 148)",
+          "oklch(76% 0.11 148)",
+          "oklch(86% 0.07 148)",
+          "oklch(95% 0.03 148)"
+        ]
+      },
+      "yellow-caution": {
+        "role": "neutral",
+        "displayName": "Ámbar Atención",
+        "canonical": "oklch(83% 0.16 85)",
+        "tonalRamp": [
+          "oklch(20% 0.05 85)",
+          "oklch(32% 0.08 85)",
+          "oklch(45% 0.11 85)",
+          "oklch(58% 0.14 85)",
+          "oklch(70% 0.16 85)",
+          "oklch(83% 0.16 85)",
+          "oklch(90% 0.11 85)",
+          "oklch(96% 0.05 85)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display — Playwrite",
+        "purpose": "Momentos de firma: wordmark del header, h1 del home, título de autenticación. Nada más."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Titular de apertura de una sala oscura a página completa. Hoy solo el hero de /about."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Encabezado de sección dentro del cuerpo. Variante chica: h3 de tarjeta a 1.4rem / 800."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Texto corrido. Medida máxima de 640px en párrafos de lectura."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Eyebrow en mayúsculas que antecede a un título de sección, siempre en teal."
+      }
+    },
+    "shadows": [
+      {
+        "name": "surface-rest",
+        "value": "0 10px 30px rgba(40, 40, 40, 0.12)",
+        "purpose": "Reposo de toda superficie de contenido sobre fondo claro: tarjeta-ticket, resumen de compra, panel de checkout."
+      },
+      {
+        "name": "surface-hover",
+        "value": "0 16px 36px rgba(0, 0, 0, 0.10)",
+        "purpose": "La misma superficie en hover, combinada con translateY(-6px)."
+      },
+      {
+        "name": "chrome",
+        "value": "0 4px 15px rgba(40, 40, 40, 0.15)",
+        "purpose": "Barras y controles internos de un panel, donde la pieza se despega apenas."
+      },
+      {
+        "name": "panel",
+        "value": "0 10px 30px rgba(40, 40, 40, 0.18)",
+        "purpose": "Paneles flotantes de nivel superior: carrito deslizable, y su botón flotante a 0.20."
+      },
+      {
+        "name": "glass-header",
+        "value": "0 8px 30px rgba(0, 0, 0, 0.08)",
+        "purpose": "Exclusivo del header en modo vidrio, junto a backdrop-filter: blur(18px) saturate(1.4)."
+      },
+      {
+        "name": "focus-ring",
+        "value": "0 0 0 2px var(--header-ring-color, rgba(0, 120, 140, 0.45))",
+        "purpose": "Anillo de foco, con el color heredado del modo de header activo."
+      },
+      {
+        "name": "legacy-hard",
+        "value": "5px 7px 20px rgba(0, 0, 0, 0.8)",
+        "purpose": "DEUDA. Dialecto viejo de sombra dura con offset diagonal (mini-card, btn-rounded, botones del home). Migrar a surface-rest / surface-hover; no usar en código nuevo."
+      }
+    ],
+    "motion": [
+      {
+        "name": "control",
+        "value": "all 0.3s ease",
+        "purpose": "Transición por defecto de botones, enlaces y campos."
+      },
+      {
+        "name": "surface",
+        "value": "transform 0.3s ease, box-shadow 0.3s ease",
+        "purpose": "Levante de tarjetas y paneles en hover."
+      },
+      {
+        "name": "surface-slow",
+        "value": "all 0.5s ease",
+        "purpose": "Mini-cards del carrusel, donde el recorrido de translateY es mayor (-10px)."
+      },
+      {
+        "name": "header-swap",
+        "value": "background-color 0.9s ease, box-shadow 0.9s ease, border-color 0.9s ease, backdrop-filter 0.9s ease",
+        "purpose": "Cambio entre header transparente y header de vidrio. Lento a propósito: ocurre durante el scroll y no debe parpadear."
+      },
+      {
+        "name": "reveal",
+        "value": "opacity 0.6s ease-out, transform 0.6s ease-out",
+        "purpose": "Entrada de sección al intersectar el viewport, desde translateY(24px). Siempre anulada bajo prefers-reduced-motion: reduce."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" },
+      { "name": "laptop", "value": "1366px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Acción principal en línea, sobre sala clara. Hover baja el teal a 0.80 y levanta la pieza.",
+      "html": "<button class=\"ds-btn-primary\">Inscribirme</button>",
+      "css": ".ds-btn-primary { background-color: rgb(0, 120, 140); color: #fff; border: solid 1px rgb(0, 120, 140); border-radius: 20px; padding: 10px 20px; font-family: Montserrat, sans-serif; font-weight: bold; cursor: pointer; transition: all 0.3s ease; } .ds-btn-primary:hover { background-color: rgba(0, 120, 140, 0.80); border-color: transparent; box-shadow: 0 10px 30px rgba(40, 40, 40, 0.12); transform: translateY(-3px); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 2px rgba(0, 120, 140, 0.45); } .ds-btn-primary:active { transform: translateY(-1px); }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Acción secundaria en línea (agregar al carrito). Invierte sus colores en hover.",
+      "html": "<button class=\"ds-btn-outline\">Agregar al carrito</button>",
+      "css": ".ds-btn-outline { background-color: transparent; color: rgb(0, 120, 140); border: solid 1px rgb(0, 120, 140); border-radius: 20px; padding: 10px 20px; font-family: Montserrat, sans-serif; font-weight: bold; cursor: pointer; transition: all 0.3s ease; } .ds-btn-outline:hover { background-color: rgb(0, 120, 140); color: #fff; box-shadow: 0 10px 30px rgba(40, 40, 40, 0.12); transform: translateY(-3px); } .ds-btn-outline:focus-visible { outline: none; box-shadow: 0 0 0 2px rgba(0, 120, 140, 0.45); } .ds-btn-outline[disabled] { color: rgba(0, 120, 140, 0.3); border-color: rgba(0, 120, 140, 0.3); cursor: default; transform: none; box-shadow: none; }"
+    },
+    {
+      "name": "Hero Button Pair",
+      "kind": "button",
+      "refersTo": "button-hero",
+      "description": "Los dos botones de portada, sobre sala oscura. El secundario se rellena de papel hueso y pasa el texto a teal.",
+      "html": "<div class=\"ds-hero-actions\"><button class=\"ds-btn-hero\">Explorar cursos</button><button class=\"ds-btn-hero-secondary\">Sobre nosotros</button></div>",
+      "css": ".ds-hero-actions { display: flex; gap: 1.25rem; padding: 1.5rem; background-color: #161616; border-radius: 12px; } .ds-btn-hero, .ds-btn-hero-secondary { padding: 0.7rem 1.5rem; border-radius: 1.5rem; font-family: Montserrat, sans-serif; font-weight: 600; color: rgb(233, 233, 233); cursor: pointer; transition: all 0.3s ease; } .ds-btn-hero { background-color: rgb(0, 120, 140); border: none; } .ds-btn-hero:hover { background-color: rgba(0, 120, 140, 0.8); transform: translateY(-3px); } .ds-btn-hero-secondary { background-color: transparent; border: 2px solid rgb(233, 233, 233); } .ds-btn-hero-secondary:hover { background-color: rgb(233, 233, 233); color: rgb(0, 120, 140); transform: translateY(-3px); } .ds-btn-hero:focus-visible, .ds-btn-hero-secondary:focus-visible { outline: none; box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.45); }"
+    },
+    {
+      "name": "OAuth Button",
+      "kind": "button",
+      "refersTo": "button-oauth",
+      "description": "Entrada federada dentro del panel oscuro de autenticación. Papel hueso sobre tinta, con icono de 1rem.",
+      "html": "<button class=\"ds-btn-oauth\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"#4285F4\" d=\"M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.4a5.5 5.5 0 0 1-2.4 3.6v3h3.9c2.2-2.1 3.6-5.1 3.6-8.8z\"/><path fill=\"#34A853\" d=\"M12 24c3.2 0 5.9-1.1 7.9-2.9l-3.9-3a7.2 7.2 0 0 1-10.7-3.8H1.3v3.1A12 12 0 0 0 12 24z\"/><path fill=\"#FBBC05\" d=\"M5.3 14.3a7.2 7.2 0 0 1 0-4.6V6.6H1.3a12 12 0 0 0 0 10.8l4-3.1z\"/><path fill=\"#EA4335\" d=\"M12 4.8c1.8 0 3.3.6 4.6 1.8l3.4-3.4A12 12 0 0 0 1.3 6.6l4 3.1A7.2 7.2 0 0 1 12 4.8z\"/></svg>Continuar con Google</button>",
+      "css": ".ds-btn-oauth { display: flex; box-sizing: border-box; align-items: center; justify-content: center; gap: 0.4rem; width: 100%; max-width: 20rem; height: 2.75rem; padding: 0 0.75rem; border-radius: 20px; border: 1px solid rgba(40, 40, 40, 0.15); background-color: rgb(233, 233, 233); color: rgb(40, 40, 40); font-family: Montserrat, sans-serif; font-size: 0.8rem; cursor: pointer; white-space: nowrap; transition: all 0.3s ease-in-out; } .ds-btn-oauth svg { width: 1rem; height: 1rem; flex-shrink: 0; } .ds-btn-oauth:hover { transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); } .ds-btn-oauth:focus-visible { outline: none; box-shadow: 0 0 0 2px rgba(0, 120, 140, 0.45); }"
+    },
+    {
+      "name": "Destructive Button",
+      "kind": "button",
+      "refersTo": "button-destructive",
+      "description": "Quitar o eliminar. Contorno en rojo aviso que se rellena en hover e invierte el icono.",
+      "html": "<button class=\"ds-btn-destructive\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14\"/></svg>Quitar del carrito</button>",
+      "css": ".ds-btn-destructive { display: flex; align-items: center; gap: 0.5rem; padding: 10px 20px; border-radius: 999px; background-color: transparent; color: rgb(197, 14, 14); border: solid 2px rgb(197, 14, 14); font-family: Montserrat, sans-serif; font-size: 1rem; line-height: 1; cursor: pointer; transition: all 0.3s ease; } .ds-btn-destructive svg { width: 1.1rem; height: 1.1rem; } .ds-btn-destructive:hover { background-color: rgb(197, 14, 14); color: rgb(233, 233, 233); box-shadow: 0 10px 30px rgba(40, 40, 40, 0.12); transform: translateY(-3px); } .ds-btn-destructive:focus-visible { outline: none; box-shadow: 0 0 0 2px rgba(197, 14, 14, 0.45); }"
+    },
+    {
+      "name": "Auth Input (etiqueta flotante)",
+      "kind": "input",
+      "refersTo": "input-auth",
+      "description": "Campo del panel oscuro de autenticación. El placeholder es transparente y la etiqueta flota hacia arriba al enfocar o al tener contenido.",
+      "html": "<div class=\"ds-field\"><input class=\"ds-input-auth\" id=\"ds-email\" type=\"email\" placeholder=\"Email\"><label class=\"ds-label-float\" for=\"ds-email\">Email</label></div>",
+      "css": ".ds-field { display: flex; flex-direction: column; width: 100%; max-width: 22rem; padding: 1.5rem 1rem 0; background-color: rgb(40, 40, 40); border-radius: 20px; } .ds-input-auth { display: flex; box-sizing: border-box; align-items: center; width: 100%; height: 3rem; padding: 0 1rem; color: rgb(233, 233, 233); background-color: rgb(50, 50, 50); border-radius: 20px; border: 2px solid rgb(0, 120, 140); box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1); font-family: Montserrat, sans-serif; transition: all 0.3s ease-in-out; } .ds-input-auth::placeholder { color: transparent; } .ds-input-auth:focus { outline: none; color: #fff; background-color: rgb(60, 60, 60); transform: translateY(-5px); } .ds-input-auth:not(:placeholder-shown) { background-color: rgb(60, 60, 60); transform: translateY(-5px); } .ds-label-float { display: flex; position: relative; top: -2.2rem; z-index: 1; align-self: flex-start; padding: 0 10px; border-radius: 20px 20px 0 0; font-family: Montserrat, sans-serif; color: rgb(233, 233, 233); pointer-events: none; transition: all 0.3s ease-in-out; } .ds-input-auth:focus + .ds-label-float, .ds-input-auth:not(:placeholder-shown) + .ds-label-float { background-color: rgb(60, 60, 60); transform: translateY(-30px); }"
+    },
+    {
+      "name": "Ticket Card",
+      "kind": "custom",
+      "refersTo": "card-ticket",
+      "description": "Componente de firma. Tarjeta-entrada con sello circular en teal, banda de perforación con trama de rejilla y festón de semicírculos. Para piezas que representan un acceso adquirido.",
+      "html": "<article class=\"ds-ticket-card\"><span class=\"ds-ticket-stamp\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M3 6h15l-1.5 9H6L4.5 6M3 6L2 3H0M7 20a1 1 0 100-2 1 1 0 000 2zM16 20a1 1 0 100-2 1 1 0 000 2z\"/></svg></span><div class=\"ds-ticket-perforation\" aria-hidden=\"true\"></div><div class=\"ds-ticket-body\"><span class=\"ds-eyebrow\">Para quienes aprenden</span><h3>Explorá y comprá cursos</h3><p>Recorré el catálogo por categorías, sumá lo que te interesa al carrito y pagá con MercadoPago.</p></div></article>",
+      "css": ".ds-ticket-card { position: relative; display: flex; flex-direction: column; overflow: hidden; max-width: 24rem; border-radius: 20px; border: 1px solid rgba(40, 40, 40, 0.08); background-color: #ffffff; box-shadow: 0 10px 30px rgba(40, 40, 40, 0.12); transition: transform 0.3s ease, box-shadow 0.3s ease; } .ds-ticket-card:hover { transform: translateY(-6px); box-shadow: 0 16px 36px rgba(0, 0, 0, 0.10); } .ds-ticket-stamp { position: absolute; top: 1.5rem; left: 1.5rem; z-index: 1; display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background-color: rgb(0, 120, 140); } .ds-ticket-stamp svg { width: 22px; height: 22px; } .ds-ticket-perforation { position: relative; height: 5.5rem; background-color: rgb(0, 120, 140); background-image: linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px); background-size: 16px 16px; } .ds-ticket-perforation::after { content: ''; position: absolute; left: 0; right: 0; bottom: -10px; height: 20px; background-image: radial-gradient(circle at 10px 0, transparent 10px, #ffffff 10.5px); background-size: 20px 20px; background-repeat: repeat-x; } .ds-ticket-body { padding: 2.5rem 1.75rem 1.75rem; } .ds-ticket-body h3 { margin: 0 0 0.5rem; font-family: Montserrat, sans-serif; font-weight: 800; font-size: 1.4rem; color: rgb(40, 40, 40); } .ds-ticket-body p { margin: 0; font-family: Montserrat, sans-serif; font-size: 0.95rem; line-height: 1.5; color: rgba(40, 40, 40, 0.7); } .ds-eyebrow { display: inline-block; margin-bottom: 0.75rem; font-family: Montserrat, sans-serif; font-weight: 600; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(0, 120, 140); }"
+    },
+    {
+      "name": "Stat Card",
+      "kind": "card",
+      "refersTo": "card-stat",
+      "description": "Superficie elevada dentro de una sala oscura: velo de papel hueso al 6%, borde al 14% y trama de rejilla de 24px. Sin sombra, por La Regla del Tono sobre lo Oscuro.",
+      "html": "<div class=\"ds-stat-wrap\"><div class=\"ds-stat-card\"><span class=\"ds-stat-value\">+200</span><span class=\"ds-stat-label\">estudiantes</span><p class=\"ds-stat-description\">Personas aprendiendo hoy mismo con la comunidad Udemix.</p><span class=\"ds-stat-icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"rgb(233,233,233)\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.9\"/></svg></span></div></div>",
+      "css": ".ds-stat-wrap { padding: 2rem; background-color: #161616; } .ds-stat-card { position: relative; display: flex; flex-direction: column; align-items: flex-start; text-align: left; max-width: 20rem; padding: 2rem 1.5rem; border-radius: 24px; border: 1px solid rgba(233, 233, 233, 0.14); background-color: rgba(233, 233, 233, 0.06); background-image: linear-gradient(rgba(233, 233, 233, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(233, 233, 233, 0.03) 1px, transparent 1px); background-size: 24px 24px; overflow: hidden; } .ds-stat-value { font-family: Montserrat, sans-serif; font-size: clamp(2rem, 1.5rem + 2.5vw, 3rem); font-weight: 800; line-height: 1.15; color: rgb(233, 233, 233); } .ds-stat-label { margin: 0.5rem 0 0.75rem; font-family: Montserrat, sans-serif; font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.25rem); font-weight: 600; color: rgb(233, 233, 233); } .ds-stat-description { margin: 0; font-family: Montserrat, sans-serif; font-size: clamp(0.8rem, 0.75rem + 0.2vw, 0.9rem); color: rgba(233, 233, 233, 0.55); } .ds-stat-icon { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; margin-top: 1.5rem; border-radius: 50%; background-color: rgba(0, 0, 0, 0.5); } .ds-stat-icon svg { width: 18px; height: 18px; }"
+    },
+    {
+      "name": "Glass Header",
+      "kind": "nav",
+      "refersTo": "nav-header-glass",
+      "description": "Píldora flotante de 80px con dos modos. En modo vidrio expone --header-text, --header-icon-filter y --header-ring-color para que los hijos hereden el color en vez de fijarlo.",
+      "html": "<div class=\"ds-header-stage\"><header class=\"ds-header ds-header-glass\"><a class=\"ds-logo\" href=\"#\">Udemix</a><nav class=\"ds-nav\"><a href=\"#\">Explorar</a><a href=\"#\">Cursos</a><a href=\"#\">Sobre nosotros</a></nav><div class=\"ds-search\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"M20 20l-3.5-3.5\"/></svg><input class=\"ds-search-input\" type=\"search\" placeholder=\"Buscar cursos\"></div></header></div>",
+      "css": ".ds-header-stage { padding: 1.5rem 0; background: linear-gradient(90deg, rgb(233, 233, 233), rgb(222, 222, 222)); } .ds-header { box-sizing: border-box; display: flex; align-items: center; gap: 1.5rem; height: 80px; margin: 0 24px; padding: 0 28px; border-radius: 40px; border: 1px solid transparent; transition: background-color 0.9s ease, box-shadow 0.9s ease, border-color 0.9s ease, backdrop-filter 0.9s ease; } .ds-header-glass { --header-text: rgb(0, 120, 140); --header-ring-color: rgba(0, 120, 140, 0.45); background-color: rgba(233, 233, 233, 0.72); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); border-color: rgba(0, 0, 0, 0.06); } .ds-logo { font-family: 'Playwrite DK Loopet', cursive; font-size: 2rem; color: var(--header-text); text-decoration: none; } .ds-nav { display: flex; align-items: center; } .ds-nav a { margin: 0 10px; font-family: Montserrat, sans-serif; font-size: 1.3rem; font-weight: 500; color: var(--header-text); text-decoration: none; transition: color 0.9s ease, opacity 0.3s ease; } .ds-nav a:hover { opacity: 0.7; } .ds-nav a:focus-visible { outline: none; border-radius: 999px; box-shadow: 0 0 0 2px var(--header-ring-color); } .ds-search { display: flex; align-items: center; gap: 0.5rem; margin-left: auto; padding: 0 1rem; height: 42%; min-height: 2.2rem; border-radius: 999px; color: var(--header-text); background-color: rgba(255, 255, 255, 0.5); border: 1px solid rgba(0, 0, 0, 0.08); backdrop-filter: blur(6px); } .ds-search svg { width: 1rem; height: 1rem; flex-shrink: 0; } .ds-search-input { width: 9rem; background-color: transparent; border: none; outline: none; color: var(--header-text); font-family: Montserrat, sans-serif; } .ds-search-input::placeholder { color: currentColor; opacity: 0.65; }"
+    },
+    {
+      "name": "Badge Pill",
+      "kind": "chip",
+      "refersTo": "badge-pill",
+      "description": "Etiqueta de contexto sobre sala oscura. Velo al 4% y borde al 15%, sin fondo sólido.",
+      "html": "<div class=\"ds-badge-stage\"><span class=\"ds-badge\">Nuestro impacto en números</span></div>",
+      "css": ".ds-badge-stage { padding: 2rem; background-color: #161616; } .ds-badge { display: inline-flex; align-items: center; padding: 0.4rem 1.1rem; border-radius: 999px; border: 1px solid rgba(233, 233, 233, 0.15); background-color: rgba(233, 233, 233, 0.04); color: rgba(233, 233, 233, 0.7); font-family: Montserrat, sans-serif; font-size: clamp(0.8rem, 0.75rem + 0.2vw, 0.9rem); font-weight: 600; letter-spacing: 0.02em; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "La Vitrina Nocturna",
+    "overview": "Udemix se lee como una vitrina iluminada de noche. La página avanza alternando bloques: una sala oscura donde el producto se presenta (hero #161616, hero y CTA de /about en #0e1a1a), y una sala clara donde el catálogo se trabaja (papel hueso rgb(233, 233, 233)). El header de vidrio es la única pieza que cruza entre las dos: nace transparente sobre lo oscuro y se condensa en vidrio esmerilado al entrar en lo claro.\n\nLa densidad es alta en lo claro y generosa en lo oscuro. Los bloques oscuros respiran — un h1, una línea de texto, tres tarjetas, dos botones y nada más — porque su trabajo es que algo se vea. Los bloques claros se apilan: listados, formularios de varios pasos, carrito, checkout. Esa asimetría es deliberada y es la base del sistema: cuando una pantalla nueva no sabe de qué lado está, está mal planteada.\n\nEl color es monógamo. Un solo teal de pizarra sostiene todo el acento; el rojo, el verde y el ámbar existen solo para decir en qué estado está algo. La letra manuscrita Playwrite aparece tres o cuatro veces en toda la aplicación y por eso funciona. Lo que este sistema rechaza, confirmado por el código que ya existe: el gris medio de panel administrativo, el degradado como relleno, y el acento repartido en cada borde hasta perder significado.",
+    "keyCharacteristics": [
+      "Alternancia de salas: bloque oscuro / bloque claro, sin página de gris medio intermedio.",
+      "Un único teal de acento sobre neutros; el trío semántico solo informa estado.",
+      "Formas de pastilla para lo que se toca; 12px para lo que se lee.",
+      "Profundidad difusa y ambiental, nunca sombra dirigida de póster.",
+      "El hover levanta la superficie; no la agranda.",
+      "Escala fluida con clamp() en tipografía y espaciado: una sola escala, sin saltos por breakpoint."
+    ],
+    "rules": [
+      {
+        "name": "La Regla de la Vitrina",
+        "body": "Cada sección pertenece a una sala: oscura (#161616 / #0e1a1a) o clara (papel hueso). No existe una tercera opción. Un fondo de página en gris medio o en teal lavado rompe el sistema entero.",
+        "section": "colors"
+      },
+      {
+        "name": "La Regla de Una Sola Voz",
+        "body": "El teal es el único acento decorativo. El rojo, el verde y el ámbar solo pueden aparecer cuando comunican estado — error, confirmación, advertencia, dirección en un flujo. Usarlos como color de marca o de adorno los vuelve ilegibles cuando realmente importan.",
+        "section": "colors"
+      },
+      {
+        "name": "La Regla de la Opacidad en vez del Gris",
+        "body": "La jerarquía secundaria se construye bajando la opacidad del neutro que ya está en la sala (rgba(233, 233, 233, 0.6) sobre oscuro, rgba(40, 40, 40, 0.75) sobre claro). No se introducen grises nuevos a la paleta.",
+        "section": "colors"
+      },
+      {
+        "name": "La Regla del Wordmark",
+        "body": "Playwrite DK Loopet solo aparece en momentos de firma: logo, h1 de portada, título de autenticación. Jamás en cuerpo, etiqueta, botón, input o tabla. Es una manuscrita de trazo fino: a tamaño de interfaz deja de ser legible y pasa a ser textura.",
+        "section": "typography"
+      },
+      {
+        "name": "La Regla de la Escala Única",
+        "body": "Los tamaños salen de la escala fluida de src/variables.scss ($text-sm … $text-display), interpolada entre 320px y 1280px de viewport. No se redeclara un font-size por breakpoint: la escala ya lo resuelve. Los clamp() propios del hero y del about son la excepción histórica para titulares de portada, no la práctica general.",
+        "section": "typography"
+      },
+      {
+        "name": "La Regla de la Sombra Difusa",
+        "body": "Reposo 0 10px 30px rgba(40, 40, 40, 0.12), hover 0 16px 36px rgba(0, 0, 0, 0.10). Sin offset lateral, sin opacidad por encima de 0.22, sin radio de desenfoque menor a 15px fuera de chrome y focus-ring. Test: si la sombra permite deducir desde dónde entra la luz en el eje horizontal, está mal.",
+        "section": "elevation"
+      },
+      {
+        "name": "La Regla del Tono sobre lo Oscuro",
+        "body": "En una sala oscura, una superficie se eleva con un velo de papel hueso al 4–6% y un borde al 14–16%, no con sombra. Una sombra negra sobre #161616 no se ve y solo ensucia el borde.",
+        "section": "elevation"
+      },
+      {
+        "name": "La Regla de la Pastilla",
+        "body": "Si se puede hacer clic, el radio es 999px, 20px o 1.5rem. Si se lee, es 12px. Un botón con 4px o una tarjeta con 999px delatan que la pieza no entendió el sistema.",
+        "section": "shapes"
+      },
+      {
+        "name": "La Regla del Levante",
+        "body": "El hover mueve la pieza en el eje vertical con translateY (-3px en controles, -6px en superficies, -10px en mini-cards), nunca con scale. scale estira el texto y el grosor del borde.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do asignar cada sección nueva a una sala antes de maquetarla: oscura (#161616 / #0e1a1a) o clara (rgb(233, 233, 233)).",
+      "Do usar $brand-color como único acento, y reservar $red-warning / $green-success / $yellow-caution para estado.",
+      "Do importar los tokens con @use '@variables' as v; y tomar tamaños de $text-* y espaciados de $space-* en lugar de literales.",
+      "Do elevar con 0 10px 30px rgba(40, 40, 40, 0.12) en reposo y 0 16px 36px rgba(0, 0, 0, 0.10) más translateY(-6px) en hover.",
+      "Do elevar con velo de tono (4–6%) y borde (14–16%) cuando la superficie está en sala oscura.",
+      "Do construir jerarquía secundaria bajando la opacidad del neutro de la sala.",
+      "Do consumir --header-text, --header-icon-filter y --header-ring-color en cualquier control que viva dentro del header.",
+      "Do envolver toda animación de entrada en @media (prefers-reduced-motion: reduce), como ya hacen /about y el layout de autenticación.",
+      "Do mantener las miniaturas en aspect-ratio: 16 / 9 con object-fit: cover, para que una imagen de proporción distinta no desalinee la rejilla."
+    ],
+    "donts": [
+      "Don't usar texto con degradado y color: transparent. Existe hoy en home-page.scss:84 (h1, .stat-value) y en about-page.scss:73 (.hero-title): es deuda a retirar, no patrón a copiar. Rompe la selección de texto, la lectura de alto contraste y el renderizado en Safari. Un titular en papel hueso sólido sobre la sala oscura ya tiene contraste suficiente.",
+      "Don't agrandar con transform: scale(1.05) en hover. Está en btn-primary, btn-add-to-cart, btn-rounded, btn-remove-inline, btn-sumbit y la paginación — todas migrables a translateY. scale estira el texto y el grosor del borde.",
+      "Don't usar sombra dura con offset diagonal (5px 7px 20px rgba(0, 0, 0, 0.8) en mini-card-component.scss:14, 5px 5px 5px rgba(0, 0, 0, 0.4) en btn-rounded.scss). Es el dialecto viejo; migrar al vocabulario difuso.",
+      "Don't escribir colores fuera del sistema. course-card.component.scss:112 usa color: green y rgb(71, 71, 71); lo correcto es $green-success y una opacidad de $black-custom.",
+      "Don't declarar font-size por breakpoint. La escala fluida ya interpola; una media query de tipografía indica que se eligió el token equivocado.",
+      "Don't aplicar Playwrite DK Loopet a nada que no sea wordmark o titular de portada.",
+      "Don't introducir un fondo de página en gris medio, ni una sala de color teal lavado. Son dos salas, no tres.",
+      "Don't apilar dos declaraciones de box-shadow sobre el mismo selector esperando que se sumen — form-global.scss:43-44 lo hace y la primera se descarta en silencio. Usar una sola declaración con las capas separadas por coma.",
+      "Don't repartir el teal en cada borde de la pantalla. Su peso viene de aparecer poco."
+    ]
+  }
+}

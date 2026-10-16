@@ -7,32 +7,45 @@
     font-family: v.$font-primary;
 }
 
+// Un número de página no es un estado: el verde queda reservado a confirmación
+// y la página activa se marca con el único acento del sistema.
 .btn-number{
     cursor: pointer;
+    box-sizing: border-box;
     width: 2rem;
     height: 2rem;
     border-radius: 0.4rem;
-    border: none;
-    background-color: v.$green-success;
-    color: v.$white-custom;
-    box-shadow: 3px 5px 8px rgba(0 , 0 , 0, 0.3);
+    border: solid 1px rgba(40, 40, 40, 0.12);
+    background-color: #ffffff;
+    color: v.$black-custom;
+    font-family: v.$font-primary;
+    font-weight: 600;
+    box-shadow: v.$shadow-chrome;
     transition: all 0.2s ease;
+
+    @include v.focus-ring();
 }
 
 .btn-number:hover{
-    transform: scale(1.05);
-    transform: translateY(-5px);
-    transition: all 0.2s ease;
-    box-shadow: 3px 5px 8px rgba(0 , 0 , 0, 0.2);
+    transform: translateY(v.$lift-control);
+    box-shadow: v.$shadow-surface-hover;
 }
 
 .selected{
     background-color: v.$brand-color;
+    border-color: v.$brand-color;
+    color: #ffffff;
 }
 
 .text{
     margin-top: 0.5rem;
     font-size: 0.8rem;
     font-weight: 600;
-    color: rgba(0 , 0 , 0, 0.5);
+    color: rgba(40, 40, 40, 0.7);
+}
+
+@media (prefers-reduced-motion: reduce){
+    .btn-number:hover{
+        transform: none;
+    }
 }

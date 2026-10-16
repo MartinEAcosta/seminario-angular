@@ -24,6 +24,10 @@ $about-ink: #0e1a1a;
         transform: none;
         transition: none;
     }
+
+    .btn:hover{
+        transform: none;
+    }
 }
 
 /* ---------- Hero ---------- */
@@ -70,10 +74,10 @@ $about-ink: #0e1a1a;
     font-size: clamp(2.5rem, 6vw, 5rem);
     line-height: 1.05;
     letter-spacing: -0.02em;
-    background: linear-gradient(180deg, v.$white-custom 0%, rgba(150, 150, 150, 1) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    // Papel hueso sólido. El degradado con `color: transparent` rompía la
+    // selección de texto, el alto contraste y el render en Safari, y el énfasis
+    // ya lo carga el peso 900.
+    color: v.$white-custom;
 }
 
 .hero-subtitle{
@@ -305,13 +309,14 @@ $about-ink: #0e1a1a;
     font-family: v.$font-primary;
     font-weight: 600;
     color: v.$white-custom;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
     transition: all ease 0.5s;
+
+    @include v.focus-ring(v.$white-custom);
 }
 
 .btn:hover{
     cursor: pointer;
-    transform: scale(1.05);
+    transform: translateY(v.$lift-control);
 }
 
 .btn-primary{

@@ -12,7 +12,7 @@
     margin-bottom: 10%;
     background-color: rgb(40, 40, 40);
     border: 1px solid rgba(233, 233, 233, 0.1);
-    box-shadow: var(--mini-card-shadow, 0 10px 30px rgba(40, 40, 40, 0.18));
+    box-shadow: var(--mini-card-shadow, #{v.$shadow-panel});
     transition: background-color 0.3s ease, border-color 0.3s ease,
         box-shadow 0.3s ease, transform 0.3s ease;
 }
@@ -20,7 +20,7 @@
 .mini-card:hover{
     background-color: var(--mini-card-hover-bg, #333333);
     border-color: rgba(0, 120, 140, 0.55);
-    box-shadow: var(--mini-card-hover-shadow, 0 16px 36px rgba(0, 0, 0, 0.1));
+    box-shadow: var(--mini-card-hover-shadow, #{v.$shadow-surface-hover});
     transform: translateY(-10px);
 }
 

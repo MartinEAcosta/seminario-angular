@@ -16,8 +16,10 @@
     padding: 0.5rem 1rem;
     background-color: v.$black-custom;
     border-radius: 1rem;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: v.$shadow-chrome;
     transition: all 0.3s ease;
+
+    @include v.focus-ring();
 }
 
 .remove-filter {
@@ -32,7 +34,12 @@
 
 .filter-selected:hover {
     cursor: pointer;
-    transform: scale(1.05);
+    transform: translateY(v.$lift-control);
     background-color: rgba(40, 40, 40, 0.95);
-    transition: all 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce){
+    .filter-selected:hover{
+        transform: none;
+    }
 }

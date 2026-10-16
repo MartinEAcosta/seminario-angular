@@ -11,13 +11,14 @@
 
 .svg-remove{
     width: 100%;
-    filter: drop-shadow( 0px 0px 15px rgba(0,0,0,1) );
+    // Halo de legibilidad, no elevación: el icono se apoya sobre miniaturas de
+    // color impredecible. Lleva offset y desenfoque como el resto del sistema.
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.45));
     transition: all 0.3s;
 }
 
 .svg-remove:hover{
-    transform: scale(1.05);
-    transition: all 0.3s;
+    transform: translateY(v.$lift-control);
 }
 
 .btn-remove-inline{
@@ -34,15 +35,17 @@
     background-color: transparent;
     color: v.$red-warning;
     border: solid 2px v.$red-warning;
-    box-shadow: 0px 0px 15px rgba(0,0,0 , 0.2);
+    box-shadow: v.$shadow-chrome;
     transition: all 0.3s ease;
+
+    @include v.focus-ring(v.$red-warning);
 }
 
 .btn-remove-inline:hover{
     background-color: v.$red-warning;
     color: v.$white-custom;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
-    transform: scale(1.05);
+    box-shadow: v.$shadow-surface-hover;
+    transform: translateY(v.$lift-control);
 }
 
 .svg-remove-inline{
@@ -53,5 +56,12 @@
 
 .btn-remove-inline:hover .svg-remove-inline{
     filter: brightness(0) invert(1);
+}
+
+@media (prefers-reduced-motion: reduce){
+    .svg-remove:hover,
+    .btn-remove-inline:hover{
+        transform: none;
+    }
 }
 

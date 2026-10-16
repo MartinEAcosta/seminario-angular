@@ -14,7 +14,7 @@
     color: v.$white-custom;    
     font-family: v.$font-primary;
     background-color: v.$black-custom;
-    box-shadow: 5px 10px 15px rgb(0,0,0 , 0.5);
+    box-shadow: v.$shadow-panel;
 }
 
 .selector{
@@ -32,6 +32,16 @@
     border: solid thin v.$white-custom;
     align-items: center;
     overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+// El input quita su outline, así que el foco se muestra en la caja que lo
+// contiene: el indicador se reemplaza, nunca se elimina.
+// El anillo va en papel hueso, no en teal: sobre tinta grafito el teal mide
+// 2.8:1 y no llega al piso de 3:1 de contraste no textual.
+.container-search:focus-within{
+    border-color: v.$white-custom;
+    box-shadow: 0 0 0 2px v.$white-custom;
 }
 
 .container-search-icon{

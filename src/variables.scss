@@ -40,3 +40,26 @@ $space-xs: clamp(0.5rem, 0.4rem + 0.5vw, 0.75rem);
 $space-sm: clamp(1rem, 0.8rem + 1vw, 1.5rem);
 $space-md: clamp(1.5rem, 1.1rem + 2vw, 2.5rem);
 $space-lg: clamp(2rem, 1.4rem + 3vw, 4rem);
+
+// Vocabulario de sombra difusa: la luz viene de arriba y sin dirección
+// lateral, el desenfoque es grande y la opacidad baja. Sobre fondo oscuro no
+// se usa sombra sino velo de tono (ver $veil-* más abajo).
+$shadow-surface-rest: 0 10px 30px rgba(40, 40, 40, 0.12);
+$shadow-surface-hover: 0 16px 36px rgba(0, 0, 0, 0.1);
+$shadow-chrome: 0 4px 15px rgba(40, 40, 40, 0.15);
+$shadow-panel: 0 10px 30px rgba(40, 40, 40, 0.18);
+
+// Elevación sobre sala oscura: borde de tono en vez de sombra.
+$veil-border: rgba(233, 233, 233, 0.14);
+
+// Levante de hover: vertical, nunca scale, que estira texto y borde.
+$lift-control: -3px;
+
+// Anillo de foco único del sistema. El indicador de foco nunca se elimina sin
+// reemplazo: todo control que ponga `outline: none` consume este mixin.
+@mixin focus-ring($color: $brand-color, $offset: 2px) {
+  &:focus-visible {
+    outline: 2px solid $color;
+    outline-offset: $offset;
+  }
+}

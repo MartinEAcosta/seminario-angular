@@ -1,5 +1,7 @@
 @use '../../../../variables.scss' as v;
 
+// Opción de un desplegable que vive sobre sala oscura: se eleva con borde de
+// tono, no con sombra — una sombra negra sobre oscuro sólo ensucia el borde.
 .option-filter{
     border: none;
     height: 25%;
@@ -7,12 +9,16 @@
     padding: 3% 4%;
     cursor: pointer;
     color: v.$white-custom;
-    box-shadow: 5px 5px 10px rgba(0,0,0,0.7);        
     background-color: v.$black-custom;
+    // Separador de tono entre opciones, en vez de sombra: inset y de 1px, así
+    // dos opciones contiguas no suman dos líneas.
+    box-shadow: inset 0 1px 0 v.$veil-border;
+
+    @include v.focus-ring(v.$white-custom);
 }
 
 .option-filter:hover{
-    background-color: v.$brand-color; 
+    background-color: v.$brand-color;
     cursor: pointer;
 }
 

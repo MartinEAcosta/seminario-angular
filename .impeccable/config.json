@@ -27,6 +27,15 @@
         ],
         "createdAt": "2026-10-16T15:45:48.737Z",
         "reason": "Angular [src] binding with /assets/thumbnail-icon.svg fallback; static parser cannot resolve bindings (false positive already recorded in the 2026-10-16 critique for this exact file)"
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/app/course/components/course-carousel-item/course-carousel-item.component.html"
+        ],
+        "createdAt": "2026-10-16T22:18:05.853Z",
+        "reason": "intentional placeholder fallback for courses without thumbnail, same pattern as course-mini-card/course-featured, pre-existing before this redesign"
       }
     ]
   }

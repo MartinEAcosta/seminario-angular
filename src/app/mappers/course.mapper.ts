@@ -23,6 +23,7 @@ export class CourseMapper {
             title: response.title,
             description: response.description,
             id_category: response.id_category,
+            category_name: response.category_name,
             thumbnail_url: response.thumbnail_url ?? "",
             id_file: response.id_file ?? "",
             id_owner: response.id_owner,

@@ -12,14 +12,10 @@
         <div class="ticket-body">
             <span class="eyebrow">Curso destacado</span>
 
-            @if (categoryName() || capacity()) {
+            @if (capacity()) {
                 <ul class="ticket-meta">
-                    @if (categoryName(); as category) {
-                        <li class="meta-pill">{{ category }}</li>
-                    }
-                    @if (capacity(); as cupos) {
-                        <li class="meta-pill">{{ cupos }} cupos</li>
-                    }
+                    <li class="meta-pill">{{ course().category_name }}</li>
+                        <li class="meta-pill">{{ capacity() }} cupos</li>
                 </ul>
             }
 

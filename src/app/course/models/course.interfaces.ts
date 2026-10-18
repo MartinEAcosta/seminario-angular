@@ -3,6 +3,7 @@ export interface Course {
     title           : string;
     description     : string;
     id_category     : string;
+    category_name   : string;
     thumbnail_url   : string | null;
     id_file         : string | null;
     id_owner        : string;

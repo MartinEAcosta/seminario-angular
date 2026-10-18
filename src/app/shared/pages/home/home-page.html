@@ -32,10 +32,11 @@
 
         <app-category-marquee [categories]="this.categoriesToShow()" />
     </div>
+    
 
     <section class="catalog">
-        @if (featuredCourse(); as featured) {
-            <app-course-featured [course]="featured" [categoryName]="featuredCategoryName()" />
+        @if (featuredCourse()) {
+            <app-course-featured [course]="featuredCourse()!" />
         }
 
         <div class="catalog-head">
@@ -64,8 +65,7 @@
 
         </div>
 
-        <app-course-carousel [courses]='this.carouselCourses()' [isLoading]='this.coursesResource.isLoading()'
-            [categoryNameById]="carouselCategoryNameById()" />
+        <app-course-carousel [courses]='this.carouselCourses()' [isLoading]='this.coursesResource.isLoading()' />
     </section>
 
     <app-modal-error-message />

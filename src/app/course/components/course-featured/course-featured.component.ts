@@ -21,8 +21,6 @@ export class CourseFeaturedComponent implements OnDestroy {
   private cartService = inject(CartService);
 
   course = input.required<Course>();
-  categoryName = input<string | null>(null);
-
   // `capacity` es la capacidad total del curso, no los lugares que quedan:
   // la etiqueta dice "cupos" y nunca insinúa escasez.
   capacity = computed(() => this.course().capacity ?? null);

@@ -25,8 +25,7 @@
             aria-label="Cursos del catálogo">
             @for (course of courses(); track course.id) {
                 <div class="track-item">
-                    <app-course-carousel-item [course]="course"
-                        [categoryName]="categoryNameById()[course.id] ?? null" />
+                    <app-course-carousel-item [course]="course" />
                 </div>
             }
         </div>
@@ -37,11 +36,5 @@
     </div>
 }
 @else {
-    <!-- El curso destacado se lleva el primero del catálogo, así que con un
-         catálogo chico la estantería puede quedarse sin nada que mostrar.
-         Un hueco mudo se lee como error. -->
-    <p class="shelf-empty">
-        Por ahora el catálogo entra entero acá arriba. Cuando se publiquen más cursos,
-        la estantería se llena sola.
-    </p>
+    <!-- TODO: No se han podido cargar los cursos.. -->
 }

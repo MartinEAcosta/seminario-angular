@@ -28,15 +28,16 @@ export type DeleteResponse = ApiResponse<boolean>;
 // * Course *
 
 export interface CourseUniqueResponse {
-  id          : string;
-  title       : string;
-  description : string;
-  id_category    : string;
-  thumbnail_url ?: string | null;
-  id_file       ?: string | null;
-  id_owner    : string;
-  price       : number;
-  capacity?   : number;
+  id          : string,
+  title       : string,
+  description : string,
+  id_category    : string,
+  category_name  : string,
+  thumbnail_url ?: string | null,
+  id_file       ?: string | null,
+  id_owner    : string,
+  price       : number,
+  capacity?   : number,
 }
 
 export type CourseResponse = ApiResponse<CourseUniqueResponse>;

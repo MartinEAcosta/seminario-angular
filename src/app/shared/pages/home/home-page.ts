@@ -94,21 +94,6 @@ export class HomeComponent implements OnDestroy {
     return value;
   });
 
-  featuredCategoryName = computed<string | null>(() =>
-    resolveCategoryName(this.featuredCourse()?.id_category, this.categoriesToShow())
-  );
-
-  // Mismo criterio que el destacado, pero uno por curso: el carrusel ahora
-  // muestra pastilla de categoría en cada item.
-  carouselCategoryNameById = computed<Record<string, string | null>>(() => {
-    const categories = this.categoriesToShow();
-    const result: Record<string, string | null> = {};
-    for (const course of this.carouselCourses()) {
-      result[course.id] = resolveCategoryName(course.id_category, categories);
-    }
-    return result;
-  });
-
   constructor() {
     // WCAG 2.2.2: con movimiento reducido la frase se muestra entera y quieta.
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {

@@ -93,7 +93,9 @@
                     <span class="password-strength-segment" [ngClass]="{'is-filled': passwordStrength().valid}"></span>
                 </div>
             }
-            <p class="field-hint">Mínimo 6 caracteres.</p>
+            @if (!(registerForm.get('password')?.errors && registerForm.get('password')?.touched)) {
+                <p class="field-hint">Mínimo 6 caracteres.</p>
+            }
         </div>
 
         <button class="btn-sumbit" type="submit">

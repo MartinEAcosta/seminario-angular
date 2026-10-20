@@ -33,7 +33,10 @@ $about-ink: #0e1a1a;
 /* ---------- Hero ---------- */
 
 .section-hero{
-    padding: 7% 6% 6%;
+    // El header flota encima del hero (margin negativo de 80px): el padding
+    // superior nunca puede bajar de su alto más el top sticky, o el
+    // stamp-strip se monta bajo el header en viewports angostos.
+    padding: max(7%, 104px) 6% 6%;
     background-color: $about-ink;
 }
 
@@ -42,12 +45,13 @@ $about-ink: #0e1a1a;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 1.5rem;
 }
 
 .stamp-strip{
     display: flex;
-    gap: 1rem;
+    gap: v.$space-sm;
+    margin-top: v.$space-md;
+    margin-bottom: v.$space-md;
 }
 
 .stamp{
@@ -68,7 +72,7 @@ $about-ink: #0e1a1a;
 
 .hero-title{
     max-width: 900px;
-    margin: 0;
+    margin: 0 0 v.$space-xs;
     font-family: v.$font-primary;
     font-weight: 900;
     font-size: clamp(2.5rem, 6vw, 5rem);
@@ -84,7 +88,8 @@ $about-ink: #0e1a1a;
     max-width: 640px;
     margin: 0;
     font-family: v.$font-primary;
-    font-size: 1.15rem;
+    font-size: v.$text-lg;
+    line-height: 1.6;
     color: rgba(233, 233, 233, 0.6);
 }
 
@@ -99,14 +104,14 @@ $about-ink: #0e1a1a;
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
-    gap: 3rem;
+    gap: v.$space-lg;
     max-width: 1100px;
     margin: 0 auto;
 }
 
 .eyebrow{
     display: inline-block;
-    margin-bottom: 0.75rem;
+    margin-bottom: v.$space-xs;
     font-family: v.$font-primary;
     font-weight: 600;
     font-size: 0.8rem;
@@ -116,7 +121,7 @@ $about-ink: #0e1a1a;
 }
 
 .spotlight-text h2{
-    margin: 0 0 1rem;
+    margin: 0 0 v.$space-sm;
     font-family: v.$font-primary;
     font-weight: 800;
     font-size: clamp(1.8rem, 3.5vw, 2.6rem);
@@ -125,7 +130,7 @@ $about-ink: #0e1a1a;
 }
 
 .spotlight-text p{
-    margin: 0 0 1.25rem;
+    margin: 0 0 v.$space-sm;
     font-family: v.$font-primary;
     color: rgba(40, 40, 40, 0.75);
     line-height: 1.6;
@@ -134,7 +139,7 @@ $about-ink: #0e1a1a;
 .spotlight-list{
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: v.$space-xs;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -184,7 +189,7 @@ $about-ink: #0e1a1a;
 .ticket-grid{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+    gap: v.$space-md;
     max-width: 1100px;
     margin: 0 auto;
 }
@@ -252,7 +257,7 @@ $about-ink: #0e1a1a;
 }
 
 .ticket-body h3{
-    margin: 0 0 0.5rem;
+    margin: 0 0 v.$space-xs;
     font-family: v.$font-primary;
     font-weight: 800;
     font-size: 1.4rem;
@@ -263,7 +268,7 @@ $about-ink: #0e1a1a;
     margin: 0;
     font-family: v.$font-primary;
     font-size: 0.95rem;
-    line-height: 1.5;
+    line-height: 1.6;
     color: rgba(40, 40, 40, 0.7);
 }
 
@@ -279,26 +284,27 @@ $about-ink: #0e1a1a;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 1rem;
 }
 
 .section-cta h2{
-    margin: 0;
+    margin: 0 0 v.$space-xs;
     font-family: v.$font-primary;
-    font-weight: 900;
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    letter-spacing: -0.01em;
     color: v.$white-custom;
 }
 
 .section-cta p{
-    margin: 0 0 0.5rem;
+    margin: 0 0 v.$space-md;
     font-family: v.$font-primary;
+    line-height: 1.6;
     color: rgba(233, 233, 233, 0.6);
 }
 
 .cta-actions{
     display: flex;
-    gap: 1.25rem;
+    gap: v.$space-sm;
 }
 
 .btn{

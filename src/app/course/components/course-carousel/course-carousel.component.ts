@@ -1,11 +1,12 @@
 import { Component, ElementRef, afterNextRender, input, signal, viewChild } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Course } from '@interfaces/course.interfaces';
-import { CourseCarouselItemComponent } from '../course-carousel-item/course-carousel-item.component';
+import { CourseCatalogCardComponent } from '../course-catalog-card/course-catalog-card.component';
 import { LoaderComponent } from '@shared/components/loader/loader.component';
 
 @Component({
   selector: 'app-course-carousel',
-  imports: [CourseCarouselItemComponent, LoaderComponent],
+  imports: [CourseCatalogCardComponent, LoaderComponent, RouterLink],
   templateUrl: './course-carousel.component.html',
   styleUrl: './course-carousel.component.scss'
 })
@@ -13,7 +14,6 @@ export class CourseCarouselComponent {
 
   courses = input.required<Course[]>();
   isLoading = input<boolean>(false);
-  categoryNameById = input<Record<string, string | null>>({});
 
   track = viewChild<ElementRef<HTMLDivElement>>('track');
 

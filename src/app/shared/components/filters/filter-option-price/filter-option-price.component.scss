@@ -1,0 +1,38 @@
+@use '@variables' as v;
+
+.segmented{
+    display: inline-flex;
+    border: 1px solid rgba(40, 40, 40, 0.15);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.segment{
+    border: none;
+    background-color: #ffffff;
+    color: v.$brand-color-deep;
+    padding: 0.4rem 0.9rem;
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    @include v.focus-ring(v.$brand-color-deep, -2px);
+}
+
+.segment + .segment{
+    border-left: 1px solid rgba(40, 40, 40, 0.15);
+}
+
+.segment:hover{
+    background-color: rgba(0, 120, 140, 0.08);
+}
+
+.segment.is-active{
+    background-color: v.$brand-color;
+    color: #ffffff;
+}
+
+.segment.is-active:hover{
+    background-color: rgba(0, 120, 140, 0.85);
+}

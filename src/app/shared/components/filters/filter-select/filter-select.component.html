@@ -1,26 +1,15 @@
+<!-- Las pills quedan siempre visibles (nada de desplegable): un filtro
+     'default' suelto (ej. "Cupos disponibles") no tiene lugar en este layout
+     por ahora, solo se renderizan los grupos 'hover' (categoría) y
+     'compound' (precio) que sí tiene el mockup. -->
 <div class="container-filter">
-    <p class="text-searchbar">Filtrar por:</p>
-    
-    <div class="container-filter-select">
-        <div class="container-select">
-            <div class="option-default">
-                <p class="option-default-selected">
-                    Selecciona un filtro
-                </p>
-                <div class="container-down-icon">
-                    <img class="down-icon" src="assets/down-icon.svg" alt="">
-                </div>
-            </div>
-            <ul class="options">
-                @for( filter of filters(); track filter) {
-                    @if( filter.type === 'default'){
-                        <app-filter-option-default [filter]="filter" />
-                    }
-                    @else if ( filter.type === 'hover') {
-                        <app-filter-option-hover [filter]="filter" />
-                    }
-                }
-            </ul>
-        </div>
-    </div>
-</div>    
+    @for( filter of filters(); track filter) {
+        @if ( filter.type === 'hover') {
+            <app-filter-option-hover [filter]="filter" />
+        }
+        @else if ( filter.type === 'compound') {
+            <app-filter-option-price [filter]="filter" />
+        }
+    }
+</div>
+

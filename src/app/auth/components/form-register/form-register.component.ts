@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { Validators, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
@@ -22,7 +22,23 @@ export class FormRegisterComponent {
   private userState = inject(UserState);
   public isLoading = computed( () => this.userState.authStatus() );
 
+  public passwordValue = signal('');
+
+  // Tres segmentos que reflejan el validador real (minLength 6): vacío,
+  // escribiendo y válido. Ningún segmento promete una regla que el form no
+  // aplica.
+  public passwordStrength = computed( () => {
+    const value = this.passwordValue();
+    return {
+      started: value.length > 0,
+      halfway: value.length >= 3,
+      valid: value.length >= 6,
+    };
+  });
+
   private fb = inject(FormBuilder);
+
+  public showPassword = signal(false);
 
   public registerForm : FormGroup = this.fb.group({
     username : [
@@ -43,6 +59,10 @@ export class FormRegisterComponent {
   });
 
   constructor( ) { }
+
+  toggleShowPassword = () => {
+    this.showPassword.update((shown) => !shown);
+  }
 
   onRegister = () : void => {
     this.registerForm.markAllAsTouched();

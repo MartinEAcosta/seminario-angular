@@ -15,5 +15,10 @@ export class PaginationComponent {
 
   getPagesList = computed( () => {
     return Array.from({ length : this.pages() } , ( _, index ) => index +1 );
-  }) 
+  })
+
+  hasPrev = computed( () => this.currentPage() > 1 );
+  hasNext = computed( () => this.currentPage() < this.pages() );
+  prevPage = computed( () => Math.max( 1 , this.currentPage() - 1 ) );
+  nextPage = computed( () => Math.min( this.pages() , this.currentPage() + 1 ) );
 }

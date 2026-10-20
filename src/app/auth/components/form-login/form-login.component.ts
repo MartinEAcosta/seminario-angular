@@ -1,5 +1,5 @@
 import { Router, RouterLink } from '@angular/router';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NgClass } from '@angular/common';
 
@@ -22,6 +22,8 @@ export class FormLoginComponent {
 
   private fb = inject(FormBuilder);
     
+  public showPassword = signal(false);
+
   public loginForm : FormGroup = this.fb.group({
     email : [ 
               '' ,[ 
@@ -36,6 +38,10 @@ export class FormLoginComponent {
   });
   
   constructor( ) {  }
+
+  toggleShowPassword = () => {
+    this.showPassword.update((shown) => !shown);
+  }
 
   onLogin = () => {
     this.loginForm.markAllAsTouched();

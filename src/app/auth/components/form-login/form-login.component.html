@@ -1,44 +1,81 @@
 <div class="container-form">
 
-    <h1 class="title-form">Iniciar sesión</h1>
+    <h1 class="title-form">Hola de nuevo</h1>
+    <p class="subtitle-form">Ingresá para continuar con tus cursos.</p>
+
+    <app-google-auth-button label="Continuar con Google" />
+
+    <span class="form-divider">o con tu correo</span>
 
     <form [formGroup]="loginForm" (submit)="onLogin()" class="form-auth">
-        
-        <form-error-label class="error error-email" [control]="loginForm.get('email')!" />
-        <input
-            type="text"
-            placeholder="example@gmail.com"
-            class="input-email"
-            name="email"
-            autocomplete="off"
-            formControlName="email"
-            required
-            [ngClass]="{'hasError': ( loginForm.get('email')?.errors && loginForm.get('email')?.touched ) ?? false }">
-        <label class="label-text">Correo Electronico</label>
 
-        <form-error-label class="error error-password" [control]="loginForm.get('password')!" />
-        <input type="password" placeholder="unaContraseñaSegur@123" class="input-password" required name="password"
-            formControlName="password"
-            [ngClass]="{'hasError': ( loginForm.get('password')?.errors  && loginForm.get('password')?.touched ) ?? false }">
-        <label class="label-text">Contraseña</label>
-
-        <button class="btn-sumbit" type="submit" (submit)="onLogin()">
-            Ingresar
-        </button>
-
-        <span class="oauth-divider">o continuá con Google</span>
-        <div class="btns-oauth">
-            <app-google-auth-button />
+        <div class="field">
+            <div class="field-head">
+                <label class="label-text" for="login-email">Correo electrónico</label>
+            </div>
+            <div class="field-control">
+                <input
+                    id="login-email"
+                    type="text"
+                    placeholder="nombre@correo.com"
+                    class="input-email"
+                    name="email"
+                    autocomplete="off"
+                    formControlName="email"
+                    required
+                    [ngClass]="{'hasError': ( loginForm.get('email')?.errors && loginForm.get('email')?.touched ) ?? false }">
+            </div>
+            <form-error-label class="error error-email" [control]="loginForm.get('email')!" />
         </div>
 
-        <a class="text-forgot-pass underline" href="">
-            ¿Olvidaste tu contraseña?
-        </a>
+        <div class="field">
+            <div class="field-head">
+                <label class="label-text" for="login-password">Contraseña</label>
+                <a class="text-forgot-pass underline" href="">¿La olvidaste?</a>
+            </div>
+            <div class="field-control">
+                <input
+                    id="login-password"
+                    [type]="showPassword() ? 'text' : 'password'"
+                    placeholder="unaContraseñaSegur@123"
+                    class="input-password"
+                    required
+                    name="password"
+                    formControlName="password"
+                    [ngClass]="{'hasError': ( loginForm.get('password')?.errors  && loginForm.get('password')?.touched ) ?? false }">
+                <button
+                    type="button"
+                    class="btn-toggle-password"
+                    (click)="toggleShowPassword()"
+                    [attr.aria-label]="showPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+                >
+                    @if (showPassword()) {
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-6 0-10-6-10-8a12.8 12.8 0 0 1 3.22-4.44M9.9 4.24A10.9 10.9 0 0 1 12 4c6 0 10 6 10 8a12.9 12.9 0 0 1-2.16 3.19M14.12 14.12a3 3 0 1 1-4.24-4.24"/>
+                            <path d="M1 1l22 22"/>
+                        </svg>
+                    } @else {
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M2 12s4-8 10-8 10 8 10 8-4 8-10 8-10-8-10-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    }
+                </button>
+            </div>
+            <form-error-label class="error error-password" [control]="loginForm.get('password')!" />
+        </div>
+
+        <button class="btn-sumbit" type="submit">
+            Ingresar
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+        </button>
 
         <p class="text-register">
-            ¿Todavia no tienes una cuenta?
+            ¿Todavía no tenés cuenta?
             <a [routerLink]="['/auth/register']" class="underline">
-                Registrate.
+                Registrate
             </a>
         </p>
 

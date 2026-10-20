@@ -1,7 +1,13 @@
 <div class="bg-page">
     <div class="container-content">
-        <app-page-title [title]="'Explorar'" />
-        <app-search-bar 
+        <header class="explore-header">
+            <p class="eyebrow">Catálogo</p>
+            <h1 class="title">Explorá los cursos</h1>
+            <p class="subtitle">Buscá por tema o filtrá por categoría y precio.</p>
+        </header>
+
+        <app-search-bar
+            [showSort]="true"
             [initialValue]="this.searchService.textSearch()"
             (value)="this.searchService.textSearch.set($event)">
 
@@ -9,17 +15,26 @@
 
         </app-search-bar>
 
+        <p class="results-count">{{ coursesResource.value()?.total ?? 0 }} cursos</p>
+
         <div class="container-courses">
             @if( coursesResource.isLoading() ){
-                <app-loader />
+                @for( i of skeletonCards; track i ){
+                    <app-course-catalog-card-skeleton />
+                }
+            }
+            @else if( coursesResource.error() ){
+                <div class="container-not-found">
+                    <p class="text">No pudimos cargar los cursos. Intentá de nuevo más tarde.</p>
+                </div>
             }
             @else {
                 @for( course of courses()?.items; track course.id){
-                    <app-course-mini-card [course]="course" />
+                    <app-course-catalog-card [course]="course" [enrollmentId]="enrollmentIdFor(course.id)" />
                 }
                 @empty {
                     <div class="container-not-found">
-                        <h1 class="text">¡No se han encontrado cursos!</h1>
+                        <p class="text">¡No se han encontrado cursos!</p>
                     </div>
                 }
             }

@@ -1,18 +1,11 @@
-<div class="container-hover-filter">
-    <div class="container-main-label">
-        <li 
-            class="option-filter">
-            {{ filter().label }} 
-        </li>
-    </div>
-    <div class="container-list">
-        @for (item of filter().value; track $index) {
-            <li
-                (click)="this.onClickFilterOption( item )!"
-                class="option-filter"
-            >
-                {{ item.label }}
-            </li>
-        }
-    </div>
-</div>
+<ul class="container-hover-filter" role="group" [attr.aria-label]="filter().label">
+    <li
+        (click)="onClickAll()"
+        class="option-filter"
+        [class.is-active]="isAllActive()">
+        Todas
+    </li>
+    @for (item of filter().value; track item.value) {
+        <app-filter-option-default [filter]="item" />
+    }
+</ul>

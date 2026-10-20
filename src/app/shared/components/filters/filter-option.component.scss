@@ -1,31 +1,32 @@
 @use '../../../../variables.scss' as v;
 
-// Opción de un desplegable que vive sobre sala oscura: se eleva con borde de
-// tono, no con sombra — una sombra negra sobre oscuro sólo ensucia el borde.
 .option-filter{
-    border: none;
-    height: 25%;
-    z-index: 1000;
-    padding: 3% 4%;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid v.$brand-color;
+    border-radius: 999px;
+    padding: 0.4rem 0.9rem;
     cursor: pointer;
-    color: v.$white-custom;
-    background-color: v.$black-custom;
-    // Separador de tono entre opciones, en vez de sombra: inset y de 1px, así
-    // dos opciones contiguas no suman dos líneas.
-    box-shadow: inset 0 1px 0 v.$veil-border;
+    color: v.$brand-color-deep;
+    background-color: #ffffff;
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease;
 
-    @include v.focus-ring(v.$white-custom);
+    @include v.focus-ring(v.$brand-color-deep, 2px);
 }
 
 .option-filter:hover{
-    background-color: v.$brand-color;
-    cursor: pointer;
+    background-color: rgba(0, 120, 140, 0.08);
 }
 
-// .option-filter:first-child{
-    // border-radius: 0.5rem 0.5rem 0 0;
-// }
+.option-filter.is-active{
+    background-color: v.$brand-color;
+    border-color: v.$brand-color;
+    color: #ffffff;
+}
 
-// .option-filter:last-child{
-//     border-radius: 0 0 0.5rem 0.5rem;
-// }
+.option-filter.is-active:hover{
+    background-color: rgba(0, 120, 140, 0.85);
+}

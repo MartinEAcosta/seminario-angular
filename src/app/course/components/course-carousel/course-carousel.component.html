@@ -4,6 +4,8 @@
 @else if (courses().length > 0) {
     <div class="shelf">
         <div class="shelf-controls">
+            <a routerLink="/explore" class="see-all">Ver todos los cursos</a>
+
             <button type="button" class="nav-btn" [disabled]="!canScrollPrev()"
                 (click)="scrollByCard(-1)" aria-label="Ver cursos anteriores">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
@@ -25,7 +27,7 @@
             aria-label="Cursos del catálogo">
             @for (course of courses(); track course.id) {
                 <div class="track-item">
-                    <app-course-carousel-item [course]="course" />
+                    <app-course-catalog-card [course]="course" />
                 </div>
             }
         </div>

@@ -1,224 +1,207 @@
 @use '@variables' as v;
 
+// Mismo tono que about-page.scss ($about-ink): la sala oscura de /about y la
+// del panel de autenticación son la misma "sala", no el gris de componente
+// ($black-custom) que usa mini-card. Cada archivo lo redeclara local porque
+// no está exportado desde variables.scss.
+$auth-ink: #0e1a1a;
+
+// El header sticky reserva 80px de flow antes de esta sección; sin este
+// margin/padding, esa franja queda sin pintar (fondo del body) y se ve como
+// una línea clara bajo el header glass. Cada panel pinta su propio color, así
+// que cada uno necesita su propia compensación (no alcanza con ponerla en el
+// contenedor, que ya no pinta fondo propio).
+@mixin header-overlay-patch($extra-padding-top) {
+    margin-top: -80px;
+    padding-top: calc(80px + #{$extra-padding-top});
+}
+
 .container-auth{
     display: flex;
-    max-width: 100vw;
-    height: 100%;
-    padding: 4%;
-    justify-content: space-between;
-    align-items: flex-start;
-    background:
-        radial-gradient(120% 100% at 12% 0%, rgba(0, 120, 140, 0.07), transparent 55%),
-        radial-gradient(120% 100% at 88% 100%, rgba(255, 190, 40, 0.09), transparent 55%),
-        v.$white-custom;
-    // El header sticky reserva 80px de flow antes de esta sección; sin este
-    // margin/padding, esa franja queda sin pintar (fondo del body) y se ve
-    // como una línea clara bajo el header glass. Se extiende el fondo hacia
-    // arriba sin mover el contenido.
-    margin-top: -80px;
-    padding-top: calc(4% + 80px);
+    align-items: stretch;
+    min-height: 100vh;
 }
 
-.container-commercial{
+.panel-commercial{
+    @include header-overlay-patch(4%);
     display: flex;
     flex-direction: column;
-    font-family: v.$font-primary;
-    color: v.$black-custom;
+    justify-content: center;
+    box-sizing: border-box;
     width: 50%;
+    padding-left: 6%;
+    padding-right: 6%;
+    padding-bottom: 4%;
+    font-family: v.$font-primary;
+    color: v.$white-custom;
+    background-color: $auth-ink;
 }
 
-.eyebrow{
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-bottom: 4%;
-    font-size: v.$text-sm;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
+.headline{
+    max-width: 22ch;
+    margin: 0 0 4%;
+    font-weight: 900;
+    // Clamp propio para este titular: el de about-page.scss asume una columna
+    // a 100vw; acá la columna es la mitad del viewport y ese tamaño desborda.
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: v.$white-custom;
+}
+
+.accent{
     color: v.$brand-color;
 }
 
-.eyebrow::before{
-    content: "";
-    display: block;
-    width: 2rem;
-    height: 2px;
+.subtitle{
+    max-width: 38ch;
+    margin: 0 0 8%;
+    font-size: v.$text-lg;
+    line-height: 1.6;
+    color: rgba(233, 233, 233, 0.7);
+}
+
+.steps{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-md;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+// Línea única detrás de los tres marcadores en vez de un conector por item:
+// con filas de alto variable (título + descripción) es la única forma de que
+// quede perfectamente centrada sin medir cada fila.
+.steps::before{
+    content: '';
+    position: absolute;
+    top: 1.125rem;
+    bottom: 1.125rem;
+    left: 1.125rem;
+    width: 2px;
+    background-color: rgba(0, 120, 140, 0.35);
+}
+
+.step{
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: v.$space-sm;
+    align-items: flex-start;
+}
+
+.step-marker{
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 2px solid v.$brand-color;
+    border-radius: 999px;
+    font-family: v.$font-primary;
+    font-weight: 700;
+    font-size: v.$text-base;
+    color: v.$brand-color;
+    background-color: $auth-ink;
+}
+
+.step-current .step-marker{
+    color: v.$white-custom;
     background-color: v.$brand-color;
 }
 
-.title-auth{
-    display: flex;
-    font-family: v.$font-brand;
-    font-weight: 400;
-    font-size: v.$text-display;
-    line-height: 1.25;
-    color: v.$black-custom;
-    margin: 0 0 3%;
-}
-
-.text-auth{
-    display: flex;
+.step-body h3{
+    margin: 0 0 0.2rem;
     font-size: v.$text-base;
-    line-height: 1.6;
-    align-items: center;
-    text-align: justify;
-    color: rgba(40, 40, 40, 0.8);
-    padding-right: 8%;
+    font-weight: 800;
+    color: v.$white-custom;
 }
 
-.container-social-media{
+.step-body p{
+    margin: 0;
+    font-size: v.$text-sm;
+    color: rgba(233, 233, 233, 0.6);
+}
+
+// Separador vacío entre los dos paneles: sin perforación ni patrón.
+.divider-ticket{
+    @include header-overlay-patch(0%);
+    flex-shrink: 0;
+    width: 24px;
+}
+
+.panel-auth{
+    @include header-overlay-patch(4%);
     display: flex;
     flex-direction: column;
-    margin-top: 5%;
-    padding-right: 5%;
-}
-
-.container-social-media .divider{
-    display: block;
-    width: 100%;
-    height: 1px;
-    margin-bottom: 6%;
-    background: linear-gradient(90deg, rgba(0, 120, 140, 0.3), transparent 70%);
-}
-
-.container-social-media h2{
-    font-size: v.$text-lg;
-    font-weight: 600;
-    margin-bottom: 2%;
-    text-align: left;
-}
-
-.container-social-media .text-social-media{
-    font-size: v.$text-sm;
-    color: rgba(40, 40, 40, 0.65);
-    margin-bottom: 6%;
-    text-align: left;
-}
-
-.container-social-media .btns-social-media{
-    display: flex;
-    margin: 0;
-    gap: 4%;
-}
-
-.btn-social{
-    display: flex;
-    font-family: v.$font-primary;
-    font-weight: 500;
-    color: v.$white-custom;
-    background-color: v.$black-custom;
     align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    width: 155px;
-    height: 45px;
-    border: none;
-    border-radius: 15px;
+    box-sizing: border-box;
+    flex: 1;
+    padding-left: 6%;
+    padding-right: 6%;
+    padding-bottom: 4%;
+    background-color: v.$white-custom;
+}
+
+.auth-tabs{
+    display: flex;
+    gap: 0.25rem;
+    width: fit-content;
+    margin: 0 auto v.$space-md;
+    padding: 0.3rem;
+    border-radius: 999px;
+    background-color: rgba(40, 40, 40, 0.05);
+}
+
+.auth-tab{
+    padding: 0.6rem 1.5rem;
+    border-radius: 999px;
+    font-family: v.$font-primary;
+    font-weight: 600;
+    font-size: v.$text-sm;
+    color: rgba(40, 40, 40, 0.55);
+    text-decoration: none;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
 }
 
-.btn-social img{
-    width: 22px;
-    height: 22px;
-}
-
-.btn-twitter:hover{
-    background-color: rgb(10, 40, 55);
-    box-shadow: 0 0 20px rgba(10, 40, 55, 0.6);
-    transform: translateY(-3px);
-}
-
-.btn-instagram:hover{
-    background-color: rgb(255, 16, 97);
-    box-shadow: 0 0 20px rgba(255, 16, 97, 0.5);
-    transform: translateY(-3px);
-}
-
-.btn-facebook:hover{
-    background-color: rgb(8, 102, 255);
-    box-shadow: 0 0 20px rgba(8, 102, 255, 0.5);
-    transform: translateY(-3px);
-}
-
-.bg-auth{
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    align-self: flex-start;
-    width: 45%;
-    height: auto;
-    max-height: 90%;
-    border-radius: 20px;
+.auth-tab.active{
+    color: v.$white-custom;
     background-color: v.$black-custom;
+    box-shadow: v.$shadow-chrome;
 }
-
 
 @media (prefers-reduced-motion: reduce){
-    .bg-auth{
-        animation: none;
+    .auth-tab{
+        transition: none;
     }
 }
 
 @include v.bp-down('laptop'){
-    .container-auth{
-        padding: 3% 3%;
-        padding-top: calc(3% + 80px);
-    }
-
-    .text-auth{
+    .panel-commercial,
+    .panel-auth{
+        padding-left: 4%;
         padding-right: 4%;
-    }
-
-    .container-social-media{
-        margin-top: 3%;
-        padding-right: 2%;
-    }
-
-    .container-social-media .divider{
-        margin-bottom: 3%;
-    }
-
-    .container-social-media h2{
-        margin-bottom: 1%;
-    }
-
-    .container-social-media .text-social-media{
-        margin-bottom: 3%;
-    }
-
-    .bg-auth{
-        width: 48%;
     }
 }
 
 @include v.bp-down('md'){
     .container-auth{
         flex-direction: column;
-        height: auto;
-        padding: 6% 4%;
+        min-height: 0;
     }
 
-    .container-commercial{
+    .panel-commercial,
+    .divider-ticket{
+        display: none;
+    }
+
+    .panel-auth{
         width: 100%;
-    }
-
-    .bg-auth{
-        width: 100%;
-        height: auto;
-        margin-top: 10%;
-    }
-
-    .btns-social-media{
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 1rem;
-    }
-}
-
-@include v.bp-down('sm'){
-    .btn-social{
-        width: 120px;
+        padding-top: calc(80px + 8%);
+        padding-bottom: 8%;
     }
 }

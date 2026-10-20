@@ -1,6 +1,6 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 
-import { SearchService } from '@shared/services/search/search.service';
+import { QueryParams, SearchService } from '@shared/services/search/search.service';
 import { FilterOptionDefault } from '@utils/filters/filter.interfaces';
 
 @Component({
@@ -13,6 +13,11 @@ export class FilterOptionDefaultComponent {
   private searchService = inject(SearchService);
 
   filter = input.required<FilterOptionDefault>();
+
+  isActive = computed( () => {
+    const key = this.filter().key as keyof QueryParams;
+    return this.searchService.queryParams()?.[key] === this.filter().value;
+  });
 
   constructor( ) {   }
 

@@ -1,13 +1,41 @@
 <div class="container-number-pages">
+    <button
+        [routerLink]=[]
+        [queryParams]="{ page : prevPage() }"
+        class="btn-arrow"
+        [disabled]="!hasPrev()"
+        aria-label="Página anterior"
+        >
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 5l-7 7 7 7"/>
+        </svg>
+    </button>
+
     @for (page of getPagesList(); track page) {
-        <button 
+        <button
             [routerLink]=[]
             [queryParams]="{ page : page }"
             class="btn-number"
             [ngClass]="currentPage() === page ? 'selected' : '' "
+            [attr.aria-current]="currentPage() === page ? 'page' : null"
             >
             {{ page }}
         </button>
-        <p class="text">Página actual: {{ page }}</p>
     }
+
+    <button
+        [routerLink]=[]
+        [queryParams]="{ page : nextPage() }"
+        class="btn-arrow"
+        [disabled]="!hasNext()"
+        aria-label="Página siguiente"
+        >
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 5l7 7-7 7"/>
+        </svg>
+    </button>
+
+    <p class="sr-only" role="status" aria-live="polite">Página actual: {{ currentPage() }}</p>
 </div>

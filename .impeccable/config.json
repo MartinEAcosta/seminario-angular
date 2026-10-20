@@ -36,6 +36,15 @@
         ],
         "createdAt": "2026-10-16T22:18:05.853Z",
         "reason": "intentional placeholder fallback for courses without thumbnail, same pattern as course-mini-card/course-featured, pre-existing before this redesign"
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/app/course/components/course-catalog-card/course-catalog-card.component.html"
+        ],
+        "createdAt": "2026-10-20T14:37:23.621Z",
+        "reason": "dynamic [src] bound to real course().thumbnail_url data, not a literal placeholder - same pattern as prior course-mini-card/course-carousel-item"
       }
     ]
   }

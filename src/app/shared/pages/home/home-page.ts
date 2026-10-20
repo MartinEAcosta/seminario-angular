@@ -4,7 +4,6 @@ import { rxResource } from '@angular/core/rxjs-interop';
 
 import { CourseService } from '@course/services/course.service';
 import { CategoryService } from '@category/services/category.service';
-import { resolveCategoryName } from '@category/utils/resolve-category-name';
 import { CourseCarouselComponent } from "@course/components/course-carousel/course-carousel.component";
 import { CourseFeaturedComponent } from '@course/components/course-featured/course-featured.component';
 import { CategoryMarqueeComponent } from "@category/components/category-marquee/category-marquee.component";

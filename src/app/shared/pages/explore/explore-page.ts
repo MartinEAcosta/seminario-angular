@@ -6,19 +6,19 @@ import { CourseService } from '@course/services/course.service';
 import { SearchService } from '../../services/search/search.service';
 import { PaginationService } from '../../pagination/services/pagination.service';
 import { CategoryService } from '@category/services/category.service';
-import { PageTitleComponent } from "../../components/page-title/page-title.component";
-import { LoaderComponent } from "../../components/loader/loader.component";
-import { CourseMiniCardComponent } from "@course/components/course-mini-card/course-mini-card.component";
+import { CourseCatalogCardComponent } from "@course/components/course-catalog-card/course-catalog-card.component";
+import { CourseCatalogCardSkeletonComponent } from "@course/components/course-catalog-card-skeleton/course-catalog-card-skeleton.component";
 import { CartComponent } from "@cart/components/cart/cart.component";
 import { PaginationComponent } from "../../pagination/pagination.component";
 import { SearchBarComponent } from "../../components/search-bar/search-bar.component";
 import { FilterSelectComponent } from "@shared/components/filters/filter-select/filter-select.component";
 import { FilterExplorePage } from '@utils/filters/filter-options';
 import { FilterOptionDefault } from '@utils/filters/filter.interfaces';
+import { EnrollmentState } from '@enrollment/state/enrollment-state';
 
 @Component({
   selector: 'app-explore-page',
-  imports: [SearchBarComponent, PageTitleComponent, LoaderComponent, CourseMiniCardComponent,
+  imports: [SearchBarComponent, CourseCatalogCardComponent, CourseCatalogCardSkeletonComponent,
     CartComponent, PaginationComponent, FilterSelectComponent],
   templateUrl: './explore-page.html',
   styleUrl: './explore-page.scss'
@@ -30,6 +30,12 @@ export class ExplorePage {
   paginationService = inject(PaginationService);
   searchService = inject(SearchService)
   categoryService = inject(CategoryService);
+  enrollmentState = inject(EnrollmentState);
+
+  // Grilla de skeletons mientras carga: 2 filas completas en el layout de
+  // 4 columnas (el breakpoint más ancho), aunque en pantallas chicas sobren
+  // algunas, no se nota porque el grid simplemente las apila.
+  skeletonCards = Array.from({ length: 8 }, (_, i) => i);
 
   categories = toSignal( 
     this.categoryService.getAllCategories(),
@@ -63,6 +69,11 @@ export class ExplorePage {
       } );
     }
   });
+
+  enrollmentIdFor = ( id_course : string ) : string | null => {
+    const enrollment = this.enrollmentState.enrollmentList().find( e => e.course.id_course === id_course );
+    return enrollment?.id ?? null;
+  }
 
   filterOptions = computed( () => {
     const filters = FilterExplorePage.map( filter => {

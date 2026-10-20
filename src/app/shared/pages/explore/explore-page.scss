@@ -24,12 +24,74 @@
     top: 0px;
 }
 
+.explore-header{
+    margin-bottom: v.$space-md;
+}
+
+.explore-header .eyebrow{
+    margin: 0 0 0.35rem;
+    color: v.$brand-color-deep;
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.explore-header .title{
+    margin: 0 0 0.5rem;
+    color: v.$black-custom;
+    font-family: v.$font-primary;
+    font-size: v.$text-display;
+    font-weight: 800;
+}
+
+.explore-header .subtitle{
+    margin: 0;
+    color: rgba(v.$black-custom, 0.65);
+    font-family: v.$font-primary;
+    font-size: v.$text-base;
+}
+
+.results-count{
+    margin: v.$space-sm 0 0;
+    color: rgba(v.$black-custom, 0.65);
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+}
+
+// Grilla de columnas iguales: el ticket deja de tener ancho fijo y pasa a
+// llenar su columna (--catalog-card-width: 100%, alto automático), así una
+// pantalla angosta nunca lo desborda y una ancha no deja medio layout vacío.
+// Los skeletons de carga comparten el mismo contrato de tamaño, así que
+// ocupan la grilla igual que las cards reales (sin regla de "spanear todo").
 .container-courses{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 3.5%;
-    margin: 3% 2%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: v.$space-sm;
+    margin: v.$space-md 0;
+    --catalog-card-width: 100%;
+    --catalog-card-height: auto;
+
+    @include v.bp-up('sm'){
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include v.bp-up('lg'){
+        grid-template-columns: repeat(3, 1fr);
+        gap: v.$space-md;
+    }
+
+    @include v.bp-up('laptop'){
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+// Los estados vacío/error caen dentro de la misma grilla que las tarjetas:
+// sin esto, quedan encajonados en la primera columna y el resto de la fila
+// se ve vacío en vez de centrado.
+.container-not-found{
+    grid-column: 1 / -1;
 }
 
 .container-not-found{
@@ -42,6 +104,9 @@
 
 .text{
     display: flex;
-    color: rgb(40, 40, 40 , 0.8);
+    color: rgba(v.$black-custom, 0.75);
     font-family: v.$font-primary;
+    font-size: v.$text-lg;
+    font-weight: 600;
+    text-align: center;
 }

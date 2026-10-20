@@ -2,8 +2,10 @@
 
 .container-number-pages{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
     font-family: v.$font-primary;
 }
 
@@ -37,15 +39,54 @@
     color: #ffffff;
 }
 
-.text{
-    margin-top: 0.5rem;
-    font-size: 0.8rem;
+.btn-arrow{
+    cursor: pointer;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.4rem;
+    border: solid 1px rgba(40, 40, 40, 0.12);
+    background-color: #ffffff;
+    color: v.$black-custom;
+    font-family: v.$font-primary;
     font-weight: 600;
-    color: rgba(40, 40, 40, 0.7);
+    font-size: 1rem;
+    line-height: 1;
+    box-shadow: v.$shadow-chrome;
+    transition: all 0.2s ease;
+
+    @include v.focus-ring();
+}
+
+.btn-arrow:hover:not(:disabled){
+    transform: translateY(v.$lift-control);
+    box-shadow: v.$shadow-surface-hover;
+}
+
+.btn-arrow:disabled{
+    cursor: not-allowed;
+    opacity: 0.35;
+    box-shadow: none;
+}
+
+.sr-only{
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 @media (prefers-reduced-motion: reduce){
-    .btn-number:hover{
+    .btn-number:hover,
+    .btn-arrow:hover{
         transform: none;
     }
 }

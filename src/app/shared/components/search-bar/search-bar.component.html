@@ -1,26 +1,36 @@
 <div class="container-bar">
-    <div class="selector">
-        <ng-content select="[filter-selector]"></ng-content>
-    </div>
-
     <div class="container-search">
-        <div 
-            class="container-search-icon" 
+        <button
+            type="button"
+            class="container-search-icon"
             (click)="value.emit(txtSearch.value)"
-            >
+            aria-label="Buscar">
             <img class="search-icon" src="/assets/search-icon-white.svg" alt="">
-        </div>
+        </button>
         <input
             #txtSearch
             (keyup.enter)="value.emit( txtSearch.value )"
             (keyup)="inputValue.set( txtSearch.value )"
             [value]="inputValue()"
-            class="input-search" 
-            placeholder="Escribe algo de tu interes..." 
-            type="text" 
-            name="" 
+            class="input-search"
+            placeholder="Buscá por título o tema, ej.: TypeScript"
+            type="text"
+            name=""
             id="">
     </div>
+
+    @if (showSort()) {
+        <div class="sort-field">
+            <label for="sortBy">Ordenar por</label>
+            <select id="sortBy" class="sort-select">
+                <option>Relevancia</option>
+            </select>
+        </div>
+    }
 </div>
 
-<app-selected-filters />
+<!-- Las pills de categoría/precio van en su propia fila, debajo de la
+     barra de búsqueda — no adentro de la tarjeta blanca. -->
+<div class="selector">
+    <ng-content select="[filter-selector]"></ng-content>
+</div>

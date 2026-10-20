@@ -1,0 +1,23 @@
+<div class="segmented" role="group" [attr.aria-label]="filter().label">
+    <button
+        type="button"
+        class="segment"
+        [class.is-active]="mode() === 'all'"
+        (click)="setMode('all')">
+        Todos
+    </button>
+    <button
+        type="button"
+        class="segment"
+        [class.is-active]="mode() === 'free'"
+        (click)="setMode('free')">
+        Gratis
+    </button>
+    <button
+        type="button"
+        class="segment"
+        [class.is-active]="mode() === 'paid'"
+        (click)="setMode('paid')">
+        Pagos
+    </button>
+</div>

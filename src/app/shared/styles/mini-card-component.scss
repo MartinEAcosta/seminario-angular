@@ -2,6 +2,7 @@
 
 .mini-card{
     display: flex;
+    box-sizing: border-box;
     width: var(--mini-card-width, 22rem);
     height: var(--mini-card-height, 26rem);
     position: relative;
@@ -9,7 +10,6 @@
     flex-direction: column;
     padding: 1.25rem 1rem 1rem;
     border-radius: 0.2rem;
-    margin-bottom: 10%;
     background-color: rgb(40, 40, 40);
     border: 1px solid rgba(233, 233, 233, 0.1);
     box-shadow: var(--mini-card-shadow, #{v.$shadow-panel});

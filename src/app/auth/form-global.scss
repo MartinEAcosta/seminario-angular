@@ -2,152 +2,171 @@
 
 .container-form{
     display: flex;
-    position: relative;
     flex-direction: column;
+    box-sizing: border-box;
     width: 100%;
-    height: auto;
-    padding: 4% 0%;
+    max-width: 440px;
+    margin: 0 auto;
+    padding: 2% 0 4%;
+    font-family: v.$font-primary;
 }
 
 .title-form{
-    display: flex;
-    width: 90%;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba( 255,255,255, 0.2);
-    font-family: v.$font-primary;
-    color: v.$white-custom;
-    justify-content: center;
-    font-size: v.$text-xl;
-    margin: 4% auto 2%;
+    margin: 0 0 0.4rem;
+    font-size: v.$text-2xl;
+    font-weight: 800;
+    color: v.$black-custom;
+}
+
+.subtitle-form{
+    margin: 0 0 v.$space-md;
+    font-size: v.$text-base;
+    color: rgba(40, 40, 40, 0.65);
 }
 
 .form-auth{
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: auto;
-    align-items: center;
 }
 
-.input-email , .input-password , .input-username{
+.field{
     display: flex;
-    align-items: center;
-    box-sizing: border-box;
-    width: 50%;
-    height: 3rem;
-    padding: 0 1rem;
-    margin: v.$space-sm auto 0;
-    color: v.$white-custom;
-    background-color: rgb(50, 50, 50);
-    border-radius: 20px;
-    // Una sola declaración: la anterior quedaba descartada en silencio por la
-    // que la seguía.
-    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
-    border: 2px solid v.$brand-color;
-    transition: all 0.3s ease-in-out;
+    flex-direction: column;
+    margin-top: v.$space-sm;
 }
 
-// El outline se quita pero el foco se marca igual: el campo sube, el fondo se
-// aclara y el borde teal queda a la vista.
-.input-email:focus , .input-password:focus , .input-username:focus , .label-text:focus{
-    outline: none;
-    color: white;
-    transform: translateY(-5px);
-    transition: all 0.3s ease-in-out;
-    background-color: rgb(60, 60, 60);
-}
-
-input:not(:placeholder-shown) + label{
-    background-color: rgb(60, 60, 60);
-    transform: translateY(-30px);
-    transition: all 0.3s ease-in-out;
-}
-
-.input-username:not(:placeholder-shown),
-.input-email:not(:placeholder-shown) ,
-.input-password:not(:placeholder-shown){
-    transform: translateY(-5px);
-    background-color: rgb(60, 60, 60);
-}
-
-.input-username:focus + .label-text,
-.input-email:focus + .label-text,
-.input-password:focus + .label-text {
-    background-color: rgb(60, 60, 60);
-    border-radius: 20px 20px;
-    transform: translateY(-30px);
-    transition: all 0.3s ease-in-out;
-}
-
-.input-username:focus::placeholder ,.input-email:focus::placeholder , .input-password:focus::placeholder{
-    color: #aaa;
-    transition: all 0.3s ease 0.2s
-}
-
-.input-username::placeholder ,.input-email::placeholder , .input-password::placeholder{
-    color: transparent;
-    align-items: center;
+.field-head{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
 }
 
 .label-text{
-    display: flex;
-    position: relative;
-    z-index: 100;
-    top: -2.2rem;
-    margin: 0;
-    padding: 0 10px 0 10px;
-    justify-content: center;
-    border-radius: 20px 20px 0px 0px;
+    font-size: v.$text-sm;
+    font-weight: 600;
+    color: v.$black-custom;
+}
+
+.text-forgot-pass{
+    font-size: v.$text-sm;
     font-family: v.$font-primary;
-    color: v.$white-custom;
-    transition: all 0.3s ease-in-out;
-    pointer-events: none;
+    color: v.$brand-color-deep;
 }
 
-.underline{
-    cursor: pointer;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    color: v.$white-custom;
-}
-
-.text-forgot-pass , .text-register , .text-login{
+.field-control{
+    position: relative;
     display: flex;
-    margin: v.$space-sm auto 0;
+    align-items: center;
+}
+
+.input-email,
+.input-password,
+.input-username{
+    box-sizing: border-box;
+    width: 100%;
+    height: 3rem;
+    padding: 0 1rem;
     font-family: v.$font-primary;
     font-size: v.$text-base;
-    color: v.$white-custom;
+    color: v.$black-custom;
+    // Blanco puro, no papel hueso: la superficie se levanta sobre el panel
+    // claro, igual que la tarjeta-ticket y el resumen de compra.
+    background-color: #ffffff;
+    border: 1px solid rgba(40, 40, 40, 0.15);
+    border-radius: 20px;
+    transition: border-color 0.3s ease-in-out;
+
+    @include v.focus-ring(v.$brand-color);
 }
 
-.text-register a , .text-login a{
-    color: v.$white-custom;
-    text-underline-offset: 3px;
+.input-password{
+    padding-right: 2.75rem;
+}
+
+.input-email::placeholder,
+.input-password::placeholder,
+.input-username::placeholder{
+    color: rgba(40, 40, 40, 0.4);
+}
+
+.input-email:focus,
+.input-password:focus,
+.input-username:focus{
+    border-color: v.$brand-color;
+}
+
+.hasError{
+    border-color: v.$red-warning;
+}
+
+.btn-toggle-password{
+    display: flex;
+    position: absolute;
+    right: 0.85rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    color: rgba(40, 40, 40, 0.5);
+    cursor: pointer;
+
+    @include v.focus-ring(v.$brand-color);
+}
+
+.btn-toggle-password:hover{
+    color: v.$black-custom;
+}
+
+.password-strength{
+    display: flex;
+    gap: 0.3rem;
+    margin-top: 0.6rem;
+}
+
+.password-strength-segment{
+    flex: 1;
+    height: 4px;
+    border-radius: 999px;
+    background-color: rgba(40, 40, 40, 0.12);
+}
+
+.password-strength-segment.is-filled{
+    background-color: v.$brand-color;
+}
+
+.field-hint{
+    margin: 0.5rem 0 0;
+    font-size: v.$text-sm;
+    color: rgba(40, 40, 40, 0.55);
 }
 
 .btn-sumbit{
     display: flex;
-    position: relative;
     box-sizing: border-box;
-    width: 50%;
-    height: 2.75rem;
-    border-radius: 20px;
-    cursor: pointer;
-    border: none;
-    font-weight: bold;
-    font-family: v.$font-primary;
-    // Blanco puro, no papel hueso: sobre el teal el papel mide 4.26:1 y no
-    // alcanza AA en texto de tamaño de interfaz. Blanco da 5.17:1.
-    color: #ffffff;
-    margin: v.$space-xs auto;
+    width: 100%;
+    height: 3rem;
     align-items: center;
     justify-content: center;
-    // Botón primario del sistema: teal lleno. El degradado de esmeralda,
-    // turquesa y azul no pertenecía a la paleta, y el relleno degradado es
-    // justamente lo que el sistema rechaza.
+    gap: 0.5rem;
+    margin-top: v.$space-md;
+    border: none;
+    border-radius: 20px;
+    font-family: v.$font-primary;
+    font-weight: bold;
+    font-size: v.$text-base;
+    color: #ffffff;
     background-color: v.$brand-color;
-    transition: all 0.4s ease-in-out;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
 
     @include v.focus-ring(v.$white-custom);
+}
+
+.btn-sumbit svg{
+    flex-shrink: 0;
 }
 
 .btn-sumbit:hover:not(.btn-disabled){
@@ -158,7 +177,6 @@ input:not(:placeholder-shown) + label{
 .btn-disabled{
     background-color: rgba(0, 120, 140, 0.3);
     cursor: not-allowed;
-    transition: all 0.4s ease-in-out;
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -168,111 +186,90 @@ input:not(:placeholder-shown) + label{
     }
 }
 
-.hasError{
-    border-color: v.$red-warning;
-}
-
-.oauth-divider{
+.form-divider{
     display: flex;
     align-items: center;
-    width: 50%;
-    margin: v.$space-sm auto 0;
-    color: rgba( 233,233,233, 0.5);
+    margin: v.$space-md 0 0;
+    color: rgba(40, 40, 40, 0.5);
     font-family: v.$font-primary;
     font-size: v.$text-sm;
     text-align: center;
 }
 
-.oauth-divider::before,
-.oauth-divider::after{
+.form-divider::before,
+.form-divider::after{
     content: '';
     flex: 1;
     height: 1px;
-    background-color: rgba( 233,233,233, 0.2);
+    background-color: rgba(40, 40, 40, 0.15);
 }
 
-.oauth-divider::before{
+.form-divider::before{
     margin-right: v.$space-xs;
 }
 
-.oauth-divider::after{
+.form-divider::after{
     margin-left: v.$space-xs;
 }
 
 .btns-oauth{
     display: flex;
-    width: 50%;
+    width: 100%;
     gap: v.$space-xs;
-    margin: v.$space-xs auto 0;
-    justify-content: center;
 }
 
 .btn-oauth{
     display: flex;
     box-sizing: border-box;
     width: 100%;
-    height: 2.75rem;
+    height: 3rem;
     padding: 0 0.75rem;
     align-items: center;
     justify-content: center;
-    gap: 0.4rem;
+    gap: 0.5rem;
     border-radius: 20px;
-    border: 1px solid rgba( 40,40,40, 0.15);
-    background-color: v.$white-custom;
+    border: 1px solid rgba(40, 40, 40, 0.15);
+    background-color: #ffffff;
     color: v.$black-custom;
     font-family: v.$font-primary;
-    font-size: 0.8rem;
+    font-weight: 600;
+    font-size: v.$text-base;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     white-space: nowrap;
 }
 
 .btn-oauth img{
-    width: 1rem;
-    height: 1rem;
+    width: 1.2rem;
+    height: 1.2rem;
     flex-shrink: 0;
 }
 
 .btn-oauth:hover{
     transform: translateY(-3px);
-    box-shadow: 0px 4px 12px rgba( 0,0,0, 0.25);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-@include v.bp-down('laptop'){
-    .container-form{
-        padding: 2% 0%;
-    }
-
-    .title-form{
-        margin: 2% auto 1%;
-    }
-
-    .form-auth{
-        padding-top: 1%;
-    }
+.text-register,
+.text-login{
+    display: flex;
+    justify-content: center;
+    margin: v.$space-md auto 0;
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    color: rgba(40, 40, 40, 0.7);
 }
 
-@include v.bp-down('md'){
-    .input-email , .input-password , .input-username , .btn-sumbit{
-        width: 70%;
-    }
+.underline{
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    color: v.$brand-color-deep;
+    font-weight: 600;
 }
 
 @include v.bp-down('sm'){
-    .input-email , .input-password , .input-username , .btn-sumbit{
-        width: 90%;
-    }
-
-    .oauth-divider , .btns-oauth{
-        width: 90%;
-    }
-
     .btns-oauth{
         flex-direction: column;
     }
-
-    .btn-oauth{
-        width: 100%;
-    }
 }
-

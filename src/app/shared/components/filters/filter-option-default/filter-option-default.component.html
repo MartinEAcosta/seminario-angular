@@ -1,5 +1,6 @@
-<li 
+<li
     (click)="onClickFilterOption()"
-    class="option-filter">
-    {{ filter().label }} 
+    class="option-filter"
+    [class.is-active]="isActive()">
+    {{ filter().label }}
 </li>

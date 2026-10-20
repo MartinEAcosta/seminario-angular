@@ -1,39 +1,66 @@
 
-<section
-    class="container-auth">
-    <div class="container-commercial">
-        <span class="eyebrow">Plataforma de cursos online</span>
-        <h1 class="title-auth">¡Bienvenido a Udemix!</h1>
-        <p class="text-auth">
-            Un espacio diseñado para estudiantes, docentes y
-            apasionados del conocimiento que buscan organizar, compartir y
-            acceder a contenido educativo de forma clara y dinámica. Nuestra
-            plataforma te permitirá grabar tus propios cursos, gestionar tu contenido
-            y compartirlo con quienes desees.
-        </p>
-        <div class="container-social-media">
-            <span class="divider"></span>
-            <h2>¿Dónde puedes encontrarnos?</h2>
-            <p class="text-social-media">Redes oficiales de Udemix </p>
+<section class="container-auth">
+    <div class="panel-commercial">
+        <h1 class="headline">
+            Tu próximo curso empieza <span class="accent">hoy</span>
+        </h1>
+        <p class="subtitle">{{ subtitle() }}</p>
 
-            <div class="btns-social-media">
-                <button class="btn-social btn-twitter">
-                    <img src="assets/x-white.svg" alt="X icon">
-                    Twitter
-                </button>
-                <button class="btn-social btn-facebook">
-                    <img src="assets/facebook-white.svg" alt="Facebook icon">
-                    Facebook
-                </button>
-                <button class="btn-social btn-instagram">
-                    <img src="assets/instagram-white.svg" alt="Instagram icon">
-                    Instagram
-                </button>
-            </div>
-        </div>
+        <ol class="steps">
+            <li class="step">
+                <span class="step-marker">1</span>
+                <div class="step-body">
+                    <h3>Explorá el catálogo</h3>
+                    <p>Filtrá por categoría y precio.</p>
+                </div>
+            </li>
+            <li class="step">
+                <span class="step-marker">2</span>
+                <div class="step-body">
+                    <h3>Inscribite</h3>
+                    <p>Pagá con Mercado Pago o empezá gratis.</p>
+                </div>
+            </li>
+            <li class="step step-current">
+                <span class="step-marker step-marker-icon">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor" aria-hidden="true">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                </span>
+                <div class="step-body">
+                    <h3>Aprendé a tu ritmo</h3>
+                    <p>Lecciones en video, cuando quieras.</p>
+                </div>
+            </li>
+        </ol>
     </div>
-    <div class="bg-auth">
+
+    <span class="divider-ticket" aria-hidden="true"></span>
+
+    <div class="panel-auth">
+        <div class="auth-tabs" role="tablist">
+            <a
+                routerLink="/auth/login"
+                routerLinkActive="active"
+                role="tab"
+                [attr.aria-selected]="!isRegisterRoute()"
+                class="auth-tab"
+            >
+                Ingresar
+            </a>
+            <a
+                routerLink="/auth/register"
+                routerLinkActive="active"
+                role="tab"
+                [attr.aria-selected]="isRegisterRoute()"
+                class="auth-tab"
+            >
+                Crear cuenta
+            </a>
+        </div>
+
         <router-outlet />
     </div>
+
     <app-modal-error-message />
 </section>

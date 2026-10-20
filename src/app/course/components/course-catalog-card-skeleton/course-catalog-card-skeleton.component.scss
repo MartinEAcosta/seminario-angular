@@ -1,0 +1,90 @@
+@use '@variables' as v;
+
+$card-radius: 1.25rem;
+$thumb-radius: 1rem;
+
+.catalog-card-skeleton{
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    width: var(--catalog-card-width, 16rem);
+    min-height: var(--catalog-card-height, 20rem);
+    overflow: hidden;
+    border-radius: $card-radius;
+    background-color: #ffffff;
+    border: 1px solid rgba(40, 40, 40, 0.08);
+    box-shadow: v.$shadow-surface-rest;
+}
+
+.skeleton-block{
+    border-radius: 0.4rem;
+    background: linear-gradient(
+        90deg,
+        rgba(40, 40, 40, 0.08) 25%,
+        rgba(40, 40, 40, 0.14) 37%,
+        rgba(40, 40, 40, 0.08) 63%
+    );
+    background-size: 400% 100%;
+    animation: pulse 1.6s ease-in-out infinite;
+}
+
+.skeleton-thumbnail{
+    margin: 0.625rem 0.625rem 0;
+    border-radius: $thumb-radius;
+    aspect-ratio: 16 / 10;
+}
+
+.skeleton-body{
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: v.$space-xs;
+    padding: v.$space-sm v.$space-sm v.$space-sm;
+}
+
+.skeleton-title{
+    width: 80%;
+    height: 1.1rem;
+}
+
+.skeleton-text{
+    width: 100%;
+    height: 0.75rem;
+}
+
+.skeleton-text-short{
+    width: 60%;
+}
+
+.skeleton-footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: v.$space-xs;
+    border-top: 1px solid rgba(40, 40, 40, 0.1);
+}
+
+.skeleton-price{
+    width: 3.5rem;
+    height: 1rem;
+}
+
+.skeleton-btn{
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 999px;
+}
+
+@keyframes pulse{
+    0%{ background-position: 100% 0; }
+    100%{ background-position: 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .skeleton-block{
+        animation: none;
+        background: rgba(40, 40, 40, 0.1);
+    }
+}

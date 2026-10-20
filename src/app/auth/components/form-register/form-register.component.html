@@ -1,62 +1,117 @@
 <div class="container-form">
-    <h1 class="title-form">Registrarse</h1>
+
+    <h1 class="title-form">Creá tu cuenta</h1>
+    <p class="subtitle-form">Es gratis y te lleva un minuto.</p>
+
+    <app-google-auth-button label="Registrarte con Google" />
+
+    <span class="form-divider">o con tu correo</span>
+
     <form [formGroup]="registerForm" (submit)="onRegister()" class="form-auth">
-            <form-error-label class="error error-username" [control]="registerForm.get('username')!"/>
-            <input
-                type="text"
-                placeholder="Charles"
-                class="input-username"
-                required
-                name="username"
-                autocomplete="off"
-                formControlName="username"
-                [ngClass]="{'hasError': ( registerForm.get('username')?.errors && registerForm.get('username')?.touched ) ?? false }"
-            />
-            <label class="label-text">Nombre de usuario</label>
 
-            <form-error-label class="error error-email" [control]="registerForm.get('email')!"/>
-            <input
-                type="text"
-                placeholder="example@gmail.com"
-                class="input-email"
-                required
-                name="email"
-                autocomplete="off"
-                formControlName="email"
-                [ngClass]="{'hasError': ( registerForm.get('email')?.errors && registerForm.get('email')?.touched ) ?? false }"
-            >
-            <label class="label-text">Correo Electronico</label>
-
-            <form-error-label class="error error-password" [control]="registerForm.get('password')!"/>
-            <input
-                type="password"
-                placeholder="unaContraseñaSegur@123"
-                class="input-password"
-                required
-                name="password"
-                formControlName="password"
-                [ngClass]="{'hasError': ( registerForm.get('password')?.errors && registerForm.get('password')?.touched ) ?? false }"
-            >
-            <label class="label-text">Contraseña</label>
-            
-            <button class="btn-sumbit" type="submit">
-                Crea una cuenta
-            </button>
-
-            <span class="oauth-divider">o continuá con Google</span>
-            <div class="btns-oauth">
-                <app-google-auth-button />
+        <div class="field">
+            <div class="field-head">
+                <label class="label-text" for="register-username">Nombre de usuario</label>
             </div>
+            <div class="field-control">
+                <input
+                    id="register-username"
+                    type="text"
+                    placeholder="Charles"
+                    class="input-username"
+                    required
+                    name="username"
+                    autocomplete="off"
+                    formControlName="username"
+                    [ngClass]="{'hasError': ( registerForm.get('username')?.errors && registerForm.get('username')?.touched ) ?? false }"
+                />
+            </div>
+            <form-error-label class="error error-username" [control]="registerForm.get('username')!"/>
+        </div>
 
-            <p class="text-login">
-                ¿Ya tienes una cuenta? 
-                <a  
-                    [routerLink]="['/auth/login']"
-                    class="underline" 
+        <div class="field">
+            <div class="field-head">
+                <label class="label-text" for="register-email">Correo electrónico</label>
+            </div>
+            <div class="field-control">
+                <input
+                    id="register-email"
+                    type="text"
+                    placeholder="nombre@correo.com"
+                    class="input-email"
+                    required
+                    name="email"
+                    autocomplete="off"
+                    formControlName="email"
+                    [ngClass]="{'hasError': ( registerForm.get('email')?.errors && registerForm.get('email')?.touched ) ?? false }"
                 >
-                        Ingresa. 
-                </a> 
-            </p>
+            </div>
+            <form-error-label class="error error-email" [control]="registerForm.get('email')!"/>
+        </div>
+
+        <div class="field">
+            <div class="field-head">
+                <label class="label-text" for="register-password">Contraseña</label>
+            </div>
+            <div class="field-control">
+                <input
+                    id="register-password"
+                    [type]="showPassword() ? 'text' : 'password'"
+                    placeholder="unaContraseñaSegur@123"
+                    class="input-password"
+                    required
+                    name="password"
+                    formControlName="password"
+                    (input)="passwordValue.set($any($event.target).value)"
+                    [ngClass]="{'hasError': ( registerForm.get('password')?.errors && registerForm.get('password')?.touched ) ?? false }"
+                >
+                <button
+                    type="button"
+                    class="btn-toggle-password"
+                    (click)="toggleShowPassword()"
+                    [attr.aria-label]="showPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+                >
+                    @if (showPassword()) {
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-6 0-10-6-10-8a12.8 12.8 0 0 1 3.22-4.44M9.9 4.24A10.9 10.9 0 0 1 12 4c6 0 10 6 10 8a12.9 12.9 0 0 1-2.16 3.19M14.12 14.12a3 3 0 1 1-4.24-4.24"/>
+                            <path d="M1 1l22 22"/>
+                        </svg>
+                    } @else {
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M2 12s4-8 10-8 10 8 10 8-4 8-10 8-10-8-10-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    }
+                </button>
+            </div>
+            <form-error-label class="error error-password" [control]="registerForm.get('password')!"/>
+
+            @if (passwordValue().length > 0) {
+                <div class="password-strength">
+                    <span class="password-strength-segment" [ngClass]="{'is-filled': passwordStrength().started}"></span>
+                    <span class="password-strength-segment" [ngClass]="{'is-filled': passwordStrength().halfway}"></span>
+                    <span class="password-strength-segment" [ngClass]="{'is-filled': passwordStrength().valid}"></span>
+                </div>
+            }
+            <p class="field-hint">Mínimo 6 caracteres.</p>
+        </div>
+
+        <button class="btn-sumbit" type="submit">
+            Crear mi cuenta
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+        </button>
+
+        <p class="text-login">
+            ¿Ya tenés cuenta?
+            <a
+                [routerLink]="['/auth/login']"
+                class="underline"
+            >
+                Ingresá
+            </a>
+        </p>
 
     </form>
 

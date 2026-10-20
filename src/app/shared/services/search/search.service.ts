@@ -87,4 +87,17 @@ export class SearchService {
       replaceUrl: true,
     });
   }
+
+  // Dos llamadas seguidas a addFilter/removeFilter navegan dos veces: la
+  // segunda cancela la primera antes de que termine de aplicarse (ej. el
+  // toggle de precio necesita tocar minPrice y maxPrice a la vez). Esto hace
+  // ambos cambios en una sola navegación — `null` saca la key, un string la
+  // setea.
+  setFilters(partial: Record<string, string | null>): void {
+    this.router.navigate([], {
+      queryParams: partial,
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
+  }
 }

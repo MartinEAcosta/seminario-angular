@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 
 import { AuthService } from '@auth/services/auth.service';
 
@@ -10,6 +10,8 @@ import { AuthService } from '@auth/services/auth.service';
 export class GoogleAuthButtonComponent implements OnInit {
 
   private authService = inject(AuthService);
+
+  label = input('Continuar con Google');
 
   ngOnInit() {
     this.authService.prepareGoogle().catch( err => console.error('Error preparando Google Auth', err) );

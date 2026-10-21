@@ -1,7 +1,6 @@
 import { Component, effect, inject, input, signal, untracked } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 
-import { DiscountCodeInputComponent } from "../discount-code-input/discount-code-input.component";
 import { CartItemCardComponent } from "@cart/components";
 import { CartService } from '@cart/state/cart.service';
 import { Cart } from '@cart/models/cart.model';
@@ -9,7 +8,7 @@ import { animateNumber } from '@utils/animate-number';
 
 @Component({
   selector: 'app-cart-checkout',
-  imports: [DiscountCodeInputComponent, CartItemCardComponent, CurrencyPipe],
+  imports: [CartItemCardComponent, CurrencyPipe],
   templateUrl: './cart-checkout.component.html',
   styleUrl: './cart-checkout.component.scss'
 })

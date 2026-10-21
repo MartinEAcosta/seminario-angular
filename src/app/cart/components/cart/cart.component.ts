@@ -4,14 +4,13 @@ import { CurrencyPipe, NgClass } from '@angular/common';
 
 import { CartService } from '../../state/cart.service';
 import { CartPanelItemComponent } from '../cart-panel-item/cart-panel-item.component';
-import { DiscountCodeInputComponent } from '../discount-code-input/discount-code-input.component';
 import { animateNumber } from '@utils/animate-number';
 
 @Component({
     selector: 'app-cart',
     templateUrl: './cart.component.html',
     styleUrl: './cart.component.scss',
-    imports: [NgClass, CartPanelItemComponent, DiscountCodeInputComponent, RouterLink, CurrencyPipe],
+    imports: [NgClass, CartPanelItemComponent, RouterLink, CurrencyPipe],
 })
 export class CartComponent {
 

@@ -84,16 +84,6 @@ export class CartService {
     return this.cart();
   }
 
-  public upQuantity = ( course : Course ) : Cart => {
-    this.cart.set( new Cart( this.cart().upQuantity( course ) , this.cart().code ) );
-    return this.cart();
-  }
-
-  public downQuantity = ( course : Course ) : Cart => {
-    this.cart.set( new Cart( this.cart().downQuantity( course ) , this.cart().code ) );
-    return this.cart();
-  }
-
   public removeFromCart = ( course : Course ) : Cart => {
     this.cart.set( new Cart( this.cart().removeItem( course ) , this.cart().code ) );
     return this.cart();

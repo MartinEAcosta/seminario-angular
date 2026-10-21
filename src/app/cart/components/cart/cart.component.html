@@ -42,15 +42,15 @@
       <div class="panel-footer">
         <button
           type="button"
-          class="btn-discount-toggle"
-          [attr.aria-expanded]="isDiscountOpen()"
-          (click)="toggleDiscount()">
+        /* [attr.aria-expanded]="isDiscountOpen()" */
+        /* (click)="toggleDiscount()"> */
+          class="btn-discount-toggle">
           <span class="icon-plus" aria-hidden="true">+</span> ¿Tenés un código de descuento?
         </button>
 
-        @if( isDiscountOpen() ){
-          <app-discount-code-input />
-        }
+        <!-- @if( isDiscountOpen() ){ -->
+          <!-- <app-discount-code-input /> -->
+        <!-- } -->
 
         <div class="container-summary">
           <div class="row-subtotal">

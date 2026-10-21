@@ -1,0 +1,23 @@
+<div class="panel-item-card" #cardRef>
+    <div class="container-imgCourse">
+        <img
+            src={{item().course.thumbnail_url}}
+            alt="{{item().course.title}} image">
+    </div>
+
+    <div class="rightSection">
+        <p class="category-course">{{ item().course.category_name }}</p>
+        <p class="title-course">{{ item().course.title }}</p>
+        <p class="price-course">{{ item().course.price | currency }}</p>
+    </div>
+
+    <button
+        type="button"
+        class="btn-remove"
+        (click)="onRemove()"
+        aria-label="Quitar {{ item().course.title }} del carrito">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 7h16M9 7V4.5A1.5 1.5 0 0 1 10.5 3h3A1.5 1.5 0 0 1 15 4.5V7m2 0 -.8 12.1a2 2 0 0 1-2 1.9H9.8a2 2 0 0 1-2-1.9L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
+</div>

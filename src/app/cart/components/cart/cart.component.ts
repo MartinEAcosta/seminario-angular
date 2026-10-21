@@ -3,20 +3,26 @@ import { RouterLink } from '@angular/router';
 import { CurrencyPipe, NgClass } from '@angular/common';
 
 import { CartService } from '../../state/cart.service';
-import { CartItemCardComponent } from '../cart-item-card/cart-item-card.component';
+import { CartPanelItemComponent } from '../cart-panel-item/cart-panel-item.component';
+import { DiscountCodeInputComponent } from '../discount-code-input/discount-code-input.component';
 import { animateNumber } from '@utils/animate-number';
 
 @Component({
     selector: 'app-cart',
     templateUrl: './cart.component.html',
     styleUrl: './cart.component.scss',
-    imports: [NgClass, CartItemCardComponent, RouterLink, CurrencyPipe],
+    imports: [NgClass, CartPanelItemComponent, DiscountCodeInputComponent, RouterLink, CurrencyPipe],
 })
 export class CartComponent {
 
   private cartService = inject(CartService);
   cart = computed( () => this.cartService.cart());
   isCartOpen = signal<boolean>(false);
+  isDiscountOpen = signal<boolean>(false);
+
+  // Suma de precio*cantidad sin descuento, para la fila "Subtotal" del panel
+  // (el total con cupón ya lo calcula el back-end en animatedTotal).
+  public subtotal = computed<number>( () => this.cart().calculateTotal() );
 
   // Muestra el total "contando" hacia el nuevo valor en vez de saltar, cada vez
   // que cambia la cantidad de un item o se aplica un cupón.
@@ -46,6 +52,10 @@ export class CartComponent {
   public closeCart = ( event: MouseEvent ) : void => {
     event.stopPropagation();
     this.isCartOpen.set(false);
+  }
+
+  public toggleDiscount = ( ) : void => {
+    this.isDiscountOpen.update( open => !open );
   }
 
 }

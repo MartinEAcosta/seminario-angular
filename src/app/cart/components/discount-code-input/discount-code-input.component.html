@@ -1,6 +1,6 @@
 <div class="container-referral">
     <p class="text-referral">¿Tiene un cupón de descuento? Ingresalo Aquí.</p>
-    <div class="input-row">
+    <div class="input-row" [class.shake]="status() === 'error'">
         <input
             type="text"
             placeholder="CURSOS-2025"
@@ -10,6 +10,7 @@
         <button
             type="button"
             class="btn-apply"
+            [class.is-applying]="status() === 'applying'"
             [disabled]="status() === 'applying' || !codeControl.value.trim()"
             (click)="onApply()">
             {{ status() === 'applying' ? 'Aplicando…' : 'Aplicar' }}

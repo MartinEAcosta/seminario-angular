@@ -1,4 +1,4 @@
-<div class="card-course">
+<div class="card-course" #cardRef>
     <button
         type="button"
         class="btn-remove"
@@ -30,7 +30,7 @@
             <div class="quantity-selector">
                 <p class="text-quota">Cupos a reservar:</p>
                 <button class="leftBtn" (click)="this.cartService.downQuantity( item().course )" type="button" aria-label="Disminuir cupos"> - </button>
-                <input class="inputNumber" type="number" name="" id="" value="{{ quantity() }}" readonly >
+                <input class="inputNumber" #quantityRef type="number" name="" id="" value="{{ quantity() }}" readonly >
                 <button class="rightBtn" (click)="this.cartService.upQuantity( item().course )" type="button" aria-label="Aumentar cupos" [disabled]="isAtCapacity()"> + </button>
             </div>
 

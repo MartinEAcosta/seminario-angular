@@ -1,16 +1,16 @@
-@use '../../../../variables.scss' as v;
+@use '@variables' as v;
 
 .container-referral{
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
-    margin: 1% 4% 3% 4%;
+    margin: v.$space-xs v.$space-sm;
     font-family: v.$font-primary;
     width: auto;
 }
 
 .text-referral{
-    font-size: smaller;
+    font-size: v.$text-sm;
     color: v.$white-custom;
     text-align: left;
 }
@@ -21,10 +21,21 @@
     gap: 0.5rem;
 }
 
+.input-row.shake{
+    animation: codeShake 0.4s cubic-bezier(.36,.07,.19,.97);
+}
+
+@keyframes codeShake{
+    10%, 90%{ transform: translateX(-1px); }
+    20%, 80%{ transform: translateX(2px); }
+    30%, 50%, 70%{ transform: translateX(-4px); }
+    40%, 60%{ transform: translateX(4px); }
+}
+
 .input-row input{
     flex: 1 1 auto;
     min-width: 0;
-    height: 40px;
+    height: 44px;
     text-align: center;
     pointer-events: all;
     background-color: rgba(255, 255, 255, 0.1);
@@ -51,14 +62,14 @@
 
 .btn-apply{
     flex: 0 0 auto;
-    min-height: 40px;
+    min-height: 44px; // objetivo táctil mínimo
     padding: 0 0.9rem;
     border: solid 1px rgba(255, 255, 255, 0.6);
     border-radius: 20px;
     background-color: transparent;
     color: v.$white-custom;
     font-family: v.$font-primary;
-    font-size: smaller;
+    font-size: v.$text-sm;
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.2s ease;
@@ -78,11 +89,30 @@
     cursor: not-allowed;
 }
 
+.btn-apply.is-applying{
+    animation: applyPulse 1.1s ease-in-out infinite;
+}
+
+@keyframes applyPulse{
+    0%, 100%{ opacity: 0.5; }
+    50%{ opacity: 0.85; }
+}
+
 .status-message{
     margin: 0;
-    font-size: smaller;
+    font-size: v.$text-sm;
     font-family: v.$font-primary;
     font-weight: 600;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+
+    // El mensaje entra desde abajo en vez de aparecer de un salto: @if lo agrega
+    // al DOM recién cuando cambia el status, así que siempre dispara esta regla.
+    @starting-style{
+        opacity: 0;
+        transform: translateY(-4px);
+    }
 }
 
 // Se aclaran ambos tonos mezclándolos con blanco: los valores base de
@@ -93,4 +123,18 @@
 
 .status-error{
     color: color-mix(in srgb, v.$red-warning 65%, white);
+}
+
+@media (prefers-reduced-motion: reduce){
+    .input-row.shake{
+        animation: none;
+    }
+
+    .btn-apply.is-applying{
+        animation: none;
+    }
+
+    .status-message{
+        transition: none;
+    }
 }

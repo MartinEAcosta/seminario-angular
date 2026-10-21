@@ -1,4 +1,4 @@
-@use '../../../../variables.scss' as v;
+@use '@variables' as v;
 
 // Tokens locales derivados de variables.scss (mismo patrón que buy-page.scss),
 // para integrarse al layout fluido de buy-page (flex: 1 1 55% en el padre).
@@ -31,7 +31,7 @@ $card-border: rgba(v.$black-custom, 0.12);
 .header-title{
     display: flex;
     margin: auto;
-    padding: 1.5% 2.5%;
+    padding: v.$space-xs v.$space-sm;
     font-weight: 550;
 }
 
@@ -65,7 +65,7 @@ $card-border: rgba(v.$black-custom, 0.12);
 }
 
 .detailed-resume p{
-    font-size: small;
+    font-size: v.$text-sm;
 }
 
 .shortened-title{
@@ -95,7 +95,7 @@ $card-border: rgba(v.$black-custom, 0.12);
     align-items: center;
     max-width: 60%;
     min-width: 60%;
-    padding: 1% 0%;
+    padding: v.$space-xs 0;
     border-right: solid thin rgba(v.$white-custom, 0.3);
 }
 
@@ -105,7 +105,7 @@ $card-border: rgba(v.$black-custom, 0.12);
     min-width: 40%;
     align-items: center;
     height: 100%;
-    margin-left: 1.5%;
+    margin-left: v.$space-xs;
 }
 
 .total-text{
@@ -117,9 +117,10 @@ $card-border: rgba(v.$black-custom, 0.12);
     display: flex;
     width: 60%;
     font-weight: 500;
+    font-variant-numeric: tabular-nums; // evita que el ancho tiemble mientras el número cuenta
 }
 
-@media (max-width: 768px) {
+@include v.bp-down('md'){
     .detailed-card{
         flex-direction: column;
     }

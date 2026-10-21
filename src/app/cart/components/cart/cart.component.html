@@ -49,9 +49,13 @@
         </div>
       }
       <div class="actions">
-        <app-discount-code-input />
+        @if( cart().items.size != 0 ){
+          <div class="container-total">
+            <span class="total-label">Total</span>
+            <span class="total-value">{{ animatedTotal() | currency }}</span>
+          </div>
+        }
         <div class="container-btns">
-          <button type="button" class="btn-continue" (click)="closeCart($event)">Continuar Explorando</button>
           <button type="button" class="btn-pay" [routerLink]="['payment/buy']">Finalizar Compra</button>
         </div>
       </div>

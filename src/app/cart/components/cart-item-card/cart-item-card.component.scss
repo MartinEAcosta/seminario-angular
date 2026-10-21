@@ -1,11 +1,21 @@
-@use '../../../../variables.scss' as v;
+@use '@variables' as v;
 
 .card-course{
     display: flex;
     position: relative;
     width: 100%;
     margin: auto;
+    overflow: hidden; // necesario para que el colapso de alto al eliminar no se vea cortado
     border-bottom: solid thin rgba(203 ,203, 203, 0.75);
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition: opacity 0.35s cubic-bezier(.34,1.56,.64,1), transform 0.35s cubic-bezier(.34,1.56,.64,1);
+
+    // Entrada al agregarse al carrito: cae y se asienta en vez de aparecer de un salto.
+    @starting-style{
+        opacity: 0;
+        transform: translateY(14px) scale(0.97);
+    }
 }
 
 .btn-remove{
@@ -36,7 +46,7 @@
 
 .details{
     display: flex;
-    margin: 4% 0%;
+    margin: v.$space-xs 0;
     width: 100%;
     height: 100%;
 }
@@ -63,14 +73,14 @@ img{
     width: auto;
     overflow: hidden;
     flex-direction: column;
-    margin-left: 10px;
+    margin-left: v.$space-xs;
     padding-right: 32px; // deja lugar al botón de eliminar (absoluto, esquina superior derecha)
 }
 
 
 .title-course{
     width: auto;
-    padding: 1% 0%;
+    padding: 2px 0;
     pointer-events: none;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -81,7 +91,7 @@ img{
 
     font-family: v.$font-primary;
     font-weight: bold;
-    font-size: 100%;
+    font-size: v.$text-base;
     color: v.$black-custom;
 }
 
@@ -95,7 +105,7 @@ img{
     line-clamp: 2;
     -webkit-box-orient: vertical;
 
-    font-size: small;
+    font-size: v.$text-sm;
     font-family: v.$font-primary;
     color: v.$black-custom;
 
@@ -103,14 +113,17 @@ img{
 
 .quantity-selector{
     display: flex;
-    width: 100%;    
+    flex-wrap: wrap;
+    width: 100%;
     margin-top: auto;
     align-items: center;
+    gap: 4px v.$space-xs;
 }
 
 .quantity-selector input{
     display: flex;
-    width: 10%;
+    width: 32px;
+    flex: 0 0 auto;
     border: none;
     text-align: center;
     pointer-events: none;
@@ -137,13 +150,24 @@ img{
 }
 
 .leftBtn , .rightBtn{
-    width: 10%;
+    // Antes width:10% del contenedor: en una tarjeta de ~300-400px el botón
+    // quedaba por debajo de los ~20px, lejos del objetivo táctil mínimo.
+    width: 36px;
+    height: 36px;
+    flex: 0 0 auto;
     border: none;
     background-color: v.$brand-color;
     color: v.$white-custom;
+    font-size: v.$text-base;
     pointer-events: all;
     z-index: 0;
     position: relative;
+    transition: transform 0.12s ease;
+}
+
+// Feedback de presión al tacto/click: hunde el botón, nunca lo agranda.
+.leftBtn:active:not(:disabled) , .rightBtn:active:not(:disabled){
+    transform: scale(0.88);
 }
 
 .leftBtn {
@@ -164,22 +188,37 @@ img{
     cursor: not-allowed;
 }
 
+// flex-basis:100% fuerza al rótulo a ocupar su propia línea cuando no entra junto
+// a los controles, en vez de que el grupo se parta en tres líneas sueltas (rótulo /
+// "-" / "1 +") como pasaba dejando que cada hijo envolviera por su cuenta.
 .text-quota{
+    flex: 1 1 100%;
     font-family: v.$font-primary;
-    font-size: 75%;
+    font-size: v.$text-sm;
     font-weight: 600;
     color: v.$black-custom;
-    margin-right: 5px;
+    margin: 0 0 2px;
 }
 
 .text-capacity{
     font-family: v.$font-primary;
-    font-size: 75%;
+    font-size: v.$text-sm;
     color: rgba(v.$black-custom, 0.6);
     margin: 4px 0 0 0;
+    width: 100%; // si envolvió a una segunda línea, ocupa el ancho completo en vez de quedar pegado al +
 }
 
 .text-capacity.at-capacity{
     color: v.$red-warning;
     font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce){
+    .card-course{
+        transition: none;
+    }
+
+    .leftBtn:active:not(:disabled) , .rightBtn:active:not(:disabled){
+        transform: none;
+    }
 }

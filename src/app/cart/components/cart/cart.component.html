@@ -1,64 +1,96 @@
 <div class="cart-widget" [ngClass]="{'overlay' : isCartOpen()}" (click)="onCloseCart()">
-  <div class="bg-cart" [ngClass]="{'open' : isCartOpen()}">
 
-    <button
-      type="button"
-      class="container-icon"
-      [attr.aria-expanded]="isCartOpen()"
-      aria-controls="cart-panel-content"
-      aria-label="Abrir carrito de compras"
-      (click)="onToggleCart($event)">
-      <img class="imgIconCart" [ngClass]="{'imgVisibility' : isCartOpen()}" src="assets/cart-icon.svg" alt="">
-    </button>
+  <button
+    type="button"
+    class="fab-trigger"
+    [ngClass]="{'fab-hidden' : isCartOpen()}"
+    [attr.aria-expanded]="isCartOpen()"
+    aria-controls="cart-panel-content"
+    aria-label="Abrir carrito de compras"
+    (click)="onToggleCart($event)">
+    <img class="icon-cart" src="assets/cart-icon.svg" alt="">
 
-    <!-- Si el carrito esta abierto se esconde el icono de notificación o en caso de que el tamaño sea distinto de 0 y este cerrado -->
-    <div class="container-notification" [ngClass]="{ 'hidden': isCartOpen() || ( cart().items.size === 0 ),
-                                                     'onNotification': !isCartOpen() && cart().items.size !== 0 }">
+    <div class="container-notification" [ngClass]="{ 'hidden': cart().items.size === 0, 'onNotification': cart().items.size !== 0 }">
       <small aria-hidden="true">{{ cart().items.size }}</small>
       <span class="sr-only">{{ cart().items.size }} cursos en el carrito</span>
     </div>
+  </button>
 
-    <div
-      class="content-open"
-      id="cart-panel-content"
-      role="dialog"
-      aria-label="Carrito de compras"
-      [ngClass]="{'hidden' : !isCartOpen()}"
-      (click)="$event.stopPropagation()">
-      <div class="header-cart">
-        <p>Mi Carrito</p>
-        <button type="button" class="btn-close-cart" (click)="closeCart($event)" aria-label="Cerrar carrito">✕</button>
+  <div
+    class="cart-panel"
+    id="cart-panel-content"
+    role="dialog"
+    aria-label="Carrito de compras"
+    [ngClass]="{'open' : isCartOpen()}"
+    (click)="$event.stopPropagation()">
+
+    <div class="panel-header">
+      <div class="header-heading">
+        <p class="header-title">Tu carrito</p>
+        <span class="header-count">{{ cart().items.size }} {{ cart().items.size === 1 ? 'curso' : 'cursos' }}</span>
       </div>
-      @if( cart().items.size != 0 ){
-        <div class="list-courses">
-          @for ( item of cart().items.values() ; track item.course.id ) {
-            <app-cart-item-card [item]="item" />
-          }
-        </div>
-      }
-      @else {
-        <div class="empty-state">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M3 4h2l1.4 10.6a2 2 0 0 0 2 1.7h8.2a2 2 0 0 0 2-1.6L20 8H6.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="9.5" cy="20" r="1.4" fill="currentColor"/>
-            <circle cx="17" cy="20" r="1.4" fill="currentColor"/>
-          </svg>
-          <p class="empty-heading">Tu carrito está vacío</p>
-          <p class="empty-copy">Explorá los cursos disponibles y armá tu selección.</p>
-          <a class="btn-empty-cta" routerLink="/explore" (click)="closeCart($event)">Explorar cursos</a>
-        </div>
-      }
-      <div class="actions">
-        @if( cart().items.size != 0 ){
-          <div class="container-total">
+      <button type="button" class="btn-close" (click)="closeCart($event)" aria-label="Cerrar carrito">✕</button>
+    </div>
+
+    @if( cart().items.size != 0 ){
+      <div class="list-courses">
+        @for ( item of cart().items.values() ; track item.course.id ) {
+          <app-cart-panel-item [item]="item" />
+        }
+      </div>
+
+      <div class="panel-footer">
+        <button
+          type="button"
+        /* [attr.aria-expanded]="isDiscountOpen()" */
+        /* (click)="toggleDiscount()"> */
+          class="btn-discount-toggle">
+          <span class="icon-plus" aria-hidden="true">+</span> ¿Tenés un código de descuento?
+        </button>
+
+        <!-- @if( isDiscountOpen() ){ -->
+          <!-- <app-discount-code-input /> -->
+        <!-- } -->
+
+        <div class="container-summary">
+          <div class="row-subtotal">
+            <span class="subtotal-label">Subtotal</span>
+            <span class="subtotal-value">{{ subtotal() | currency }}</span>
+          </div>
+          <div class="row-total">
             <span class="total-label">Total</span>
             <span class="total-value">{{ animatedTotal() | currency }}</span>
           </div>
-        }
-        <div class="container-btns">
-          <button type="button" class="btn-pay" [routerLink]="['payment/buy']">Finalizar Compra</button>
         </div>
+
+        <button
+          type="button"
+          class="btn-pay"
+          [routerLink]="['payment/buy']"
+          (click)="closeCart($event)">
+          Ir a pagar <span class="icon-arrow" aria-hidden="true">→</span>
+        </button>
+
+        <p class="secure-note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          Pagás de forma segura con Mercado Pago
+        </p>
       </div>
-    </div>
+    }
+    @else {
+      <div class="empty-state">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 4h2l1.4 10.6a2 2 0 0 0 2 1.7h8.2a2 2 0 0 0 2-1.6L20 8H6.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="9.5" cy="20" r="1.4" fill="currentColor"/>
+          <circle cx="17" cy="20" r="1.4" fill="currentColor"/>
+        </svg>
+        <p class="empty-heading">Tu carrito está vacío</p>
+        <p class="empty-copy">Explorá los cursos disponibles y armá tu selección.</p>
+        <a class="btn-empty-cta" routerLink="/explore" (click)="closeCart($event)">Explorar cursos</a>
+      </div>
+    }
   </div>
 </div>

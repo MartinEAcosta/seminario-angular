@@ -42,11 +42,13 @@ Files are `<name>.component.ts|html|scss` (+ `.spec.ts`), class `<Name>Component
 
 **OAuth**: `AUTH_PROVIDER` (`auth/auth.provider.ts`) is an `InjectionToken<AuthProvider>` wired in `app.config.ts` to `GoogleAuthService` — add further providers behind that interface (`ready`/`prepare`/`signIn`/`onCode`) instead of injecting a concrete service. `GoogleAuthService` lazily injects Google's GSI script and runs `initCodeClient` in popup mode; the auth code is exchanged server-side via `POST /auth/login/google`. Note: it imports `environments/environment.development` directly rather than `environment`, so the dev client id ships in production builds too.
 
+**Course cards**: `course-mini-card` was renamed/replaced by `course-catalog-card` (`course/components/course-catalog-card/`), paired with a `course-catalog-card-skeleton` loading placeholder — used by `explore-page`/carousels instead of the old mini-card.
+
 **API/DTO boundary**: raw HTTP responses are never used directly in components — each feature that talks to the backend has a corresponding class in `src/app/mappers/` (e.g. `CourseMapper`, `AuthMapper`) that translates between backend shapes (`*Response`/`*DTO` types in feature `models/`) and app-internal model types. Follow this mapper pattern when adding new API integrations.
 
 **HTTP**: `provideHttpClient(withFetch(), withInterceptors([authInterceptor]))`. `authInterceptor` (`auth/interceptors/auth.interceptor.ts`) attaches `Authorization: Bearer <token>` from `UserState`'s token signal when present. `environment.ts` / `environment.development.ts` hold `apiURL`, `MERCADOPAGO_PUBLIC_KEY` and `GOOGLE_CLIENT_ID`; the dev build swaps the file via `fileReplacements`.
 
-**Cart/Payment**: `CartService` (`cart/state/cart.service.ts`) persists cart contents to `localStorage` via an `effect`, and reactively recomputes the total by calling `PaymentService.calculateTotal` in another `effect` whenever cart items or the applied discount code change.
+**Cart/Payment**: `CartService` (`cart/state/cart.service.ts`) persists cart contents to `localStorage` via an `effect`, and reactively recomputes the total by calling `PaymentService.calculateTotal` in another `effect` whenever cart items or the applied discount code change. `cart.component` renders as a full-height side panel (fixed, anchored right, `100vh`, see `specs/08-*`) using `CartPanelItemComponent` (`cart/components/cart-panel-item/`, no cupo selector — that stays on `cart-item-card`/`cart-checkout` only, used at `/payment/buy`). The panel's total animates via `animateNumber` (`@utils/animate-number.ts`, rAF tween, respects `prefers-reduced-motion`) into a local `animatedTotal` signal driven by an `effect` watching `cartService.total()`; `subtotal` is a separate `computed` (pre-discount sum) for the panel's "Subtotal" row. The coupon input is behind a collapsible `isDiscountOpen` signal, collapsed by default.
 
 ## Styling
 

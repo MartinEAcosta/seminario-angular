@@ -27,19 +27,6 @@
                 {{item().course.description}}
             </p>
 
-            <div class="quantity-selector">
-                <p class="text-quota">Cupos a reservar:</p>
-                <button class="leftBtn" (click)="this.cartService.downQuantity( item().course )" type="button" aria-label="Disminuir cupos"> - </button>
-                <input class="inputNumber" #quantityRef type="number" name="" id="" value="{{ quantity() }}" readonly >
-                <button class="rightBtn" (click)="this.cartService.upQuantity( item().course )" type="button" aria-label="Aumentar cupos" [disabled]="isAtCapacity()"> + </button>
-            </div>
-
-            @if( capacity() != null ){
-                <p class="text-capacity" [class.at-capacity]="isAtCapacity()">
-                    {{ isAtCapacity() ? 'No quedan más cupos disponibles' : 'Quedan ' + remainingSeats() + ' cupos' }}
-                </p>
-            }
-
         </div>
     </div>
 </div>

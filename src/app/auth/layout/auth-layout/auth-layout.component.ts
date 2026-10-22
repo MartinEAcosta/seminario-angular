@@ -11,9 +11,7 @@ import { ModalErrorMessageComponent } from "@shared/components/modal-error-messa
   styleUrl: './auth-layout.component.scss'
 })
 export class AuthLayoutComponent {
-
   private router = inject(Router);
-
   private currentUrl = signal(this.router.url);
 
   isRegisterRoute = computed(() => this.currentUrl().includes('/register'));

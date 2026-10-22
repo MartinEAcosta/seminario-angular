@@ -2,9 +2,7 @@ import { inject } from "@angular/core";
 import { UserState } from "@user/state/user-state";
 import { HttpHandlerFn, HttpRequest } from "@angular/common/http";
 
-export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
-
-
+export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) : ReturnType<HttpHandlerFn> {
     // toma la referencia del userState en caso de que haya, sino la crea y toma el token
     const token = inject(UserState).token();
     // console.log({token});

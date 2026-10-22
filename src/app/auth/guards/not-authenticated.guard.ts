@@ -1,8 +1,9 @@
 import { inject } from '@angular/core';
-import { CanMatchFn, Route, Router, UrlSegment } from '@angular/router';
-import { UserState } from '@user/state/user-state';
+import { CanMatchFn } from '@angular/router';
 import { filter, firstValueFrom } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
+
+import { UserState } from '@user/state/user-state';
 
 export const NotAuthenticatedGuard: CanMatchFn = async() => {
 

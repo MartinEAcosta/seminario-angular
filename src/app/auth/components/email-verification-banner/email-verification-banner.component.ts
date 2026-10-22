@@ -20,12 +20,11 @@ export class EmailVerificationBannerComponent implements OnDestroy {
 
   public isSending = signal<boolean>(false);
   public cooldown = signal<number>(0);
-
   private cooldownIntervalId : any;
 
   public isVerified = computed<boolean>( () => this.userState.user()?.isEmailVerified ?? false );
 
-  onSendVerificationEmail = ( ) : void => {
+  public onSendVerificationEmail = ( ) : void => {
     if( this.isSending() || this.cooldown() > 0 ) return;
 
     this.isSending.set(true);

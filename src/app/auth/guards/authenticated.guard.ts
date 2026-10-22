@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { CanMatchFn, Route, Router } from '@angular/router';
+import { CanMatchFn, Router } from '@angular/router';
 import { filter, firstValueFrom } from 'rxjs';
 
 import { UserState } from '@user/state/user-state';

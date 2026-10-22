@@ -1,12 +1,9 @@
 import { inject } from "@angular/core";
-import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from "@angular/router";
+import { ActivatedRouteSnapshot, CanActivateFn, Router } from "@angular/router";
+
 import { UserState } from "@user/state/user-state";
 
-export const ValidatePermissionGuard : CanActivateFn = (
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot,
-) => {
-
+export const ValidatePermissionGuard : CanActivateFn = (route: ActivatedRouteSnapshot) => {
     const expectedRoles: string[] = route.data['roles'] || [];
     const userState = inject( UserState );
     const router = inject( Router );

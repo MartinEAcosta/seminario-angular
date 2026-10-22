@@ -128,7 +128,7 @@ nav a:hover{
 
 .container-search{
     display: flex;
-    flex: 0 1 22rem;
+    flex: 0 1 16rem;
     min-width: 0;
     align-items: center;
     margin: 0;
@@ -194,6 +194,8 @@ nav a:hover{
     font-family: v.$font-primary;
     font-size: 1rem;
     margin-left: 0.35rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
     transition: color 0.9s ease;
 
     &::placeholder{
@@ -216,7 +218,16 @@ nav a:hover{
     height: 100%;
 }
 
-@include v.bp-down('md') {
+// El breakpoint del menú hamburguesa es 'xl' (1280px) y no 'md' (768px): con
+// sesión iniciada (caso más ancho: teacher/admin con Biblioteca + Creá tu
+// curso + avatar) ese combo no entra junto a la búsqueda hasta recién ahí.
+// Con el buscador angosto (16rem, ver .container-search) se rompe entre
+// 1024-1150px (probado en vivo con breakpoint real, no con overrides CSS
+// forzados — ojo con ese atajo, da falsos positivos porque la media query
+// mobile también achica header/logo) — 1280 es el token existente más chico
+// que queda cómodo. Si el buscador vuelve a 22rem o se agregan más links,
+// retestear en vivo antes de bajar el breakpoint.
+@include v.bp-down('xl') {
     header{
         justify-content: space-between;
         margin: 0 16px;

@@ -17,7 +17,6 @@ export class CartComponent {
   private cartService = inject(CartService);
   cart = computed( () => this.cartService.cart());
   isCartOpen = signal<boolean>(false);
-  isDiscountOpen = signal<boolean>(false);
 
   // Suma de precio*cantidad sin descuento, para la fila "Subtotal" del panel
   // (el total con cupón ya lo calcula el back-end en animatedTotal).
@@ -51,10 +50,6 @@ export class CartComponent {
   public closeCart = ( event: MouseEvent ) : void => {
     event.stopPropagation();
     this.isCartOpen.set(false);
-  }
-
-  public toggleDiscount = ( ) : void => {
-    this.isDiscountOpen.update( open => !open );
   }
 
 }

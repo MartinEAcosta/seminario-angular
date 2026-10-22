@@ -18,7 +18,7 @@
             }
             @if( userState.user()?.role === 'student' ) {
                 <div [routerLink]="['/become-teacher']" class="dropdown-item">
-                    <a>Conviértete en profesor</a>
+                    <a>Convertite en profesor</a>
                 </div>
             }
             <div class="dropdown-item logout" (click)="authService.logoutUser()">

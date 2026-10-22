@@ -37,7 +37,7 @@
           #searchInput
           type="search"
           [value]="searchService.textSearch()"
-          placeholder="Buscá un tema que te interese…"
+          placeholder="Buscá un curso…"
           name="title"
           id="header-search"
           aria-label="Buscar cursos"
@@ -60,12 +60,6 @@
         @if( userState.user()?.role === 'teacher' || userState.user()?.role === 'admin' ) {
           <a [routerLink]="['/course/create']" (click)="closeMenu()">
             Creá tu curso
-          </a>
-        }
-
-        @if( userState.user()?.role === 'student' ) {
-          <a [routerLink]="['/become-teacher']" (click)="closeMenu()">
-            Convertite en profesor
           </a>
         }
 

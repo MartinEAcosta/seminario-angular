@@ -26,7 +26,7 @@
 
     <div class="panel-header">
       <div class="header-heading">
-        <p class="header-title">Tu carrito</p>
+        <p class="header-title">CARRITO</p>
         <span class="header-count">{{ cart().items.size }} {{ cart().items.size === 1 ? 'curso' : 'cursos' }}</span>
       </div>
       <button type="button" class="btn-close" (click)="closeCart($event)" aria-label="Cerrar carrito">✕</button>
@@ -40,18 +40,6 @@
       </div>
 
       <div class="panel-footer">
-        <button
-          type="button"
-        /* [attr.aria-expanded]="isDiscountOpen()" */
-        /* (click)="toggleDiscount()"> */
-          class="btn-discount-toggle">
-          <span class="icon-plus" aria-hidden="true">+</span> ¿Tenés un código de descuento?
-        </button>
-
-        <!-- @if( isDiscountOpen() ){ -->
-          <!-- <app-discount-code-input /> -->
-        <!-- } -->
-
         <div class="container-summary">
           <div class="row-subtotal">
             <span class="subtotal-label">Subtotal</span>

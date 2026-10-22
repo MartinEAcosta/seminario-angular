@@ -2,7 +2,7 @@
 
 $fab-shadow: 0 10px 30px rgba(v.$black-custom, 0.20);
 $chrome-shadow: 0 4px 15px rgba(v.$black-custom, 0.15);
-$btn-shadow: 2px 4px 15px rgba(v.$black-custom, 0.15);
+$btn-shadow: 0 4px 15px rgba(v.$black-custom, 0.15);
 $btn-shadow-hover: 0 6px 20px rgba(v.$black-custom, 0.22);
 
 $ease-spring-out: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -155,8 +155,9 @@ $ease-out-decisive: cubic-bezier(0.16, 1, 0.3, 1);
 
 .header-heading{
     display: flex;
-    align-items: baseline;
-    gap: v.$space-xs;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
 }
 
 .header-title{
@@ -164,13 +165,14 @@ $ease-out-decisive: cubic-bezier(0.16, 1, 0.3, 1);
     font-family: v.$font-primary;
     font-weight: bold;
     font-size: v.$text-xl;
+    letter-spacing: 0.02em;
     color: v.$black-custom;
 }
 
 .header-count{
     font-family: v.$font-primary;
     font-size: v.$text-sm;
-    color: rgba(v.$black-custom, 0.55);
+    color: rgba(v.$black-custom, 0.7);
 }
 
 .btn-close{
@@ -181,7 +183,7 @@ $ease-out-decisive: cubic-bezier(0.16, 1, 0.3, 1);
     width: 40px;
     height: 40px;
     border: none;
-    border-radius: 10px;
+    border-radius: 999px;
     background-color: rgba(v.$black-custom, 0.06);
     color: v.$black-custom;
     font-size: 0.9rem;
@@ -208,16 +210,20 @@ $ease-out-decisive: cubic-bezier(0.16, 1, 0.3, 1);
     gap: v.$space-xs;
 }
 
+// flex-start + padding-top generoso en vez de justify-content:center: en un
+// panel full-height, centrar matemáticamente deja el contenido flotando lejos
+// del header y a una altura que varía con el viewport. Anclado arriba, el
+// estado vacío cae siempre en la misma posición relativa al header.
 .empty-state{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
+    justify-content: flex-start;
+    gap: v.$space-xs;
     flex: 1 1 auto;
     min-height: 0;
     width: 100%;
-    padding: v.$space-md;
+    padding: v.$space-lg v.$space-md v.$space-md;
     box-sizing: border-box;
     text-align: center;
     color: rgba(v.$black-custom, 0.7);
@@ -230,6 +236,8 @@ $ease-out-decisive: cubic-bezier(0.16, 1, 0.3, 1);
 .empty-heading{
     font-family: v.$font-primary;
     font-weight: bold;
+    font-size: v.$text-lg;
+    line-height: 1.25;
     color: v.$black-custom;
     margin: 0;
 }
@@ -237,6 +245,7 @@ $ease-out-decisive: cubic-bezier(0.16, 1, 0.3, 1);
 .empty-copy{
     font-family: v.$font-primary;
     font-size: v.$text-sm;
+    line-height: 1.6;
     margin: 0;
 }
 
@@ -262,7 +271,7 @@ $ease-out-decisive: cubic-bezier(0.16, 1, 0.3, 1);
 .btn-empty-cta:hover{
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: $btn-shadow-hover;
-    transform: scale(1.05);
+    transform: translateY(v.$lift-control);
 }
 
 .btn-empty-cta:focus-visible{
@@ -277,34 +286,6 @@ $ease-out-decisive: cubic-bezier(0.16, 1, 0.3, 1);
     // Separa la lista del resumen sin agregar otro color de fondo: el panel
     // sigue siendo una sola superficie, no una barra encimada.
     border-top: dashed 1px rgba(v.$black-custom, 0.25);
-}
-
-.btn-discount-toggle{
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    align-self: flex-start;
-    margin-bottom: v.$space-xs;
-    padding: 0;
-    border: none;
-    background: none;
-    font-family: v.$font-primary;
-    font-weight: bold;
-    font-size: v.$text-sm;
-    color: v.$brand-color-deep;
-    cursor: pointer;
-}
-
-.btn-discount-toggle:hover{
-    text-decoration: underline;
-}
-
-.btn-discount-toggle:focus-visible{
-    @include v.focus-ring($color: v.$brand-color);
-}
-
-.icon-plus{
-    font-weight: bold;
 }
 
 .container-summary{
@@ -325,7 +306,7 @@ $ease-out-decisive: cubic-bezier(0.16, 1, 0.3, 1);
 .subtotal-label,
 .subtotal-value{
     font-size: v.$text-sm;
-    color: rgba(v.$black-custom, 0.6);
+    color: rgba(v.$black-custom, 0.7);
 }
 
 .total-label{
@@ -350,7 +331,7 @@ $ease-out-decisive: cubic-bezier(0.16, 1, 0.3, 1);
     min-height: 52px;
     margin-top: v.$space-xs;
     border: none;
-    border-radius: 16px;
+    border-radius: 20px;
     box-shadow: $btn-shadow;
     background-color: v.$brand-color;
     color: v.$white-custom;
@@ -381,9 +362,10 @@ $ease-out-decisive: cubic-bezier(0.16, 1, 0.3, 1);
     justify-content: center;
     gap: 6px;
     margin: v.$space-xs 0 0;
-    color: rgba(v.$black-custom, 0.55);
+    color: rgba(v.$black-custom, 0.7);
     font-family: v.$font-primary;
     font-size: v.$text-sm;
+    line-height: 1.6;
     text-align: center;
 }
 
@@ -408,7 +390,7 @@ $ease-out-decisive: cubic-bezier(0.16, 1, 0.3, 1);
         left: 0;
         right: 0;
         height: min(76vh, 620px);
-        border-radius: 16px 16px 0 0;
+        border-radius: 12px 12px 0 0;
         transform: translateY(100%);
     }
 

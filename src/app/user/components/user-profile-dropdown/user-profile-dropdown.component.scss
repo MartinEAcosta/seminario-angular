@@ -139,3 +139,88 @@
     text-decoration: none;
     transition: color 0.15s ease;
 }
+
+// Este componente se renderiza inline dentro del nav hamburguesa del header
+// por debajo de 'xl' (1280px) — mismo breakpoint que header.component.scss,
+// tienen que ir en lockstep. Ahí no puede abrir un popup flotante propio
+// (quedaría anidado dentro del panel ya abierto); en cambio, sus items se
+// fuerzan siempre expandidos y pasan a verse como filas normales del menú.
+@include v.bp-down('xl') {
+    .container-user-profile {
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        width: 100%;
+        margin-left: 0;
+        border-top: 1px solid rgba(233, 233, 233, 0.08);
+    }
+
+    // El toggle queda sin efecto (el panel ya está siempre expandido): se
+    // saca el affordance de click en vez de dejarlo muerto. El ring de
+    // hover/active también se neutraliza: con pointer-events:none el mouse
+    // nunca lo dispara, pero el botón sigue enfocable por teclado y
+    // Enter/Space sí activa el click handler, y como el botón ahora está
+    // stretcheado a lo ancho (align-items:stretch del padre), el ring
+    // circular quedaría dibujado como una elipse.
+    .profile-trigger {
+        pointer-events: none;
+
+        &:hover,
+        &.active {
+            box-shadow: none;
+        }
+    }
+
+    // Selector combinado para no depender de qué gane por especificidad
+    // contra `.open` — el signal `open` deja de importar en este modo.
+    .dropdown-wrapper,
+    .dropdown-wrapper.open {
+        grid-template-rows: 1fr;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        position: static;
+        width: 100%;
+        z-index: auto;
+        border-radius: 0;
+        background-color: transparent;
+        box-shadow: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+
+        &::before {
+            display: none;
+        }
+    }
+
+    .dropdown-inner {
+        padding: 0;
+    }
+
+    .dropdown-item {
+        padding: 0 0.25rem;
+        min-height: 2.75rem;
+        display: flex;
+        align-items: center;
+        border-radius: 0;
+        border-bottom: 1px solid rgba(233, 233, 233, 0.08);
+
+        & + .dropdown-item {
+            margin-top: 0;
+        }
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        &.logout {
+            border-top: none;
+            margin-top: 0;
+            padding-top: 0;
+        }
+    }
+
+    .dropdown-item a {
+        color: var(--header-text, #{v.$black-custom});
+    }
+}

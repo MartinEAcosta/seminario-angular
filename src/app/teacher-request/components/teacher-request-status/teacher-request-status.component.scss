@@ -1,49 +1,116 @@
 @use '@variables' as v;
 
-.card-status{
+// Tarjeta-ticket (DESIGN.md la nombra explícitamente para "pase de profesor"):
+// misma receta que about-page.scss .ticket-card — perforación + festón +
+// cuerpo —, con el sello en el color semántico del estado en vez de teal fijo.
+.ticket-card{
+    position: relative;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    max-width: 620px;
-    margin: 0 auto;
-    padding: 32px;
-    border-radius: 12px;
-    background-color: v.$white-custom;
+    overflow: hidden;
+    max-width: 640px;
+    border-radius: 20px;
+    border: 1px solid rgba(40, 40, 40, 0.08);
+    background-color: #ffffff;
+    box-shadow: v.$shadow-surface-rest;
     font-family: v.$font-primary;
 }
 
-.icon{
+.ticket-perforation{
+    position: relative;
+    height: 5.5rem;
+    background-color: v.$brand-color;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+    background-size: 16px 16px;
+}
+
+.ticket-perforation::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -10px;
+    height: 20px;
+    background-image: radial-gradient(circle at 10px 0, transparent 10px, #ffffff 10.5px);
+    background-size: 20px 20px;
+    background-repeat: repeat-x;
+}
+
+.ticket-stamp{
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    color: white;
-    font-weight: bold;
-    font-size: 1.2rem;
+    color: #ffffff;
 }
 
-.icon.pending{
+.ticket-stamp.pending{
     background-color: v.$yellow-caution;
 }
 
-.icon.approved{
+.ticket-stamp.approved{
     background-color: v.$green-success;
 }
 
-.icon.rejected{
+.ticket-stamp.rejected{
     background-color: v.$red-warning;
 }
 
+.ticket-body{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: v.$space-xs;
+    padding: 2.5rem 1.75rem 1.75rem;
+}
+
 .title{
-    font-size: 1.5rem;
+    font-size: v.$text-2xl;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 0;
     color: v.$black-custom;
-    margin: 4px 0;
 }
 
 .text{
+    font-size: v.$text-base;
+    line-height: 1.6;
     color: rgba(40, 40, 40, 0.8);
     margin: 0;
+}
+
+.btn-action{
+    margin-top: v.$space-sm;
+    background-color: v.$brand-color;
+    color: v.$white-custom;
+    border: none;
+    border-radius: 20px;
+    padding: v.$space-xs v.$space-md;
+    font-weight: bold;
+    font-family: v.$font-primary;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-action:hover{
+    background-color: rgba(0, 120, 140, 0.80);
+    transform: translateY(-3px);
+}
+
+.btn-action:focus-visible{
+    @include v.focus-ring($color: v.$brand-color-deep);
+}
+
+@media (prefers-reduced-motion: reduce){
+    .btn-action:hover{
+        transform: none;
+    }
 }

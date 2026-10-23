@@ -7,6 +7,11 @@ $brand-color: rgb(0, 120, 140);
 // 4.2:1 contra rgb(233,233,233) y no llega a AA en tamaño de interfaz.
 // Mismo tono, 6.3:1. Para fondos y bordes se sigue usando $brand-color.
 $brand-color-deep: rgb(0, 92, 108);
+// Variante del acento para TEXTO chico sobre sala oscura (#161616 /
+// #0e1a1a): $brand-color mide 3.4:1 contra #0e1a1a y no llega a AA en
+// tamaño de interfaz. Mismo tono, aclarado, 6.4:1. Para fondos y bordes
+// sobre oscuro se sigue usando $brand-color.
+$brand-color-bright: rgb(45, 170, 190);
 $red-warning: rgb(197, 14, 14);
 $green-success: rgb(0, 150, 50);
 $yellow-caution: rgb(255, 190, 40);

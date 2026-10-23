@@ -1,32 +1,61 @@
-<div class="card-status">
+<div class="ticket-card">
 
     @switch ( request().status ) {
 
         @case ( 'pending' ) {
-            <span class="icon pending">⏳</span>
-            <h1 class="title">Tu solicitud está en revisión</h1>
-            <p class="text">
-                La enviaste el {{ request().createdAt | date:'dd/MM/yyyy' }}. Un administrador la va a revisar
-                y te vamos a avisar apenas tengamos una respuesta.
-            </p>
+            <div class="ticket-perforation">
+                <span class="ticket-stamp pending">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.6"/>
+                        <path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+            </div>
+            <div class="ticket-body">
+                <h1 class="title">Tu solicitud está en revisión</h1>
+                <p class="text">
+                    La enviaste el {{ request().createdAt | date:'dd/MM/yyyy' }}. Un administrador la va a revisar
+                    y te vamos a avisar apenas tengamos una respuesta.
+                </p>
+            </div>
         }
 
         @case ( 'approved' ) {
-            <span class="icon approved">✓</span>
-            <h1 class="title">¡Tu solicitud fue aprobada!</h1>
-            <p class="text">
-                Ya sos parte del equipo docente de Udemix. Recargá la página o volvé a ingresar para
-                ver la opción "Crea tu curso".
-            </p>
+            <div class="ticket-perforation">
+                <span class="ticket-stamp approved">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M5 12.5 9.5 17 19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+            </div>
+            <div class="ticket-body">
+                <h1 class="title">¡Tu solicitud fue aprobada!</h1>
+                <p class="text">
+                    Ya sos parte del equipo docente de Udemix. Actualizá tu sesión para empezar a crear cursos.
+                </p>
+                <button class="btn-action" type="button" (click)="onUpdateSession()">
+                    Actualizar mi sesión
+                </button>
+            </div>
         }
 
         @case ( 'rejected' ) {
-            <span class="icon rejected">✕</span>
-            <h1 class="title">Tu solicitud no fue aprobada</h1>
-            @if ( request().rejectionReason ) {
-                <p class="text">Motivo: {{ request().rejectionReason }}</p>
-            }
-            <p class="text">Podés volver a solicitarlo cuando quieras.</p>
+            <div class="ticket-perforation">
+                <span class="ticket-stamp rejected">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M6.5 6.5 17.5 17.5M17.5 6.5 6.5 17.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+            </div>
+            <div class="ticket-body">
+                <h1 class="title">Tu solicitud no fue aprobada</h1>
+                @if ( request().rejectionReason ) {
+                    <p class="text">Motivo: {{ request().rejectionReason }}</p>
+                }
+                <button class="btn-action" type="button" (click)="retry.emit()">
+                    Volver a solicitar
+                </button>
+            </div>
         }
 
     }

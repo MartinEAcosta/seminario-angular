@@ -50,15 +50,17 @@ export type VerificationEmailResponse = ApiResponse<boolean>;
 // * Teacher Request *
 
 export type TeacherRequestStatus = 'pending' | 'approved' | 'rejected';
+export type TeacherExperienceLevelResponse = 'none' | 'informal' | 'teacher';
 
 export interface TeacherRequestUniqueResponse {
   id                : string;
   id_user           : string;
   status            : TeacherRequestStatus;
   category_ids      : string[];
-  experience        : string;
-  motivation        : string;
-  course_idea       : string;
+  about_you         : string;
+  experience_level  : TeacherExperienceLevelResponse;
+  course_title      : string;
+  course_summary    : string;
   portfolio_url    ?: string | null;
   rejection_reason ?: string | null;
   created_at        : Date;

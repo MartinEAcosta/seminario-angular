@@ -1,118 +1,278 @@
 @use '@variables' as v;
 
-.container-become-teacher{
+// El header sticky reserva 80px de flow antes de esta sección (mismo patrón
+// que auth-layout.component.scss): cada panel pinta su propio fondo, así que
+// cada uno necesita su propia compensación, y además así ambos arrancan en la
+// misma línea vertical.
+@mixin header-overlay-patch($extra-padding-top) {
+    margin-top: -80px;
+    padding-top: calc(80px + #{$extra-padding-top});
+}
+
+// * Hero de bloqueo (ya profesor / email no verificado) *
+
+.hero-blocked{
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 16px;
+    gap: v.$space-lg;
     width: 100%;
     min-height: 60vh;
     box-sizing: border-box;
-    padding: 8% 6%;
-    background-color: v.$white-custom;
+    padding: v.$space-lg 8%;
+    background: radial-gradient(circle at 15% 20%, rgba(0, 120, 140, 0.08), transparent 55%), v.$white-custom;
     font-family: v.$font-primary;
 }
 
-.container-become-teacher > *{
-    width: 100%;
-}
-
-.card-intro{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 10px;
-    box-sizing: border-box;
-    max-width: 460px;
-    margin: 0 auto;
-    padding: 40px 32px;
-    border-radius: 16px;
-    background-color: #fff;
-    border: 1px solid rgba(40, 40, 40, 0.08);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-}
-
-.icon-badge{
+.hero-illustration{
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 56px;
-    height: 56px;
-    margin-bottom: 4px;
+    flex-shrink: 0;
+    width: clamp(96px, 14vw, 140px);
+    height: clamp(96px, 14vw, 140px);
     border-radius: 50%;
     background-color: rgba(0, 120, 140, 0.1);
-    font-size: 1.6rem;
+    color: v.$brand-color;
 }
 
-.card-intro .title{
-    font-size: 1.6rem;
+.hero-illustration svg{
+    width: 55%;
+    height: 55%;
+}
+
+.hero-copy{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: v.$space-xs;
+    max-width: 520px;
+}
+
+.hero-title{
+    margin: 0;
+    font-size: v.$text-2xl;
+    font-weight: 800;
     color: v.$black-custom;
-    margin: 0;
 }
 
-.card-intro .text{
+.hero-text{
+    margin: 0;
     color: rgba(40, 40, 40, 0.75);
-    margin: 0;
+    font-size: v.$text-base;
+    line-height: 1.6;
 }
 
-.card-intro app-email-verification-banner{
+.btn-hero-cta{
+    display: inline-flex;
+    align-items: center;
+    box-sizing: border-box;
+    min-height: 44px;
+    margin-top: v.$space-xs;
+    padding: 0.85rem 1.75rem;
+    border-radius: 1.5rem;
+    background-color: v.$brand-color;
+    color: #ffffff;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-hero-cta:hover{
+    background-color: rgba(0, 120, 140, 0.8);
+    transform: translateY(-2px);
+}
+
+.btn-hero-cta:focus-visible{
+    @include v.focus-ring($color: v.$brand-color-deep);
+}
+
+.hero-copy app-email-verification-banner{
     display: block;
     width: 100%;
-    margin-top: 4px;
-    text-align: left;
+    margin-top: v.$space-xs;
 }
 
-.btn-primary-cta, .btn-secondary{
-    margin-top: 8px;
-    border-radius: 20px;
-    padding: 12px 28px;
-    font-weight: bold;
+// * Shell de dos columnas *
+
+.shell-two-columns{
+    display: grid;
+    grid-template-columns: minmax(320px, 38%) 1fr;
+    align-items: stretch;
+    width: 100%;
+    min-height: 80vh;
     font-family: v.$font-primary;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
 }
 
-.btn-primary-cta{
-    background-color: v.$brand-color;
-    color: white;
-    border: none;
+.panel-roadmap{
+    @include header-overlay-patch(v.$space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-md;
+    box-sizing: border-box;
+    padding-left: v.$space-md;
+    padding-right: v.$space-md;
+    padding-bottom: v.$space-lg;
+    background-color: #0e1a1a;
+    color: v.$white-custom;
 }
 
-.btn-primary-cta:hover{
-    background-color: rgba(0, 120, 140, 0.80);
-    transform: scale(1.03);
+.roadmap-title{
+    margin: 0;
+    font-size: v.$text-2xl;
+    font-weight: 800;
+    line-height: 1.2;
 }
 
-.btn-secondary{
-    background-color: transparent;
+.roadmap-title .highlight{
     color: v.$brand-color;
-    border: 1px solid v.$brand-color;
 }
 
-.btn-secondary:hover{
-    background-color: rgba(0, 120, 140, 0.08);
+.roadmap-subtitle{
+    margin: 0;
+    color: rgba(233, 233, 233, 0.75);
+    font-size: v.$text-base;
+    line-height: 1.6;
 }
 
-@media (max-width: 37.5rem){
-    .container-become-teacher{
-        padding: 12% 6%;
+.email-verified-badge{
+    display: flex;
+    align-items: flex-start;
+    // nowrap a propósito: con wrap, .badge-text (un solo flex item) salta
+    // entero a su propia línea en vez de achicarse y romper el texto
+    // adentro, dejando el ícono huérfano arriba. El wrap real lo hace
+    // .badge-text internamente vía flex-shrink + min-width:0.
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0.7rem 1rem;
+    border-radius: 12px;
+    background-color: rgba(0, 120, 140, 0.15);
+    border: 1px solid rgba(0, 120, 140, 0.35);
+    font-size: v.$text-sm;
+    color: v.$white-custom;
+}
+
+.badge-text{
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.icon-check{
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+    color: v.$green-success;
+}
+
+.roadmap-list{
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-sm;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.roadmap-step{
+    display: flex;
+    gap: 0.875rem;
+}
+
+.step-number{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 2px solid rgba(233, 233, 233, 0.3);
+    // $brand-color-bright, no $brand-color: a este tamaño el teal base no
+    // llega a 4.5:1 sobre #0e1a1a (ver comentario en variables.scss).
+    color: v.$brand-color-bright;
+    font-weight: 700;
+    font-size: v.$text-sm;
+}
+
+.roadmap-step:not(:last-child) .step-number::after{
+    content: '';
+    position: absolute;
+    top: 2rem;
+    left: 50%;
+    width: 2px;
+    height: v.$space-sm;
+    background-color: rgba(233, 233, 233, 0.2);
+    transform: translateX(-50%);
+}
+
+.roadmap-step.active .step-number{
+    background-color: v.$brand-color;
+    border-color: v.$brand-color;
+    color: #ffffff;
+}
+
+.step-content{
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding-top: 0.15rem;
+}
+
+.step-title{
+    font-weight: 600;
+    color: rgba(233, 233, 233, 0.55);
+}
+
+.step-text{
+    font-size: v.$text-sm;
+    color: rgba(233, 233, 233, 0.55);
+}
+
+.roadmap-step.active .step-title{
+    color: v.$white-custom;
+    font-weight: 700;
+}
+
+.roadmap-step.active .step-text{
+    color: rgba(233, 233, 233, 0.75);
+}
+
+.panel-content{
+    @include header-overlay-patch(v.$space-lg);
+    box-sizing: border-box;
+    padding-left: v.$space-md;
+    padding-right: v.$space-md;
+    padding-bottom: v.$space-lg;
+    background-color: v.$white-custom;
+}
+
+@include v.bp-down('md') {
+    .shell-two-columns{
+        grid-template-columns: 1fr;
         min-height: auto;
     }
 
-    .card-intro{
-        padding: 28px 20px;
-        border-radius: 12px;
+    // Apilado en una sola columna: sólo .panel-roadmap (primero en el flujo)
+    // sigue pegado al header: .panel-content queda debajo de él, no del
+    // header, y el patch de -80px la superpondría contra el panel oscuro.
+    .panel-content{
+        margin-top: 0;
+        padding-top: v.$space-lg;
     }
 
-    .card-intro .title{
-        font-size: 1.4rem;
+    .hero-blocked{
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+        min-height: auto;
     }
+}
 
-    .btn-primary-cta, .btn-secondary{
-        width: 100%;
-        text-align: center;
+@media (prefers-reduced-motion: reduce){
+    .btn-hero-cta:hover{
+        transform: none;
     }
 }

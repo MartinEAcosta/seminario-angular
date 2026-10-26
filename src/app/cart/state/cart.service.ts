@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { Course } from '@course/models/course.interfaces';
-import { map, Observable, tap, throwError } from 'rxjs';
+import { map, throwError } from 'rxjs';
 import { CartItem, ItemQuantity } from '../models/cart.interface';
 import { Cart } from '../models/cart.model';
 import { PaymentService } from '@payment/services/payment.service';
@@ -57,7 +57,6 @@ export class CartService {
 
   private obtainTotalOnChange = effect(() => {
       const items = this.getItemsArray();
-      const code = this.cart().code;
 
       if (items.length === 0) {
         this.total.set(0);
@@ -65,7 +64,7 @@ export class CartService {
       }
 
       this.paymentService
-        .calculateTotal(items, code)
+        .calculateTotal(items)
         .subscribe({
           next: total => this.total.set(total),
           error: err => console.error('Error calculando total:', err),
@@ -74,18 +73,20 @@ export class CartService {
 
   public getItemsArray = () : ItemQuantity[] => {
     return Array.from(this.cart().items.values()).map(item => ({
-      id_course: item.course.id,
+      id_course : item.course.id,
+      title : item.course.title,
+      unit_price : item.course.price.toFixed(2),
       quantity: item.quantity
     }));
   }
 
   public onAddToCart = ( course : Course ) : Cart => {
-    this.cart.set( new Cart( this.cart().addToCart( course ) , this.cart().code ) );
+    this.cart.set( new Cart( this.cart().addToCart( course ) ) );
     return this.cart();
   }
 
   public removeFromCart = ( course : Course ) : Cart => {
-    this.cart.set( new Cart( this.cart().removeItem( course ) , this.cart().code ) );
+    this.cart.set( new Cart( this.cart().removeItem( course ) ) );
     return this.cart();
   }
 
@@ -94,24 +95,10 @@ export class CartService {
     this.total.set(0);
   }
 
-  // Aplica un cupón de descuento: sólo se persiste en el carrito si el back-end
-  // responde correctamente (evita dejar un código sin confirmar en el estado).
-  public applyDiscountCode = ( code : string ) : Observable<number> => {
-    const trimmedCode = code.trim();
-    return this.paymentService
-      .calculateTotal( this.getItemsArray() , trimmedCode )
-      .pipe(
-        tap( total => {
-          this.cart.set( new Cart( this.cart().items , trimmedCode ) );
-          this.total.set( total );
-        })
-      );
-  }
-
   public calculateTotal = ( ) : number => {
-    this.paymentService.calculateTotal( this.getItemsArray() , this.cart().code ).subscribe( value => { this.total.set(value) });
+    this.paymentService.calculateTotal( this.getItemsArray() ).subscribe( value => { this.total.set(value) });
     return this.total();
   }
-  
+
 
 }

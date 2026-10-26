@@ -198,3 +198,19 @@ export type IdentificationTypeListResponse = ApiResponse<IndentificationTypeUniq
 
 
 export type TotalResponse = ApiResponse<number>;
+
+// Respuesta de POST /orders/ : el backend devuelve el payment persistido en Mongo
+// (PaymentResponseDto), no la orden de MercadoPago. `status` es el status del gateway
+// tal cual ('processed' | 'action_required' | ...) y `id_payment` es el id de la orden en MP.
+export interface OrderUniqueResponse {
+  id         : string,
+  id_user    : string,
+  id_courses : string[],
+  id_payment : string | null,
+  amount     : number,
+  date       : Date,
+  method     : string | null,
+  status     : string,
+}
+
+export type OrderResponse = ApiResponse<OrderUniqueResponse>;

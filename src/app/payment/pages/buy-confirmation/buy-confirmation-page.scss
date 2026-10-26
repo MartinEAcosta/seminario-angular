@@ -1,0 +1,32 @@
+@use '../../../../variables.scss' as v;
+
+.confirmation-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    padding: 4rem 1rem;
+}
+
+.title{
+    font-family: v.$font-primary;
+    color: v.$black-custom;
+}
+
+.subtitle{
+    font-family: v.$font-primary;
+    color: v.$black-custom;
+}
+
+.btn-back{
+    margin-top: 1rem;
+    color: v.$brand-color;
+    font-family: v.$font-primary;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.btn-back:hover{
+    text-decoration: underline;
+}

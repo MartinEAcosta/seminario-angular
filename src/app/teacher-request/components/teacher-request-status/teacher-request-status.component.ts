@@ -1,6 +1,7 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
+import { AuthService } from '@auth/services/auth.service';
 import { TeacherRequest } from '@teacher-request/models/teacher-request.interfaces';
 
 @Component({
@@ -11,6 +12,13 @@ import { TeacherRequest } from '@teacher-request/models/teacher-request.interfac
 })
 export class TeacherRequestStatusComponent {
 
+  private authService = inject(AuthService);
+
   public request = input.required<TeacherRequest>();
+  public retry = output<void>();
+
+  public onUpdateSession = ( ) : void => {
+    this.authService.checkStatusResource.reload();
+  }
 
 }

@@ -51,9 +51,10 @@ export const routes: Routes = [
   },
 
   {
-    // En caso de no hacer match con ningun path regirige al home
+    // En caso de no hacer match con ningun path muestra la página de error 404
     path : '**',
-    redirectTo: ''
+    loadComponent: () =>
+      import('@shared/pages/not-found/not-found-page'),
   }
   
 ];

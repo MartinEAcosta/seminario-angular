@@ -1,6 +1,6 @@
 <div class="container-payment">
     <p class="text-pay">Pagar con tarjeta</p>
-    <form id="form-checkout" class="form-checkout">
+    <form id="form-checkout" class="form-checkout" [formGroup]="cardholderForm" (ngSubmit)="onSubmit()">
         <div class="top-section">
 
             <div class="container-card-number container-input-label">
@@ -19,33 +19,79 @@
         </div>
         <div class="container-input-label container-cardHolderInfo">
             <div class="column">
-                <label class="text-label">Nombre del titular de la tarjeta</label>
-                <input class="container-input cardHolderName" type="text" id="form-checkout__cardholderName" placeholder="Nombre y apellido" />
+                <label class="text-label">Nombre</label>
+                <input
+                    class="container-input cardHolderName"
+                    [class.hasError]="cardholderForm.controls.firstName.invalid && cardholderForm.controls.firstName.touched"
+                    type="text"
+                    formControlName="firstName"
+                    placeholder="Nombre" />
+            </div>
+
+            <div class="column">
+                <label class="text-label">Apellido</label>
+                <input
+                    class="container-input cardHolderName"
+                    [class.hasError]="cardholderForm.controls.lastName.invalid && cardholderForm.controls.lastName.touched"
+                    type="text"
+                    formControlName="lastName"
+                    placeholder="Apellido" />
             </div>
 
             <div class="container-input-label">
                 <label class="text-label">Documento</label>
                 <div class="identificationInfo container-select-input">
-                    <select class="select-identificationType" id="form-checkout__identificationType">
+                    <select class="select-identificationType" formControlName="identificationType">
                         @if( checkoutFormState.identificationTypeResource.hasValue() ){
                             @for ( item of checkoutFormState.identificationTypeResource.value() ; track item) {
                                 <option value="{{ item.id }}"> {{ item.name | uppercase }} </option>
                             }
                         }
                     </select>
-                    <input class="input-number" type="text" id="form-checkout__identificationNumber" placeholder="12345678" />
+                    <input
+                        class="input-number"
+                        [class.hasError]="cardholderForm.controls.identificationNumber.invalid && cardholderForm.controls.identificationNumber.touched"
+                        type="text"
+                        formControlName="identificationNumber"
+                        placeholder="12345678" />
                 </div>
             </div>
         </div>
 
-        <select id="form-checkout__issuer" class="hidden" ></select>
-        <select id="form-checkout__installments" class="hidden" ></select>
+        @if (checkoutFormState.installmentOptions().length > 0) {
+            <div class="container-input-label">
+                <label class="text-label">Cuotas</label>
+                <select
+                    class="select-installments container-input"
+                    [value]="checkoutFormState.selectedInstallments()"
+                    (change)="onInstallmentsChange($event)">
+                    @for (option of checkoutFormState.installmentOptions(); track option.installments) {
+                        <option [value]="option.installments">{{ option.recommended_message }}</option>
+                    }
+                </select>
+            </div>
+        }
 
         <div class="container-email">
-            <label for="" class="text-label">Correo electronico</label>
-            <input type="email" id="form-checkout__cardholderEmail" class="container-input input-email" placeholder="correo@ejemplo.com"/>
+            <label class="text-label">Correo electronico</label>
+            <input
+                type="email"
+                class="container-input input-email"
+                [class.hasError]="cardholderForm.controls.email.invalid && cardholderForm.controls.email.touched"
+                formControlName="email"
+                placeholder="correo@ejemplo.com"/>
         </div>
-        <button class="btn-pay" id="form-checkout__submit">Pagar</button>
-        <!-- <progress value="0" class="progress-bar hidden">Cargando</progress> -->
+
+        @if (checkoutFormState.submitError()) {
+            <p class="error-message">{{ checkoutFormState.submitError() }}</p>
+        }
+
+        <button
+            class="btn-pay"
+            [class.btn-disabled]="checkoutFormState.isSubmitting() || checkoutFormState.isLoadingBinLookup()"
+            [disabled]="checkoutFormState.isSubmitting() || checkoutFormState.isLoadingBinLookup()"
+            type="submit">
+            {{ checkoutFormState.isSubmitting() ? 'Procesando...' : 'Pagar' }}
+        </button>
     </form>
 </div>

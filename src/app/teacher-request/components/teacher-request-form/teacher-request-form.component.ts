@@ -1,5 +1,5 @@
-import { Component, inject, output } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject, input, output } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { NgClass } from '@angular/common';
 
@@ -7,13 +7,14 @@ import { CategoryService } from '@category/services/category.service';
 import { Category } from '@category/models/category.interfaces';
 import { FormErrorLabelComponent } from '@shared/components/form-error-label/form-error-label.component';
 import { FormUtils } from '@utils/form-utils';
-import { TeacherRequestDTO } from '@teacher-request/models/teacher-request.interfaces';
+import { TeacherExperienceLevel, TeacherRequestDTO } from '@teacher-request/models/teacher-request.interfaces';
+import { CategoryMultiselectDropdownComponent } from '../category-multiselect-dropdown/category-multiselect-dropdown.component';
 
 @Component({
     selector: 'app-teacher-request-form',
     templateUrl: './teacher-request-form.component.html',
     styleUrl: './teacher-request-form.component.scss',
-    imports: [ReactiveFormsModule, NgClass, FormErrorLabelComponent]
+    imports: [ReactiveFormsModule, NgClass, FormErrorLabelComponent, CategoryMultiselectDropdownComponent]
 })
 export class TeacherRequestFormComponent {
 
@@ -21,44 +22,51 @@ export class TeacherRequestFormComponent {
   private categoryService = inject(CategoryService);
 
   public submitRequest = output<TeacherRequestDTO>();
+  public isSubmitting = input<boolean>( false );
 
-  // Temas/categorías disponibles para que el usuario elija en qué le gustaría dictar cursos.
   public categoriesResource = rxResource({
     stream: () => this.categoryService.getAllCategories()
   });
 
-  public teacherRequestForm : FormGroup = this.fb.group({
-    categoryIds : this.fb.array( [] , [ Validators.required , Validators.minLength(1) ] ),
-    experience : [
+  public experienceLevelOptions : { value : TeacherExperienceLevel; label : string; subtitle : string }[] = [
+    { value : 'none', label : 'Ninguna', subtitle : 'Sería mi primera vez' },
+    { value : 'informal', label : 'Informal', subtitle : 'Tutorías, charlas' },
+    { value : 'teacher', label : 'Profesor', subtitle : 'Enseño formalmente' },
+  ];
+
+  public teacherRequestForm = this.fb.group({
+    categoryIds : this.fb.nonNullable.array<string>( [] , [ Validators.required , Validators.minLength(1) ] ),
+    aboutYou : this.fb.nonNullable.control(
                   '',
-                  [ Validators.required, Validators.minLength(50) ]
-                ],
-    motivation : [
+                  [ Validators.required, Validators.minLength(50), Validators.maxLength(500) ]
+                ),
+    experienceLevel : this.fb.control<TeacherExperienceLevel | null>( null, [ Validators.required ] ),
+    courseTitle : this.fb.nonNullable.control(
                   '',
-                  [ Validators.required, Validators.minLength(30) ]
-                ],
-    courseIdea : [
+                  [ Validators.required, Validators.minLength(5) ]
+                ),
+    courseSummary : this.fb.nonNullable.control(
                   '',
-                  [ Validators.required, Validators.minLength(20) ]
-                ],
-    portfolioUrl : [
+                  [ Validators.required, Validators.minLength(10) ]
+                ),
+    portfolioUrl : this.fb.nonNullable.control(
                   '',
                   [ Validators.pattern( FormUtils.urlPattern ) ]
-                ],
-    agreesToGuidelines : [ false, [ Validators.requiredTrue ] ],
+                ),
+    agreesToGuidelines : this.fb.nonNullable.control( false, [ Validators.requiredTrue ] ),
   });
 
-  get categoryIdsControl () : FormArray {
-    return this.teacherRequestForm.get('categoryIds') as FormArray;
+  get categoryIdsControl () : FormArray<FormControl<string>> {
+    return this.teacherRequestForm.controls.categoryIds;
   }
 
-  isCategorySelected = ( category : Category ) : boolean => {
-    return this.categoryIdsControl.value.includes( category.id );
+  get aboutYouLength () : number {
+    return this.teacherRequestForm.controls.aboutYou.value.length;
   }
 
   onToggleCategory = ( category : Category , checked : boolean ) : void => {
     if( checked ){
-      this.categoryIdsControl.push( new FormControl( category.id ) );
+      this.categoryIdsControl.push( this.fb.nonNullable.control( category.id ) );
     }
     else{
       const index = this.categoryIdsControl.value.indexOf( category.id );
@@ -68,11 +76,14 @@ export class TeacherRequestFormComponent {
   }
 
   onSubmit = ( ) : void => {
+    if( this.isSubmitting() ) return;
     this.teacherRequestForm.markAllAsTouched();
     if( this.teacherRequestForm.valid ){
-      const { portfolioUrl , ...rest } = this.teacherRequestForm.value;
+      const { portfolioUrl , experienceLevel , ...rest } = this.teacherRequestForm.getRawValue();
       const teacherRequestDTO : TeacherRequestDTO = {
         ...rest,
+        // La validación de `valid` ya garantiza que experienceLevel no sea null.
+        experienceLevel : experienceLevel!,
         // Se omite si quedó vacío para no mandar un string vacío al backend.
         ...( portfolioUrl ? { portfolioUrl } : {} ),
       };

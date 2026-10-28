@@ -30,8 +30,10 @@ export class HeroCanvasBackgroundDirective implements AfterViewInit, OnDestroy {
   private lastNoiseSwap = 0;
   private canvasSize = { w: 0, h: 0 };
   private resizeObserver?: ResizeObserver;
+  private intersectionObserver?: IntersectionObserver;
   private animationFrameId?: number;
   private reducedMotion = false;
+  private isVisible = true;
 
   ngAfterViewInit(): void {
     const canvas = this.elementRef.nativeElement;
@@ -61,6 +63,52 @@ export class HeroCanvasBackgroundDirective implements AfterViewInit, OnDestroy {
       return;
     }
 
+    // El hero es la primera sección: una vez que se scrollea fuera de vista,
+    // seguir redibujando el canvas a 60fps no aporta nada visible y quema CPU
+    // para siempre (la pestaña puede quedar abierta horas).
+    if (typeof IntersectionObserver !== 'undefined') {
+      this.intersectionObserver = new IntersectionObserver(([entry]) => {
+        this.isVisible = entry.isIntersecting;
+        if (this.isVisible) {
+          this.startLoop();
+        } else {
+          this.stopLoop();
+        }
+      });
+      this.intersectionObserver.observe(canvas);
+    } else {
+      this.startLoop();
+    }
+
+    document.addEventListener('visibilitychange', this.handleVisibilityChange);
+  }
+
+  ngOnDestroy(): void {
+    this.stopLoop();
+
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+    } else {
+      window.removeEventListener('resize', this.resizeCanvas);
+    }
+
+    this.intersectionObserver?.disconnect();
+    document.removeEventListener('visibilitychange', this.handleVisibilityChange);
+  }
+
+  private handleVisibilityChange = (): void => {
+    if (document.hidden) {
+      this.stopLoop();
+    } else if (this.isVisible) {
+      this.startLoop();
+    }
+  };
+
+  private startLoop(): void {
+    if (this.animationFrameId !== undefined || document.hidden) {
+      return;
+    }
+
     const loop = (timestamp: number) => {
       this.drawFrame(timestamp);
       this.animationFrameId = requestAnimationFrame(loop);
@@ -68,15 +116,10 @@ export class HeroCanvasBackgroundDirective implements AfterViewInit, OnDestroy {
     this.animationFrameId = requestAnimationFrame(loop);
   }
 
-  ngOnDestroy(): void {
+  private stopLoop(): void {
     if (this.animationFrameId !== undefined) {
       cancelAnimationFrame(this.animationFrameId);
-    }
-
-    if (this.resizeObserver) {
-      this.resizeObserver.disconnect();
-    } else {
-      window.removeEventListener('resize', this.resizeCanvas);
+      this.animationFrameId = undefined;
     }
   }
 

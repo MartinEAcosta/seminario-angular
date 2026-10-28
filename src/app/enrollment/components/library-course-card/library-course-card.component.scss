@@ -1,0 +1,287 @@
+@use '@variables' as v;
+
+:host{
+    display: block;
+    width: 100%;
+}
+
+// ---- Grid card (tablet / desktop) ----
+
+.view-grid{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 12px;
+    background-color: #ffffff;
+    border: 1px solid rgba(v.$black-custom, 0.08);
+    box-shadow: v.$shadow-surface-rest;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.view-grid:hover{
+    box-shadow: v.$shadow-surface-hover;
+    transform: translateY(v.$lift-control);
+}
+
+.thumb{
+    position: relative;
+    margin: 0;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+}
+
+.thumb-img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.category-badge{
+    position: absolute;
+    left: 0.75rem;
+    bottom: 0.75rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    background-color: rgba(40, 40, 40, 0.72);
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+.completed-badge{
+    position: absolute;
+    right: 0.75rem;
+    top: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    background-color: v.$green-success;
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.body{
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: v.$space-xs;
+    padding: v.$space-sm;
+}
+
+.title{
+    margin: 0;
+}
+
+.title a{
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    min-height: calc(1.25em * 2);
+    font-family: v.$font-primary;
+    font-weight: 800;
+    font-size: v.$text-lg;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: v.$black-custom;
+    text-decoration: none;
+    @include v.focus-ring(v.$brand-color-deep, 2px);
+}
+
+.title a:hover{
+    text-decoration: underline;
+}
+
+.meta{
+    margin: 0;
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    color: rgba(v.$black-custom, 0.65);
+}
+
+.progress-track{
+    width: 100%;
+    height: 0.4rem;
+    border-radius: 999px;
+    background-color: rgba(v.$black-custom, 0.08);
+    overflow: hidden;
+}
+
+.progress-fill{
+    height: 100%;
+    border-radius: 999px;
+    background-color: v.$brand-color;
+    transition: width 0.3s ease;
+}
+
+.footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: v.$space-xs;
+}
+
+.footer-label{
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    font-weight: 700;
+    color: v.$black-custom;
+}
+
+.footer-label.is-empty{
+    color: rgba(v.$black-custom, 0.55);
+    font-weight: 500;
+}
+
+.btn{
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid v.$brand-color;
+    background-color: v.$brand-color;
+    color: #ffffff;
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    @include v.focus-ring(v.$brand-color-deep, 2px);
+}
+
+.btn:hover{
+    background-color: rgba(0, 120, 140, 0.8);
+    transform: translateY(v.$lift-control);
+}
+
+.btn.btn-outline{
+    background-color: transparent;
+    color: v.$brand-color-deep;
+}
+
+.btn.btn-outline:hover{
+    background-color: v.$brand-color;
+    color: #ffffff;
+}
+
+// ---- Compact row (mobile) ----
+
+.row.view-list{
+    display: none;
+}
+
+.row{
+    align-items: center;
+    gap: v.$space-xs;
+    padding: 0.6rem;
+    border-radius: 12px;
+    background-color: #ffffff;
+    border: 1px solid rgba(v.$black-custom, 0.08);
+    text-decoration: none;
+    transition: border-color 0.3s ease;
+    @include v.focus-ring(v.$brand-color-deep, 2px);
+}
+
+.row:hover{
+    border-color: rgba(0, 120, 140, 0.4);
+}
+
+.row-thumb{
+    flex-shrink: 0;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: 0;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.row-body{
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.row-title{
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: v.$font-primary;
+    font-weight: 700;
+    font-size: v.$text-base;
+    color: v.$black-custom;
+}
+
+.row-meta{
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    color: rgba(v.$black-custom, 0.6);
+}
+
+.row-progress{
+    width: 100%;
+    height: 0.3rem;
+    border-radius: 999px;
+    background-color: rgba(v.$black-custom, 0.08);
+    overflow: hidden;
+}
+
+.row-progress-fill{
+    height: 100%;
+    border-radius: 999px;
+    background-color: v.$brand-color;
+}
+
+.row-status{
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 999px;
+    background-color: v.$brand-color;
+    color: #ffffff;
+}
+
+.row-status.is-done{
+    background-color: transparent;
+    border: 1.5px solid v.$brand-color;
+    color: v.$brand-color-deep;
+}
+
+@include v.bp-down('sm'){
+    .view-grid{
+        display: none;
+    }
+
+    .row.view-list{
+        display: flex;
+    }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .view-grid:hover,
+    .btn:hover{
+        transform: none;
+    }
+}

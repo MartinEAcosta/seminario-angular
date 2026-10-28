@@ -15,11 +15,12 @@ import { FilterSelectComponent } from "@shared/components/filters/filter-select/
 import { FilterExplorePage } from '@utils/filters/filter-options';
 import { FilterOptionDefault } from '@utils/filters/filter.interfaces';
 import { EnrollmentState } from '@enrollment/state/enrollment-state';
+import { PageTitleComponent } from "@shared/components/page-title/page-title.component";
 
 @Component({
   selector: 'app-explore-page',
   imports: [SearchBarComponent, CourseCatalogCardComponent, CourseCatalogCardSkeletonComponent,
-    CartComponent, PaginationComponent, FilterSelectComponent],
+    CartComponent, PaginationComponent, FilterSelectComponent, PageTitleComponent],
   templateUrl: './explore-page.html',
   styleUrl: './explore-page.scss'
 })
@@ -37,14 +38,10 @@ export class ExplorePage {
   // algunas, no se nota porque el grid simplemente las apila.
   skeletonCards = Array.from({ length: 8 }, (_, i) => i);
 
-  categories = toSignal( 
+  categories = toSignal(
     this.categoryService.getAllCategories(),
     { initialValue : [] }
   );
-  categoriesResource = rxResource({
-    params : () => ({}),
-    stream : () => this.categoryService.getAllCategories(),
-  });
 
   courses = linkedSignal(() => this.coursesResource.value());
   coursesResource = rxResource({

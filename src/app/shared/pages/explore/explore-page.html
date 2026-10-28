@@ -1,10 +1,10 @@
 <div class="bg-page">
     <div class="container-content">
-        <header class="explore-header">
-            <p class="eyebrow">Catálogo</p>
-            <h1 class="title">Explorá los cursos</h1>
-            <p class="subtitle">Buscá por tema o filtrá por categoría y precio.</p>
-        </header>
+        <app-page-title
+            class="explore-header"
+            [eyebrow]="'Catálogo'"
+            [title]="'Explorá los cursos'"
+            [subtitle]="'Buscá por tema o filtrá por categoría y precio.'" />
 
         <app-search-bar
             [showSort]="true"

@@ -2,7 +2,13 @@
 
 .container-bg {
     width: 100%;
-    background-color: v.$white-custom; 
+    background-color: v.$white-custom;
+    // El header sticky reserva 80px de flow antes de esta sección; sin este
+    // margin/padding, esa franja queda sin pintar (fondo del body) y se ve
+    // como una línea clara bajo el header glass. Se extiende el fondo hacia
+    // arriba sin mover el contenido. Mismo patrón que explore-page.scss.
+    margin-top: -80px;
+    padding-top: 80px;
 }
 
 .container-content{
@@ -14,28 +20,305 @@
     top: 0px;
 }
 
-
 .container-loading{
-    margin: auto;
-}
-
-.container-enrollments{
     display: flex;
-    width: 100%;
-    gap: 2.5%;
-    margin: 3% 2%;
+    justify-content: center;
+    margin: v.$space-md 0;
 }
 
 .container-not-found{
     display: flex;
-    height: 15vh;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: auto;
+    gap: v.$space-sm;
+    height: 40vh;
+    text-align: center;
 }
 
 .text{
-    display: flex;
-    color: rgb(40, 40, 40 , 0.8);
+    margin: 0;
+    color: rgba(v.$black-custom, 0.75);
     font-family: v.$font-primary;
+    font-size: v.$text-lg;
+    font-weight: 600;
+}
+
+.btn-explore{
+    padding: 0.6rem 1.25rem;
+    border-radius: 20px;
+    background-color: v.$brand-color;
+    color: #ffffff;
+    font-family: v.$font-primary;
+    font-weight: 700;
+    font-size: v.$text-sm;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    @include v.focus-ring(v.$brand-color-deep, 2px);
+}
+
+.btn-explore:hover{
+    background-color: rgba(0, 120, 140, 0.8);
+    transform: translateY(v.$lift-control);
+}
+
+// ---- Hero "Seguí donde lo dejaste" ----
+// Tarjeta oscura flotando sobre la sala clara: tinta grafito, no negro
+// vitrina — ese tono es para fondo de componente, no de sección (ver
+// DESIGN.md "Tinta Grafito").
+
+.hero{
+    display: flex;
+    gap: v.$space-sm;
+    margin: v.$space-md 0;
+    padding: v.$space-xs;
+    border-radius: 20px;
+    background-color: v.$black-custom;
+}
+
+.hero-thumb{
+    position: relative;
+    flex: 1 1 45%;
+    margin: 0;
+    min-height: 12rem;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.hero-img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-play{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 999px;
+    background-color: rgba(255, 255, 255, 0.85);
+    color: v.$black-custom;
+    transform: translate(-50%, -50%);
+}
+
+.hero-body{
+    display: flex;
+    flex: 1 1 55%;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: v.$space-sm v.$space-sm v.$space-sm 0;
+}
+
+.hero-eyebrow{
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: v.$brand-color;
+}
+
+.hero-title{
+    margin: 0;
+    font-family: v.$font-primary;
+    font-weight: 800;
+    font-size: v.$text-xl;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: v.$white-custom;
+}
+
+.hero-next{
+    margin: 0;
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    color: rgba(v.$white-custom, 0.7);
+}
+
+.hero-progress-track{
+    width: 100%;
+    max-width: 24rem;
+    height: 0.4rem;
+    margin-top: 0.3rem;
+    border-radius: 999px;
+    background-color: rgba(v.$white-custom, 0.15);
+    overflow: hidden;
+}
+
+.hero-progress-fill{
+    height: 100%;
+    border-radius: 999px;
+    background-color: v.$brand-color;
+}
+
+.hero-caption{
+    margin: 0;
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    color: rgba(v.$white-custom, 0.6);
+}
+
+.hero-btn{
+    align-self: flex-start;
+    margin-top: 0.4rem;
+    padding: 0.6rem 1.25rem;
+    border-radius: 999px;
+    background-color: v.$brand-color;
+    color: #ffffff;
+    font-family: v.$font-primary;
+    font-weight: 700;
+    font-size: v.$text-sm;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    @include v.focus-ring(v.$brand-color-deep, 2px);
+}
+
+.hero-btn:hover{
+    background-color: rgba(0, 120, 140, 0.8);
+    transform: translateY(v.$lift-control);
+}
+
+@include v.bp-down('sm'){
+    .hero{
+        flex-direction: column;
+    }
+
+    .hero-thumb{
+        min-height: 9rem;
+    }
+
+    .hero-body{
+        padding: 0 v.$space-xs v.$space-xs;
+    }
+}
+
+// ---- Fila de conteo + filtros ----
+
+.filter-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: v.$space-xs;
+    margin-top: v.$space-sm;
+}
+
+.count{
+    margin: 0;
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    color: rgba(v.$black-custom, 0.65);
+}
+
+.filter-select-wrap{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-select-label{
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    color: rgba(v.$black-custom, 0.65);
+}
+
+.filter-select{
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid rgba(v.$black-custom, 0.15);
+    background-color: #ffffff;
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    font-weight: 600;
+    color: v.$black-custom;
+    cursor: pointer;
+    @include v.focus-ring(v.$brand-color-deep, 2px);
+}
+
+.filter-pills{
+    display: none;
+    gap: 0.5rem;
+    overflow-x: auto;
+}
+
+.pill{
+    flex-shrink: 0;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid rgba(v.$black-custom, 0.15);
+    background-color: #ffffff;
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    font-weight: 600;
+    color: v.$black-custom;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    @include v.focus-ring(v.$brand-color-deep, 2px);
+}
+
+.pill.is-active{
+    border-color: v.$brand-color;
+    background-color: v.$brand-color;
+    color: #ffffff;
+}
+
+@include v.bp-down('sm'){
+    .filter-row{
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-select-wrap{
+        display: none;
+    }
+
+    .filter-pills{
+        display: flex;
+    }
+}
+
+// ---- Grilla de cursos ----
+// Mismo contrato que explore-page: la card deja el ancho fijo y pasa a
+// llenar su columna.
+
+.container-enrollments{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: v.$space-sm;
+    margin: v.$space-md 0;
+
+    @include v.bp-up('sm'){
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include v.bp-up('lg'){
+        grid-template-columns: repeat(3, 1fr);
+        gap: v.$space-md;
+    }
+
+    @include v.bp-up('laptop'){
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@include v.bp-down('sm'){
+    .container-enrollments{
+        gap: v.$space-xs;
+    }
+}
+
+.empty-filtered{
+    grid-column: 1 / -1;
+    padding: v.$space-md 0;
+    text-align: center;
+    font-family: v.$font-primary;
+    font-size: v.$text-base;
+    color: rgba(v.$black-custom, 0.55);
 }

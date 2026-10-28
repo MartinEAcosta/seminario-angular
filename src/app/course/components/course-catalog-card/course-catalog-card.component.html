@@ -1,7 +1,7 @@
 <div class="catalog-card">
     <figure class="thumbnail-frame" [class.is-placeholder]="!hasThumbnail()">
         @if (hasThumbnail()) {
-            <img class="thumbnail-course" [src]="course().thumbnail_url" alt="">
+            <img class="thumbnail-course" [src]="course().thumbnail_url" alt="" loading="lazy">
         }
         @else {
             <div class="placeholder-gradient">
@@ -24,7 +24,7 @@
         <div class="card-footer">
             @if (isEnrolled()) {
                 <p class="enrolled-caption">Ya estás inscripto</p>
-                <a class="btn-continue" [routerLink]="['/enrollment', enrollmentId()]">Continuar →</a>
+                <a class="btn-continue" [routerLink]="['/enrollment', enrollmentId()]">Continuar</a>
             }
             @else {
                 <p class="price">

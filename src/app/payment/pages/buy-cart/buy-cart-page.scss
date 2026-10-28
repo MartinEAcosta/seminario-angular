@@ -62,7 +62,6 @@ $content-gap: 2.5rem;
     background-color: $ticket-bg;
     border-radius: $ticket-radius;
     box-shadow: $ticket-shadow;
-    border-top: 4px solid $ticket-accent;
     padding: 1.75rem 1.5rem;
 }
 
@@ -127,23 +126,17 @@ $content-gap: 2.5rem;
 .empty-cart-cta{
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
     padding: 0.7rem 1.5rem;
     border-radius: 999px;
     background-color: $ticket-accent;
     color: v.$white-custom;
     font-weight: 600;
     text-decoration: none;
-    transition: gap 0.2s ease, opacity 0.2s ease;
+    transition: opacity 0.2s ease;
 }
 
 .empty-cart-cta:hover{
-    gap: 0.85rem;
     opacity: 0.9;
-}
-
-.empty-cart-cta-arrow{
-    transition: transform 0.2s ease;
 }
 
 @media (max-width: 768px) {

@@ -1,31 +1,92 @@
 <div class="container-bg">
     <div class="container-content">
 
-        <app-page-title [title]="'Tu biblioteca'" />
+        <app-page-title
+            [eyebrow]="'Biblioteca'"
+            [title]="'Mi biblioteca'"
+            [subtitle]="'Los cursos en los que te inscribiste, ordenados por tu actividad más reciente.'" />
 
-        <app-search-bar />
-        
-        <div class="container-enrollments">
-            @if( isLoading() ){
-                <div class="container-loading">
-                    <app-loader />
-                </div>
+        @if ( isLoading() ) {
+            <div class="container-loading">
+                <app-loader />
+            </div>
+        }
+        @else if ( error() ) {
+            <div class="container-not-found">
+                <h2 class="text">No pudimos cargar tus inscripciones. Intentá de nuevo más tarde.</h2>
+            </div>
+        }
+        @else if ( userEnrollments().length === 0 ) {
+            <div class="container-not-found">
+                <h2 class="text">Todavía no te inscribiste a ningún curso.</h2>
+                <a class="btn-explore" routerLink="/explore">Explorar cursos</a>
+            </div>
+        }
+        @else {
+
+            @if ( selectedFilter() === 'all' && heroItem(); as hero ) {
+                <section class="hero">
+                    <figure class="hero-thumb">
+                        <img class="hero-img" [src]="hero.enrollment.course.thumbnail_url" alt="">
+                        <span class="hero-play" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M6 4.5v15l12-7.5z"/></svg>
+                        </span>
+                    </figure>
+
+                    <div class="hero-body">
+                        <span class="hero-eyebrow">Seguí donde lo dejaste</span>
+                        <h2 class="hero-title">{{ hero.enrollment.course.title }}</h2>
+                        <p class="hero-next">Próxima: <strong>Lección {{ hero.nextLessonNumber }}</strong> · {{ hero.nextLessonTitle }}</p>
+
+                        <div class="hero-progress-track">
+                            <div class="hero-progress-fill" [style.width.%]="hero.enrollment.progress"></div>
+                        </div>
+                        <p class="hero-caption">
+                            {{ hero.enrollment.completed_lessons.length }} de {{ hero.totalLessons }} lecciones · {{ hero.enrollment.progress }}%
+                        </p>
+
+                        <a class="hero-btn" [routerLink]="['/enrollment', hero.enrollment.id]">Continuar</a>
+                    </div>
+                </section>
             }
-            @else if( error() ){
-                <div class="container-not-found">
-                    <h1 class="text">No pudimos cargar tus inscripciones. Intentá de nuevo más tarde.</h1>
+
+            <div class="filter-row">
+                <p class="count">{{ countAll() }} curso{{ countAll() === 1 ? '' : 's' }}</p>
+
+                <label class="filter-select-wrap">
+                    <span class="filter-select-label">Mostrar</span>
+                    <select class="filter-select" [value]="selectedFilter()" (change)="onFilterSelectChange($event)">
+                        <option value="all">Todos ({{ countAll() }})</option>
+                        <option value="in-progress">En curso ({{ countInProgress() }})</option>
+                        <option value="not-started">Sin empezar ({{ countNotStarted() }})</option>
+                        <option value="completed">Completados ({{ countCompleted() }})</option>
+                    </select>
+                </label>
+
+                <div class="filter-pills" role="tablist" aria-label="Filtrar cursos">
+                    <button type="button" class="pill" [class.is-active]="selectedFilter() === 'all'" (click)="setFilter('all')">
+                        Todos · {{ countAll() }}
+                    </button>
+                    <button type="button" class="pill" [class.is-active]="selectedFilter() === 'in-progress'" (click)="setFilter('in-progress')">
+                        En curso · {{ countInProgress() }}
+                    </button>
+                    <button type="button" class="pill" [class.is-active]="selectedFilter() === 'not-started'" (click)="setFilter('not-started')">
+                        Sin empezar · {{ countNotStarted() }}
+                    </button>
+                    <button type="button" class="pill" [class.is-active]="selectedFilter() === 'completed'" (click)="setFilter('completed')">
+                        Completados · {{ countCompleted() }}
+                    </button>
                 </div>
-            }
-            @else{
-                @for( enrollment of userEnrollments(); track enrollment.id ){
-                    <app-enrollment-mini-card [enrollment]="enrollment" />
+            </div>
+
+            <div class="container-enrollments">
+                @for ( item of filteredItems(); track item.enrollment.id ) {
+                    <app-library-course-card [item]="item" />
                 }
                 @empty {
-                    <div class="container-not-found">
-                        <h1 class="text">¡No hemos encontrado inscripciones!</h1>
-                    </div>
+                    <p class="empty-filtered">No tenés cursos en esta categoría todavía.</p>
                 }
-            }
-        </div>
+            </div>
+        }
     </div>
 </div>

@@ -352,10 +352,6 @@ $ease-out-decisive: cubic-bezier(0.16, 1, 0.3, 1);
     @include v.focus-ring($color: v.$brand-color-deep);
 }
 
-.icon-arrow{
-    font-size: 1.1em;
-}
-
 .secure-note{
     display: flex;
     align-items: center;

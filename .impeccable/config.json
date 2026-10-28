@@ -45,6 +45,24 @@
         ],
         "createdAt": "2026-10-20T14:37:23.621Z",
         "reason": "dynamic [src] bound to real course().thumbnail_url data, not a literal placeholder - same pattern as prior course-mini-card/course-carousel-item"
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/app/enrollment/components/library-course-card/library-course-card.component.html"
+        ],
+        "createdAt": "2026-10-27T19:21:53.772Z",
+        "reason": "Angular [src] bindeado a thumbnail_url real, mismo patrón que course-catalog-card.component.html"
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/app/enrollment/pages/enrollments-page.html"
+        ],
+        "createdAt": "2026-10-27T19:23:22.889Z",
+        "reason": "Angular [src] bindeado a thumbnail_url real del hero, mismo patron que course-catalog-card"
       }
     ]
   }

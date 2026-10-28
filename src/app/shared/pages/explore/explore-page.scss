@@ -28,31 +28,6 @@
     margin-bottom: v.$space-md;
 }
 
-.explore-header .eyebrow{
-    margin: 0 0 0.35rem;
-    color: v.$brand-color-deep;
-    font-family: v.$font-primary;
-    font-size: v.$text-sm;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
-
-.explore-header .title{
-    margin: 0 0 0.5rem;
-    color: v.$black-custom;
-    font-family: v.$font-primary;
-    font-size: v.$text-display;
-    font-weight: 800;
-}
-
-.explore-header .subtitle{
-    margin: 0;
-    color: rgba(v.$black-custom, 0.65);
-    font-family: v.$font-primary;
-    font-size: v.$text-base;
-}
-
 .results-count{
     margin: v.$space-sm 0 0;
     color: rgba(v.$black-custom, 0.65);

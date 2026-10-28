@@ -6,6 +6,7 @@ export interface Enrollment {
   purchaseDate   : Date;
   progress       : number;
   completed_lessons : string[];
+  last_accessed_at : Date;
 }
 
 export interface EnrollmentDetailed {
@@ -15,9 +16,13 @@ export interface EnrollmentDetailed {
     id_course : string;
     title : string;
     id_owner : string;
+    category_name : string;
     thumbnail_url : string;
   }
   purchaseDate   : Date;
   progress       : number;
   completed_lessons : string[];
+  last_accessed_at : Date;
 }
+
+export type EnrollmentStatus = 'not-started' | 'in-progress' | 'completed';

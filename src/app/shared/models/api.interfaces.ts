@@ -103,6 +103,7 @@ export interface EnrollmentUniqueResponse {
   purchaseDate   : Date;
   progress       : number;
   completed_lessons : string[];
+  last_accessed_at : Date;
 }
 
 export interface EnrollmentPopulatedUniqueResponse {
@@ -112,11 +113,13 @@ export interface EnrollmentPopulatedUniqueResponse {
     _id : string;
     title : string;
     id_owner : string;
+    category_name : string;
     thumbnail_url : string;
   }
   purchaseDate : Date;
   progress : number;
   completed_lessons : string[];
+  last_accessed_at : Date;
 }
 
 export type EnrollmentResponse = ApiResponse<EnrollmentUniqueResponse>;

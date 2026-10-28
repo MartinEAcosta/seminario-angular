@@ -1,6 +1,6 @@
 # SPEC 10 — Pase de profesor: rediseño completo de `/become-teacher`
 
-> **Status:** Draft
+> **Status:** Aprobado
 > **Depends on:** 01 (breakpoints y escala fluida)
 > **Date:** 2026-10-22
 > **Objective:** Reescribir por completo `/become-teacher` (layout, formulario y estado de la solicitud) para que coincida con el mock "Pase de profesor · /become-teacher", reemplazando el flujo actual de card-intro + formulario de 5 preguntas por un layout de dos columnas con roadmap de 4 pasos, un formulario de campos nuevos, y el wiring real de `TeacherRequestState` (hoy un stub vacío) para reflejar pending/approved/rejected.
@@ -50,7 +50,7 @@ El mock no cubre todos los estados que la página necesita (role ya profesor, em
 
 ```ts
 export type TeacherRequestStatus = 'pending' | 'approved' | 'rejected';
-export type TeacherExperienceLevel = 'ninguna' | 'informal' | 'docente';
+export type TeacherExperienceLevel = 'none' | 'informal' | 'teacher';
 
 export interface TeacherRequest {
     id              : string;
@@ -82,7 +82,7 @@ Validadores del formulario (en `teacher-request-form.component.ts`):
 | --- | --- |
 | `categoryIds` (`FormArray`) | `required`, `minLength(1)` — igual que hoy |
 | `aboutYou` | `required`, `minLength(50)`, `maxLength(500)` — el contador en el template muestra `{{ length }}/500` |
-| `experienceLevel` | `required` — tres opciones fijas: Ninguna / Informal / Docente |
+| `experienceLevel` | `required` — tres opciones fijas: Ninguna / Informal / Profesor |
 | `courseTitle` | `required`, `minLength(5)` |
 | `courseSummary` | `required`, `minLength(10)` |
 | `portfolioUrl` | `Validators.pattern(FormUtils.urlPattern)` — opcional, igual que el `portfolioUrl` actual |

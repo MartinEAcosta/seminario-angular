@@ -9,32 +9,58 @@
 }
 
 .title-form{
-    font-size: 1.8rem;
+    font-size: v.$text-2xl;
+    font-weight: 800;
+    line-height: 1.2;
     color: v.$black-custom;
-    margin-bottom: 4px;
+    margin-bottom: v.$space-xs;
 }
 
 .subtitle-form{
+    font-size: v.$text-base;
+    line-height: 1.6;
     color: rgba(40, 40, 40, 0.75);
-    margin-bottom: 24px;
+    margin-bottom: v.$space-md;
+}
+
+.title-section{
+    font-size: v.$text-sm;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: v.$brand-color-deep;
+    margin: 0 0 v.$space-xs;
+    padding-top: v.$space-md;
+    border-top: 1px solid rgba(40, 40, 40, 0.1);
+}
+
+.form-teacher-request > .title-section:first-of-type{
+    border-top: none;
+    padding-top: 0;
+}
+
+.subtitle-section{
+    color: rgba(40, 40, 40, 0.7);
+    font-size: v.$text-sm;
+    margin: 0 0 v.$space-sm;
 }
 
 .field-group{
     display: flex;
     flex-direction: column;
-    margin-bottom: 22px;
+    margin-bottom: v.$space-sm;
 }
 
 .label-question{
     font-weight: bold;
     color: v.$black-custom;
-    margin-bottom: 8px;
+    margin-bottom: v.$space-xs;
 }
 
 textarea, input[type="text"]{
     font-family: v.$font-primary;
     padding: 12px 14px;
-    border-radius: 10px;
+    border-radius: 20px;
     border: 1px solid rgba(40, 40, 40, 0.25);
     resize: vertical;
     outline: none;
@@ -48,64 +74,150 @@ textarea.hasError, input[type="text"].hasError{
     border-color: v.$red-warning;
 }
 
-.container-categories{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
 .text-loading-categories{
-    color: rgba(40, 40, 40, 0.6);
+    color: rgba(40, 40, 40, 0.7);
 }
 
-.option-category{
+.field-footer{
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 8px 14px;
+    justify-content: space-between;
+    margin-top: 0.25rem;
+}
+
+.hint-text{
+    margin: 0;
+    font-size: v.$text-sm;
+    color: rgba(40, 40, 40, 0.7);
+}
+
+.char-counter{
+    margin: 0;
+    font-size: v.$text-sm;
+    color: rgba(40, 40, 40, 0.7);
+}
+
+.container-experience-level{
+    display: flex;
+    flex-wrap: wrap;
+    gap: v.$space-xs;
+}
+
+.option-experience-level{
+    display: flex;
+    flex: 1 1 140px;
+    flex-direction: column;
+    gap: 2px;
+    padding: v.$space-xs v.$space-sm;
     border-radius: 20px;
     border: 1px solid rgba(40, 40, 40, 0.25);
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
-.option-category.checked{
+.option-experience-level input[type="radio"]{
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.option-experience-level:has(input[type="radio"]:focus-visible){
+    outline: 2px solid v.$brand-color-deep;
+    outline-offset: 2px;
+}
+
+.option-experience-label{
+    font-weight: bold;
+    color: v.$black-custom;
+}
+
+.option-experience-subtitle{
+    font-size: v.$text-sm;
+    color: rgba(40, 40, 40, 0.7);
+}
+
+.option-experience-level.checked{
     background-color: rgba(0, 120, 140, 0.12);
     border-color: v.$brand-color;
-    color: v.$brand-color;
-    font-weight: bold;
+}
+
+.option-experience-level.checked .option-experience-label,
+.option-experience-level.checked .option-experience-subtitle{
+    color: v.$brand-color-deep;
 }
 
 .option-agreement{
     display: flex;
     align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 6px;
+    gap: v.$space-xs;
+    margin-bottom: v.$space-xs;
     color: v.$black-custom;
     cursor: pointer;
 }
 
 .hint-error{
     color: v.$red-warning;
-    font-size: 80%;
+    font-size: v.$text-sm;
     margin: 4px 0 0 0;
 }
 
+.btn-retry-categories{
+    margin-left: 0.4rem;
+    border: none;
+    background: none;
+    padding: 0;
+    color: v.$brand-color-deep;
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    font-weight: 700;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.btn-retry-categories:focus-visible{
+    @include v.focus-ring($color: v.$brand-color-deep);
+}
+
 .btn-submit{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: v.$space-xs;
     align-self: flex-start;
-    margin-top: 20px;
+    margin-top: v.$space-sm;
     background-color: v.$brand-color;
     color: white;
     border: none;
     border-radius: 20px;
-    padding: 12px 28px;
+    padding: v.$space-xs v.$space-md;
     font-weight: bold;
     font-family: v.$font-primary;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .btn-submit:hover{
     background-color: rgba(0, 120, 140, 0.80);
-    transform: scale(1.03);
+    transform: translateY(-3px);
+}
+
+.btn-submit:disabled{
+    background-color: rgba(0, 120, 140, 0.3);
+    cursor: not-allowed;
+}
+
+.btn-submit:disabled:hover{
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce){
+    .btn-submit:hover{
+        transform: none;
+    }
+}
+
+@media (max-width: 37.5rem){
+    .option-experience-level{
+        flex: 1 1 100%;
+    }
 }

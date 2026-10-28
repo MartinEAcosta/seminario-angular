@@ -1,0 +1,24 @@
+<div class="confirmation-container">
+    @switch (order?.status) {
+        @case ('approved') {
+            <h1 class="title">¡Pago aprobado!</h1>
+            <p class="subtitle">Ya tenés acceso a {{ order!.courseIds.length === 1 ? 'tu curso' : 'tus cursos' }}. Te enviamos el comprobante por correo.</p>
+            <a class="btn-back" routerLink="/enrollment">Ir a mis cursos</a>
+        }
+        @case ('pending') {
+            <h1 class="title">Tu pago está en proceso</h1>
+            <p class="subtitle">Mercado Pago todavía no lo acreditó. Cuando se acredite habilitamos la inscripción y te avisamos por correo.</p>
+            <a class="btn-back" routerLink="/">Volver al inicio</a>
+        }
+        @case ('rejected') {
+            <h1 class="title">No pudimos procesar el pago</h1>
+            <p class="subtitle">El pago fue rechazado y no se te cobró nada. Podés intentar con otra tarjeta.</p>
+            <a class="btn-back" routerLink="/payment/buy/pay">Reintentar el pago</a>
+        }
+        @default {
+            <h1 class="title">No encontramos el resultado del pago</h1>
+            <p class="subtitle">Si ya pagaste, revisá tu correo o el historial de compras antes de intentar de nuevo.</p>
+            <a class="btn-back" routerLink="/">Volver al inicio</a>
+        }
+    }
+</div>

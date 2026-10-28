@@ -1,12 +1,14 @@
 export type TeacherRequestStatus = 'pending' | 'approved' | 'rejected';
+export type TeacherExperienceLevel = 'none' | 'informal' | 'teacher';
 
 export interface TeacherRequest {
     id              : string;
     status          : TeacherRequestStatus;
     categoryIds     : string[];
-    experience      : string;
-    motivation      : string;
-    courseIdea      : string;
+    aboutYou        : string;
+    experienceLevel : TeacherExperienceLevel;
+    courseTitle     : string;
+    courseSummary   : string;
     portfolioUrl    : string | null;
     rejectionReason : string | null;
     createdAt       : Date;
@@ -15,9 +17,10 @@ export interface TeacherRequest {
 
 // Lo que se envía al crear una solicitud.
 export interface TeacherRequestDTO {
-    categoryIds   : string[];
-    experience    : string;
-    motivation    : string;
-    courseIdea    : string;
-    portfolioUrl ?: string;
+    categoryIds     : string[];
+    aboutYou        : string;
+    experienceLevel : TeacherExperienceLevel;
+    courseTitle     : string;
+    courseSummary   : string;
+    portfolioUrl   ?: string;
 }

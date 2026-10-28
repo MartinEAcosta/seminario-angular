@@ -1,63 +1,106 @@
-<section class="container-become-teacher">
+@if ( user()?.role !== 'student' ) {
 
-    @if ( user()?.role !== 'student' ) {
-
-        <div class="card-intro">
-            <span class="icon-badge">🎓</span>
-            <h1 class="title">Ya formás parte del equipo docente de Udemix</h1>
-            <p class="text">Podés crear tus cursos desde la sección "Crea tu curso".</p>
+    <section class="hero-blocked">
+        <div class="hero-illustration">
+            <svg width="72" height="72" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3 2 8l10 5 8-4.2V15" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 10.5V16c0 1.5 2.8 3 6 3s6-1.5 6-3v-5.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
         </div>
+        <div class="hero-copy">
+            <h1 class="hero-title">Ya formás parte del equipo docente de Udemix</h1>
+            <p class="hero-text">Podés crear y publicar tus cursos cuando quieras.</p>
+            <a class="btn-hero-cta" routerLink="/course/create">Crear tu curso</a>
+        </div>
+    </section>
 
-    }
-    @else if ( !user()?.isEmailVerified ) {
+}
+@else if ( !user()?.isEmailVerified ) {
 
-        <div class="card-intro">
-            <span class="icon-badge">📧</span>
-            <h1 class="title">Conviértete en profesor</h1>
-            <p class="text">
+    <section class="hero-blocked">
+        <div class="hero-illustration">
+            <svg width="72" height="72" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M3.5 6.5 12 13l8.5-6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <div class="hero-copy">
+            <h1 class="hero-title">Convertite en profesor</h1>
+            <p class="hero-text">
                 Antes de poder solicitarlo necesitamos que valides tu email, así confirmamos que la cuenta te pertenece.
             </p>
             <app-email-verification-banner />
         </div>
+    </section>
 
-    }
-    <!-- @else if ( isLoading() ) {
+}
+@else if ( isLoading() ) {
 
-        <app-loader />
+    <app-loader />
 
-    }
-    @else if ( myRequest() && myRequest()!.status !== 'rejected' ) {
+}
+@else {
 
-        <app-teacher-request-status [request]="myRequest()!" />
+    <section class="shell-two-columns">
 
-    }
-    @else if ( myRequest() && myRequest()!.status === 'rejected' && !showForm() ) {
-
-        <app-teacher-request-status [request]="myRequest()!" />
-        <button class="btn-secondary" type="button" (click)="onStartRequest()">
-            Volver a solicitar
-        </button>
-
-    } -->
-    @else if ( !showForm() ) {
-
-        <div class="card-intro">
-            <span class="icon-badge">🎓</span>
-            <h1 class="title">Conviértete en profesor</h1>
-            <p class="text">
-                Contanos un poco sobre vos: qué te gustaría enseñar y por qué. Un administrador va a
-                revisar tu solicitud y te vamos a avisar el resultado por acá.
+        <aside class="panel-roadmap">
+            <h1 class="roadmap-title">Enseñá lo que <span class="highlight">sabés</span></h1>
+            <p class="roadmap-subtitle">
+                Completá la solicitud. Cuando la aprobemos, se habilita tu rol de profesor y podés crear y publicar tus cursos.
             </p>
-            <button class="btn-primary-cta" type="button" (click)="onStartRequest()">
-                Comenzar solicitud
-            </button>
+            <p class="email-verified-badge">
+                <span class="icon-check">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M5 12.5 9.5 17 19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="badge-text">Tu correo <strong>{{ user()?.email }}</strong> está validado.</span>
+            </p>
+            <ol class="roadmap-list">
+                @for ( step of roadmapSteps; track step.title; let i = $index ) {
+                    <li class="roadmap-step" [class.active]="currentStep() === i + 1">
+                        <span class="step-number">{{ i + 1 }}</span>
+                        <span class="step-content">
+                            <span class="step-title">{{ step.title }}</span>
+                            <span class="step-text">{{ step.text }}</span>
+                        </span>
+                    </li>
+                }
+            </ol>
+        </aside>
+
+        <div class="panel-content">
+            @if ( !myRequest() ) {
+
+                <app-teacher-request-form
+                    [isSubmitting]="teacherRequestState.isSubmitting()"
+                    (submitRequest)="onSubmitRequest($event)"
+                />
+
+            }
+            @else {
+                @switch ( myRequest()!.status ) {
+
+                    @case ( 'rejected' ) {
+                        @if ( retryForm() ) {
+                            <app-teacher-request-form
+                    [isSubmitting]="teacherRequestState.isSubmitting()"
+                    (submitRequest)="onSubmitRequest($event)"
+                />
+                        }
+                        @else {
+                            <app-teacher-request-status [request]="myRequest()!" (retry)="onRetry()" />
+                        }
+                    }
+
+                    @default {
+                        <app-teacher-request-status [request]="myRequest()!" />
+                    }
+
+                }
+            }
         </div>
 
-    }
-    @else {
+    </section>
 
-        <app-teacher-request-form (submitRequest)="onSubmitRequest($event)" />
-
-    }
-
-</section>
+}

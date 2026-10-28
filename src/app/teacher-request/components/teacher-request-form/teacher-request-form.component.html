@@ -1,90 +1,122 @@
 <form [formGroup]="teacherRequestForm" (submit)="onSubmit()" class="form-teacher-request">
 
-    <h1 class="title-form">Contanos sobre vos</h1>
-    <p class="subtitle-form">
-        Estas respuestas las va a revisar un administrador de Udemix antes de aprobar tu cuenta como profesor.
-    </p>
+    <h1 class="title-form">Solicitud de pase de profesor</h1>
+    <p class="subtitle-form">Todos los campos son obligatorios, salvo que diga lo contrario.</p>
+
+    <h2 class="title-section">Sobre vos</h2>
 
     <div class="field-group">
-        <label class="label-question">1. ¿En qué temas o categorías te gustaría dictar cursos?</label>
-        <div class="container-categories">
-            @if ( categoriesResource.isLoading() ) {
-                <p class="text-loading-categories">Cargando categorías...</p>
-            }
-            @for ( category of categoriesResource.value(); track category.id ) {
-                <label class="option-category" [ngClass]="{ 'checked' : isCategorySelected(category) }">
-                    <input
-                        type="checkbox"
-                        [checked]="isCategorySelected(category)"
-                        (change)="onToggleCategory(category, $any($event.target).checked)"
-                    />
-                    {{ category.name }}
-                </label>
-            }
-        </div>
+        <label class="label-question">Área de enseñanza</label>
+        @if ( categoriesResource.isLoading() ) {
+            <p class="text-loading-categories">Cargando categorías...</p>
+        } @else if ( categoriesResource.error() ) {
+            <p class="hint-error">
+                No pudimos cargar las categorías.
+                <button type="button" class="btn-retry-categories" (click)="categoriesResource.reload()">Reintentar</button>
+            </p>
+        } @else {
+            <app-category-multiselect-dropdown
+                [categories]="categoriesResource.value() ?? []"
+                [selectedIds]="categoryIdsControl.value"
+                (toggleCategory)="onToggleCategory($event.category, $event.checked)"
+            />
+        }
         @if ( categoryIdsControl.touched && categoryIdsControl.invalid ) {
-            <p class="hint-error">Elegí al menos un tema.</p>
+            <p class="hint-error">Elegí al menos una categoría.</p>
         }
     </div>
 
     <div class="field-group">
-        <label class="label-question" for="experience">2. Contanos tu experiencia enseñando o en el tema elegido</label>
+        <label class="label-question" for="aboutYou">Contanos sobre vos</label>
         <textarea
-            id="experience"
-            rows="4"
-            placeholder="Ej: hace 3 años trabajo como desarrollador y di clases particulares de programación..."
-            formControlName="experience"
-            [ngClass]="{'hasError': ( teacherRequestForm.get('experience')?.errors && teacherRequestForm.get('experience')?.touched ) ?? false }"
+            id="aboutYou"
+            rows="5"
+            maxlength="500"
+            placeholder="Qué sabés hacer, dónde lo aprendiste y por qué te gustaría enseñarlo."
+            formControlName="aboutYou"
+            [ngClass]="{'hasError': ( teacherRequestForm.get('aboutYou')?.errors && teacherRequestForm.get('aboutYou')?.touched ) ?? false }"
         ></textarea>
-        <form-error-label [control]="teacherRequestForm.get('experience')!" />
+        <div class="field-footer">
+            <p class="hint-text">Mínimo 50 caracteres.</p>
+            <p class="char-counter">{{ aboutYouLength }}/500</p>
+        </div>
+        <form-error-label [control]="teacherRequestForm.get('aboutYou')!" />
     </div>
 
     <div class="field-group">
-        <label class="label-question" for="motivation">3. ¿Por qué querés ser profesor en Udemix?</label>
-        <textarea
-            id="motivation"
-            rows="4"
-            placeholder="Contanos qué te motiva a compartir tu conocimiento..."
-            formControlName="motivation"
-            [ngClass]="{'hasError': ( teacherRequestForm.get('motivation')?.errors && teacherRequestForm.get('motivation')?.touched ) ?? false }"
-        ></textarea>
-        <form-error-label [control]="teacherRequestForm.get('motivation')!" />
-    </div>
-
-    <div class="field-group">
-        <label class="label-question" for="courseIdea">4. Contanos brevemente la idea de tu primer curso</label>
-        <textarea
-            id="courseIdea"
-            rows="3"
-            placeholder="Ej: un curso introductorio de Angular para quienes ya saben JavaScript..."
-            formControlName="courseIdea"
-            [ngClass]="{'hasError': ( teacherRequestForm.get('courseIdea')?.errors && teacherRequestForm.get('courseIdea')?.touched ) ?? false }"
-        ></textarea>
-        <form-error-label [control]="teacherRequestForm.get('courseIdea')!" />
-    </div>
-
-    <div class="field-group">
-        <label class="label-question" for="portfolioUrl">5. ¿Tenés algún portfolio, LinkedIn o redes para compartirnos? (opcional)</label>
+        <label class="label-question" for="portfolioUrl">Link de referencia (opcional)</label>
         <input
             id="portfolioUrl"
             type="text"
-            placeholder="https://..."
+            placeholder="https://linkedin.com/in/..."
             formControlName="portfolioUrl"
             [ngClass]="{'hasError': ( teacherRequestForm.get('portfolioUrl')?.errors && teacherRequestForm.get('portfolioUrl')?.touched ) ?? false }"
         />
+        <p class="hint-text">LinkedIn, GitHub, portfolio o algo que muestre tu trabajo.</p>
         <form-error-label [control]="teacherRequestForm.get('portfolioUrl')!" />
+    </div>
+
+    <div class="field-group">
+        <label class="label-question">Experiencia enseñando</label>
+        <div class="container-experience-level">
+            @for ( option of experienceLevelOptions; track option.value ) {
+                <label class="option-experience-level" [ngClass]="{ 'checked' : teacherRequestForm.get('experienceLevel')?.value === option.value }">
+                    <input
+                        type="radio"
+                        name="experienceLevel"
+                        formControlName="experienceLevel"
+                        [value]="option.value"
+                    />
+                    <span class="option-experience-label">{{ option.label }}</span>
+                    <span class="option-experience-subtitle">{{ option.subtitle }}</span>
+                </label>
+            }
+        </div>
+        <form-error-label [control]="teacherRequestForm.get('experienceLevel')!" />
+    </div>
+
+    <h2 class="title-section">Tu primer curso</h2>
+    <p class="subtitle-section">No es un compromiso: nos ayuda a entender qué te gustaría enseñar.</p>
+
+    <div class="field-group">
+        <label class="label-question" for="courseTitle">Título tentativo</label>
+        <input
+            id="courseTitle"
+            type="text"
+            placeholder="Ej.: Angular desde cero"
+            formControlName="courseTitle"
+            [ngClass]="{'hasError': ( teacherRequestForm.get('courseTitle')?.errors && teacherRequestForm.get('courseTitle')?.touched ) ?? false }"
+        />
+        <form-error-label [control]="teacherRequestForm.get('courseTitle')!" />
+    </div>
+
+    <div class="field-group">
+        <label class="label-question" for="courseSummary">De qué se trata, en una línea</label>
+        <input
+            id="courseSummary"
+            type="text"
+            placeholder="Ej.: Un curso corto y práctico para arrancar desde cero."
+            formControlName="courseSummary"
+            [ngClass]="{'hasError': ( teacherRequestForm.get('courseSummary')?.errors && teacherRequestForm.get('courseSummary')?.touched ) ?? false }"
+        />
+        <form-error-label [control]="teacherRequestForm.get('courseSummary')!" />
     </div>
 
     <label class="option-agreement">
         <input type="checkbox" formControlName="agreesToGuidelines" />
-        Confirmo que el contenido que voy a subir es de mi autoría y respeta las normas de la comunidad de Udemix.
+        <span>Leí y acepto los términos para profesores.</span>
     </label>
     @if ( teacherRequestForm.get('agreesToGuidelines')?.touched && teacherRequestForm.get('agreesToGuidelines')?.invalid ) {
         <p class="hint-error">Necesitamos que aceptes esto para poder enviar tu solicitud.</p>
     }
 
-    <button class="btn-submit" type="submit">
-        Enviar solicitud
+    <button class="btn-submit" type="submit" [disabled]="isSubmitting()">
+        {{ isSubmitting() ? 'Enviando...' : 'Enviar solicitud' }}
+        @if ( !isSubmitting() ) {
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        }
     </button>
 
 </form>

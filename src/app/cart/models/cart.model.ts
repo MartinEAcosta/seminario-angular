@@ -5,11 +5,9 @@ import { CartItem } from "./cart.interface";
 export class Cart {
 
     public items : Map<string, CartItem> = new Map<string,CartItem>();
-    public code ?: string;
 
-    constructor( items : Map<string,CartItem> = new Map<string,CartItem>() , code ?: string ) {
+    constructor( items : Map<string,CartItem> = new Map<string,CartItem>() ) {
         items.forEach( item => this.items.set( item.course.id , item ) );
-        this.code = code;
     }
 
     public addToCart = ( course : Course ) : Map<string,CartItem> => {
@@ -33,7 +31,6 @@ export class Cart {
         for (const item of this.items.values()) {
             total += (item.course.price * item.quantity);
         }
-        // * En caso de haber cupón de descuento verificar con el back-end
         return total;
     }
 

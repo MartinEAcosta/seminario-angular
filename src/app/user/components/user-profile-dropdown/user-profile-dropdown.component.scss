@@ -155,20 +155,13 @@
         border-top: 1px solid rgba(233, 233, 233, 0.08);
     }
 
-    // El toggle queda sin efecto (el panel ya está siempre expandido): se
-    // saca el affordance de click en vez de dejarlo muerto. El ring de
-    // hover/active también se neutraliza: con pointer-events:none el mouse
-    // nunca lo dispara, pero el botón sigue enfocable por teclado y
-    // Enter/Space sí activa el click handler, y como el botón ahora está
-    // stretcheado a lo ancho (align-items:stretch del padre), el ring
-    // circular quedaría dibujado como una elipse.
+    // El avatar no cumple función en este modo (el panel ya está siempre
+    // expandido, "Tu perfil" hace la misma navegación): dejarlo visible
+    // significa un botón muerto que, por el align-items:stretch del
+    // padre, se estira a lo ancho y queda como un ícono suelto flotando
+    // arriba de la primera fila. Se saca del flujo en vez de neutralizarlo.
     .profile-trigger {
-        pointer-events: none;
-
-        &:hover,
-        &.active {
-            box-shadow: none;
-        }
+        display: none;
     }
 
     // Selector combinado para no depender de qué gane por especificidad
@@ -217,6 +210,21 @@
             border-top: none;
             margin-top: 0;
             padding-top: 0;
+        }
+
+        // Mismo idioma de hover que los links del header (nav a:hover):
+        // opacity 0.7, sin borde ni cambio de color. La regla base de acá
+        // abajo (fuera de este media query, pensada para el popup de
+        // escritorio) pinta el texto de teal en hover — hay que pisarla
+        // acá con el mismo blanco de `.dropdown-item a`, no con `inherit`
+        // (eso toma el negro heredado del body, no el blanco del link).
+        &:not(.logout):hover {
+            background-color: transparent;
+            opacity: 0.7;
+        }
+
+        &:not(.logout):hover a {
+            color: var(--header-text, #{v.$black-custom});
         }
     }
 

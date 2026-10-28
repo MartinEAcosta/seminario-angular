@@ -6,6 +6,8 @@ export interface CartItem{
 }
 
 export interface ItemQuantity {
-    id_course : string,
-    quantity : number,
+    id_course  : string;
+    title      : string;
+    unit_price : string;
+    quantity   : number;
 }

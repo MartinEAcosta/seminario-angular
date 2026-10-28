@@ -1,0 +1,24 @@
+<div class="container-dropdown" [class.open]="open()">
+    <button type="button" class="option-default" (click)="toggle()">
+        <span class="option-default-selected">{{ selectedLabel }}</span>
+        <div class="container-icon">
+            <div class="icon option-down-icon"></div>
+        </div>
+    </button>
+
+    @if( open() ){
+        <ul class="options">
+            @for (category of categories(); track category.id) {
+                <li class="option-item" (click)="onToggleCategory(category)">
+                    <input
+                        type="checkbox"
+                        class="option-checkbox"
+                        [checked]="isSelected(category)"
+                        (click)="$event.stopPropagation()"
+                        (change)="onToggleCategory(category)" />
+                    <span>{{ category.name }}</span>
+                </li>
+            }
+        </ul>
+    }
+</div>

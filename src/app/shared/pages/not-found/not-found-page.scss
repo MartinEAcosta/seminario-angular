@@ -1,0 +1,258 @@
+@use '@variables' as v;
+
+// Mismo tono que auth-layout.component.scss / about-page.scss: la sala
+// oscura secundaria del sistema. Cada archivo lo redeclara local porque no
+// está exportado desde variables.scss.
+$panel-ink: #0e1a1a;
+
+// El header sticky reserva 80px de flow antes de esta sección (mismo patrón
+// que auth-layout y become-teacher-page): cada panel pinta su propio fondo,
+// así que cada uno necesita su propia compensación.
+@mixin header-overlay-patch($extra-padding-top) {
+    margin-top: -80px;
+    padding-top: calc(80px + #{$extra-padding-top});
+}
+
+.shell-404{
+    display: flex;
+    align-items: stretch;
+    min-height: 100vh;
+}
+
+// * Panel izquierdo — sala oscura *
+
+.panel-signal{
+    @include header-overlay-patch(6%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 50%;
+    padding-left: 8%;
+    padding-right: 8%;
+    padding-bottom: 6%;
+    font-family: v.$font-primary;
+    background-color: $panel-ink;
+}
+
+.panel-signal .eyebrow{
+    display: inline-block;
+    width: fit-content;
+    margin-bottom: v.$space-xs;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    // $brand-color-bright, no $brand-color: a este tamaño el teal base no
+    // llega a 4.5:1 sobre #0e1a1a (ver comentario en variables.scss).
+    color: v.$brand-color-bright;
+}
+
+.code-404{
+    margin: 0;
+    font-weight: 900;
+    // Clamp propio: el de la escala global asume hero a ancho completo, acá
+    // la columna es la mitad del viewport.
+    font-size: clamp(4.5rem, 9vw, 7.5rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: v.$white-custom;
+}
+
+.code-404 .digit.accent{
+    color: v.$brand-color-bright;
+}
+
+.badge-pill{
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    gap: 0.5rem;
+    margin: v.$space-md 0 0;
+    padding: 0.4rem 1.1rem;
+    border: 1px solid v.$veil-border;
+    border-radius: 999px;
+    background-color: rgba(233, 233, 233, 0.04);
+    font-size: v.$text-sm;
+    color: rgba(233, 233, 233, 0.7);
+}
+
+.badge-icon{
+    flex-shrink: 0;
+    color: v.$brand-color-bright;
+}
+
+// * Separador — vacío, sin perforación ni patrón (mismo criterio que
+// auth-layout.component.scss) *
+
+.panel-divider{
+    @include header-overlay-patch(0%);
+    flex-shrink: 0;
+    width: 24px;
+}
+
+// * Panel derecho — sala clara *
+
+.panel-recovery{
+    @include header-overlay-patch(6%);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    box-sizing: border-box;
+    flex: 1;
+    padding-left: 8%;
+    padding-right: 8%;
+    padding-bottom: 6%;
+    font-family: v.$font-primary;
+    background-color: v.$white-custom;
+}
+
+.panel-recovery h1{
+    max-width: 16ch;
+    margin: 0 0 v.$space-xs;
+    font-weight: 800;
+    font-size: v.$text-2xl;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: v.$black-custom;
+}
+
+.recovery-text{
+    max-width: 40ch;
+    margin: 0 0 v.$space-md;
+    font-size: v.$text-base;
+    line-height: 1.6;
+    color: rgba(40, 40, 40, 0.75);
+}
+
+.recovery-actions{
+    display: flex;
+    flex-wrap: wrap;
+    gap: v.$space-xs;
+}
+
+.btn-primary,
+.btn-outline{
+    display: inline-flex;
+    align-items: center;
+    box-sizing: border-box;
+    min-height: 44px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+
+    @include v.focus-ring();
+}
+
+.btn-primary{
+    border: solid 1px v.$brand-color;
+    background-color: v.$brand-color;
+    color: #ffffff;
+}
+
+.btn-primary:hover{
+    border-color: transparent;
+    background-color: rgba(0, 120, 140, 0.8);
+    transform: translateY(v.$lift-control);
+}
+
+.btn-outline{
+    border: solid 1px v.$brand-color;
+    background-color: transparent;
+    color: v.$brand-color-deep;
+}
+
+.btn-outline:hover{
+    background-color: v.$brand-color;
+    color: #ffffff;
+    transform: translateY(v.$lift-control);
+}
+
+.recovery-divider{
+    width: 100%;
+    max-width: 28rem;
+    margin: v.$space-md 0;
+    border-top: 1px dashed rgba(40, 40, 40, 0.15);
+}
+
+.panel-recovery .eyebrow{
+    display: inline-block;
+    margin-bottom: v.$space-xs;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: v.$brand-color;
+}
+
+.recovery-links{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.recovery-links a{
+    padding: 0.5rem 1.1rem;
+    border: 1px solid rgba(40, 40, 40, 0.14);
+    border-radius: 999px;
+    font-size: v.$text-sm;
+    font-weight: 600;
+    color: v.$black-custom;
+    text-decoration: none;
+    transition: all 0.3s ease;
+
+    @include v.focus-ring();
+}
+
+.recovery-links a:hover{
+    border-color: v.$brand-color;
+    color: v.$brand-color-deep;
+    transform: translateY(v.$lift-control);
+}
+
+@media (prefers-reduced-motion: reduce){
+    .btn-primary:hover,
+    .btn-outline:hover,
+    .recovery-links a:hover{
+        transform: none;
+    }
+}
+
+@include v.bp-down('laptop'){
+    .panel-signal,
+    .panel-recovery{
+        padding-left: 6%;
+        padding-right: 6%;
+    }
+}
+
+@include v.bp-down('md'){
+    .shell-404{
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    .panel-signal,
+    .panel-recovery{
+        width: 100%;
+    }
+
+    .panel-divider{
+        display: none;
+    }
+
+    // Apilado en una sola columna: sólo .panel-signal (primero en el flujo)
+    // sigue pegado al header; .panel-recovery queda debajo de él, no del
+    // header, y el patch de -80px la superpondría contra el panel oscuro.
+    .panel-recovery{
+        margin-top: 0;
+        padding-top: v.$space-lg;
+    }
+
+    .code-404{
+        font-size: clamp(4rem, 22vw, 6rem);
+    }
+}

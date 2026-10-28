@@ -18,6 +18,6 @@ export class SearchBarComponent {
 
   inputValue = linkedSignal<string>(() => this.initialValue() ?? '');
 
-  constructor() {}
+  constructor() {  }
 
 }

@@ -35,8 +35,10 @@ export class ModuleMapper {
             title : response.title,
             lessons : response.lessons.map( lesson => {
                 return {
+                    id: lesson.id,
                     title: lesson.title,
-                    id: lesson.id
+                    content_type: lesson.content_type ?? null,
+                    duration_minutes: lesson.duration_minutes ?? null,
                 }
             }) || [],
             unit : response.unit,

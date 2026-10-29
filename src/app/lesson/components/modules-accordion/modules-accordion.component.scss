@@ -1,99 +1,157 @@
 @use '@variables' as v;
 
-.container-module-toggle {
-    flex-direction: column;
+.module-card{
     width: 100%;
-    height: 100%;
-    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(40, 40, 40, 0.08);
 }
 
-.container-module-header:hover{
-    background-color: rgb(20, 20, 20);
-    transition: all 0.3s ease;
+.module-card:last-child{
+    border-bottom: none;
 }
 
-.container-module-header{
+.module-header{
     display: flex;
-    padding: 1rem;
+    align-items: center;
+    gap: v.$space-xs;
+    width: 100%;
+    padding: v.$space-sm;
+    border: none;
+    background-color: transparent;
     font-family: v.$font-primary;
-    align-items: center;
-    flex: 1;
+    text-align: left;
     cursor: pointer;
-    user-select: none;
+    transition: background-color 0.3s ease;
+    @include v.focus-ring(v.$brand-color-deep, -2px);
 }
 
-.container-module-header.open{
-    background-color: rgb(20, 20, 20);
-    transition: all 0.3s ease;
+.module-header:hover{
+    background-color: rgba(0, 120, 140, 0.05);
 }
 
-.icon-expand{
-    width: 3rem;
-    height: 1rem;
-    rotate: -90deg;
-    transition: all 0.3s ease;
-}
-
-.icon-expand.open{
-    rotate: 0deg;
-    transition: all 0.3s ease;
-}
-
-.title-module{
-    font-weight: 300;
-    flex: 1;
-}
-
-.container-list-lessons {
+.module-index{
     display: flex;
-    flex-direction: column;
-    width: 100%;
-    background-color: rgb(30, 30 ,30);
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 8px;
+    background-color: rgba(0, 120, 140, 0.1);
+    font-size: v.$text-sm;
+    font-weight: 800;
+    color: v.$brand-color-deep;
+}
+
+.module-title{
+    flex: 1;
+    min-width: 0;
     margin: 0;
-    padding: 0;
-    transition: all 0.3 ease;
-}
-
-.container-list-lessons.hidden{
-    visibility: hidden;
-    opacity: 0;
-    height: 0px;
-    transition: all 0.3s ease;
-}
-
-.container-list-lessons.deployed{
-    display: flex;
-    height: 5rem;
-    transition: height 0.3s ease;
-}
-
-.container-lesson{
-    display: flex;
-    padding: 0 1rem;
-    width: 100%;
-    height: 5rem;
-    align-items: center;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    user-select: none;
-}
-
-.container-lesson:hover{
-    background-color: rgb(20, 20, 20);
-    transition: all 0.3s ease;
-}
-
-.title-lesson{
-    font-size: 1rem;
-    width: 90%;
-    pointer-events: none;
-
+    font-size: v.$text-base;
+    font-weight: 700;
+    color: v.$black-custom;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    line-clamp: 1;
-    -webkit-box-orient: vertical;
+    white-space: nowrap;
+}
 
+.module-lesson-count{
+    flex-shrink: 0;
+    font-size: v.$text-sm;
+    color: rgba(40, 40, 40, 0.55);
+    white-space: nowrap;
+}
+
+.chevron-icon{
+    flex-shrink: 0;
+    color: rgba(40, 40, 40, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.module-card.is-open .chevron-icon{
+    transform: rotate(180deg);
+}
+
+// `height: 0 -> auto` no interpola en ningún motor: la apertura se anima con
+// la fila de grilla (0fr -> 1fr), que sí lo hace.
+.lessons-list{
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 0.25s ease;
+}
+
+.lessons-inner{
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.lessons-list.is-open{
+    grid-template-rows: 1fr;
+    opacity: 1;
+}
+
+.lessons-list.is-open .lessons-inner{
+    padding-bottom: v.$space-xs;
+}
+
+.lesson-row{
+    display: flex;
+    align-items: center;
+    gap: v.$space-xs;
+    padding: 0.6rem v.$space-sm 0.6rem calc(v.$space-sm + 1.5rem);
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease;
+}
+
+.lesson-row:not(.is-locked):hover{
+    background-color: rgba(0, 120, 140, 0.05);
+}
+
+.lesson-row.is-locked{
+    cursor: default;
+    opacity: 0.6;
+}
+
+.lesson-icon{
+    display: flex;
+    flex-shrink: 0;
+    color: rgba(40, 40, 40, 0.5);
+}
+
+.lesson-title{
+    flex: 1;
+    min-width: 0;
+    margin: 0;
     font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    color: v.$black-custom;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.lesson-duration{
+    flex-shrink: 0;
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    font-variant-numeric: tabular-nums;
+    color: rgba(40, 40, 40, 0.55);
+    white-space: nowrap;
+}
+
+.lock-icon{
+    flex-shrink: 0;
+    color: rgba(40, 40, 40, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .chevron-icon,
+    .lessons-list{
+        transition: none;
+    }
 }

@@ -1,9 +1,55 @@
-<div class="bg-course-detail">
-    @if( this.courseResource.isLoading() ){
-        <app-loader />
+<div class="course-page">
+    @if( courseResource.isLoading() ){
+        <div class="page-loader">
+            <app-loader />
+        </div>
     }
-    @else if( this.courseResource.hasValue() ){
-        <app-course-detail [course]="this.courseResource.value()" />
-        <app-list-of-content [courseId]="courseResource.value().id" />
+    @else if( courseResource.hasValue() ){
+        <section class="hero-band">
+            <div class="band-inner">
+                <app-course-hero [course]="courseResource.value()" [modules]="modules()" />
+                <!-- Columna derecha vacía: reserva el ancho del panel de compra,
+                     que vive en la grilla de abajo y sube con margen negativo
+                     para montarse sobre la banda oscura. -->
+                <div class="band-panel-gap" aria-hidden="true"></div>
+            </div>
+        </section>
+
+        <div class="content-band">
+            <div class="band-inner">
+                <div class="main-column">
+                    <app-list-of-content [modules]="modules()" [isLoading]="modulesResource.isLoading()" />
+
+                    <section class="about-section">
+                        <h2 class="section-title">Sobre este curso</h2>
+                        <p class="about-text">{{ courseResource.value().description }}</p>
+                    </section>
+
+                    @if( courseResource.value().owner_name ) {
+                        <app-course-instructor
+                            variant="card"
+                            [name]="courseResource.value().owner_name"
+                            [avatarUrl]="courseResource.value().owner_avatar_url"
+                            [bio]="courseResource.value().owner_bio" />
+                    }
+                </div>
+
+                <aside class="purchase-column">
+                    <app-course-purchase-panel
+                        [course]="courseResource.value()"
+                        [enrollmentId]="enrollmentIdFor(courseResource.value().id)"
+                        [lessonsCount]="moduleStats().lessonCount" />
+                </aside>
+            </div>
+        </div>
+    }
+    @else {
+        <!-- El curso no cargó: sin backend levantado este resource falla, y la
+             página tiene que leerse como una decisión, no como una pantalla rota. -->
+        <div class="page-error">
+            <h1 class="error-title">No pudimos cargar este curso</h1>
+            <p class="error-text">Puede que ya no exista o que el servicio no esté disponible ahora mismo.</p>
+            <a class="btn-error" routerLink="/explore">Volver a explorar</a>
+        </div>
     }
 </div>

@@ -14,7 +14,11 @@ export const defaultCourses : Course[] = [
     "id_file": "a",
     "id_owner": "665fa63c94c4f85d3f9e73a1",
     "price": 2499,
-    "capacity": 100
+    "capacity": 100,
+    "owner_name": null,
+    "owner_avatar_url": null,
+    "owner_bio": null,
+    "spots_remaining": null
   },
   {
     "id": "b",
@@ -26,7 +30,11 @@ export const defaultCourses : Course[] = [
     "id_file": "a",
     "id_owner": "665fa63c94c4f85d3f9e73a1",
     "price": 2999,
-    "capacity": 80
+    "capacity": 80,
+    "owner_name": null,
+    "owner_avatar_url": null,
+    "owner_bio": null,
+    "spots_remaining": null
   },
   {
     "id": "c",
@@ -38,7 +46,11 @@ export const defaultCourses : Course[] = [
     "id_file": "a",
     "id_owner": "665fa63c94c4f85d3f9e73a1",
     "price": 3999,
-    "capacity": 50
+    "capacity": 50,
+    "owner_name": null,
+    "owner_avatar_url": null,
+    "owner_bio": null,
+    "spots_remaining": null
   },
   {
     "id": "d",
@@ -50,6 +62,10 @@ export const defaultCourses : Course[] = [
     "id_file": "a",
     "id_owner": "665fa63c94c4f85d3f9e73a1",
     "price": 1999,
+    "owner_name": null,
+    "owner_avatar_url": null,
+    "owner_bio": null,
+    "spots_remaining": null
   },
   {
     "id": "e",
@@ -61,6 +77,10 @@ export const defaultCourses : Course[] = [
     "id_file": "a",
     "id_owner": "665fa63c94c4f85d3f9e73a1",
     "price": 1499,
-    "capacity": 200
+    "capacity": 200,
+    "owner_name": null,
+    "owner_avatar_url": null,
+    "owner_bio": null,
+    "spots_remaining": null
   }
 ]

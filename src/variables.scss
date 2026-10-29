@@ -15,6 +15,11 @@ $brand-color-bright: rgb(45, 170, 190);
 $red-warning: rgb(197, 14, 14);
 $green-success: rgb(0, 150, 50);
 $yellow-caution: rgb(255, 190, 40);
+// Variante del ámbar para TEXTO sobre papel hueso o blanco ficha: el ámbar
+// de estado mide 1.7:1 contra blanco y es ilegible en tamaño de interfaz.
+// Mismo tono, oscurecido, 4.9:1. Para rellenos y barras se sigue usando
+// $yellow-caution.
+$yellow-caution-deep: rgb(140, 100, 0);
 
 $breakpoints: (
   'sm': 640px,

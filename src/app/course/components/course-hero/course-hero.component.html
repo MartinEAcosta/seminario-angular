@@ -1,0 +1,52 @@
+<div class="course-hero">
+    <!-- Solo en mobile: la imagen del curso vive en el panel de compra, pero
+         abajo de 'lg' ese panel se convierte en la barra fija (sin imagen), así
+         que la portada sube al hero, como en el mock mobile. -->
+    <figure class="hero-media" [class.is-placeholder]="!hasThumbnail()">
+        @if (hasThumbnail()) {
+            <img [src]="course().thumbnail_url" alt="" loading="lazy">
+        }
+        <figcaption class="hero-media-category">{{ course().category_name }}</figcaption>
+    </figure>
+
+    <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <a routerLink="/explore">Explorar</a>
+        <span aria-hidden="true">›</span>
+        <span>{{ course().category_name }}</span>
+    </nav>
+
+    <h1 class="hero-title">{{ course().title }}</h1>
+    <p class="hero-description">{{ course().description }}</p>
+
+    <app-course-instructor
+        variant="inline"
+        [name]="course().owner_name"
+        [avatarUrl]="course().owner_avatar_url" />
+
+    <!-- Mismo dato en dos formas: píldoras en desktop, franja de tres columnas
+         pegada al borde de la banda oscura en mobile. Una sola de las dos se
+         muestra por breakpoint (ver .scss). -->
+    <ul class="hero-badges">
+        <li>{{ stats().moduleCount }} módulos · {{ stats().lessonCount }} lecciones</li>
+        @if (durationLabel()) {
+            <li>{{ durationLabel() }} de video</li>
+        }
+    </ul>
+
+    <dl class="hero-stats">
+        <div class="hero-stat">
+            <dt>Módulos</dt>
+            <dd>{{ stats().moduleCount }}</dd>
+        </div>
+        <div class="hero-stat">
+            <dt>Lecciones</dt>
+            <dd>{{ stats().lessonCount }}</dd>
+        </div>
+        @if (durationLabel()) {
+            <div class="hero-stat">
+                <dt>Video</dt>
+                <dd>{{ durationLabel() }}</dd>
+            </div>
+        }
+    </dl>
+</div>

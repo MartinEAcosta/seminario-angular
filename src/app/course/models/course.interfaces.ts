@@ -9,6 +9,10 @@ export interface Course {
     id_owner        : string;
     price           : number;
     capacity?       : number | null;
+    owner_name      : string | null;
+    owner_avatar_url: string | null;
+    owner_bio       : string | null;
+    spots_remaining : number | null;
 }
 
 export interface CourseDTO {

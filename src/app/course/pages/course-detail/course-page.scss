@@ -1,10 +1,239 @@
 @use '@variables' as v;
 
+// Ancho del panel de compra en desktop. La imagen del panel es 16/9, así que
+// su alto sale de acá — y de ese alto sale cuánto sube el panel para montarse
+// sobre la banda oscura (ver .purchase-column).
+$panel-width: 320px;
+$panel-media-height: 180px; // 320px en 16/9
 
-.bg-course-detail{
-    background-color: v.$white-custom;
-    background-position: center;
-    background-size: cover;
-    font-family: v.$font-primary;
+.course-page{
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
+    background-color: v.$white-custom;
+    font-family: v.$font-primary;
+}
+
+.page-loader{
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    padding: v.$space-lg 6%;
+}
+
+.page-error{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: v.$space-xs;
+    padding: v.$space-lg 6%;
+    text-align: center;
+}
+
+.error-title{
+    margin: 0;
+    font-family: v.$font-primary;
+    font-weight: 800;
+    font-size: v.$text-xl;
+    letter-spacing: -0.01em;
+    color: v.$black-custom;
+}
+
+.error-text{
+    margin: 0;
+    max-width: 46ch;
+    font-family: v.$font-primary;
+    font-size: v.$text-base;
+    line-height: 1.6;
+    color: rgba(40, 40, 40, 0.7);
+}
+
+.btn-error{
+    margin-top: v.$space-xs;
+    padding: 10px 20px;
+    border: 1px solid v.$brand-color;
+    border-radius: 20px;
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    font-weight: 700;
+    text-decoration: none;
+    color: v.$brand-color-deep;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    @include v.focus-ring(v.$brand-color-deep, 2px);
+}
+
+.btn-error:hover{
+    background-color: v.$brand-color;
+    color: #ffffff;
+    transform: translateY(v.$lift-control);
+}
+
+// Las dos salas de la página: oscura para presentar el curso, clara para
+// trabajarlo. Las dos comparten la misma grilla interna para que el panel de
+// compra caiga alineado al cruzar de una a la otra.
+.band-inner{
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) $panel-width;
+    gap: v.$space-md;
+    align-items: start;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+// La sala oscura arranca arriba de todo y el header flota encima en modo
+// vidrio, como en el mock. Los 80px son el alto que el header sticky reserva
+// en el flujo; se los come con margen negativo y se devuelven como padding,
+// sin tocar el componente del header.
+.hero-band{
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: -80px;
+    padding: calc(80px + #{v.$space-md}) 6% v.$space-md;
+    background-color: #0e1a1a;
+    // Trama de puntos de 24px, apenas visible: da textura a la sala oscura sin
+    // meter un degradado de relleno.
+    background-image: radial-gradient(rgba(45, 170, 190, 0.14) 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+.hero-band .band-inner{
+    // Garantiza que el panel montado nunca llegue más arriba que el padding de
+    // la banda, aunque el título del curso sea corto.
+    min-height: 17rem;
+    align-items: center;
+}
+
+.content-band{
+    box-sizing: border-box;
+    width: 100%;
+    padding: v.$space-md 6% v.$space-lg;
+}
+
+.main-column{
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-md;
+    min-width: 0;
+}
+
+.purchase-column{
+    display: block;
+    // El panel es sticky adentro de esta columna: para que tenga recorrido, la
+    // columna y el host del componente tienen que ocupar el alto de la fila, no
+    // el del panel (con `align-items: start` la columna mediría lo mismo que su
+    // contenido y el sticky no se movería nunca).
+    align-self: stretch;
+    // Sube hasta que el pie de su imagen quede al ras del borde inferior de la
+    // banda oscura: el panel cruza de una sala a la otra.
+    margin-top: calc(-1 * (#{$panel-media-height} + #{v.$space-md}));
+}
+
+.purchase-column app-course-purchase-panel{
+    display: block;
+    height: 100%;
+}
+
+.section-title{
+    margin: 0 0 v.$space-xs;
+    font-family: v.$font-primary;
+    font-weight: 800;
+    font-size: v.$text-lg;
+    letter-spacing: -0.01em;
+    color: v.$black-custom;
+}
+
+.about-section{
+    width: 100%;
+}
+
+.about-text{
+    margin: 0;
+    max-width: 68ch;
+    font-family: v.$font-primary;
+    font-size: v.$text-base;
+    line-height: 1.7;
+    color: rgba(40, 40, 40, 0.78);
+}
+
+app-course-instructor{
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: v.$space-sm;
+    border-radius: 12px;
+    background-color: #ffffff;
+    border: 1px solid rgba(40, 40, 40, 0.08);
+    box-shadow: v.$shadow-surface-rest;
+}
+
+// Único momento de entrada de la página: el bloque del hero aparece de abajo
+// hacia arriba una sola vez. El panel de compra no se anima — un transform en
+// su contenedor rompería el `position: sticky`.
+@keyframes hero-rise-in{
+    from{
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to{
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.hero-band app-course-hero{
+    animation: hero-rise-in 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@include v.bp-down('lg') {
+    .band-inner{
+        grid-template-columns: minmax(0, 1fr);
+        max-width: 42rem;
+    }
+
+    .hero-band{
+        // El gutter deja de ser porcentual para que la franja de conteos del
+        // hero pueda salirse de él con un margen negativo exacto.
+        --band-gutter: #{v.$space-sm};
+        padding: v.$space-sm v.$space-sm 0;
+    }
+
+    .hero-band .band-inner{
+        min-height: 0;
+    }
+
+    .band-panel-gap{
+        display: none;
+    }
+
+    .content-band{
+        padding: v.$space-sm v.$space-sm v.$space-lg;
+        // El panel de compra queda fijo abajo de la pantalla: deja lugar para
+        // que no tape el final del contenido.
+        padding-bottom: 8rem;
+    }
+
+    // El panel sale de la grilla: abajo de 'lg' es una barra fija, no una
+    // columna.
+    .purchase-column{
+        display: contents;
+        margin-top: 0;
+    }
+
+    .purchase-column app-course-purchase-panel{
+        height: auto;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-band app-course-hero{
+        animation: none;
+    }
+
+    .btn-error:hover{
+        transform: none;
+    }
 }

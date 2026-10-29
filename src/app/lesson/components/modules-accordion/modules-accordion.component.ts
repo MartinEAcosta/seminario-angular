@@ -1,18 +1,18 @@
 import { Component, inject, input, signal } from '@angular/core';
-import { NgClass } from '@angular/common';
 
 import { ModulePopulated } from '@module/models/module.interfaces';
 import { Router } from '@angular/router';
 import { EnrollmentState } from '@enrollment/state/enrollment-state';
+import { formatDuration } from '@utils/module-stats';
 
 @Component({
   selector: 'app-modules-accordion',
-  imports: [NgClass],
+  imports: [],
   templateUrl: './modules-accordion.component.html',
   styleUrl: './modules-accordion.component.scss'
 })
 export class ModulesAccordionComponent {
-  
+
   router = inject(Router);
 
   enrollmentState = inject(EnrollmentState);
@@ -32,6 +32,10 @@ export class ModulesAccordionComponent {
     if( this.isClickable() && enrollmentId ){
       this.router.navigateByUrl( `/enrollment/${ enrollmentId }/lesson/${ id_lesson }`);
     }
+  }
+
+  public lessonDuration = ( durationMinutes: number | null ) => {
+    return formatDuration( durationMinutes );
   }
 
 }

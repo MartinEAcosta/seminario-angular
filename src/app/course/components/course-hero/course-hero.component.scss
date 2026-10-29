@@ -1,0 +1,192 @@
+@use '@variables' as v;
+
+// La banda oscura, su trama y su padding los pone la página (.hero-band en
+// course-page.scss): este componente sólo aporta el contenido, para que la
+// columna del hero y la del panel de compra compartan la misma grilla.
+.course-hero{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: v.$space-xs;
+    width: 100%;
+    box-sizing: border-box;
+    color: v.$white-custom;
+}
+
+.hero-media{
+    display: none;
+}
+
+.breadcrumb{
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    font-weight: 600;
+    color: rgba(233, 233, 233, 0.6);
+}
+
+.breadcrumb a{
+    color: v.$brand-color-bright;
+    text-decoration: none;
+    text-underline-offset: 0.25em;
+    @include v.focus-ring(v.$brand-color-bright, 2px);
+}
+
+.breadcrumb a:hover{
+    text-decoration: underline;
+}
+
+.hero-title{
+    margin: 0.2rem 0 0;
+    max-width: 18ch;
+    font-family: v.$font-primary;
+    font-weight: 900;
+    font-size: v.$text-display;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    color: v.$white-custom;
+}
+
+.hero-description{
+    margin: 0;
+    max-width: 48ch;
+    font-family: v.$font-primary;
+    font-size: v.$text-base;
+    line-height: 1.6;
+    color: rgba(233, 233, 233, 0.72);
+}
+
+app-course-instructor{
+    margin-top: 0.4rem;
+}
+
+.hero-badges{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: v.$space-xs 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+// Velo de tono en vez de sombra para elevar sobre sala oscura (DESIGN.md:
+// "La Regla del Tono sobre lo Oscuro").
+.hero-badges li{
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    background-color: rgba(233, 233, 233, 0.06);
+    border: 1px solid v.$veil-border;
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    font-weight: 600;
+    color: v.$white-custom;
+}
+
+.hero-stats{
+    display: none;
+}
+
+// Mobile: la portada entra al hero y los conteos pasan de píldoras sueltas a
+// una franja de tres columnas pegada al borde de la banda — el ancho de esa
+// franja sale del gutter que publica .hero-band como custom property.
+@include v.bp-down('lg') {
+    .course-hero{
+        gap: 0.6rem;
+    }
+
+    .hero-media{
+        display: block;
+        position: relative;
+        width: 100%;
+        margin: 0 0 0.4rem;
+        aspect-ratio: 16 / 7;
+        border-radius: 12px;
+        overflow: hidden;
+        background-color: rgba(233, 233, 233, 0.06);
+        border: 1px solid v.$veil-border;
+    }
+
+    .hero-media.is-placeholder{
+        background: linear-gradient(135deg, v.$brand-color, #0e1a1a);
+    }
+
+    .hero-media img{
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .hero-media-category{
+        position: absolute;
+        left: 0.75rem;
+        bottom: 0.75rem;
+        padding: 0.35rem 0.8rem;
+        border-radius: 999px;
+        background-color: rgba(14, 26, 26, 0.82);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        font-family: v.$font-primary;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: v.$brand-color-bright;
+    }
+
+    .hero-title{
+        max-width: none;
+        font-size: v.$text-xl;
+    }
+
+    .hero-description{
+        max-width: none;
+        font-size: v.$text-sm;
+    }
+
+    .hero-badges{
+        display: none;
+    }
+
+    .hero-stats{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        width: calc(100% + var(--band-gutter, 0px) * 2);
+        margin: v.$space-sm calc(var(--band-gutter, 0px) * -1) 0;
+        padding: 0;
+        border-top: 1px solid v.$veil-border;
+        background-color: rgba(233, 233, 233, 0.045);
+    }
+
+    .hero-stat{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.15rem;
+        padding: 0.7rem 0.5rem;
+        border-left: 1px solid v.$veil-border;
+    }
+
+    .hero-stat:first-child{
+        border-left: none;
+    }
+
+    .hero-stat dt{
+        font-family: v.$font-primary;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        color: rgba(233, 233, 233, 0.6);
+    }
+
+    .hero-stat dd{
+        margin: 0;
+        font-family: v.$font-primary;
+        font-size: v.$text-base;
+        font-weight: 800;
+        color: v.$white-custom;
+    }
+}

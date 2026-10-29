@@ -1,9 +1,9 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { ModulesAccordionComponent } from "../modules-accordion/modules-accordion.component";
-import { rxResource } from '@angular/core/rxjs-interop';
-import { ModuleService } from '@module/services/module.service';
 import { UserState } from '@user/state/user-state';
 import { LoaderComponent } from "@shared/components/loader/loader.component";
+import { ModulePopulated } from '@module/models/module.interfaces';
+import { computeModuleStats, formatDuration } from '@utils/module-stats';
 
 @Component({
   selector: 'app-list-of-content',
@@ -13,17 +13,18 @@ import { LoaderComponent } from "@shared/components/loader/loader.component";
 })
 export class ListOfContentComponent {
 
-  private moduleService = inject(ModuleService);
   private userState = inject(UserState);
 
-  courseId = input.required<string>();
+  // Los módulos llegan de course-page (una sola fuente de carga, compartida
+  // con los badges de course-hero) en vez de que este componente haga su
+  // propio fetch con courseId.
+  modules = input<ModulePopulated[]>([]);
+  isLoading = input<boolean>(false);
+
   user = computed( () => this.userState.user() );
 
-  modulesResource = rxResource({
-    stream : ( ) => {
-      return this.moduleService.getModulesByCourseId( this.courseId() );
-    },
-  });
+  stats = computed( () => computeModuleStats( this.modules() ) );
+  durationLabel = computed( () => formatDuration( this.stats().totalDurationMinutes ) );
 
   constructor( ) {  }
 

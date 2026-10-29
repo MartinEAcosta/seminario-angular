@@ -63,6 +63,42 @@
         ],
         "createdAt": "2026-10-27T19:23:22.889Z",
         "reason": "Angular [src] bindeado a thumbnail_url real del hero, mismo patron que course-catalog-card"
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/app/course/components/course-instructor/course-instructor.component.html"
+        ],
+        "createdAt": "2026-10-28T15:40:56.512Z",
+        "reason": "img src bound dynamicamente a owner_avatar_url real del backend, no placeholder; condicional a hasAvatarUrl()"
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/app/course/components/course-hero/course-hero.component.html"
+        ],
+        "createdAt": "2026-10-28T15:47:57.369Z",
+        "reason": "img src bound dinamicamente a course().thumbnail_url real, no placeholder; condicional a hasThumbnail()"
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/app/lesson/pages/lesson-viewer-page/lesson-viewer-page.component.html"
+        ],
+        "createdAt": "2026-10-28T15:56:24.385Z",
+        "reason": "img src bound dinamicamente a selectedLesson().file.url real del backend, no placeholder; preexistente, no tocado por esta spec"
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/app/course/components/course-purchase-panel/course-purchase-panel.component.html"
+        ],
+        "createdAt": "2026-10-28T16:18:02.510Z",
+        "reason": "img src bound dinamicamente a course().thumbnail_url real, no placeholder; condicional a hasThumbnail()"
       }
     ]
   }

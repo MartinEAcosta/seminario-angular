@@ -38,6 +38,10 @@ export interface CourseUniqueResponse {
   id_owner    : string,
   price       : number,
   capacity?   : number,
+  owner_name       ?: string | null,
+  owner_avatar_url ?: string | null,
+  owner_bio        ?: string | null,
+  spots_remaining  ?: number | null,
 }
 
 export type CourseResponse = ApiResponse<CourseUniqueResponse>;

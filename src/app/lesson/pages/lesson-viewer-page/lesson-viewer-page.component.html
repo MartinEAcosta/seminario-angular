@@ -10,7 +10,7 @@
         </div>
     }
     @else if( enrollmentState.selectedEnrollment() ){
-        <app-list-of-content [courseId]="enrollmentState.selectedEnrollment()!.course.id_course!" />
+        <app-list-of-content [modules]="modulesResource.value() ?? []" [isLoading]="modulesResource.isLoading()" />
 
         <div class="container-media">
             @if( isLoadingLesson() ){

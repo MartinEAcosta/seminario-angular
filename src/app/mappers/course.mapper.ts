@@ -28,7 +28,11 @@ export class CourseMapper {
             id_file: response.id_file ?? "",
             id_owner: response.id_owner,
             price: response.price ?? 0, // Si no existe, se asigna 0 por defecto
-            capacity: response.capacity ?? null,   
+            capacity: response.capacity ?? null,
+            owner_name: response.owner_name ?? null,
+            owner_avatar_url: response.owner_avatar_url ?? null,
+            owner_bio: response.owner_bio ?? null,
+            spots_remaining: response.spots_remaining ?? null,
         };
     } 
 

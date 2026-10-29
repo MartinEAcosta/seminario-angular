@@ -20,7 +20,9 @@ export interface ModulePopulated {
   title : string;
   unit : number;
   lessons : {
-    title : string;
-    id : string;
+    id               : string;
+    title            : string;
+    content_type     : 'video' | 'document' | null;
+    duration_minutes : number | null;
   }[];
 }

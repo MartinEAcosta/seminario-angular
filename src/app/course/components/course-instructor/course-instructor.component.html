@@ -1,0 +1,24 @@
+<div class="instructor" [class.is-card]="isCard()">
+    <div class="avatar" aria-hidden="true">
+        @if (hasAvatarUrl()) {
+            <img class="avatar-image" [src]="avatarUrl()" alt="" loading="lazy">
+        }
+        @else {
+            <span class="avatar-initials">{{ initials() }}</span>
+        }
+    </div>
+
+    <div class="instructor-info">
+        @if (isCard()) {
+            <span class="instructor-label">Tu profesor</span>
+            <p class="instructor-name">{{ displayName() }}</p>
+
+            @if (hasBio()) {
+                <p class="instructor-bio">{{ bio() }}</p>
+            }
+        }
+        @else {
+            <p class="instructor-name"><span class="instructor-by">Por</span> {{ displayName() }}</p>
+        }
+    </div>
+</div>

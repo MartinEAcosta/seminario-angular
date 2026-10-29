@@ -1,0 +1,98 @@
+@use '@variables' as v;
+
+.instructor{
+    display: flex;
+    align-items: center;
+    gap: v.$space-xs;
+}
+
+.instructor.is-card{
+    align-items: flex-start;
+    gap: v.$space-sm;
+}
+
+.avatar{
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background-color: v.$brand-color;
+    overflow: hidden;
+}
+
+.instructor.is-card .avatar{
+    width: 3.5rem;
+    height: 3.5rem;
+}
+
+.avatar-image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-initials{
+    font-family: v.$font-primary;
+    font-weight: 800;
+    font-size: v.$text-sm;
+    color: #ffffff;
+}
+
+.instructor.is-card .avatar-initials{
+    font-size: v.$text-lg;
+}
+
+.instructor-info{
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+}
+
+.instructor-label{
+    font-family: v.$font-primary;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(40, 40, 40, 0.55);
+}
+
+.instructor.is-card .instructor-label{
+    color: v.$brand-color-deep;
+}
+
+.instructor-name{
+    margin: 0;
+    font-family: v.$font-primary;
+    font-weight: 700;
+    font-size: v.$text-base;
+    // Variante inline vive sobre la sala oscura del hero (único uso según
+    // la spec); is-card vive sobre la card blanca de "Tu profesor".
+    color: v.$white-custom;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.instructor-by{
+    font-weight: 500;
+    color: rgba(233, 233, 233, 0.62);
+}
+
+.instructor.is-card .instructor-name{
+    font-size: v.$text-lg;
+    color: v.$black-custom;
+    white-space: normal;
+}
+
+.instructor-bio{
+    margin: 0.4rem 0 0;
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    line-height: 1.6;
+    color: rgba(40, 40, 40, 0.75);
+}

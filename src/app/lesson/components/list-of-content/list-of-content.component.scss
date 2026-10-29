@@ -1,28 +1,54 @@
-@use '../../../../variables.scss' as v;
+@use '@variables' as v;
 
-.container-list {
-    width: 30rem;
-    background-color: v.$black-custom;
-    margin-left: 3rem;
-    border-radius: 1rem;
-    color: v.$white-custom;
-    overflow: hidden;
-    box-shadow: 6px 8px 15px rgba(40, 40 , 40 , 0.3);
+// El host ocupa la columna que le toque: ancho completo en la columna de
+// /course/:id, el resto del ancho en la fila del visor de lecciones.
+:host{
+    display: block;
+    flex: 1 1 auto;
+    min-width: 0;
 }
 
+.container-list{
+    display: block;
+    width: 100%;
+}
+
+// El encabezado va sobre el papel, no adentro de la tarjeta: el Temario se lee
+// como sección de la página, igual que "Sobre este curso".
 .container-list-header{
     display: flex;
-    width: 90%;
-    margin: auto;
-    margin-bottom: 0.5rem;
-    justify-content: center;
-    border-bottom: 1px solid rgba(255, 255, 255 , 0.2);
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.35rem v.$space-sm;
+    margin-bottom: v.$space-xs;
 }
 
 .title-list{
+    margin: 0;
     font-family: v.$font-primary;
-    font-weight: 400;
-    margin: 1rem;
+    font-weight: 800;
+    font-size: v.$text-lg;
+    letter-spacing: -0.01em;
+    color: v.$black-custom;
+}
+
+.content-stats{
+    margin: 0;
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: rgba(40, 40, 40, 0.55);
+}
+
+.modules-card{
+    width: 100%;
+    border-radius: 12px;
+    background-color: #ffffff;
+    border: 1px solid rgba(40, 40, 40, 0.08);
+    box-shadow: v.$shadow-surface-rest;
+    overflow: hidden;
 }
 
 .container-loader-modules {
@@ -31,5 +57,13 @@
     justify-content: center;
     width: 100%;
     height: 10rem;
-    padding: 1rem 0;
+    padding: v.$space-sm 0;
+}
+
+.empty-modules{
+    margin: 0;
+    padding: v.$space-sm;
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    color: rgba(40, 40, 40, 0.65);
 }

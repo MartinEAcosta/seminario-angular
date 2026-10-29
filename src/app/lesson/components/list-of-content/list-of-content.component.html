@@ -1,15 +1,26 @@
-<div class="container-list">
-    <div class="container-list-header">
-        <h3 class="title-list">
-            Contenido
-        </h3>
+<section class="container-list">
+    <header class="container-list-header">
+        <h2 class="title-list">Temario</h2>
+
+        <p class="content-stats">
+            {{ stats().moduleCount }} módulos · {{ stats().lessonCount }} lecciones
+            @if (durationLabel()) {
+                · {{ durationLabel() }}
+            }
+        </p>
+    </header>
+
+    <div class="modules-card">
+        @if( isLoading() ) {
+            <div class="container-loader-modules">
+                <app-loader />
+            </div>
+        }
+        @else if( modules().length === 0 ) {
+            <p class="empty-modules">Este curso todavía no tiene módulos publicados.</p>
+        }
+        @for( module of modules(); track module.unit ){
+            <app-modules-accordion [module]="module" [isClickable]="!!user()" />
+        }
     </div>
-    @if( modulesResource.isLoading() ) {
-        <div class="container-loader-modules">
-            <app-loader /> 
-        </div>
-    }
-    @for( module of modulesResource.value(); track module.unit ){
-        <app-modules-accordion [module]="module" [isClickable]="!!user()" />
-    }
-</div>
+</section>

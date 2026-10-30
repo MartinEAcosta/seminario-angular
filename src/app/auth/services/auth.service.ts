@@ -10,7 +10,7 @@ import { GoogleAuthService } from '@auth/services/google-auth.service';
 import { CartService } from '@cart/state/cart.service';
 import { FileService } from '@file/services/file.service';
 import { AuthResponse, User, UserDTO } from '@auth/models/auth.interfaces';
-import { ErrorResponse, VerificationEmailResponse } from '@shared/models/api.interfaces';
+import { ApiResponse, ErrorResponse } from '@shared/models/api.interfaces';
 import { AuthMapper } from '@mappers/auth.mapper';
 import { UserState } from '@user/state/user-state';
 import { AUTH_PROVIDER } from '@auth/auth.provider';
@@ -112,7 +112,7 @@ export class AuthService {
   // Envia (o reenvia) el email con el enlace de validación a la cuenta del usuario logueado.
   public sendVerificationEmail = ( ) : Observable<boolean> => {
     return this.http
-                  .post<VerificationEmailResponse>(`${this.baseURL}/send-validation-email`, {} )
+                  .post<ApiResponse<boolean>>(`${this.baseURL}/send-validation-email`, {} )
                     .pipe(
                       map( ( response ) => response.ok ),
                       catchError( ( { error } : { error : ErrorResponse } ) => {

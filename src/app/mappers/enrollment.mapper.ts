@@ -1,26 +1,26 @@
 import { Enrollment, EnrollmentDetailed } from '@enrollment/models/enrollment.interfaces';
-import { EnrollmentPopulatedListResponse, EnrollmentPopulatedUniqueResponse, EnrollmentListResponse, EnrollmentUniqueResponse } from '@shared/models/api.interfaces';
+import { ApiResponse, EnrollmentPopulatedResponseDto, EnrollmentResponseDto } from '@shared/models/api.interfaces';
 
 
 export class EnrollmentMapper {
 
-    static mapResponseToEnrollment ( response : EnrollmentUniqueResponse ) : Enrollment {
+    static mapResponseToEnrollment ( response : EnrollmentResponseDto ) : Enrollment {
         return {
             id : response.id,
             id_user : response.id_user,
             id_course : response.id_course,
-            purchaseDate : response.purchaseDate,
+            purchaseDate : new Date( response.purchaseDate ),
             progress : response.progress,
             completed_lessons : response.completed_lessons,
-            last_accessed_at : response.last_accessed_at,
+            last_accessed_at : new Date( response.last_accessed_at ),
         };
     }
 
-    static mapResponseToEnrollmentArray ( response : EnrollmentListResponse ) : Enrollment[] {
+    static mapResponseToEnrollmentArray ( response : ApiResponse<EnrollmentResponseDto[]> ) : Enrollment[] {
         return response.data.map( this.mapResponseToEnrollment );
     }
 
-    static mapResponseToEnrollmentDetailed ( response : EnrollmentPopulatedUniqueResponse ) : EnrollmentDetailed {
+    static mapResponseToEnrollmentDetailed ( response : EnrollmentPopulatedResponseDto ) : EnrollmentDetailed {
         return{
             id : response.id,
             id_user : response.id_user,
@@ -31,14 +31,14 @@ export class EnrollmentMapper {
                 category_name : response.course.category_name,
                 thumbnail_url : response.course.thumbnail_url,
             },
-            purchaseDate : response.purchaseDate,
+            purchaseDate : new Date( response.purchaseDate ),
             progress : response.progress,
             completed_lessons : response.completed_lessons,
-            last_accessed_at : response.last_accessed_at,
+            last_accessed_at : new Date( response.last_accessed_at ),
         };
     }
 
-    static mapResponseToEnrollmentDetailedArray ( response : EnrollmentPopulatedListResponse ) : EnrollmentDetailed[] {
+    static mapResponseToEnrollmentDetailedArray ( response : ApiResponse<EnrollmentPopulatedResponseDto[]> ) : EnrollmentDetailed[] {
         return response.data.map( this.mapResponseToEnrollmentDetailed );
     }
 }

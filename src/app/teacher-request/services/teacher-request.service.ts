@@ -4,7 +4,7 @@ import { catchError, map, Observable, of } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 import { UIService } from '@shared/services/ui/ui.service';
-import { TeacherRequestResponse, ErrorResponse } from '@shared/models/api.interfaces';
+import { ApiResponse, ErrorResponse, TeacherRequestResponseDto } from '@shared/models/api.interfaces';
 import { TeacherRequestMapper } from '@mappers/teacher-request.mapper';
 import { TeacherRequest, TeacherRequestDTO } from '@teacher-request/models/teacher-request.interfaces';
 
@@ -20,7 +20,7 @@ export class TeacherRequestService {
   // Devuelve la última solicitud del usuario logueado, o null si todavía no solicitó nada.
   public getMyTeacherRequest = ( ) : Observable<TeacherRequest | null> => {
     return this.http
-                  .post<TeacherRequestResponse>(`${this.baseURL}/me`, { } )
+                  .post<ApiResponse<TeacherRequestResponseDto>>(`${this.baseURL}/me`, { } )
                     .pipe(
                       map( ( response ) => TeacherRequestMapper.mapApiResponseToTeacherRequest( response ) ),
                       // 404 -> el usuario nunca solicitó ser profesor, no es un error a mostrar.
@@ -30,7 +30,7 @@ export class TeacherRequestService {
 
   public createTeacherRequest = ( teacherRequestDTO : TeacherRequestDTO ) : Observable<TeacherRequest | false> => {
     return this.http
-                  .post<TeacherRequestResponse>(`${this.baseURL}`, { ...teacherRequestDTO } )
+                  .post<ApiResponse<TeacherRequestResponseDto>>(`${this.baseURL}`, { ...teacherRequestDTO } )
                     .pipe(
                       map( ( response ) => TeacherRequestMapper.mapApiResponseToTeacherRequest( response ) ),
                       catchError( ( { error } : { error : ErrorResponse } ) => {

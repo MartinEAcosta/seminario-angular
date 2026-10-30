@@ -1,9 +1,9 @@
-import { TeacherRequestResponse, TeacherRequestUniqueResponse } from "@shared/models/api.interfaces";
+import { ApiResponse, TeacherRequestResponseDto } from "@shared/models/api.interfaces";
 import { TeacherRequest } from "@teacher-request/models/teacher-request.interfaces";
 
 export class TeacherRequestMapper {
 
-    static mapResponseToTeacherRequest = ( response : TeacherRequestUniqueResponse ) : TeacherRequest => {
+    static mapResponseToTeacherRequest = ( response : TeacherRequestResponseDto ) : TeacherRequest => {
         return {
             id              : response.id,
             status          : response.status,
@@ -19,7 +19,7 @@ export class TeacherRequestMapper {
         };
     }
 
-    static mapApiResponseToTeacherRequest = ( response : TeacherRequestResponse ) : TeacherRequest => {
+    static mapApiResponseToTeacherRequest = ( response : ApiResponse<TeacherRequestResponseDto> ) : TeacherRequest => {
         return this.mapResponseToTeacherRequest( response.data );
     }
 

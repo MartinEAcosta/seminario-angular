@@ -1,10 +1,9 @@
-import { ModuleListResponse , ModulePopulatedListResponse, ModuleUniqueResponse } from "@shared/models/api.interfaces";
+import { ApiResponse, ModulePopulatedResponseDto, ModuleResponseDto } from "@shared/models/api.interfaces";
 import { Module, ModuleDTO, ModulePopulated } from "@module/models/module.interfaces";
 
 export class ModuleMapper {
 
-    static mapResponseToModule = ( response : ModuleUniqueResponse ) : Module => {
-        console.log( response )
+    static mapResponseToModule = ( response : ModuleResponseDto ) : Module => {
         return {
             id        : response.id,
             id_course : response.id_course,
@@ -24,28 +23,28 @@ export class ModuleMapper {
         }
     }
 
-    static mapResponseToModuleArray = ( response : ModuleListResponse ) : Module[] => {
+    static mapResponseToModuleArray = ( response : ApiResponse<ModuleResponseDto[]> ) : Module[] => {
         return response.data.map( this.mapResponseToModule );
     }
 
-    static mapResponseToModulePopulated = ( response : ModulePopulated ) : ModulePopulated  => {
+    static mapResponseToModulePopulated = ( response : ModulePopulatedResponseDto ) : ModulePopulated  => {
         return {
             id        : response.id,
             id_course : response.id_course,
             title : response.title,
-            lessons : response.lessons.map( lesson => {
+            lessons : ( response.lessons ?? [] ).map( lesson => {
                 return {
                     id: lesson.id,
                     title: lesson.title,
                     content_type: lesson.content_type ?? null,
                     duration_minutes: lesson.duration_minutes ?? null,
                 }
-            }) || [],
+            }),
             unit : response.unit,
         };
     }
 
-    static mapResponseToModulePopulatedArray = ( response : ModulePopulatedListResponse ) : ModulePopulated[] => {
+    static mapResponseToModulePopulatedArray = ( response : ApiResponse<ModulePopulatedResponseDto[]> ) : ModulePopulated[] => {
         return response.data.map( this.mapResponseToModulePopulated );
     }
 

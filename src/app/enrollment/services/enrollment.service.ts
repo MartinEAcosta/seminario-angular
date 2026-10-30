@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
-import { EnrollmentPopulatedListResponse, EnrollmentListResponse, EnrollmentPopulatedResponse, EnrollmentResponse } from '@shared/models/api.interfaces';
+import { ApiResponse, EnrollmentPopulatedResponseDto, EnrollmentResponseDto } from '@shared/models/api.interfaces';
 import { Enrollment, EnrollmentDetailed } from '@enrollment/models/enrollment.interfaces';
 import { EnrollmentMapper } from '@mappers/enrollment.mapper';
 
@@ -27,7 +27,7 @@ export class EnrollmentService {
 
   public getAllEnrollments = ( ) : Observable<Enrollment[]> => {
     return this.http
-                    .get<EnrollmentListResponse>( `${this.baseURL}/` )
+                    .get<ApiResponse<EnrollmentResponseDto[]>>( `${this.baseURL}/` )
                     .pipe(
                       map( ( enrollmentsResponse ) => {
                         return EnrollmentMapper.mapResponseToEnrollmentArray( enrollmentsResponse );
@@ -38,7 +38,7 @@ export class EnrollmentService {
 
   public getEnrollmentPopulatedById = ( id_enrollment : string ) : Observable<EnrollmentDetailed> => {
     return this.http
-                    .get<EnrollmentPopulatedResponse>( `${this.baseURL}/${id_enrollment}` )
+                    .get<ApiResponse<EnrollmentPopulatedResponseDto>>( `${this.baseURL}/${id_enrollment}` )
                     .pipe(
                       map( ( enrollmentResponse ) => { 
                         return EnrollmentMapper.mapResponseToEnrollmentDetailed( enrollmentResponse.data );
@@ -49,7 +49,7 @@ export class EnrollmentService {
 
   public getEnrollmentsByUserId = ( id_user : string ) : Observable<EnrollmentDetailed[]> => {
     return this.http
-                    .get<EnrollmentPopulatedListResponse>( `${this.baseURL}/user/${id_user}` )
+                    .get<ApiResponse<EnrollmentPopulatedResponseDto[]>>( `${this.baseURL}/user/${id_user}` )
                     .pipe(
                       map( ( enrollmentsResponse ) => {
                         return EnrollmentMapper.mapResponseToEnrollmentDetailedArray( enrollmentsResponse );
@@ -60,7 +60,7 @@ export class EnrollmentService {
 
   public getEnrollmentByUserIdAndCourseId = ( id_user : string , id_course : string ) : Observable<Enrollment> => {
     return this.http
-                    .get<EnrollmentResponse>( `${this.baseURL}/user/${id_user}/course/${id_course}` )
+                    .get<ApiResponse<EnrollmentResponseDto>>( `${this.baseURL}/user/${id_user}/course/${id_course}` )
                     .pipe(
                       map( ( enrollmentResponse ) => {
                         return EnrollmentMapper.mapResponseToEnrollment( enrollmentResponse.data );

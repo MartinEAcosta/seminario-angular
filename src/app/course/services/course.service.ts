@@ -3,9 +3,9 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { Course, CourseDTO } from '@course/models/course.interfaces';
+import { Course, CourseDTO, CoursePopulated } from '@course/models/course.interfaces';
 import { CourseMapper } from '@mappers/course.mapper';
-import { DeleteResponse, CourseResponse, PaginationResponseDto, PaginationResponse } from '@shared/models/api.interfaces';
+import { ApiResponse, CoursePopulatedResponseDto, CourseResponseDto, PaginationResponse, PaginationResponseDto } from '@shared/models/api.interfaces';
 import { FileService } from '@file/services/file.service';
 import { PaginationMapper } from '@mappers/pagination.mapper';
 import { buildExploreQueryParams } from '@course/utils/obtainOptionsParams';
@@ -15,6 +15,7 @@ export type Options = {
   limit ?: number,
   title ?: string;
   id_category?: string;
+  category_name?: string;
   minPrice?: string;
   maxPrice?: string;
   notFullyEnrolled?: string;
@@ -29,15 +30,15 @@ export class CourseService {
   private http = inject(HttpClient);
   private baseURL: string = `${environment.apiURL}courses`;
 
-  public getAll = ( options ?: Options ): Observable<PaginationResponseDto<Course[]>> => {
+  public getAll = ( options ?: Options ): Observable<PaginationResponseDto<Course>> => {
     const params = options ? buildExploreQueryParams( options ) : { };
 
-    return this.http.get<PaginationResponse<Course[]>>(`${this.baseURL}`, { 
+    return this.http.get<PaginationResponse<CourseResponseDto>>(`${this.baseURL}`, {
       params,
     })
     .pipe(
       map((courseResponse) => {
-        return PaginationMapper.mapToPaginationDto<Course[]>( courseResponse );
+        return PaginationMapper.mapToPaginationDto( courseResponse, CourseMapper.mapResponseToCourse );
       }),
       catchError((error) => {
         console.log(error);
@@ -55,7 +56,7 @@ export class CourseService {
   };
 
   public getById = (id: string): Observable<Course> => {
-    return this.http.get<CourseResponse>(`${this.baseURL}/${id}`).pipe(
+    return this.http.get<ApiResponse<CourseResponseDto>>(`${this.baseURL}/${id}`).pipe(
       map((courseResponse) => {
 
         return CourseMapper.mapResponseToCourse(courseResponse.data);
@@ -68,12 +69,26 @@ export class CourseService {
     );
   };
 
+  // Mismo curso que `getById` pero con el profesor resuelto por el backend.
+  // Devuelve `Course` igual que el resto: el owner anidado se aplana en el
+  // mapper, así los componentes siguen leyendo `owner_name`/`owner_bio`.
+  public getDetailedById = ( id : string ) : Observable<CoursePopulated> => {
+    return this.http.get<ApiResponse<CoursePopulatedResponseDto>>(`${this.baseURL}/detailed/${id}`)
+      .pipe(
+        map(( courseResponse ) => CourseMapper.mapPopulatedResponseToCourse( courseResponse.data )),
+        catchError(({ error }) => {
+          console.log(error);
+          return throwError(() => new Error(`${error?.errorMessage}`));
+        })
+      );
+  }
+
   public saveCourse = ( courseRequest: CourseDTO, file: File | null = null ): Observable<Course> => {
     const { id, ...rest } = courseRequest;
     let course;
     if (id) {
       course = this.http
-        .put<CourseResponse>(`${this.baseURL}/update/${id}`, rest)
+        .put<ApiResponse<CourseResponseDto>>(`${this.baseURL}/update/${id}`, rest)
         .pipe(
           map((courseResponse) => {
             course = CourseMapper.mapResponseToCourse(courseResponse.data);
@@ -90,7 +105,7 @@ export class CourseService {
     } 
     else {
       course = this.http
-        .post<CourseResponse>(`${this.baseURL}/new`, rest)
+        .post<ApiResponse<CourseResponseDto>>(`${this.baseURL}/new`, rest)
         .pipe(
           map((courseResponse) => {
             course = CourseMapper.mapResponseToCourse(courseResponse.data);
@@ -112,7 +127,7 @@ export class CourseService {
 
   public deleteCourse = (id: string): Observable<boolean> => {
     return this.http
-      .delete<DeleteResponse>(`${this.baseURL}/delete/${id}`)
+      .delete<ApiResponse<boolean>>(`${this.baseURL}/delete/${id}`)
       .pipe(
         map((courseResponse) => {
           return courseResponse.ok;

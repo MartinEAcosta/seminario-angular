@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 
 import { LessonMapper } from '@mappers/lesson.mapper';
 import { Lesson, LessonPopulated, SaveLessonDto } from '@lesson/models/lesson.interfaces';
-import { DeleteResponse, LessonPopulatedListResponse, LessonPopulatedResponse, LessonResponse } from '@shared/models/api.interfaces';
+import { ApiResponse, LessonPopulatedResponseDto, LessonResponseDto } from '@shared/models/api.interfaces';
 import { FileService } from '@file/services/file.service';
 
 @Injectable({
@@ -21,7 +21,7 @@ export class LessonService {
 
   public getAllLessonPopulatedFromCourse = ( id_course : string ) : Observable<LessonPopulated[]> => {
     return this.http
-                    .get<LessonPopulatedListResponse>(`${this.baseURL}/populated/course/${id_course}`)
+                    .get<ApiResponse<LessonPopulatedResponseDto[]>>(`${this.baseURL}/populated/course/${id_course}`)
                     .pipe(
                       map( (lessonResponse) => {
                         // console.log(lessonResponse)
@@ -49,7 +49,7 @@ export class LessonService {
 
   public getLessonPopulatedById = ( id_lesson : string ) => {
     return this.http
-                    .get<LessonPopulatedResponse>( `${this.baseURL}/populated/${id_lesson}` )
+                    .get<ApiResponse<LessonPopulatedResponseDto>>(`${this.baseURL}/populated/${id_lesson}` )
                     .pipe(
                       map( (lessonResponse) => {
                         return LessonMapper.mapResponseToLessonPopulated( lessonResponse.data );
@@ -63,7 +63,7 @@ export class LessonService {
 
   public getNextLesson = ( id_enrollment : string ) : Observable<LessonPopulated> => {
     return this.http
-                    .get<LessonPopulatedResponse>( `${this.baseURL}/next/${id_enrollment}` )
+                    .get<ApiResponse<LessonPopulatedResponseDto>>(`${this.baseURL}/next/${id_enrollment}` )
                     .pipe(
                       map( ( lessonResponse ) => {
                           console.log(lessonResponse)
@@ -81,7 +81,7 @@ export class LessonService {
 
     if( id ){
       return this.http
-            .put<LessonResponse>(`${this.baseURL}/update/${id}` , lessonRequest )
+            .put<ApiResponse<LessonResponseDto>>(`${this.baseURL}/update/${id}` , lessonRequest )
             .pipe(
               map( (lessonResponse) =>{
                 return LessonMapper.mapResponseToLesson( lessonResponse.data );
@@ -100,7 +100,7 @@ export class LessonService {
     }
     else{
       return this.http
-                  .post<LessonResponse>(`${this.baseURL}/new` , rest )
+                  .post<ApiResponse<LessonResponseDto>>(`${this.baseURL}/new` , rest )
                   .pipe(
                     map( (lessonResponse) =>{
                       return LessonMapper.mapResponseToLesson( lessonResponse.data );
@@ -121,7 +121,7 @@ export class LessonService {
 
   public deleteLesson = ( id_lesson : string ) : Observable<boolean> => {
     return this.http
-            .delete<DeleteResponse>(`${this.baseURL}/delete/${id_lesson}` )
+            .delete<ApiResponse<boolean>>(`${this.baseURL}/delete/${id_lesson}` )
             .pipe(
               map( (response) =>{
                 return response.data;

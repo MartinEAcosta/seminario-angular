@@ -5,7 +5,7 @@ import { OrderMapper } from '@mappers/order.mapper';
 import { catchError, map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
-import { IdentificationTypeListResponse, IssuerListResponse, OrderResponse, TotalResponse } from '@shared/models/api.interfaces';
+import { ApiResponse, IdentificationTypeResponseDto, IssuerResponseDto, OrderResponseDto } from '@shared/models/api.interfaces';
 import { IdentificationType, Issuer, CreateOrderRequestDTO } from '../models/payment.interface';
 import { Order } from '../models/order.interface';
 import { ItemQuantity } from '@cart/models/cart.interface';
@@ -21,21 +21,9 @@ export class PaymentService {
 
   constructor() { }
 
-  // No se usa en el flujo de Fields: los payment methods se resuelven client-side vía mp.getPaymentMethods({bin}).
-  public getAllPaymentMethods = ( ) : Observable<Issuer[]>=> {
-    return this.http
-                .get<IssuerListResponse>(`${this.baseURL}/methods`)
-                .pipe(
-                  map( ( paymentResponse ) => {
-                    return PaymentMapper.mapIssuerListResponseToEntityArray(paymentResponse);
-                  }),
-                  catchError((error) => { throw error; })
-                )
-  }
-  
   public getAllIdentificationTypes = ( ) : Observable<IdentificationType[]> => {
     return this.http
-                .get<IdentificationTypeListResponse>(`${this.baseURL}/identification-types`)
+                .get<ApiResponse<IdentificationTypeResponseDto[]>>(`${this.baseURL}/identification-types`)
                 .pipe(
                   map( ( paymentResponse ) => {
                     return PaymentMapper.mapIdentificationTypeListResponseToEntityArray( paymentResponse )
@@ -48,7 +36,7 @@ export class PaymentService {
   // gateway responde 'processed', genera las inscripciones antes de contestar.
   public createOrder = ( payload : CreateOrderRequestDTO ) : Observable<Order> => {
     return this.http
-                .post<OrderResponse>(`${this.ordersURL}/`, payload)
+                .post<ApiResponse<OrderResponseDto>>(`${this.ordersURL}/`, payload)
                 .pipe(
                   map( ( orderResponse ) => {
                     return OrderMapper.mapCreateOrderResponseToEntity( orderResponse );
@@ -59,7 +47,7 @@ export class PaymentService {
 
   public calculateTotal = ( items : ItemQuantity[] ) : Observable<number> => {
     return this.http
-                .post<TotalResponse>(`${this.baseURL}/total` , { items } )
+                .post<ApiResponse<number>>(`${this.baseURL}/total` , { items } )
                 .pipe(
                   map( ( paymentResponse ) => {
                     return paymentResponse.data;

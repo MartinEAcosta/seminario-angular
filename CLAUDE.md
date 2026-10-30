@@ -24,6 +24,27 @@ Runtime dependencies are deliberately few: Angular + `rxjs`, `video.js`, `@merca
 
 **`ng test` currently fails to build** (pre-existing, not caused by your change). Unresolved imports: `shared/pages/explore/explore-page.spec.ts`, `shared/pagination/services/pagination.service.spec.ts`, the `enrollment-card` spec, and a `lesson-form-state` spec — all point at moved/renamed files; plus `angular.json`'s test `styles` references `node_modules/@videojs/themes/dist/fantasy/index.css`, a package that isn't in `package.json`. Fix those spec paths and drop/install the theme before trusting test output.
 
+## Working agreement: resolve open questions before building on them
+
+Do not keep building work that a later answer could invalidate. When something is unresolved — an ambiguous requ
+irement, a missing decision, a half-finished piece of work, an assumption you cannot verify in the code — stop a
+t that point and either:
+
+1. **Hand it over.** Deliver what is already complete and usable, and state plainly what is unfinished and why.
+2. **Interview me.** Ask the specific question(s) needed to unblock, one decision at a time, with the options an
+d the trade-off for each.
+
+Rules:
+
+- Never silently pick an interpretation and build a large amount of code on top of it. Small, reversible judgmen
+t calls are fine — state the assumption and move on.
+- If different readings of the request would produce materially different code, that is a blocking question: ask
+ before writing the code, not after.
+- Finish every part of the task that does **not** depend on the open question first. Only the dependent part wai
+ts.
+- When reporting back, be explicit: what is done, what is blocked, what question unblocks it.
+- Partial work that is about to be thrown away is worse than no work. Prefer asking.
+
 ## Conventions
 
 Files are `<name>.component.ts|html|scss` (+ `.spec.ts`), class `<Name>Component`, selector `app-<name>`; services `<name>.service.ts`, state `<name>-state.ts`. Standalone is implicit — no component declares `standalone: true`. DI is always `inject()`, never constructor params. Public service methods are frequently arrow-function class properties.

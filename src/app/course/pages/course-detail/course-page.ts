@@ -40,7 +40,7 @@ export class CoursePage {
     stream : ( { params  } ) => {
       if( params.id === '' ) return of();
 
-      return this.courseService.getById( params.id )
+      return this.courseService.getDetailedById( params.id )
     },
   });
 

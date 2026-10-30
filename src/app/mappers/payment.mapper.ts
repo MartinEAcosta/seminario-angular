@@ -1,14 +1,13 @@
-import { TotalResponse } from '@shared/models/api.interfaces';
 import { Issuer , IdentificationType } from "@payment/models/payment.interface";
-import { IdentificationTypeListResponse, IndentificationTypeUniqueResponse, IssuerListResponse, IssuerUniqueResponse } from "@shared/models/api.interfaces";
+import { ApiResponse, IdentificationTypeResponseDto, IssuerResponseDto } from "@shared/models/api.interfaces";
 
 export class PaymentMapper {
 
-    static mapIssuerListResponseToEntityArray = ( response : IssuerListResponse ) : Issuer[] => {
+    static mapIssuerListResponseToEntityArray = ( response : ApiResponse<IssuerResponseDto[]> ) : Issuer[] => {
         return response.data.map(PaymentMapper.mapIssuerResponseToEntity);
     };
 
-    static mapIssuerResponseToEntity = ( response : IssuerUniqueResponse ) : Issuer => {
+    static mapIssuerResponseToEntity = ( response : IssuerResponseDto ) : Issuer => {
         return {
             id : response.id,
             name: response.name,
@@ -18,7 +17,7 @@ export class PaymentMapper {
         };
     };
 
-    static mapIdentificationTypeResponseToEntity = ( response : IndentificationTypeUniqueResponse ) : IdentificationType => {
+    static mapIdentificationTypeResponseToEntity = ( response : IdentificationTypeResponseDto ) : IdentificationType => {
         return {
             id : response.id,
             name : response.name,
@@ -28,11 +27,11 @@ export class PaymentMapper {
         };
     };
 
-    static mapIdentificationTypeListResponseToEntityArray = ( response : IdentificationTypeListResponse ) : IdentificationType[] => {
+    static mapIdentificationTypeListResponseToEntityArray = ( response : ApiResponse<IdentificationTypeResponseDto[]> ) : IdentificationType[] => {
         return response.data.map( PaymentMapper.mapIdentificationTypeResponseToEntity );
     };
 
-    static mapTotalResponseToNumber = ( response : TotalResponse ) : number => {
+    static mapTotalResponseToNumber = ( response : ApiResponse<number> ) : number => {
         return response.data!;
     }
 }

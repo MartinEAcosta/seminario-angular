@@ -4,7 +4,7 @@ import { catchError, forkJoin, map, Observable, of, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 import { FileMapper } from '@mappers/file.mapper';
-import { DeleteResponse, FileResponse } from '@shared/models/api.interfaces';
+import { ApiResponse, FileResponseDto } from '@shared/models/api.interfaces';
 import { UploadedFile, UploadFolder } from '@file/models/file.interfaces';
 import { CourseFormState } from '@course/state/course-form/course-form-state';
 import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
@@ -39,7 +39,7 @@ export class FileService {
     const formData = new FormData( );
     formData.append( 'files', file );
     return this.http
-                .post<FileResponse>(
+                .post<ApiResponse<FileResponseDto>>(
                                     `${this.baseURL}/upload/single/${folder}/${id_entity}`, 
                                     formData,
                                   )
@@ -54,10 +54,10 @@ export class FileService {
                                   );
   }
 
-  deleteFile = ( id : string ) : Observable<DeleteResponse> => {
+  deleteFile = ( id : string ) : Observable<ApiResponse<boolean>> => {
     console.log(id)
     return this.http
-                .delete<DeleteResponse>(
+                .delete<ApiResponse<boolean>>(
                                       `${this.baseURL}/${id}`,
                                     )
                                     .pipe(
@@ -70,9 +70,9 @@ export class FileService {
                                     );
   }
   
-  deleteCourseThumbnail = ( id : string ) : Observable<DeleteResponse> => {
+  deleteCourseThumbnail = ( id : string ) : Observable<ApiResponse<boolean>> => {
     return this.http
-                .delete<DeleteResponse>(
+                .delete<ApiResponse<boolean>>(
                                       `${this.baseURL}/course-thumbnail/${id}`,
                                     )
                                     .pipe(
@@ -88,7 +88,7 @@ export class FileService {
 
   getFileByPublicId = ( public_id : string ) => {
     return this.http
-                .get<FileResponse>(
+                .get<ApiResponse<FileResponseDto>>(
                                     `${this.baseURL}/get/${public_id}`
                                   )
                                   .pipe(

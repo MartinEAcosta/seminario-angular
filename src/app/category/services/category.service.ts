@@ -1,4 +1,4 @@
-import { CategoryListResponse } from '@shared/models/api.interfaces';
+import { ApiResponse, CategoryResponseDto } from '@shared/models/api.interfaces';
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -18,7 +18,7 @@ export class CategoryService {
 
   public getAllCategories = ( ) : Observable<Category[]> => {
     return this.http
-                  .get<CategoryListResponse>(`${this.baseURL}`)
+                  .get<ApiResponse<CategoryResponseDto[]>>(`${this.baseURL}`)
                     .pipe(
                       map( ( categoryResponse ) => {
                           // console.log(categoryResponse);

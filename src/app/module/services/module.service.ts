@@ -4,7 +4,7 @@ import { ModuleMapper } from '@mappers/module.mapper';
 import { catchError, map, Observable, throwError } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { ModulePopulatedListResponse, ModuleResponse } from '@shared/models/api.interfaces';
+import { ApiResponse, ModulePopulatedResponseDto, ModuleResponseDto } from '@shared/models/api.interfaces';
 import { Module, ModuleDTO, ModulePopulated } from '../models/module.interfaces';
 
 @Injectable({
@@ -22,7 +22,7 @@ export class ModuleService {
 
     if( id ){
       return this.http
-                    .put<ModuleResponse>(`${this.baseURL}/update/${id}` , moduleRequest )
+                    .put<ApiResponse<ModuleResponseDto>>(`${this.baseURL}/update/${id}` , moduleRequest )
                     .pipe(
                     map(( modulesResponse ) => {
                       return ModuleMapper.mapResponseToModule(modulesResponse.data);
@@ -34,7 +34,7 @@ export class ModuleService {
     }
     else{
       return this.http
-                    .post<ModuleResponse>(`${this.baseURL}/new` , rest )
+                    .post<ApiResponse<ModuleResponseDto>>(`${this.baseURL}/new` , rest )
                     .pipe(
                     map(( modulesResponse ) => {
                       return ModuleMapper.mapResponseToModule(modulesResponse.data);
@@ -48,7 +48,7 @@ export class ModuleService {
 
   public getModulesByCourseId = ( id_course : string ) : Observable<ModulePopulated[]> => {
     return this.http
-                .get<ModulePopulatedListResponse>(`${this.baseURL}/course/detailed/${id_course}`)
+                .get<ApiResponse<ModulePopulatedResponseDto[]>>(`${this.baseURL}/course/detailed/${id_course}`)
                 .pipe(
                   map(( modulesResponse ) => {
                     return ModuleMapper.mapResponseToModulePopulatedArray(modulesResponse);

@@ -1,4 +1,4 @@
-import { OrderResponse, OrderUniqueResponse } from '@shared/models/api.interfaces';
+import { ApiResponse, OrderResponseDto } from '@shared/models/api.interfaces';
 import { Order, OrderStatus } from '@payment/models/order.interface';
 
 export class OrderMapper {
@@ -21,7 +21,7 @@ export class OrderMapper {
         }
     };
 
-    static mapOrderResponseToEntity = ( response : OrderUniqueResponse ) : Order => {
+    static mapOrderResponseToEntity = ( response : OrderResponseDto ) : Order => {
         return {
             id        : response.id,
             gatewayId : response.id_payment ?? null,
@@ -31,7 +31,7 @@ export class OrderMapper {
         };
     };
 
-    static mapCreateOrderResponseToEntity = ( response : OrderResponse ) : Order => {
+    static mapCreateOrderResponseToEntity = ( response : ApiResponse<OrderResponseDto> ) : Order => {
         return OrderMapper.mapOrderResponseToEntity( response.data );
     };
 

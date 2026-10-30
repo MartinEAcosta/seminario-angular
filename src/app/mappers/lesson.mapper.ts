@@ -1,5 +1,5 @@
 import { FormGroup } from "@angular/forms";
-import { LessonListResponse, LessonPopulatedListResponse, LessonPopulatedUniqueResponse, LessonUniqueResponse } from "@shared/models/api.interfaces";
+import { ApiResponse, LessonPopulatedResponseDto, LessonResponseDto } from "@shared/models/api.interfaces";
 import { Lesson, LessonPopulated, SaveLessonDto } from "@lesson/models/lesson.interfaces";
 
 export class LessonMapper {
@@ -13,7 +13,7 @@ export class LessonMapper {
         };
     };
 
-    static mapResponseToLesson = ( response : LessonUniqueResponse ) : Lesson => {
+    static mapResponseToLesson = ( response : LessonResponseDto ) : Lesson => {
         return {
             id        : response.id,
             id_course : response.id_course,
@@ -26,11 +26,11 @@ export class LessonMapper {
         };
     }
 
-    static mapResponseToLessonArray( response : LessonListResponse ) : Lesson[] {
+    static mapResponseToLessonArray( response : ApiResponse<LessonResponseDto[]> ) : Lesson[] {
         return response.data.map( this.mapResponseToLesson );
     }
 
-    static mapResponseToLessonPopulated = ( response : LessonPopulatedUniqueResponse ) : LessonPopulated => {
+    static mapResponseToLessonPopulated = ( response : LessonPopulatedResponseDto ) : LessonPopulated => {
         return {
             id : response.id,
             id_course : response.id_course,
@@ -48,7 +48,7 @@ export class LessonMapper {
         }
     }
 
-    static mapResponseToLessonPopulatedArray( response : LessonPopulatedListResponse ) : LessonPopulated[] {
+    static mapResponseToLessonPopulatedArray( response : ApiResponse<LessonPopulatedResponseDto[]> ) : LessonPopulated[] {
         return response.data.map( this.mapResponseToLessonPopulated );
     }
 }

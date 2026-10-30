@@ -10,6 +10,7 @@ export const buildExploreQueryParams = ( options : Options ) : Options => {
     ...params,
     ...( options.title && { title : options.title.toLowerCase().trim() } ),
     ...( options.id_category && { id_category : options.id_category } ),
+    ...( options.category_name && { category_name : options.category_name } ),
     ...( options.minPrice && { minPrice : options.minPrice } ),
     ...( options.maxPrice && { maxPrice : options.maxPrice } ),
     ...( options.notFullyEnrolled && { notFullyEnrolled : options.notFullyEnrolled } ),

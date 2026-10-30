@@ -13,24 +13,14 @@ export interface Course {
     spots_remaining?: number | null;
 };
 
-export interface CoursePopulated {
-    id              : string;
-    title           : string;
-    description     : string;
-    id_category     : string;
-    category_name   : string;
-    thumbnail_url   : string | null;
-    id_file         : string | null;
+export interface CoursePopulated extends Course {
     owner           : {
         id : string;
         username : string;
         email : string;
         avatar_url : string | null;
+        bio ?: string | null;
     };
-    price           : number;
-    current_enrolled: number;
-    capacity?       : number | null;
-    spots_remaining?: number | null;
 };
 
 export interface CourseDTO {

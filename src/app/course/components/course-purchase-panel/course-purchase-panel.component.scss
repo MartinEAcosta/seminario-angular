@@ -100,6 +100,12 @@
 
 .btn-add-to-cart.is-in-cart{
     background-color: v.$green-success;
+
+    // El anillo del sistema (brand-color-deep) cae bajo 3:1 contra el verde
+    // de confirmación (1.98:1): en este estado el foco se ve en blanco.
+    &:focus-visible{
+        outline-color: #ffffff;
+    }
 }
 
 .btn-add-to-cart.is-in-cart:hover{
@@ -218,7 +224,7 @@
     .spots-text{
         grid-column: 1;
         grid-row: 2;
-        font-size: 0.75rem;
+        font-size: v.$text-sm;
     }
 
     .btn-continue,

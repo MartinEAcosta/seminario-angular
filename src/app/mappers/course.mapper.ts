@@ -47,11 +47,13 @@ export class CourseMapper {
             category_name: response.category_name,
             thumbnail_url: response.thumbnail_url ?? "",
             id_file: response.id_file ?? "",
+            id_owner: response.owner.id,
             owner: {
                 id : response.owner.id,
                 username : response.owner.username,
                 email : response.owner.email,
                 avatar_url : response.owner.avatar_url ?? '',
+                bio : response.owner.bio ?? null,
             },
             price: response.price ?? 0,
             current_enrolled: response.current_enrolled,

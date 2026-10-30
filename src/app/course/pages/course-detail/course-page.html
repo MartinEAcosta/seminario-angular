@@ -25,12 +25,12 @@
                         <p class="about-text">{{ courseResource.value().description }}</p>
                     </section>
 
-                    @if( courseResource.value().owner_name ) {
+                    @if( courseResource.value().owner ) {
                         <app-course-instructor
                             variant="card"
-                            [name]="courseResource.value().owner_name"
-                            [avatarUrl]="courseResource.value().owner_avatar_url"
-                            [bio]="courseResource.value().owner_bio" />
+                            [name]="courseResource.value().owner.username"
+                            [avatarUrl]="courseResource.value().owner.avatar_url"
+                            [bio]="courseResource.value().owner.bio ?? null" />
                     }
                 </div>
 

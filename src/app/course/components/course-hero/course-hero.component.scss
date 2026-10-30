@@ -55,7 +55,8 @@
     max-width: 48ch;
     font-family: v.$font-primary;
     font-size: v.$text-base;
-    line-height: 1.6;
+    line-height: 1.65;
+    letter-spacing: 0.01em;
     color: rgba(233, 233, 233, 0.72);
 }
 
@@ -130,7 +131,7 @@ app-course-instructor{
         backdrop-filter: blur(6px);
         -webkit-backdrop-filter: blur(6px);
         font-family: v.$font-primary;
-        font-size: 0.72rem;
+        font-size: v.$text-sm;
         font-weight: 700;
         letter-spacing: 0.08em;
         text-transform: uppercase;
@@ -176,7 +177,7 @@ app-course-instructor{
 
     .hero-stat dt{
         font-family: v.$font-primary;
-        font-size: 0.7rem;
+        font-size: v.$text-sm;
         font-weight: 600;
         letter-spacing: 0.06em;
         color: rgba(233, 233, 233, 0.6);

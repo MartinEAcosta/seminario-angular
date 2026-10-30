@@ -29,7 +29,7 @@
                 type="button"
                 class="btn-add-to-cart"
                 [class.is-in-cart]="isInCart()"
-                [attr.aria-label]="'Añadir ' + course().title + ' al carrito'"
+                [attr.aria-label]="isInCart() ? course().title + ' ya está en el carrito' : 'Añadir ' + course().title + ' al carrito'"
                 (click)="onAddToCart()">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
                     stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

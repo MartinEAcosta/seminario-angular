@@ -94,10 +94,6 @@ $panel-media-height: 180px; // 320px en 16/9
     margin-top: -80px;
     padding: calc(80px + #{v.$space-md}) 6% v.$space-md;
     background-color: #0e1a1a;
-    // Trama de puntos de 24px, apenas visible: da textura a la sala oscura sin
-    // meter un degradado de relleno.
-    background-image: radial-gradient(rgba(45, 170, 190, 0.14) 1px, transparent 1px);
-    background-size: 24px 24px;
 }
 
 .hero-band .band-inner{

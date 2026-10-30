@@ -1,7 +1,7 @@
 import { Component, computed, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { Course } from '@course/models/course.interfaces';
+import { CoursePopulated } from '@course/models/course.interfaces';
 import { ModulePopulated } from '@module/models/module.interfaces';
 import { CourseInstructorComponent } from '@course/components/course-instructor/course-instructor.component';
 import { computeModuleStats, formatDuration } from '@utils/module-stats';
@@ -17,7 +17,7 @@ import { computeModuleStats, formatDuration } from '@utils/module-stats';
 })
 export class CourseHeroComponent {
 
-  course = input.required<Course>();
+  course = input.required<CoursePopulated>();
   modules = input<ModulePopulated[]>([]);
 
   stats = computed( () => computeModuleStats( this.modules() ) );

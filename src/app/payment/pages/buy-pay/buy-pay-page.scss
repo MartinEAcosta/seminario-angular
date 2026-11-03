@@ -1,50 +1,173 @@
-@use '../../../../variables.scss' as v;
+@use '@variables' as v;
 
-.pay-layout{
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 2.5rem;
+// Tokens locales derivados de variables.scss (mismo patrón que purchase-summary
+// y cart.component): el ticket de carrito vacío necesita despegarse del fondo
+// gris de la página, por eso usa blanco puro + sombra difusa.
+$ticket-bg: #fff;
+$ticket-radius: 12px;
+
+.container-header{
+    padding: 0 0 v.$space-md;
 }
 
-.container-resume{
+// Sin max-width/margin:auto: igual que explore-page/enrollments-page, el
+// contenido corre a ancho completo dentro de container-content y respeta
+// sus mismos bordes (4% 5%) en vez de flotar centrado con un margen propio.
+.checkout-layout{
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: v.$space-md;
+    width: 100%;
+}
+
+// Orden visual = orden de lectura: el pedido primero, el pago después. En
+// mobile ambas columnas pasan a 100% y se apilan en ese mismo orden.
+// Proporción 45/55 vía flex-grow (no max-width fijo): reparte el espacio
+// disponible siempre en esa razón exacta, sin importar el ancho de viewport.
+.order-column{
     display: flex;
     flex-direction: column;
-    flex: 0 1 380px;
+    flex: 45 1 320px;
     min-width: 320px;
-    max-width: 380px;
     align-items: stretch;
+}
+
+// El sticky va en el hijo, no en .order-column: align-items:stretch ya
+// estira la columna a la altura de .pay-column, así que si el sticky
+// estuviera en la columna misma no tendría recorrido (su propia caja ya
+// ocupa todo el alto disponible) y nunca llegaría a engancharse.
+app-purchase-summary{
+    display: block;
+    position: sticky;
+    top: 1.5rem;
+}
+
+.pay-column{
+    flex: 55 1 320px;
+    min-width: 320px;
+}
+
+.empty-cart-container{
+    display: flex;
+    justify-content: center;
+}
+
+.ticket{
+    box-sizing: border-box;
+    width: 100%;
+    background-color: $ticket-bg;
+    border-radius: $ticket-radius;
+    box-shadow: v.$shadow-surface-rest;
+    padding: 1.75rem 1.5rem;
+}
+
+.empty-cart-ticket{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    max-width: 34rem;
     font-family: v.$font-primary;
     color: v.$black-custom;
 }
 
-.pay-form{
-    flex: 1 1 0%;
-    min-width: 320px;
+.empty-cart-stub{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    background-color: color-mix(in srgb, v.$brand-color 12%, white);
 }
 
-.back-link{
-    display: inline-block;
-    margin-bottom: 1rem;
-    color: v.$brand-color;
-    font-family: v.$font-primary;
+.empty-cart-icon{
+    width: 2.25rem;
+    height: 2.25rem;
+    stroke: v.$brand-color;
+    fill: none;
+}
+
+.empty-cart-divider{
+    align-self: stretch;
+    flex: 0 0 auto;
+    width: 0;
+    border-left: dashed thin rgba(v.$black-custom, 0.25);
+}
+
+.empty-cart-copy{
+    min-width: 0;
+}
+
+.empty-cart-title{
+    margin: 0 0 0.5rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.25;
+}
+
+.empty-cart-subtitle{
+    margin: 0 0 1.25rem;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: rgba(v.$black-custom, 0.65);
+}
+
+.empty-cart-cta{
+    display: inline-flex;
+    align-items: center;
+    padding: 0.7rem 1.5rem;
+    border-radius: 999px;
+    background-color: v.$brand-color;
+    color: v.$white-custom;
     font-weight: 600;
     text-decoration: none;
+    transition: all 0.3s ease;
 }
 
-.back-link:hover{
-    text-decoration: underline;
+.empty-cart-cta:hover{
+    background-color: v.$brand-color-deep;
+    transform: translateY(v.$lift-control);
 }
 
-@media (max-width: 768px) {
-    .pay-layout{
+.empty-cart-cta:focus-visible{
+    @include v.focus-ring($color: v.$brand-color);
+}
+
+@include v.bp-down('md'){
+    .checkout-layout{
         flex-direction: column;
     }
 
-    .container-resume,
-    .pay-form{
+    .order-column,
+    .pay-column{
         flex-basis: 100%;
         min-width: 0;
+        max-width: none;
         width: 100%;
+    }
+
+    app-purchase-summary{
+        position: static;
+    }
+
+    .ticket{
+        padding: 1.25rem 1rem;
+    }
+
+    .empty-cart-ticket{
+        flex-direction: column;
+        text-align: center;
+        gap: 1.25rem;
+    }
+
+    .empty-cart-divider{
+        align-self: stretch;
+        width: auto;
+        height: 0;
+        border-left: none;
+        border-top: dashed thin rgba(v.$black-custom, 0.25);
     }
 }

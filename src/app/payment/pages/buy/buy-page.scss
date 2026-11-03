@@ -2,40 +2,20 @@
 
 .container-bg {
     width: 100%;
-    overflow: hidden;
     background-color: v.$white-custom;
+    // El header sticky reserva 80px de flow antes de esta sección; sin este
+    // margin/padding, esa franja queda sin pintar (fondo del body) y se ve
+    // como una línea clara bajo el header glass. Mismo patrón que
+    // explore-page.scss / enrollments-page.scss.
+    margin-top: -80px;
+    padding-top: 80px;
 }
 
-.container-header{
-    padding: 4% 5% 1%;
-}
-
-.wizard-layout{
+.container-content{
     display: flex;
-    align-items: flex-start;
-    gap: 4rem;
-    margin: 0 5% 2%;
-}
-
-.wizard-content{
-    flex: 1;
-    min-width: 0;
-    padding-left: 2rem;
-    border-left: 1px solid rgba(v.$black-custom, 0.08);
-}
-
-@media (max-width: 768px) {
-    .container-header{
-        padding: 6% 6% 2%;
-    }
-
-    .wizard-layout{
-        flex-direction: column;
-        margin: 0 5% 6%;
-    }
-
-    .wizard-content{
-        padding-left: 0;
-        border-left: none;
-    }
+    flex-direction: column;
+    position: relative;
+    padding: 4% 5%;
+    height: 100%;
+    top: 0px;
 }

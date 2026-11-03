@@ -1,15 +1,37 @@
-<div class="ticket">
-    <h2 class="title-resume">Resumen de la compra</h2>
-    <div class="detailed-resume">
-        @for (item of cart().items.values(); track item) {
-            <div class="item-reserved">
-                <small class="course-title"> {{ item.course.title }}</small>
-                <small> <span class="text-bold"> Precio unitario: </span> {{ item.course.price | currency}}</small>
+<div class="order-card">
+    <button
+        type="button"
+        class="summary-toggle"
+        [attr.aria-expanded]="!collapsed()"
+        aria-controls="order-items"
+        (click)="toggleCollapsed()">
+        <span class="toggle-label">Tu pedido · {{ itemCount() }} {{ itemCount() === 1 ? 'curso' : 'cursos' }}</span>
+        <span class="toggle-right">
+            <span class="toggle-total">{{ total() | currency }}</span>
+            <svg class="toggle-chevron" [class.open]="!collapsed()" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </span>
+    </button>
+
+    <h2 class="order-heading">Tu pedido <span class="order-count">{{ itemCount() }} {{ itemCount() === 1 ? 'curso' : 'cursos' }}</span></h2>
+
+    <div class="order-body" id="order-items" [class.collapsed]="collapsed()">
+        <div class="order-items">
+            @for (item of items(); track item.course.id) {
+                <app-cart-panel-item [item]="item" />
+            }
+        </div>
+
+        <div class="order-totals">
+            <div class="row-subtotal">
+                <span>Subtotal</span>
+                <span>{{ total() | currency }}</span>
             </div>
-        }
-        <div class="ticket-total">
-            <small class="text-bold">Total a pagar: {{ total() | currency }}</small>
+            <div class="row-total">
+                <span>Total</span>
+                <span>{{ total() | currency }}</span>
+            </div>
         </div>
     </div>
-    <ng-content />
 </div>

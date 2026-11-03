@@ -5,69 +5,150 @@
     width: 100%;
 }
 
-$ticket-bg: #fff;
-$ticket-shadow: 0 10px 30px rgba(v.$black-custom, 0.12);
-$ticket-accent: v.$brand-color;
-$ticket-radius: 12px;
-
-.ticket{
+.order-card{
     box-sizing: border-box;
     width: 100%;
-    background-color: $ticket-bg;
-    border-radius: $ticket-radius;
-    box-shadow: $ticket-shadow;
-    border-top: 4px solid $ticket-accent;
-    padding: 1.75rem 1.5rem;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: v.$shadow-surface-rest;
+    padding: v.$space-sm;
 }
 
-.text-bold{
-    font-weight: bold;
+// Encabezado fijo de escritorio: "Tu pedido  2 cursos". Oculto en mobile,
+// donde el mismo rol lo cumple .summary-toggle (interactivo, colapsable).
+.order-heading{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: v.$space-xs;
+    margin: 0 0 v.$space-sm;
+    font-family: v.$font-primary;
+    font-weight: 800;
+    font-size: v.$text-xl;
+    color: v.$black-custom;
 }
 
-.title-resume{
-    margin: 0 0 1.25rem;
-    font-size: 1.35rem;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    text-align: center;
+.order-count{
+    font-weight: 500;
+    font-size: v.$text-sm;
+    color: rgba(v.$black-custom, 0.6);
 }
 
-.detailed-resume{
+.summary-toggle{
+    display: none;
+}
+
+.order-items{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    text-align: center;
+    gap: v.$space-xs;
+}
+
+.order-totals{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: v.$space-sm;
+    padding-top: v.$space-xs;
+    border-top: dashed 1px rgba(v.$black-custom, 0.25);
+    font-family: v.$font-primary;
+}
+
+.row-subtotal,
+.row-total{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.row-subtotal{
+    font-size: v.$text-sm;
+    color: rgba(v.$black-custom, 0.7);
+}
+
+.row-total{
+    margin-top: 2px;
+    font-weight: bold;
+    font-size: v.$text-lg;
+    color: v.$black-custom;
+}
+
+.row-total span:last-child{
     font-variant-numeric: tabular-nums;
 }
 
-.item-reserved{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding: 0.5rem;
-    margin: auto;
-    border-bottom: dashed thin rgba(v.$black-custom, 0.25);
-}
+@include v.bp-down('md'){
+    .order-heading{
+        display: none;
+    }
 
-.ticket-total{
-    width: 100%;
-    margin-top: 0.5rem;
-    padding-top: 0.75rem;
-    border-top: 2px solid $ticket-accent;
-    font-size: 1.1rem;
-    color: $ticket-accent;
-}
+    .summary-toggle{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0;
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-family: v.$font-primary;
+        color: v.$black-custom;
+        text-align: left;
+    }
 
-.course-title{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
+    .summary-toggle:focus-visible{
+        @include v.focus-ring($color: v.$brand-color);
+    }
 
-@media (max-width: 768px) {
-    .ticket{
-        padding: 1.25rem 1rem;
+    .toggle-label{
+        font-weight: 700;
+        font-size: v.$text-base;
+    }
+
+    .toggle-right{
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .toggle-total{
+        font-weight: bold;
+        font-size: v.$text-base;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .toggle-chevron{
+        color: rgba(v.$black-custom, 0.6);
+        transition: transform 0.2s ease;
+    }
+
+    .toggle-chevron.open{
+        transform: rotate(180deg);
+    }
+
+    .order-body{
+        display: grid;
+        grid-template-rows: 1fr;
+        overflow: hidden;
+        transition: grid-template-rows 0.25s ease;
+    }
+
+    .order-body > *{
+        min-height: 0;
+    }
+
+    .order-body.collapsed{
+        grid-template-rows: 0fr;
+        margin-top: 0;
+    }
+
+    .order-body:not(.collapsed){
+        margin-top: v.$space-sm;
+    }
+
+    @media (prefers-reduced-motion: reduce){
+        .order-body{
+            transition: none;
+        }
     }
 }

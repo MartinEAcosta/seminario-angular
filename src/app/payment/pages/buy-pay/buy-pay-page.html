@@ -1,11 +1,39 @@
-<a class="back-link" routerLink="../cart">Volver al carrito</a>
-
-<div class="pay-layout">
-    <div class="pay-form">
-        <app-form-card-checkout [amount]="cartService.total()" />
-    </div>
-
-    <aside class="container-resume" aria-label="Resumen de la compra">
-        <app-purchase-summary [cart]="cartService.cart()" [total]="cartService.total()" />
-    </aside>
+<div class="container-header">
+    <app-page-title
+        [eyebrow]="'Pago'"
+        [title]="'Finalizá tu compra'"
+        [subtitle]="'Revisá tu pedido y completá el pago con tarjeta.'" />
 </div>
+
+@if (!isEmpty()) {
+    <div class="checkout-layout">
+        <aside class="order-column" aria-label="Resumen del pedido">
+            <app-purchase-summary [cart]="cartService.cart()" [total]="cartService.total()" />
+        </aside>
+
+        <section class="pay-column">
+            <app-form-card-checkout [amount]="cartService.total()" />
+        </section>
+    </div>
+} @else {
+    <div class="empty-cart-container">
+        <div class="ticket empty-cart-ticket">
+            <div class="empty-cart-stub" aria-hidden="true">
+                <svg class="empty-cart-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 12h4l4.2 20.2a3 3 0 0 0 2.94 2.4h16.3a3 3 0 0 0 2.94-2.36L40 18H14" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="19" cy="40" r="2.4" stroke-width="2.5"/>
+                    <circle cx="32" cy="40" r="2.4" stroke-width="2.5"/>
+                    <path d="M24 20v9M19.5 24.5h9" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div class="empty-cart-divider" aria-hidden="true"></div>
+            <div class="empty-cart-copy">
+                <h2 class="empty-cart-title">Tu carrito está esperando su primer curso</h2>
+                <p class="empty-cart-subtitle">Todavía no agregaste nada. Elegí un curso del catálogo y arrancá cuando quieras.</p>
+                <a class="empty-cart-cta" routerLink="/explore">
+                    Ver cursos
+                </a>
+            </div>
+        </div>
+    </div>
+}

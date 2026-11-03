@@ -1,22 +1,30 @@
 <div class="container-payment">
-    <p class="text-pay">Pagar con tarjeta</p>
-    <form id="form-checkout" class="form-checkout" [formGroup]="cardholderForm" (ngSubmit)="onSubmit()">
-        <div class="top-section">
+    <h2 class="pay-heading">Pago</h2>
+    <p class="pay-method-label">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M2 10h20" stroke="currentColor" stroke-width="1.6"/>
+        </svg>
+        Tarjeta
+    </p>
 
-            <div class="container-card-number container-input-label">
-                <label class="text-label">Digitos de la tarjeta</label>
-                <div id="form-checkout__cardNumber" class="container-input cardNumber" ></div>
-            </div>
+    <form id="form-checkout" class="form-checkout" [formGroup]="cardholderForm" (ngSubmit)="onSubmit()">
+        <div class="container-card-number container-input-label">
+            <label class="text-label">Número de tarjeta</label>
+            <div id="form-checkout__cardNumber" class="container-input cardNumber" ></div>
+        </div>
+
+        <div class="top-section">
             <div class="container-expiration-date container-input-label">
-                <label class="text-label">F. Vencimiento</label>
+                <label class="text-label">Vencimiento</label>
                 <div id="form-checkout__expirationDate" class="container-input expirationDate" ></div>
             </div>
             <div class="container-securityCode container-input-label">
-                <label class="text-label">CVV</label>
+                <label class="text-label">Código de seguridad</label>
                 <div id="form-checkout__securityCode" class="container-input securityCode"></div>
             </div>
-
         </div>
+
         <div class="container-input-label container-cardHolderInfo">
             <div class="column">
                 <label class="text-label">Nombre</label>
@@ -25,7 +33,7 @@
                     [class.hasError]="cardholderForm.controls.firstName.invalid && cardholderForm.controls.firstName.touched"
                     type="text"
                     formControlName="firstName"
-                    placeholder="Nombre" />
+                    placeholder="Ana" />
             </div>
 
             <div class="column">
@@ -35,11 +43,13 @@
                     [class.hasError]="cardholderForm.controls.lastName.invalid && cardholderForm.controls.lastName.touched"
                     type="text"
                     formControlName="lastName"
-                    placeholder="Apellido" />
+                    placeholder="Pérez" />
             </div>
+        </div>
 
-            <div class="container-input-label">
-                <label class="text-label">Documento</label>
+        <div class="container-input-label container-docAndInstallments">
+            <div class="column doc-column">
+                <label class="text-label">DNI del titular</label>
                 <div class="identificationInfo container-select-input">
                     <select class="select-identificationType" formControlName="identificationType">
                         @if( checkoutFormState.identificationTypeResource.hasValue() ){
@@ -56,24 +66,24 @@
                         placeholder="12345678" />
                 </div>
             </div>
+
+            @if (checkoutFormState.installmentOptions().length > 0) {
+                <div class="column">
+                    <label class="text-label">Cuotas</label>
+                    <select
+                        class="select-installments container-input"
+                        [value]="checkoutFormState.selectedInstallments()"
+                        (change)="onInstallmentsChange($event)">
+                        @for (option of checkoutFormState.installmentOptions(); track option.installments) {
+                            <option [value]="option.installments">{{ option.recommended_message }}</option>
+                        }
+                    </select>
+                </div>
+            }
         </div>
 
-        @if (checkoutFormState.installmentOptions().length > 0) {
-            <div class="container-input-label">
-                <label class="text-label">Cuotas</label>
-                <select
-                    class="select-installments container-input"
-                    [value]="checkoutFormState.selectedInstallments()"
-                    (change)="onInstallmentsChange($event)">
-                    @for (option of checkoutFormState.installmentOptions(); track option.installments) {
-                        <option [value]="option.installments">{{ option.recommended_message }}</option>
-                    }
-                </select>
-            </div>
-        }
-
-        <div class="container-email">
-            <label class="text-label">Correo electronico</label>
+        <div class="container-input-label container-email">
+            <label class="text-label">Correo electrónico</label>
             <input
                 type="email"
                 class="container-input input-email"
@@ -91,7 +101,15 @@
             [class.btn-disabled]="checkoutFormState.isSubmitting() || checkoutFormState.isLoadingBinLookup()"
             [disabled]="checkoutFormState.isSubmitting() || checkoutFormState.isLoadingBinLookup()"
             type="submit">
-            {{ checkoutFormState.isSubmitting() ? 'Procesando...' : 'Pagar' }}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            {{ checkoutFormState.isSubmitting() ? 'Procesando...' : 'Pagar ' + (amount() | currency) }}
         </button>
+
+        <p class="secure-disclaimer">
+            Procesado por Mercado Pago. Udemix no guarda los datos de tu tarjeta. Al pagar aceptás los términos.
+        </p>
     </form>
 </div>

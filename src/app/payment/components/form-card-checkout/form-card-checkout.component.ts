@@ -7,7 +7,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { UpperCasePipe } from '@angular/common';
+import { CurrencyPipe, UpperCasePipe } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CheckoutFormState } from '../../state/checkout-form-state';
 
@@ -19,7 +19,7 @@ declare global {
 
 @Component({
   selector: 'app-form-card-checkout',
-  imports: [UpperCasePipe, ReactiveFormsModule],
+  imports: [UpperCasePipe, CurrencyPipe, ReactiveFormsModule],
   templateUrl: './form-card-checkout.component.html',
   styleUrl: './form-card-checkout.component.scss'
 })

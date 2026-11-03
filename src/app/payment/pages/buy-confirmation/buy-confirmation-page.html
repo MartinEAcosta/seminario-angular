@@ -1,24 +1,99 @@
-<div class="confirmation-container">
+<div class="confirmation-shell">
     @switch (order?.status) {
         @case ('approved') {
-            <h1 class="title">¡Pago aprobado!</h1>
-            <p class="subtitle">Ya tenés acceso a {{ order!.courseIds.length === 1 ? 'tu curso' : 'tus cursos' }}. Te enviamos el comprobante por correo.</p>
-            <a class="btn-back" routerLink="/enrollment">Ir a mis cursos</a>
+            <div class="result-card result-success">
+                <div class="result-icon" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h1 class="result-title">¡Listo! Ya estás inscripto</h1>
+                <p class="result-subtitle">Tu pago fue aprobado. Ya podés empezar {{ order!.courseIds.length === 1 ? 'tu curso' : 'tus cursos' }}. Te enviamos el comprobante por correo.</p>
+
+                @if (enrolledCourses().length > 0) {
+                    <div class="course-list">
+                        @for (enrollment of enrolledCourses(); track enrollment.id) {
+                            <div class="course-row">
+                                <img class="course-thumb" [src]="enrollment.course.thumbnail_url" alt="">
+                                <span class="course-title">{{ enrollment.course.title }}</span>
+                                <a class="btn-start" [routerLink]="['/enrollment', enrollment.id]">
+                                    Empezar
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                }
+
+                <div class="payment-detail">
+                    <div class="detail-row">
+                        <span>Total</span>
+                        <strong>{{ order!.amount | currency }}</strong>
+                    </div>
+                    <div class="detail-row">
+                        <span>Medio</span>
+                        <strong>Tarjeta</strong>
+                    </div>
+                    @if (order!.gatewayId) {
+                        <div class="detail-row">
+                            <span>N.° de operación</span>
+                            <strong>{{ order!.gatewayId }}</strong>
+                        </div>
+                    }
+                </div>
+
+                <div class="result-actions">
+                    <a class="btn-primary" routerLink="/enrollment">Ir a mi biblioteca</a>
+                    <a class="btn-outline" routerLink="/explore">Seguir explorando</a>
+                </div>
+            </div>
         }
         @case ('pending') {
-            <h1 class="title">Tu pago está en proceso</h1>
-            <p class="subtitle">Mercado Pago todavía no lo acreditó. Cuando se acredite habilitamos la inscripción y te avisamos por correo.</p>
-            <a class="btn-back" routerLink="/">Volver al inicio</a>
+            <div class="result-card result-pending">
+                <div class="result-icon" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 7v5l3.5 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h1 class="result-title">Tu pago está en proceso</h1>
+                <p class="result-subtitle">Mercado Pago todavía no lo acreditó. Cuando se acredite habilitamos la inscripción y te avisamos por correo.</p>
+                <div class="result-actions">
+                    <a class="btn-primary" routerLink="/">Volver al inicio</a>
+                </div>
+            </div>
         }
         @case ('rejected') {
-            <h1 class="title">No pudimos procesar el pago</h1>
-            <p class="subtitle">El pago fue rechazado y no se te cobró nada. Podés intentar con otra tarjeta.</p>
-            <a class="btn-back" routerLink="/payment/buy/pay">Reintentar el pago</a>
+            <div class="result-card result-rejected">
+                <div class="result-icon" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                        <path d="M7 7l10 10M17 7L7 17" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h1 class="result-title">No pudimos procesar el pago</h1>
+                <p class="result-subtitle">El pago fue rechazado y no se te cobró nada. Podés intentar con otra tarjeta.</p>
+                <div class="result-actions">
+                    <a class="btn-primary" routerLink="/payment/buy/pay">Reintentar el pago</a>
+                </div>
+            </div>
         }
         @default {
-            <h1 class="title">No encontramos el resultado del pago</h1>
-            <p class="subtitle">Si ya pagaste, revisá tu correo o el historial de compras antes de intentar de nuevo.</p>
-            <a class="btn-back" routerLink="/">Volver al inicio</a>
+            <div class="result-card result-unknown">
+                <div class="result-icon" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+                        <path d="M9.5 9.2a2.5 2.5 0 1 1 3.4 2.3c-.75.3-1.4.9-1.4 1.8v.3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="12" cy="17" r="0.9" fill="currentColor"/>
+                    </svg>
+                </div>
+                <h1 class="result-title">No encontramos el resultado del pago</h1>
+                <p class="result-subtitle">Si ya pagaste, revisá tu correo o el historial de compras antes de intentar de nuevo.</p>
+                <div class="result-actions">
+                    <a class="btn-primary" routerLink="/">Volver al inicio</a>
+                </div>
+            </div>
         }
     }
 </div>

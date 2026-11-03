@@ -1,32 +1,224 @@
-@use '../../../../variables.scss' as v;
+@use '@variables' as v;
 
-.confirmation-container{
+.confirmation-shell{
+    display: flex;
+    justify-content: center;
+    padding: v.$space-lg 5%;
+}
+
+.result-card{
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 640px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: v.$shadow-surface-rest;
+    padding: v.$space-md;
+    text-align: center;
+    font-family: v.$font-primary;
+}
+
+.result-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto v.$space-sm;
+    border-radius: 50%;
+}
+
+.result-success .result-icon{
+    background-color: color-mix(in srgb, v.$green-success 14%, white);
+    color: v.$green-success;
+}
+
+.result-pending .result-icon{
+    background-color: color-mix(in srgb, v.$yellow-caution 20%, white);
+    color: v.$yellow-caution-deep;
+}
+
+.result-rejected .result-icon{
+    background-color: color-mix(in srgb, v.$red-warning 12%, white);
+    color: v.$red-warning;
+}
+
+.result-unknown .result-icon{
+    background-color: rgba(v.$black-custom, 0.08);
+    color: rgba(v.$black-custom, 0.55);
+}
+
+.result-title{
+    margin: 0 0 0.5rem;
+    font-weight: 800;
+    font-size: v.$text-2xl;
+    color: v.$black-custom;
+}
+
+.result-subtitle{
+    max-width: 440px;
+    margin: 0 auto;
+    font-size: v.$text-base;
+    line-height: 1.6;
+    color: rgba(v.$black-custom, 0.7);
+}
+
+// Lista de cursos recién inscriptos (sólo 'approved'): separada del resto por
+// el mismo divisor punteado que el resumen de compra.
+.course-list{
     display: flex;
     flex-direction: column;
+    gap: v.$space-xs;
+    margin-top: v.$space-md;
+    padding-top: v.$space-md;
+    border-top: dashed 1px rgba(v.$black-custom, 0.2);
+    text-align: left;
+}
+
+.course-row{
+    display: flex;
     align-items: center;
-    text-align: center;
-    gap: 1rem;
-    padding: 4rem 1rem;
+    gap: v.$space-xs;
+    padding: v.$space-xs;
+    border-radius: 14px;
+    background-color: rgba(v.$black-custom, 0.03);
 }
 
-.title{
-    font-family: v.$font-primary;
+.course-thumb{
+    flex: 0 0 auto;
+    width: 56px;
+    height: 56px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.course-title{
+    flex: 1 1 0%;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 700;
     color: v.$black-custom;
 }
 
-.subtitle{
-    font-family: v.$font-primary;
-    color: v.$black-custom;
-}
-
-.btn-back{
-    margin-top: 1rem;
-    color: v.$brand-color;
-    font-family: v.$font-primary;
-    font-weight: 600;
+.btn-start{
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 4px;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    background-color: v.$brand-color;
+    color: v.$white-custom;
+    font-weight: 700;
+    font-size: v.$text-sm;
     text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.btn-back:hover{
-    text-decoration: underline;
+.btn-start:hover{
+    background-color: v.$brand-color-deep;
+    transform: translateY(v.$lift-control);
+}
+
+.btn-start:focus-visible{
+    @include v.focus-ring($color: v.$brand-color-deep);
+}
+
+.payment-detail{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: v.$space-md;
+    padding: v.$space-sm;
+    border-radius: 12px;
+    background-color: rgba(v.$black-custom, 0.03);
+    text-align: left;
+}
+
+.detail-row{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    font-size: v.$text-sm;
+    color: rgba(v.$black-custom, 0.7);
+}
+
+.detail-row strong{
+    color: v.$black-custom;
+    font-variant-numeric: tabular-nums;
+}
+
+.result-actions{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: v.$space-xs;
+    margin-top: v.$space-md;
+}
+
+.btn-primary,
+.btn-outline{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 1.75rem;
+    border-radius: 20px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary{
+    border: solid 1px v.$brand-color;
+    background-color: v.$brand-color;
+    color: v.$white-custom;
+}
+
+.btn-primary:hover{
+    background-color: v.$brand-color-deep;
+    border-color: v.$brand-color-deep;
+    transform: translateY(v.$lift-control);
+}
+
+.btn-outline{
+    border: solid 1px v.$brand-color;
+    background-color: transparent;
+    color: v.$brand-color-deep;
+}
+
+.btn-outline:hover{
+    background-color: v.$brand-color;
+    color: v.$white-custom;
+    transform: translateY(v.$lift-control);
+}
+
+.btn-primary:focus-visible,
+.btn-outline:focus-visible{
+    @include v.focus-ring($color: v.$brand-color-deep);
+}
+
+@media (prefers-reduced-motion: reduce){
+    .btn-start,
+    .btn-primary,
+    .btn-outline{
+        transition: none;
+    }
+}
+
+@include v.bp-down('sm'){
+    .result-card{
+        padding: v.$space-sm;
+    }
+
+    .result-actions{
+        flex-direction: column;
+    }
+
+    .btn-primary,
+    .btn-outline{
+        width: 100%;
+    }
 }

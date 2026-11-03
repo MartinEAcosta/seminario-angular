@@ -1,29 +1,43 @@
-@use '../../../../variables.scss' as v;
+@use '@variables' as v;
 
-// Tokens locales derivados de variables.scss (mismo patrón que buy-page.scss
-// y cart-checkout.component.scss), para que el formulario comparta lenguaje
-// visual con el resto de la pantalla de compra.
-$input-border: rgba(v.$black-custom, 0.3);
-$input-shadow: 2px 4px 15px rgba(v.$black-custom, 0.15);
-$input-radius: 0.5rem;
+// Dialecto de input "en caja" para sala clara: no está documentado en
+// DESIGN.md (que sólo cubre caja-sobre-oscuro y texto-sin-caja-sobre-claro),
+// así que se deriva del mismo radio/acento que input-auth, en blanco en vez
+// de gris 50. Mismo patrón de tokens locales que purchase-summary/cart.
+$input-border: rgba(v.$black-custom, 0.15);
+$input-radius: 14px;
+$btn-shadow: 0 4px 15px rgba(v.$black-custom, 0.15);
+$btn-shadow-hover: 0 6px 20px rgba(v.$black-custom, 0.22);
 
 .container-payment{
-    width: 100%;
     box-sizing: border-box;
-    justify-content: center;
-    padding: 2% 0;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: v.$shadow-surface-rest;
+    padding: v.$space-sm;
 }
 
-.container-issuers{
-    display: flex;
-}
-
-.text-pay{
-    text-align: center;
+.pay-heading{
+    margin: 0 0 v.$space-xs;
     font-family: v.$font-primary;
+    font-weight: 800;
+    font-size: v.$text-xl;
     color: v.$black-custom;
-    font-size: x-large;
-    font-weight: 600;
+}
+
+.pay-method-label{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 v.$space-sm;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    background-color: rgba(v.$brand-color, 0.1);
+    color: v.$brand-color-deep;
+    font-family: v.$font-primary;
+    font-weight: 700;
+    font-size: v.$text-sm;
 }
 
 .form-checkout{
@@ -32,179 +46,174 @@ $input-radius: 0.5rem;
     flex-direction: column;
 }
 
+.container-input-label{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: v.$space-xs;
+}
+
+.text-label{
+    font-family: v.$font-primary;
+    font-weight: 600;
+    font-size: v.$text-sm;
+    color: rgba(v.$black-custom, 0.75);
+}
+
 .container-input{
     display: flex;
     width: 100%;
-    height: 2rem;
+    height: 3rem;
+    box-sizing: border-box;
+    align-items: center;
     border-radius: $input-radius;
-    color: $input-border;
+    border: solid 1.5px $input-border;
+    background-color: #fff;
+    color: v.$black-custom;
     font-weight: 500;
     font-family: v.$font-primary;
-    border: solid 1.2px $input-border;
-    background-color: inherit;
-    padding-left: 0.5rem;
-    box-shadow: $input-shadow;
-    z-index: 10;
+    padding: 0 1rem;
 }
 
 .top-section{
     display: flex;
     width: 100%;
-    margin: 1rem 0;
+    gap: v.$space-xs;
 }
 
-.container-input-label{
-    display: flex;
-    flex-direction: column;
-    margin: 0.5rem;
+.top-section .container-input-label{
+    flex: 1 1 0%;
+    min-width: 0;
 }
 
-.container-card-number{
-    width: 50%;
-}
-
-.container-expiration-date{
-    width: 25%;
-}
-
-.container-security-code{
-    width: 25%;
-}
-
-.text-label{
-    display: flex;
-    font-family: v.$font-primary;
-    align-items: center;
-    color: v.$black-custom;
-    margin-bottom: 0.5rem;
-}
-
-.cardNumber{
-    width: auto;
-}
-
-.expirationDate{
-    width: auto;
-}
-
-.securityCode{
-    width: auto;
-}
-
-.container-cardHolderInfo{
+.container-cardHolderInfo,
+.container-docAndInstallments{
     display: flex;
     flex-direction: row;
-    align-items: center;
-    gap: 3%;
+    gap: v.$space-xs;
+    margin-bottom: v.$space-xs;
+}
+
+.container-cardHolderInfo .column,
+.container-docAndInstallments .column{
+    display: flex;
+    flex: 1 1 0%;
+    min-width: 0;
+    flex-direction: column;
+    gap: 6px;
 }
 
 .cardHolderName{
-    width: 100%;
-    color: v.$black-custom;
     outline: none;
 }
 
-.column{
+.cardHolderName:focus-visible,
+.input-email:focus-visible{
+    @include v.focus-ring($color: v.$brand-color-deep);
+}
+
+.cardHolderName:focus,
+.input-email:focus,
+.select-installments:focus,
+.container-select-input:focus-within{
+    border-color: v.$brand-color;
+    border-width: 2px;
+}
+
+.doc-column{
+    flex: 1.3 1 0%;
+}
+
+.container-select-input{
     display: flex;
-    flex-direction: column;
+    width: 100%;
+    height: 3rem;
+    box-sizing: border-box;
+    border: solid 1.5px $input-border;
+    border-radius: $input-radius;
+    background-color: #fff;
+    overflow: hidden;
 }
 
 .select-identificationType{
     display: flex;
-    width: 35%;
-    padding: 0rem 1rem;
-    border: none;
-    outline: none;
-    background-color: inherit;
-    border-right: solid thin $input-border;
-    color: v.$black-custom;
-    height: 2rem;
-}
-
-.identificationInfo{
-    display: flex;
-    flex-direction: row;
-}
-
-.container-select-input{
-    border: solid thin $input-border;
-    border-radius: $input-radius;
-    box-shadow: $input-shadow;
-    width: 100%;
-}
-
-.container-select-input .text-label{
-    display: flex;
-    margin: auto;
-    padding-left: 0.5rem;
-    justify-content: center;
-    text-align: center;
+    flex: 0 0 auto;
     align-items: center;
+    width: 4.5rem;
+    padding: 0 0.5rem;
+    border: none;
+    border-right: solid 1.5px $input-border;
+    outline: none;
+    background-color: transparent;
+    color: rgba(v.$black-custom, 0.75);
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
 }
 
 .container-select-input input{
-    width: 100%;
-    background-color: inherit;
+    flex: 1 1 0%;
+    min-width: 0;
     border: none;
     outline: none;
+    background-color: transparent;
+    padding: 0 1rem;
+    color: v.$black-custom;
     font-family: v.$font-primary;
-    padding-left: 0.5rem;
 }
 
-.hidden{
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-    width: 0;
-    height: 0;
+.select-installments{
+    width: 100%;
+    cursor: pointer;
 }
 
 .container-email{
-    display: flex;
-    flex-direction: column;
-    margin: 0.5rem;
+    margin-bottom: v.$space-sm;
 }
 
 .input-email{
-    display: flex;
-    color: v.$black-custom;
     outline: none;
-    width: 45%;
-}
-
-.btn-pay{
-    display: flex;
-    width: 75%;
-    cursor: pointer;
-    margin: 1.5rem auto;
-    padding: 0.7rem;
-    border-radius: 1.5rem;
-    border: solid thin transparent;
-    color: v.$white-custom;
-    font-family: v.$font-primary;
-    font-weight: 600;
-    background-color: v.$green-success;
-    justify-content: center;
-    box-shadow: 5px 10px 12px rgba(v.$black-custom, 0.30);
-    transition: all 0.5s ease;
-}
-
-.btn-pay:hover{
-    transform: scale(1.01);
-    transition: all 0.5s ease;
-    background-color: rgba(0, 165, 65);
-    box-shadow: 5px 10px 12px rgba(v.$black-custom, 0.20);
 }
 
 .hasError{
     border-color: v.$red-warning;
+    border-width: 2px;
 }
 
 .error-message{
-    margin: 0.5rem;
+    margin: 0 0 v.$space-xs;
     font-family: v.$font-primary;
-    font-size: 0.9rem;
+    font-size: v.$text-sm;
     color: v.$red-warning;
+}
+
+.btn-pay{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 52px;
+    margin-top: v.$space-xs;
+    border: none;
+    border-radius: 20px;
+    box-shadow: $btn-shadow;
+    background-color: v.$brand-color;
+    color: v.$white-custom;
+    font-family: v.$font-primary;
+    font-weight: bold;
+    font-size: v.$text-base;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-pay:hover:not(.btn-disabled){
+    background-color: v.$brand-color-deep;
+    box-shadow: $btn-shadow-hover;
+    transform: translateY(v.$lift-control);
+}
+
+.btn-pay:focus-visible{
+    @include v.focus-ring($color: v.$brand-color-deep);
 }
 
 .btn-disabled{
@@ -212,15 +221,17 @@ $input-radius: 0.5rem;
     opacity: 0.6;
 }
 
-.btn-pay:hover.btn-disabled{
-    transform: none;
+.secure-disclaimer{
+    margin: v.$space-xs 0 0;
+    color: rgba(v.$black-custom, 0.6);
+    font-family: v.$font-primary;
+    font-size: v.$text-sm;
+    line-height: 1.6;
+    text-align: center;
 }
 
-@media (max-width: 768px) {
-    .container-payment{
-        width: 100%;
-        margin: 0%;
-        padding: 6% 5%;
-        box-sizing: border-box;
+@media (prefers-reduced-motion: reduce){
+    .btn-pay{
+        transition: none;
     }
 }

@@ -1,13 +1,5 @@
 <div class="container-bg">
-    <div class="container-header">
-        <app-page-title [eyebrow]="'Pago'" [title]="'Continuar transacción'" />
-    </div>
-
-    <div class="wizard-layout">
-        <app-checkout-steps [cartEmpty]="isEmpty()" />
-
-        <div class="wizard-content">
-            <router-outlet />
-        </div>
+    <div class="container-content">
+        <router-outlet />
     </div>
 </div>

@@ -108,6 +108,15 @@
         ],
         "createdAt": "2026-10-30T18:50:40.051Z",
         "reason": "false positive: [src] is bound to real API data (enrollment.course.thumbnail_url), static scan can't resolve Angular bindings"
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/app/auth/pages/user-profile-page/user-profile-page.component.html"
+        ],
+        "createdAt": "2026-11-03T22:26:31.295Z",
+        "reason": "dynamic [src] binds tempAvatar() ?? defaultAvatar (assets/user-profile.svg), resolves to a real asset at runtime; static analysis can't evaluate the binding. Same pre-existing pattern as original file."
       }
     ]
   }

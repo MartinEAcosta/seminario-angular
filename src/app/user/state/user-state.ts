@@ -26,10 +26,14 @@ export class UserState {
   private fb = inject(FormBuilder);
 
   public profileForm : FormGroup = this.fb.group({
-    username : [
-                '',
-                [ Validators.required, Validators.minLength(3), Validators.pattern( FormUtils.notOnlySpacesPattern ) ]
-              ],
+    first_name : [
+      '',
+      [ Validators.required, Validators.minLength(3), Validators.pattern( FormUtils.notOnlySpacesPattern ) ]
+    ],
+    last_name : [
+      '',
+      [ Validators.required, Validators.minLength(2), Validators.pattern( FormUtils.notOnlySpacesPattern ) ]      
+    ],
     email : [
               '',
               [ Validators.required, Validators.pattern( FormUtils.emailPattern ) ]
@@ -47,7 +51,8 @@ export class UserState {
   // terminar en un ciclo valueChanges -> guardar -> re-patch -> valueChanges.
   public patchValuesForm = ( user : User ) : FormGroup => {
     this.profileForm.patchValue({
-      username: user.username,
+      first_name: user.first_name,
+      last_name: user.last_name,
       email: user.email,
     });
 

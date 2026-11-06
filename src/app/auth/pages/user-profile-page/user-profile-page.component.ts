@@ -5,11 +5,11 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validatio
 import { AuthService } from '@auth/services/auth.service';
 import { UIService } from '@shared/services/ui/ui.service';
 import { FormErrorLabelComponent } from '@shared/components/form-error-label/form-error-label.component';
+import { EmailVerificationBannerComponent } from '@auth/components/email-verification-banner/email-verification-banner.component';
 import { FileService } from '@file/services/file.service';
 import { UserState } from '@user/state/user-state';
 import { AuthMapper } from '@mappers/auth.mapper';
-
-type SettingsSection = 'perfil' | 'cuenta';
+import { FormUtils } from '@utils/form-utils';
 
 // Group-level check: lives here rather than in FormUtils because only this page needs it.
 const passwordsMatchValidator = ( group : AbstractControl ) : ValidationErrors | null => {
@@ -19,9 +19,15 @@ const passwordsMatchValidator = ( group : AbstractControl ) : ValidationErrors |
   return newPassword === confirmPassword ? null : { passwordsMismatch : true };
 }
 
+const ROLE_LABELS: Record<'student' | 'teacher' | 'admin', string> = {
+  student: 'Estudiante',
+  teacher: 'Profesor',
+  admin: 'Administrador',
+};
+
 @Component({
   selector: 'app-user-profile-page',
-  imports: [ ReactiveFormsModule, FormErrorLabelComponent, NgClass ],
+  imports: [ ReactiveFormsModule, FormErrorLabelComponent, NgClass, EmailVerificationBannerComponent ],
   templateUrl: './user-profile-page.component.html',
   styleUrls: ['../../form-global.scss', './user-profile-page.component.scss'],
 })
@@ -35,10 +41,11 @@ export class UserProfilePageComponent {
   private fb = inject(FormBuilder);
   public authService = inject(AuthService);
 
-  activeSection = signal<SettingsSection>('perfil');
-
+  roleLabel = computed<string>( () => ROLE_LABELS[ this.userState.user()?.role ?? 'student' ] );
   isEmailVerified = computed<boolean>( () => this.userState.user()?.isEmailVerified ?? false );
-  isSendingVerification = signal<boolean>(false);
+
+  // Collapsed by default: the password fields only mount once the user asks to change it.
+  isChangingPassword = signal<boolean>(false);
 
   // Owned by UserState so FileService can write the picked avatar into it and
   // onSaveProfile can read it back without any effect() tying the two together.
@@ -49,9 +56,26 @@ export class UserProfilePageComponent {
   // Never prefilled: always starts empty.
   public passwordForm : FormGroup = this.fb.group({
     currentPassword : [ '', [ Validators.required ] ],
-    newPassword : [ '', [ Validators.required, Validators.minLength(6) ] ],
+    newPassword : [ '', [ Validators.required, Validators.pattern( FormUtils.strongPasswordPattern ) ] ],
     confirmPassword : [ '', [ Validators.required ] ],
   }, { validators : passwordsMatchValidator });
+
+  public newPasswordValue = signal('');
+
+  private static strongPasswordRegex = new RegExp( FormUtils.strongPasswordPattern );
+
+  // Cuatro escalones atados al validador real (FormUtils.strongPasswordPattern:
+  // minLength 8 + al menos un dígito), mismo criterio que form-register.component.ts:
+  // ningún segmento promete una regla que el form no aplica.
+  public newPasswordStrength = computed( () => {
+    const value = this.newPasswordValue();
+    return {
+      started: value.length > 0,
+      halfway: value.length >= 4,
+      minLength: value.length >= 8,
+      valid: UserProfilePageComponent.strongPasswordRegex.test(value),
+    };
+  });
 
   constructor() {
     // Único punto de sync user -> form: se ejecuta una sola vez acá, nunca
@@ -59,10 +83,6 @@ export class UserProfilePageComponent {
     // un re-patch que a su vez dispare otro guardado.
     const user = this.userState.user();
     if( user ) this.userState.patchValuesForm(user);
-  }
-
-  onSelectSection( section: SettingsSection ): void {
-    this.activeSection.set( section );
   }
 
   onAvatarSelected( event: Event ): void {
@@ -86,10 +106,11 @@ export class UserProfilePageComponent {
 
     let userToUpdate = userDto;
     if( (this.userState.user()?.avatar_url! && this.userState.user()?.id_file! ) && this.userState.avatarFile() === null ){
-      this.fileService.deleteFile( this.userState.user()?.id_file! );
+      this.fileService.deleteFile( this.userState.user()?.id_file! ).subscribe( () => {
+        this.uiService.showToastMessage('Avatar eliminado.')
+      });
       userToUpdate = {
         ...userDto,
-        avatar_url : '',
         id_file : undefined,
       };
       this.userState.setTempAvatar(null);
@@ -109,6 +130,15 @@ export class UserProfilePageComponent {
             && ( this.passwordForm.get('confirmPassword')?.touched ?? false );
   }
 
+  onTogglePasswordChange(): void {
+    this.isChangingPassword.update( ( open ) => !open );
+
+    if( !this.isChangingPassword() ){
+      this.passwordForm.reset();
+      this.newPasswordValue.set('');
+    }
+  }
+
   onChangePassword(): void {
     this.passwordForm.markAllAsTouched();
 
@@ -118,21 +148,8 @@ export class UserProfilePageComponent {
     console.log('[mock] Cambiar contraseña', this.passwordForm.value);
     this.uiService.showToastMessage('Contraseña actualizada.');
     this.passwordForm.reset();
-  }
-
-  // The one real write on this page: the endpoint already exists and verify-email-page uses it.
-  onResendVerificationEmail(): void {
-    if( this.isSendingVerification() ) return;
-
-    this.isSendingVerification.set(true);
-    this.authService.sendVerificationEmail()
-                      .subscribe( ( ok ) => {
-                        this.isSendingVerification.set(false);
-
-                        if( ok ){
-                          this.uiService.showToastMessage('Te enviamos el email de validación. Revisá tu bandeja de entrada.');
-                        }
-                      });
+    this.newPasswordValue.set('');
+    this.isChangingPassword.set(false);
   }
 
 }

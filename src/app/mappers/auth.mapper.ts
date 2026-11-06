@@ -6,7 +6,8 @@ export class AuthMapper {
     static mapResponseToUser( response : AuthResponse ) : User {
         return {
             id              : response.user.id,
-            username        : response.user.username,
+            first_name      : response.user.first_name,
+            last_name       : response.user.last_name,
             email           : response.user.email,
             isEmailVerified : response.user.isEmailVerified,
             role            : response.user.role,
@@ -18,9 +19,9 @@ export class AuthMapper {
     static mapFormToUserDTO( form : FormGroup ) : UserDTO {
         const formValue = form.value;
         return {
-            username : formValue.username,
+            first_name : formValue.first_name,
+            last_name : formValue.last_name,
             email    : formValue.email,
-            avatar_url : formValue.avatar_url,
             id_file : formValue.id_file
         }
     }

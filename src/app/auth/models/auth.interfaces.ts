@@ -8,7 +8,8 @@ export interface AuthResponse {
 
 export interface User {
     id              : string;
-    username        : string;
+    first_name      : string;
+    last_name       : string;
     email           : string;
     isEmailVerified : boolean;
     role            : 'student' | 'teacher' | 'admin';
@@ -17,11 +18,11 @@ export interface User {
 }
 
 export interface UserDTO {
-    username?: string;
-    email?: string;
-    password?: string | null;
-    avatar_url      ?: string;
-    id_file         ?: string;
+    first_name      : string;
+    last_name       : string;
+    email          ?: string;
+    password       ?: string | null;
+    id_file        ?: string;
 }
 
 

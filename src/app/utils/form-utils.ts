@@ -6,6 +6,9 @@ export class FormUtils {
     static emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
     static notOnlySpacesPattern = '^[a-zA-Z0-9]+$';
     static urlPattern = '^(https?:\\/\\/)?([\\w-]+\\.)+[a-zA-Z]{2,}([\\/?#][^\\s]*)?$';
+    // Al menos 8 caracteres y un dígito. Usado donde se pide una contraseña
+    // "fuerte" (ej. cambio de contraseña en user-profile-page); login no la usa.
+    static strongPasswordPattern = '^(?=.*\\d).{8,}$';
     
     static getTextError = ( errors : ValidationErrors ) : string | null =>  {
 
@@ -33,6 +36,9 @@ export class FormUtils {
                     }
                     else if( errors['pattern'].requiredPattern === FormUtils.urlPattern ){
                         return `El contenido del campo no luce como una URL válida.`;
+                    }
+                    else if( errors['pattern'].requiredPattern === FormUtils.strongPasswordPattern ){
+                        return `Debe tener al menos 8 caracteres y un número.`;
                     }
                     return `Error de validación personalizada.`;
             

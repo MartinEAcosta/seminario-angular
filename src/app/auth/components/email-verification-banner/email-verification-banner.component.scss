@@ -1,21 +1,40 @@
 @use '@variables' as v;
 
+/* container-type (not a viewport media query) because this component renders inside very
+   different widths: the wide .settings-panel on user-profile-page vs. the narrow 560px
+   .verify-card on verify-email-page. The row layout only fits the former. */
+:host{
+    display: block;
+    container-type: inline-size;
+}
+
 .container-banner{
     display: flex;
-    align-items: flex-start;
-    gap: 12px;
+    align-items: center;
+    gap: 16px;
     padding: 16px 20px;
-    border-radius: 12px;
+    border-radius: 20px;
     font-family: v.$font-primary;
+}
+
+@container (max-width: 540px){
+    .container-banner{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .btn-send-verification{
+        align-self: stretch;
+    }
 }
 
 .icon{
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
-    min-width: 28px;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
     border-radius: 50%;
     font-weight: bold;
     color: white;
@@ -36,18 +55,35 @@
 }
 
 .not-verified{
-    background-color: rgba(255, 190, 40, 0.12);
-    border: 1px solid rgba(255, 190, 40, 0.4);
+    background-color: rgba(255, 196, 61, 0.16);
+    border: none;
 
     .icon{
         background-color: v.$yellow-caution;
     }
 }
 
+/* Embebido en profile-hero (user-profile-page): el padre ya aporta el radio de
+   borde inferior vía overflow:hidden, así que acá alcanza con sacar el propio
+   radio/margen e igualar el padding horizontal al de la fila de arriba para
+   que ambas franjas queden alineadas. */
+.not-verified.flush{
+    border-radius: 0;
+    padding: 1.25rem 2.25rem;
+}
+
+@media (max-width: 37.5rem){
+    .not-verified.flush{
+        padding: 1.25rem 1.5rem;
+    }
+}
+
 .content-banner{
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: 2px;
 }
 
 .text-banner{
@@ -55,19 +91,28 @@
     margin: 0;
 }
 
+.banner-title{
+    color: v.$black-custom;
+    font-weight: 700;
+    margin: 0;
+}
+
 .text-banner-secondary{
-    color: rgba(40, 40, 40, 0.75);
+    color: rgb(140, 95, 0);
     font-size: 90%;
-    margin: 0 0 8px 0;
+    margin: 0;
 }
 
 .btn-send-verification{
-    align-self: flex-start;
-    background-color: v.$brand-color;
-    color: white;
-    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    background-color: transparent;
+    color: rgb(140, 95, 0);
+    border: 2px solid rgb(140, 95, 0);
     border-radius: 20px;
-    padding: 8px 18px;
+    padding: 10px 20px;
     font-weight: bold;
     font-family: v.$font-primary;
     cursor: pointer;
@@ -75,11 +120,43 @@
 }
 
 .btn-send-verification:hover:not(:disabled){
-    background-color: rgba(0, 120, 140, 0.80);
-    transform: scale(1.03);
+    background-color: v.$yellow-caution;
+    border-color: v.$yellow-caution;
+    color: v.$black-custom;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(140, 95, 0, 0.25);
 }
 
 .btn-send-verification:disabled{
-    background-color: rgba(0, 120, 140, 0.4);
+    border-color: rgba(140, 95, 0, 0.3);
+    color: rgba(140, 95, 0, 0.4);
     cursor: not-allowed;
+}
+
+.btn-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+}
+
+.btn-spinner{
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(140, 95, 0, 0.2);
+    border-top-color: rgb(140, 95, 0);
+    border-radius: 50%;
+    animation: btn-spin 0.8s linear infinite;
+}
+
+@keyframes btn-spin{
+    to{ transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .btn-spinner{
+        animation: none;
+        border-top-color: rgba(140, 95, 0, 0.5);
+    }
 }

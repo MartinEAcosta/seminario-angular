@@ -34,11 +34,6 @@ export const authRoutes : Routes = [
         canMatch: [ AuthenticatedGuard ],
     },
     {
-        path: 'verify-email',
-        component: VerifyEmailPageComponent,
-        canMatch: [ AuthenticatedGuard ],
-    },
-    {
         path: 'verify-email/:token',
         component: VerifyEmailPageComponent,
     },

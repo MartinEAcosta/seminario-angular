@@ -11,11 +11,6 @@
             <div [routerLink]="['/auth/me']" class="dropdown-item">
                 <a>Tu perfil</a>
             </div>
-            @if( !userState.user()?.isEmailVerified ) {
-                <div [routerLink]="['/auth/verify-email']" class="dropdown-item">
-                    <a>Validar tu email</a>
-                </div>
-            }
             @if( userState.user()?.role === 'student' ) {
                 <div [routerLink]="['/become-teacher']" class="dropdown-item">
                     <a>Convertite en profesor</a>

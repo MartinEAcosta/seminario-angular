@@ -17,7 +17,7 @@ describe('VerifyEmailPageComponent', () => {
         provideHttpClientTesting(),
         {
           provide: ActivatedRoute,
-          useValue: { snapshot: { paramMap: convertToParamMap({}) } }
+          useValue: { snapshot: { paramMap: convertToParamMap({ token: 'test-token' }) } }
         }
       ]
     })

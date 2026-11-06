@@ -47,6 +47,9 @@ export class UserProfilePageComponent {
   // Collapsed by default: the password fields only mount once the user asks to change it.
   isChangingPassword = signal<boolean>(false);
 
+  // Drives the submit button's loading state and blocks a second submit while the request is in flight.
+  isSavingProfile = signal<boolean>(false);
+
   // Owned by UserState so FileService can write the picked avatar into it and
   // onSaveProfile can read it back without any effect() tying the two together.
   get profileForm() : FormGroup {
@@ -99,7 +102,9 @@ export class UserProfilePageComponent {
   onSaveProfile(): void {
     this.profileForm.markAllAsTouched();
 
-    if( !this.profileForm.valid ) return;
+    if( !this.profileForm.valid || this.isSavingProfile() ) return;
+
+    this.isSavingProfile.set(true);
 
     const userDto = AuthMapper.mapFormToUserDTO( this.profileForm );
     const file = this.userState.avatarFile();
@@ -118,6 +123,7 @@ export class UserProfilePageComponent {
     }
 
     this.authService.updateUser(userToUpdate, file).subscribe( ( user ) => {
+      this.isSavingProfile.set(false);
       if( !user ) return; // AuthService ya mostró el error vía handleAuthError.
       this.userState.setUser(user);
       this.uiService.showToastMessage('Perfil actualizado.');
@@ -144,8 +150,9 @@ export class UserProfilePageComponent {
 
     if( !this.passwordForm.valid ) return;
 
-    // Mock: no HTTP call yet. Swap this log for the real endpoint when it exists.
-    console.log('[mock] Cambiar contraseña', this.passwordForm.value);
+    // Mock: no HTTP call yet. Swap this for the real endpoint when it exists.
+    // Deliberately not logging passwordForm.value: even mock console output shouldn't carry plaintext passwords.
+    console.log('[mock] Cambiar contraseña');
     this.uiService.showToastMessage('Contraseña actualizada.');
     this.passwordForm.reset();
     this.newPasswordValue.set('');

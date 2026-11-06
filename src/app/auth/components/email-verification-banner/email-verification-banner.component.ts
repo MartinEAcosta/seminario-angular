@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnDestroy, signal } from '@angular/core';
+import { Component, computed, inject, input, OnDestroy, signal } from '@angular/core';
 
 import { AuthService } from '@auth/services/auth.service';
 import { UserState } from '@user/state/user-state';
@@ -17,6 +17,10 @@ export class EmailVerificationBannerComponent implements OnDestroy {
   public authService = inject(AuthService);
   public userState = inject(UserState);
   private uiService = inject(UIService);
+
+  // true cuando el banner vive embebido en otra card (user-profile-page) y debe
+  // perder su propio borde/radio/margen para fundirse con el contenedor padre.
+  public flush = input<boolean>(false);
 
   public isSending = signal<boolean>(false);
   public cooldown = signal<number>(0);

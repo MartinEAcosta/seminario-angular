@@ -5,12 +5,6 @@
         <article class="profile-hero">
 
             <div class="profile-hero-top">
-                <span class="settings-eyebrow">Tu cuenta</span>
-                <h1 class="settings-title">Mi perfil</h1>
-            </div>
-
-            <div class="profile-hero-bottom">
-
                 <div class="avatar-block">
                     <img
                         class="avatar-image"
@@ -55,8 +49,9 @@
 
                     <p class="avatar-hint">JPG, PNG o WebP · hasta 2MB</p>
                 </div>
-
             </div>
+
+            <app-email-verification-banner class="verification-strip" [flush]="true" />
 
         </article>
 
@@ -66,20 +61,34 @@
 
             <form [formGroup]="profileForm" (submit)="onSaveProfile()" class="form-auth settings-form">
 
-                <div class="field">
-                    <input
-                        type="text"
-                        placeholder="Charles"
-                        class="input-username"
-                        name="username"
-                        autocomplete="off"
-                        formControlName="username"
-                        [ngClass]="{'hasError': ( profileForm.get('username')?.errors && profileForm.get('username')?.touched ) ?? false }"
-                    />
-                    <label class="label-text">Nombre de usuario</label>
-                    <form-error-label class="error error-username" [control]="profileForm.get('username')!"/>
+                <div class="container-me">
+                    <div class="field">
+                        <input
+                            type="text"
+                            placeholder="Charles"
+                            class="input-username"
+                            name="first_name"
+                            autocomplete="off"
+                            formControlName="first_name"
+                            [ngClass]="{'hasError': ( profileForm.get('first_name')?.errors && profileForm.get('first_name')?.touched ) ?? false }"
+                        />
+                        <label class="label-text">Nombre</label>
+                        <form-error-label class="error error-username" [control]="profileForm.get('first_name')!"/>
+                    </div>
+                    <div class="field">
+                        <input
+                            type="text"
+                            placeholder="Darwin"
+                            class="input-username"
+                            name="last_name"
+                            autocomplete="off"
+                            formControlName="last_name"
+                            [ngClass]="{'hasError': ( profileForm.get('last_name')?.errors && profileForm.get('last_name')?.touched ) ?? false }"
+                        />
+                        <label class="label-text">Apellido</label>
+                        <form-error-label class="error error-username" [control]="profileForm.get('last_name')!"/>
+                    </div>
                 </div>
-
                 <div class="field">
                     <input
                         type="text"
@@ -92,16 +101,15 @@
                     />
                     <label class="label-text">Correo electrónico</label>
                     <form-error-label class="error error-email" [control]="profileForm.get('email')!"/>
+                    <p class="field-hint">Si lo cambiás, vas a tener que validarlo de nuevo.</p>
                 </div>
-
-                <app-email-verification-banner class="settings-verification-banner" />
 
                 <button
                     class="btn-sumbit"
                     type="submit"
-                    [class.btn-disabled]="profileForm.invalid"
-                    [disabled]="profileForm.invalid">
-                    Guardar cambios
+                    [class.btn-disabled]="profileForm.invalid || isSavingProfile()"
+                    [disabled]="profileForm.invalid || isSavingProfile()">
+                    {{ isSavingProfile() ? 'Guardando...' : 'Guardar cambios' }}
                 </button>
             </form>
         </article>
@@ -186,7 +194,7 @@
                     </div>
 
                     @if( newPasswordValue().length > 0 ) {
-                        <div class="password-strength">
+                        <div class="password-strength" aria-hidden="true">
                             <span class="password-strength-segment" [ngClass]="{'is-filled': newPasswordStrength().started}"></span>
                             <span class="password-strength-segment" [ngClass]="{'is-filled': newPasswordStrength().halfway}"></span>
                             <span class="password-strength-segment" [ngClass]="{'is-filled': newPasswordStrength().minLength}"></span>

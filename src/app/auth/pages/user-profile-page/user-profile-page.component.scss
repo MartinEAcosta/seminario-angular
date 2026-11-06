@@ -9,9 +9,10 @@
     min-height: 100vh;
     padding: 4rem 4% 6rem;
     font-family: v.$font-primary;
+    // Un solo velo de teal: el ámbar queda reservado a estado (ver .status-badge.unverified)
+    // y no debe reaparecer como decoración ambiental, y una sala de tarea no necesita dos acentos.
     background:
-        radial-gradient(120% 100% at 12% 0%, rgba(0, 120, 140, 0.07), transparent 55%),
-        radial-gradient(120% 100% at 88% 100%, rgba(255, 190, 40, 0.09), transparent 55%),
+        radial-gradient(120% 100% at 12% 0%, rgba(0, 120, 140, 0.05), transparent 55%),
         v.$white-custom;
     // El header sticky reserva 80px de flow antes de esta sección; sin este
     // margin/padding, esa franja queda sin pintar (fondo del body) y se ve
@@ -33,42 +34,13 @@
     margin: 0 auto;
 }
 
-.settings-eyebrow{
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-bottom: 0.75rem;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: v.$brand-color-bright;
-}
-
-.settings-eyebrow::before{
-    content: "";
-    display: block;
-    width: 2rem;
-    height: 2px;
-    background-color: v.$brand-color-bright;
-}
-
-.settings-title{
-    margin: 0;
-    font-family: v.$font-primary;
-    font-weight: 400;
-    font-size: 2.25rem;
-    line-height: 1.25;
-    color: v.$white-custom;
-}
-
 .settings-card{
     box-sizing: border-box;
     width: 100%;
     padding: 2rem 2.25rem 2.25rem;
     border-radius: 20px;
     background-color: #fff;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+    box-shadow: v.$shadow-surface-rest;
 }
 
 .settings-card-title{
@@ -76,7 +48,7 @@
     margin: 0 0 0.35rem;
     font-family: v.$font-primary;
     font-size: 1.25rem;
-    font-weight: 600;
+    font-weight: 700;
     color: v.$black-custom;
 }
 
@@ -99,10 +71,6 @@
     .settings-page{
         padding: 2.5rem 5% 4rem;
     }
-
-    .settings-title{
-        font-size: 1.8rem;
-    }
 }
 
 @media (max-width: 37.5rem){
@@ -111,29 +79,30 @@
     }
 }
 
-/* ---------- Hero: eyebrow/title on a dark band, avatar row on a light one ---------- */
+/* ---------- Hero: avatar + identity + actions, single light card ---------- */
 
+/* Columna: fila de arriba (avatar/identidad/acciones) + franja de verificación
+   fundida abajo. overflow:hidden es lo que le da a esa franja sus esquinas
+   inferiores redondeadas gratis, sin que el banner necesite conocer el radio
+   de esta card. */
 .profile-hero{
+    display: flex;
     box-sizing: border-box;
     width: 100%;
-    overflow: hidden;
+    flex-direction: column;
     border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+    background-color: #fff;
+    box-shadow: v.$shadow-surface-rest;
+    overflow: hidden;
 }
 
 .profile-hero-top{
-    padding: 2rem 2.25rem;
-    background: linear-gradient(135deg, v.$brand-color, #0e1a1a);
-}
-
-.profile-hero-bottom{
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1.5rem;
     flex-wrap: wrap;
     padding: 1.75rem 2.25rem;
-    background-color: #fff;
 }
 
 .avatar-block{
@@ -162,6 +131,7 @@
 
 .profile-username{
     margin: 0;
+    overflow-wrap: anywhere;
     font-family: v.$font-primary;
     font-size: 1.15rem;
     font-weight: 700;
@@ -170,6 +140,7 @@
 
 .profile-email{
     margin: 0;
+    overflow-wrap: anywhere;
     font-size: 0.9rem;
     color: rgba(40, 40, 40, 0.6);
 }
@@ -181,8 +152,6 @@
     margin-top: 0.4rem;
 }
 
-/* Role pill: tone-on-dark would wash out here since it sits on the light
-   bottom band, so it borrows the brand tint instead of .hero-badges' veil. */
 .role-badge{
     display: inline-flex;
     align-items: center;
@@ -222,10 +191,6 @@
 
 @media (max-width: 37.5rem){
     .profile-hero-top{
-        padding: 1.5rem 1.5rem;
-    }
-
-    .profile-hero-bottom{
         flex-direction: column;
         align-items: stretch;
         padding: 1.5rem;
@@ -376,6 +341,29 @@
     transition: all 0.25s ease-in-out;
 }
 
+/* Row of two fields (Nombre/Apellido). margin-top lives here, not on the
+   children, so both inputs share one baseline — a per-field margin-top would
+   let .field:first-child's 1.75rem outrank the sibling's 2.25rem and knock
+   the row out of alignment. */
+.settings-panel .container-me{
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    gap: v.$space-sm;
+    margin-top: 1.75rem;
+}
+
+.settings-panel .container-me .field{
+    flex: 1;
+    min-width: 0;
+    margin-top: 0;
+}
+
+.settings-panel .container-me .input-username{
+    display: flex;
+    width: 100%;
+}
+
 /* Floated label: shrinks into the same eyebrow voice used across the page. */
 .settings-panel input:not(:placeholder-shown) + label,
 .settings-panel .input-username:focus + .label-text,
@@ -416,7 +404,7 @@
     min-width: 12rem;
     padding: 0 2rem;
     margin: 2.5rem 0 0;
-    align-self: flex-start;
+    align-self: flex-end;
 }
 
 .settings-panel .btn-sumbit:disabled{
@@ -438,6 +426,10 @@
         width: 100%;
         align-self: stretch;
     }
+
+    .settings-panel .container-me{
+        flex-direction: column;
+    }
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -451,10 +443,13 @@
 
 /* ---------- Email verification ---------- */
 
-/* Nudges the embedded banner off the field above it and off the submit button below. */
-.settings-verification-banner{
+/* Última fila de .profile-hero, no una card aparte: el componente no es un
+   article/div en sí, así que necesita display:block para participar del flex
+   column del padre como cualquier otro hijo de .profile-hero. */
+.verification-strip{
     display: block;
-    margin: 1.75rem 0;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 .status-badge{

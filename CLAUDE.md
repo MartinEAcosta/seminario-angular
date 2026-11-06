@@ -38,6 +38,8 @@ Rules:
 
 - Never silently pick an interpretation and build a large amount of code on top of it. Small, reversible judgmen
 t calls are fine — state the assumption and move on.
+- If something fails, gets canceled, or loses access mid-task (a service, a credential, a permission, a connection) — say so immediately and in the final report. Never route around it silently.
+- No work is considered closed until the user confirms it — not in the final report, not in internal task tracking. Don't mark it done on your own initiative.
 - If different readings of the request would produce materially different code, that is a blocking question: ask
  before writing the code, not after.
 - Finish every part of the task that does **not** depend on the open question first. Only the dependent part wai

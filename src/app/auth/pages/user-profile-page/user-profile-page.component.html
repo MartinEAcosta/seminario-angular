@@ -8,15 +8,15 @@
                 <div class="avatar-block">
                     <img
                         class="avatar-image"
-                        [src]="this.userState.tempAvatar() ?? defaultAvatar"
+                        [src]="avatarSrc()"
                         alt="Tu foto de perfil">
 
                     <div class="profile-identity">
-                        <p class="profile-username">{{ userState.user()?.first_name }} {{ userState.user()?.last_name }}</p>
-                        <p class="profile-email">{{ userState.user()?.email }}</p>
+                        <p class="profile-username">{{ user()?.first_name }} {{ user()?.last_name }}</p>
+                        <p class="profile-email">{{ user()?.email }}</p>
 
                         <div class="profile-badges">
-                            <span class="role-badge">{{ roleLabel() }}</span>
+                            <span class="role-badge">{{ user()?.role | roleLabel }}</span>
                             <span
                                 class="status-badge"
                                 [class.verified]="isEmailVerified()"
@@ -36,7 +36,7 @@
                             accept="image/*"
                             (change)="onAvatarSelected($event)">
 
-                        @if( this.userState.tempAvatar() ) {
+                        @if( this.avatarPreview.preview() || ( this.user()?.avatar_url && !this.avatarRemoved() ) ) {
                             <button type="button" class="btn-quiet" (click)="onRemoveAvatar(avatarInput)">
                                 Quitar foto
                             </button>
@@ -48,6 +48,7 @@
                     </div>
 
                     <p class="avatar-hint">JPG, PNG o WebP · hasta 2MB</p>
+                    <form-error-label class="error error-avatar" [control]="profileForm.get('avatar')!"/>
                 </div>
             </div>
 
@@ -107,8 +108,8 @@
                 <button
                     class="btn-sumbit"
                     type="submit"
-                    [class.btn-disabled]="profileForm.invalid || isSavingProfile()"
-                    [disabled]="profileForm.invalid || isSavingProfile()">
+                    [class.btn-disabled]="profileForm.invalid || profileForm.pristine || isSavingProfile()"
+                    [disabled]="profileForm.invalid || profileForm.pristine || isSavingProfile()">
                     {{ isSavingProfile() ? 'Guardando...' : 'Guardar cambios' }}
                 </button>
             </form>
@@ -167,7 +168,6 @@
                                 name="newPassword"
                                 autocomplete="new-password"
                                 formControlName="newPassword"
-                                (input)="newPasswordValue.set($any($event.target).value)"
                                 [ngClass]="{'hasError': ( passwordForm.get('newPassword')?.errors && passwordForm.get('newPassword')?.touched ) ?? false }"
                             />
                             <form-error-label class="error" [control]="passwordForm.get('newPassword')!"/>
@@ -193,7 +193,7 @@
                         </div>
                     </div>
 
-                    @if( newPasswordValue().length > 0 ) {
+                    @if( newPasswordStrength().started ) {
                         <div class="password-strength" aria-hidden="true">
                             <span class="password-strength-segment" [ngClass]="{'is-filled': newPasswordStrength().started}"></span>
                             <span class="password-strength-segment" [ngClass]="{'is-filled': newPasswordStrength().halfway}"></span>

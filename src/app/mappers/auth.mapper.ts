@@ -22,9 +22,8 @@ export class AuthMapper {
             first_name : formValue.first_name,
             last_name : formValue.last_name,
             email    : formValue.email,
-            id_file : formValue.id_file
         }
     }
 
-
+    
 }

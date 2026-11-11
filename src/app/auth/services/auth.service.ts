@@ -100,7 +100,13 @@ export class AuthService {
                                                         };
                                                         this.userState.setUser( updatedUser );
                                                         return updatedUser;
-                                                      })
+                                                      }),
+                                                      // Los datos de texto ya se guardaron (map anterior); si falla
+                                                      // solo la foto, no propagamos el error como fallo total.
+                                                      catchError( () => {
+                                                        this.uiService.showToastMessage('Perfil actualizado, pero no pudimos subir la foto.');
+                                                        return of( user );
+                                                      }),
                                                     );
                         }),
                         catchError( ( { error } ) => {

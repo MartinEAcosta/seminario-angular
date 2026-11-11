@@ -2,6 +2,12 @@ import { ResourceValidTypes } from "../../shared/models/api.interfaces";
 
 export type UploadFolder = 'course' | 'lesson' | 'user';
 
+export interface SelectedFile {
+    file : File,
+    previewURL : string,
+    mediaType : ResourceValidTypes;
+}
+
 export interface UploadedFile {
     id            : string,
     public_id     : string,

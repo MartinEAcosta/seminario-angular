@@ -1,4 +1,4 @@
-import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export class FormUtils {
 
@@ -9,7 +9,14 @@ export class FormUtils {
     // Al menos 8 caracteres y un dígito. Usado donde se pide una contraseña
     // "fuerte" (ej. cambio de contraseña en user-profile-page); login no la usa.
     static strongPasswordPattern = '^(?=.*\\d).{8,}$';
-    
+
+    static fileMaxSizeValidator = ( maxBytes : number ) : ValidatorFn => ( control : AbstractControl ) : ValidationErrors | null => {
+        const file = control.value as File | null;
+        if ( !file ) return null;
+
+        return file.size > maxBytes ? { fileMaxSize : { max : maxBytes, actual : file.size } } : null;
+    }
+
     static getTextError = ( errors : ValidationErrors ) : string | null =>  {
 
         for( const key of Object.keys(errors) ){
@@ -41,7 +48,10 @@ export class FormUtils {
                         return `Debe tener al menos 8 caracteres y un número.`;
                     }
                     return `Error de validación personalizada.`;
-            
+
+                case 'fileMaxSize':
+                    return `El archivo no puede superar ${ Math.round( errors['fileMaxSize'].max / (1024 * 1024) ) }MB.`;
+
                 default:
                     return `Error no controlado.`;
 

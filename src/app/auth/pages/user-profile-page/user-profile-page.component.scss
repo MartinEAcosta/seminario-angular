@@ -558,6 +558,10 @@
     border-radius: 50%;
     color: v.$black-custom;
     transition: transform 0.25s ease-in-out;
+
+    svg{
+        transform: translateY(1px);
+    }
 }
 
 .password-chevron.is-open{

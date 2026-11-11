@@ -3,12 +3,10 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, forkJoin, map, Observable, of, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
+import { UIService } from '@shared/services/ui/ui.service';
 import { FileMapper } from '@mappers/file.mapper';
 import { ApiResponse, FileResponseDto } from '@shared/models/api.interfaces';
-import { UploadedFile, UploadFolder } from '@file/models/file.interfaces';
-import { CourseFormState } from '@course/state/course-form/course-form-state';
-import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
-import { UserState } from '@user/state/user-state';
+import { SelectedFile, UploadedFile, UploadFolder } from '@file/models/file.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +15,8 @@ export class FileService {
 
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}file`;
+  private uiService = inject(UIService);
   
-  private courseFormState = inject(CourseFormState);
-  private lessonFormState = inject(LessonFormState);
-  private userState = inject(UserState);
-
   constructor ( ) { }
 
   uploadFiles = ( folder : UploadFolder , id_entity : string , files : FileList  ) : Observable<UploadedFile[]> => {
@@ -65,6 +60,7 @@ export class FileService {
                                         return fileResponse;
                                       }),
                                       catchError( ({error}) => {
+                                        this.uiService.showToastMessage('Error al eliminar el archivo. Por favor, inténtalo de nuevo.');
                                         return throwError(() => new Error(`${error}`));
                                       }),
                                     );
@@ -100,35 +96,21 @@ export class FileService {
                                   )
   }
 
-  public onFileChanged = ( event : Event, type : UploadFolder ) => {
-    const fileChanged = ( event.target as HTMLInputElement ).files;
-    if( !fileChanged ) return;
-    // En caso de que el el fileList no sea undefined o vacio, permite generar url para utilizar de forma local
-    const url = Array.from( fileChanged ?? [ ] )
-                                                  .map( 
-                                                        (file) => URL.createObjectURL(file)
-                                                  );
+  public onFileChanged = ( event : Event ) : SelectedFile | null => {
+    const fileChanged = ( event.target as HTMLInputElement ).files?.[0];
+    if( !fileChanged ) return null;
 
-    switch (type) {
-      case 'course':
-        this.courseFormState.setTempThumbnail(url.shift()!);
-        this.courseFormState.setFileThumbnail(fileChanged[0]);
-        break;
+    const kind = fileChanged.type.split('/')[0];
+    if( kind !== 'image' && kind !== 'video' ) {
+      this.uiService.showToastMessage('Tipo de archivo no válido. Por favor, selecciona una imagen o un video.');
+      return null;
+    };
 
-      case 'lesson':
-        this.lessonFormState.setTempMedia(url.shift()!);
-        this.lessonFormState.setMediaFile(fileChanged[0]);
-        const type = fileChanged.item(0)?.type.split('/').at(0) as 'image' | 'video' | undefined;
-        this.lessonFormState.setTypeMedia(
-          type === 'image' || type === 'video' ? type : null
-        );
-        break;
-      case 'user':
-        this.userState.setTempAvatar(url.shift()!);
-        this.userState.setAvatarFile(fileChanged[0]);
-        break;
-      default:
-        break;
-    }
+    return { 
+      file : fileChanged, 
+      previewURL : URL.createObjectURL(fileChanged), 
+      mediaType : kind 
+    };
   }
+
 }

@@ -11,14 +11,30 @@
     justify-content: center;
 }
 
+// Sin truncado: en columnas angostas (ej. field-row de nombre/apellido en
+// form-register) un mensaje de error cortado con ellipsis dejaba al usuario
+// sin saber qué estaba mal. El wrap no afecta a los consumidores de columna
+// ancha (login, profile): ahí el texto ya entraba en una sola línea.
 .errorMessage{
     width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
     font-family: v.$font-primary;
     font-size: 80%;
     color: v.$red-warning;
+    animation: error-shake 0.4s ease-in-out;
+}
+
+@keyframes error-shake{
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-4px); }
+    40% { transform: translateX(4px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(3px); }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .errorMessage{
+        animation: none;
+    }
 }
 
 .container-svg{

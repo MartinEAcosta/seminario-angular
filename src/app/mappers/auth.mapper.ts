@@ -22,6 +22,7 @@ export class AuthMapper {
             first_name : formValue.first_name,
             last_name : formValue.last_name,
             email    : formValue.email,
+            password : formValue.password,
         }
     }
 

@@ -9,24 +9,46 @@
 
     <form [formGroup]="registerForm" (submit)="onRegister()" class="form-auth">
 
-        <div class="field">
-            <div class="field-head">
-                <label class="label-text" for="register-username">Nombre de usuario</label>
+        <div class="field-row">
+            <div class="field">
+                <div class="field-head">
+                    <label class="label-text" for="register-first-name">Nombre</label>
+                </div>
+                <div class="field-control">
+                    <input
+                        id="register-first-name"
+                        type="text"
+                        placeholder="Charles"
+                        class="input-username"
+                        required
+                        name="first_name"
+                        autocomplete="off"
+                        formControlName="first_name"
+                        [ngClass]="{'hasError': ( registerForm.get('first_name')?.errors && registerForm.get('first_name')?.touched ) ?? false }"
+                    />
+                </div>
+                <form-error-label class="error error-first-name" [control]="registerForm.get('first_name')!"/>
             </div>
-            <div class="field-control">
-                <input
-                    id="register-username"
-                    type="text"
-                    placeholder="Charles"
-                    class="input-username"
-                    required
-                    name="username"
-                    autocomplete="off"
-                    formControlName="username"
-                    [ngClass]="{'hasError': ( registerForm.get('username')?.errors && registerForm.get('username')?.touched ) ?? false }"
-                />
+
+            <div class="field">
+                <div class="field-head">
+                    <label class="label-text" for="register-last-name">Apellido</label>
+                </div>
+                <div class="field-control">
+                    <input
+                        id="register-last-name"
+                        type="text"
+                        placeholder="Darwin"
+                        class="input-username"
+                        required
+                        name="last_name"
+                        autocomplete="off"
+                        formControlName="last_name"
+                        [ngClass]="{'hasError': ( registerForm.get('last_name')?.errors && registerForm.get('last_name')?.touched ) ?? false }"
+                    />
+                </div>
+                <form-error-label class="error error-last-name" [control]="registerForm.get('last_name')!"/>
             </div>
-            <form-error-label class="error error-username" [control]="registerForm.get('username')!"/>
         </div>
 
         <div class="field">
@@ -100,9 +122,6 @@
 
         <button class="btn-sumbit" type="submit">
             Crear mi cuenta
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M5 12h14M13 6l6 6-6 6"/>
-            </svg>
         </button>
 
         <p class="text-login">

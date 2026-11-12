@@ -8,6 +8,7 @@ import { FormErrorLabelComponent } from '@shared/components/form-error-label/for
 import { UserDTO } from '@auth/models/auth.interfaces';
 import { FormUtils } from '@utils/form-utils';
 import { GoogleAuthButtonComponent } from '@auth/components/google-auth-button/google-auth-button.component';
+import { AuthMapper } from '@mappers/auth.mapper';
 
 @Component({
     selector: 'app-form-login',
@@ -46,8 +47,7 @@ export class FormLoginComponent {
   onLogin = () => {
     this.loginForm.markAllAsTouched();
     if( this.loginForm.valid ){
-      // * ESTANDARIZAR DTOS
-      const loginUserDTO : UserDTO = this.loginForm.value;
+      const loginUserDTO : UserDTO = AuthMapper.mapFormToUserDTO( this.loginForm );
       this.authService.loginUser( loginUserDTO )
                         .subscribe( (isAuthenticated) => {
                           if(isAuthenticated){

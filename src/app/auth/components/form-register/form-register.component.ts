@@ -4,6 +4,7 @@ import { NgClass } from '@angular/common';
 import { Validators, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 
 import { FormUtils } from '@utils/form-utils';
+import { AuthMapper } from '@mappers/auth.mapper';
 import { AuthService } from '@auth/services/auth.service';
 import { UserState } from '@user/state/user-state';
 import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
@@ -41,9 +42,13 @@ export class FormRegisterComponent {
   public showPassword = signal(false);
 
   public registerForm : FormGroup = this.fb.group({
-    username : [
-                '', 
-                [Validators.required, Validators.minLength(3) , Validators.pattern( FormUtils.notOnlySpacesPattern ) ] 
+    first_name : [
+                '',
+                [Validators.required, Validators.minLength(2) , Validators.pattern( FormUtils.notOnlySpacesPattern ) ]
+              ],
+    last_name : [
+                '',
+                [Validators.required, Validators.minLength(2) , Validators.pattern( FormUtils.notOnlySpacesPattern ) ]
               ],
     email : [
               '',
@@ -67,7 +72,7 @@ export class FormRegisterComponent {
   onRegister = () : void => {
     this.registerForm.markAllAsTouched();
     if( this.registerForm.valid ){
-      const registerUserDTO = this.registerForm.value;
+      const registerUserDTO = AuthMapper.mapFormToUserDTO(this.registerForm);
       this.authService.registerUser( registerUserDTO )
                         .subscribe( (isAuthenticated) => {
                           if( isAuthenticated ){

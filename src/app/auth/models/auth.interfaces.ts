@@ -18,9 +18,9 @@ export interface User {
 }
 
 export interface UserDTO {
-    first_name      : string;
-    last_name       : string;
-    email          ?: string;
+    first_name     ?: string;
+    last_name      ?: string;
+    email           : string;
     password       ?: string | null;
     id_file        ?: string;
 }

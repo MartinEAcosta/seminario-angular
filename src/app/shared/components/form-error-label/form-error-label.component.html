@@ -6,7 +6,9 @@
         <img 
             src="/assets/warning.svg" alt="">
     </div>
-    <p class="errorMessage">
-        {{ errorMessage }}
-    </p>
+    @if (errorMessage != null) {
+        <p class="errorMessage">
+            {{ errorMessage }}
+        </p>
+    }
 </div>

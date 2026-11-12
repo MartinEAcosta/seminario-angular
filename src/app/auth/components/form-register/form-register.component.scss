@@ -1,0 +1,11 @@
+@use '@variables' as v;
+
+.field-row{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: v.$space-xs;
+}
+
+.field-row .field{
+    min-width: 0;
+}

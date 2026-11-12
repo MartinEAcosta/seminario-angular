@@ -57,9 +57,11 @@ export class FileService {
                                     )
                                     .pipe(
                                       map( fileResponse => {
+                                        console.log(fileResponse);
                                         return fileResponse;
                                       }),
                                       catchError( ({error}) => {
+                                        console.log(error)
                                         this.uiService.showToastMessage('Error al eliminar el archivo. Por favor, inténtalo de nuevo.');
                                         return throwError(() => new Error(`${error}`));
                                       }),

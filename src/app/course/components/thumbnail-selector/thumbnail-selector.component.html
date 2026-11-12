@@ -5,7 +5,7 @@
         name="file" 
         class="input-file"
         accept="image/*"
-        (change)="this.fileService.onFileChanged( $event , folder() )"
+        (change)="this.fileService.onFileChanged( $event )"
     />
     <div class="figure thumbnail-figure">
         @if( folder() === 'course' ){

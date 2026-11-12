@@ -6,10 +6,9 @@ import { rxResource } from '@angular/core/rxjs-interop';
 
 import { environment } from '../../../environments/environment';
 import { UIService } from '@shared/services/ui/ui.service';
-import { GoogleAuthService } from '@auth/services/google-auth.service';
 import { CartService } from '@cart/state/cart.service';
 import { FileService } from '@file/services/file.service';
-import { AuthResponse, User, UserDTO } from '@auth/models/auth.interfaces';
+import { AuthResponse, PasswordDTO, User, UserDTO } from '@auth/models/auth.interfaces';
 import { ApiResponse, ErrorResponse } from '@shared/models/api.interfaces';
 import { AuthMapper } from '@mappers/auth.mapper';
 import { UserState } from '@user/state/user-state';
@@ -115,6 +114,21 @@ export class AuthService {
                       );
   }
 
+  public updatePassword = ( passwordDto : PasswordDTO ) : Observable<boolean> => {
+    return this.http.put<AuthResponse>(`${this.baseURL}/password/` , { ...passwordDto } )
+                      .pipe(
+                        map( ( authResponse ) => {
+                          this.handleAuthSuccess( authResponse );
+                          this.uiService.showToastMessage('Contraseña actualizada.');
+                          return true;
+                        }),
+                        catchError( ( { error } ) => {
+                          this.uiService.showToastMessage('No pudimos actualizar la contraseña.');
+                          return of(false);
+                        }     
+                      )
+                     );
+  }
   // Envia (o reenvia) el email con el enlace de validación a la cuenta del usuario logueado.
   public sendVerificationEmail = ( ) : Observable<boolean> => {
     return this.http

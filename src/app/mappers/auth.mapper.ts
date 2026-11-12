@@ -1,5 +1,5 @@
 import { FormGroup } from "@angular/forms";
-import type { User , AuthResponse, UserDTO } from "@auth/models/auth.interfaces";
+import type { User , AuthResponse, UserDTO, PasswordDTO } from "@auth/models/auth.interfaces";
 
 export class AuthMapper {
 
@@ -25,5 +25,12 @@ export class AuthMapper {
         }
     }
 
+    static mapFormToPasswordDTO( form : FormGroup ) : PasswordDTO {
+        const formValue = form.value;
+        return {
+            currentPassword : formValue.currentPassword,
+            newPassword     : formValue.newPassword,
+        }
+    }
     
 }

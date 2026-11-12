@@ -14,6 +14,7 @@ import { RoleLabelPipe } from '@auth/pipes/role-label.pipe';
 import { buildPasswordForm, buildProfileForm, getPasswordStrength, patchProfileForm } from '@auth/forms/user-form-factory';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FilePreviewControl } from '@file/models/file-preview-control';
+import { PasswordDTO } from '@auth/models/auth.interfaces';
 
 @Component({
   selector: 'app-user-profile-page',
@@ -127,10 +128,10 @@ export class UserProfilePageComponent implements OnDestroy {
     this.passwordForm.markAllAsTouched();
     if( !this.passwordForm.valid ) return;
 
-    // Mock: no HTTP call yet. Swap this for the real endpoint when it exists.
-    // Deliberately not logging passwordForm.value: even mock console output shouldn't carry plaintext passwords.
-    console.log('[mock] Cambiar contraseña');
-    this.uiService.showToastMessage('Contraseña actualizada.');
+    const passwordDto : PasswordDTO = AuthMapper.mapFormToPasswordDTO( this.passwordForm );
+    this.authService.updatePassword( passwordDto ).subscribe( () => {
+      this.uiService.showToastMessage('Contraseña actualizada.');
+    });
     this.passwordForm.reset();
     this.isChangingPassword.set(false);
   }

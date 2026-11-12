@@ -25,4 +25,8 @@ export interface UserDTO {
     id_file        ?: string;
 }
 
+export interface PasswordDTO {
+    currentPassword : string;
+    newPassword : string;
+}
 

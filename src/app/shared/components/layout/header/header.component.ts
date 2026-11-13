@@ -6,7 +6,7 @@ import { UserState } from '@user/state/user-state';
 import { SearchService } from '@shared/services/search/search.service';
 import { UserProfileDropdownComponent } from '../../../../user/components/user-profile-dropdown/user-profile-dropdown.component';
 
-const DARK_HERO_ROUTES = ['/', '/about'];
+const DARK_HERO_ROUTES = ['/', '/about' ];
 const SCROLL_THRESHOLD = 48;
 
 @Component({
@@ -27,17 +27,12 @@ export class HeaderComponent {
   private currentUrl = signal(this.router.url);
   private isScrolled = signal(window.scrollY > SCROLL_THRESHOLD);
 
-  // Sin recortar query y fragmento, `/?page=2` o `/#algo` dejaban de contar
-  // como hero oscuro y el header arrancaba en modo vidrio sobre la sala negra.
   private hasDarkHero = computed(() =>
     DARK_HERO_ROUTES.includes(this.currentUrl().split(/[?#]/)[0])
   );
 
   isTransparentTop = computed(() => this.hasDarkHero() && !this.isScrolled());
 
-  // El header sticky reserva su propio alto en el flujo normal; en rutas con
-  // hero oscuro se superpone al contenido (margin negativo) para que el hero
-  // quede visible detrás del header transparente/glass sin tocar esas páginas.
   overlaysDarkHero = computed(() => this.hasDarkHero());
 
   // Abajo de 768px la búsqueda y los enlaces no caben en la píldora: se

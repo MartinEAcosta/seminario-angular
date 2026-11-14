@@ -2,6 +2,7 @@ import { Routes } from "@angular/router";
 import { NotAuthenticatedGuard } from "@guards/not-authenticated.guard";
 import { AuthenticatedGuard } from "@guards/authenticated.guard";
 import { AuthLayoutComponent } from "./layout/auth-layout/auth-layout.component";
+import { PasswordRecoveryLayoutComponent } from "./layout/password-recovery-layout/password-recovery-layout.component";
 import { FormLoginComponent } from "./components/form-login/form-login.component";
 import { FormRegisterComponent } from "./components/form-register/form-register.component";
 import { VerifyEmailPageComponent } from "./pages/verify-email-page/verify-email-page.component";
@@ -11,20 +12,21 @@ import { ResetPasswordPageComponent } from "./pages/reset-password-page/reset-pa
 
 export const authRoutes : Routes = [
 
-    // Antes del bloque "" de AuthLayoutComponent a propósito: ese bloque tiene
-    // un '**' -> redirectTo 'login' entre sus children, que intercepta
-    // cualquier segmento no listado ahí (incluido 'forgot-password' o
-    // 'reset-password') antes de que el router llegue a probar estas rutas
-    // hermanas. Puestas primero, se evalúan antes de que ese wildcard actúe.
+   
     {
-        path: 'forgot-password',
-        component: ForgotPasswordPageComponent,
+        path : '',
+        component : PasswordRecoveryLayoutComponent,
         canMatch: [ NotAuthenticatedGuard ],
-    },
-    {
-        path: 'reset-password/:token',
-        component: ResetPasswordPageComponent,
-        canMatch: [ NotAuthenticatedGuard ],
+        children: [
+            {
+                path: 'forgot-password',
+                component: ForgotPasswordPageComponent,
+            },
+            {
+                path: 'reset-password/:token',
+                component: ResetPasswordPageComponent,
+            },
+        ]
     },
     {
         path : '',

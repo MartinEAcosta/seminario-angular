@@ -1,6 +1,6 @@
 # SPEC 14 — Shell compartido para el layout de login/register y el de recuperar contraseña
 
-> **Status:** Draft
+> **Status:** Aprobado
 > **Depends on:** SPEC 13 (forgot-password)
 > **Date:** 2026-11-13
 > **Objective:** Agrupar `forgot-password`/`reset-password/:token` bajo un layout propio (mismo patrón de ruta que `AuthLayoutComponent`) y extraer a un partial SCSS compartido el shell visual (contenedor, panel oscuro, separador, panel blanco, roadmap) que hoy está triplicado byte a byte entre `auth-layout.component.scss`, `forgot-password-page.component.scss` y `reset-password-page.component.scss`.

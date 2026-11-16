@@ -54,6 +54,15 @@ export function buildPasswordForm ( fb : FormBuilder ) : FormGroup {
     }, { validators : passwordsMatchValidator });
 }
 
+// Igual a buildPasswordForm pero sin currentPassword: acá la identidad la prueba
+// el token de /auth/reset-password/:token, no una contraseña vigente.
+export function buildResetPasswordForm ( fb : FormBuilder ) : FormGroup {
+    return fb.group({
+        newPassword : [ '', [ Validators.required, Validators.pattern( FormUtils.strongPasswordPattern ) ] ],
+        confirmPassword : [ '', [ Validators.required ] ],
+    }, { validators : passwordsMatchValidator });
+}
+
 const passwordsMatchValidator = ( group : AbstractControl ) : ValidationErrors | null => {
   const newPassword = group.get('newPassword')?.value;
   const confirmPassword = group.get('confirmPassword')?.value;

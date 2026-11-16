@@ -129,6 +129,7 @@ export class AuthService {
                       )
                      );
   }
+
   // Envia (o reenvia) el email con el enlace de validación a la cuenta del usuario logueado.
   public sendVerificationEmail = ( ) : Observable<boolean> => {
     return this.http
@@ -159,6 +160,38 @@ export class AuthService {
                         return of(false);
                       })
                     );
+  }
+
+  public sendForgotPasswordEmail = ( email : string ) : Observable<boolean> => {
+    return this.http
+                .post<ApiResponse<boolean>>( `${this.baseURL}/forgot-password` , { email } )
+                .pipe(
+                  map( (response) => {
+                    return response.ok;
+                  }),
+                  catchError( ( { error } : { error : ErrorResponse } ) => {
+                    this.uiService.showToastMessage( error?.error ?? 'No pudimos enviar el enlace. Probá de nuevo.' );
+                    return of(false);
+                  })
+                );
+  }
+
+  // Aplica la contraseña nueva a partir del token recibido por correo. Sin toast propio:
+  // ResetPasswordPageComponent es el único consumidor y cubre el error con un estado
+  // inline ("este enlace no es válido o expiró") en vez de un segundo mensaje.
+  public resetPassword = ( token : string, password : string ) : Observable<boolean> => {
+    return this.http
+                .post<ApiResponse<boolean>>( `${this.baseURL}/reset-password`, {  token , password } )
+                .pipe(
+                  map( ( response ) => {
+                    console.log(response)
+                    return response.ok
+                  }),
+                  catchError( ( error ) => {
+                    console.log(error);
+                    return of(false)
+                  })
+                );
   }
 
   public logoutUser = ( ) : void => {

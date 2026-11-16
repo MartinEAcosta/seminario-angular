@@ -2,13 +2,32 @@ import { Routes } from "@angular/router";
 import { NotAuthenticatedGuard } from "@guards/not-authenticated.guard";
 import { AuthenticatedGuard } from "@guards/authenticated.guard";
 import { AuthLayoutComponent } from "./layout/auth-layout/auth-layout.component";
+import { PasswordRecoveryLayoutComponent } from "./layout/password-recovery-layout/password-recovery-layout.component";
 import { FormLoginComponent } from "./components/form-login/form-login.component";
 import { FormRegisterComponent } from "./components/form-register/form-register.component";
 import { VerifyEmailPageComponent } from "./pages/verify-email-page/verify-email-page.component";
 import { UserProfilePageComponent } from "./pages/user-profile-page/user-profile-page.component";
+import { ForgotPasswordPageComponent } from "./pages/forgot-password-page/forgot-password-page.component";
+import { ResetPasswordPageComponent } from "./pages/reset-password-page/reset-password-page.component";
 
 export const authRoutes : Routes = [
 
+   
+    {
+        path : '',
+        component : PasswordRecoveryLayoutComponent,
+        canMatch: [ NotAuthenticatedGuard ],
+        children: [
+            {
+                path: 'forgot-password',
+                component: ForgotPasswordPageComponent,
+            },
+            {
+                path: 'reset-password/:token',
+                component: ResetPasswordPageComponent,
+            },
+        ]
+    },
     {
         path : '',
         component : AuthLayoutComponent,

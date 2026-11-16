@@ -9,6 +9,7 @@ import { VerifyEmailPageComponent } from "./pages/verify-email-page/verify-email
 import { UserProfilePageComponent } from "./pages/user-profile-page/user-profile-page.component";
 import { ForgotPasswordPageComponent } from "./pages/forgot-password-page/forgot-password-page.component";
 import { ResetPasswordPageComponent } from "./pages/reset-password-page/reset-password-page.component";
+import { SingleUseTokenGuard } from "./guards/single-use-token.guard";
 
 export const authRoutes : Routes = [
 
@@ -24,6 +25,7 @@ export const authRoutes : Routes = [
             },
             {
                 path: 'reset-password/:token',
+                canActivate: [ SingleUseTokenGuard ],
                 component: ResetPasswordPageComponent,
             },
         ]

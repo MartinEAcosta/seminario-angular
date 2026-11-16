@@ -194,6 +194,20 @@ export class AuthService {
                 );
   }
 
+  public singleUseTokenIsValid = ( token : string ) : Observable<boolean> =>  {
+    return this.http.get<ApiResponse<{ valid : boolean }>>(`${this.baseURL}/reset-password/${token}/status`)
+                    .pipe(
+                      map( (res) => {
+                        console.log(res);
+                        return res.data.valid;
+                      }),
+                      catchError( ( error ) => {
+                        console.log(error);
+                        return of(true);
+                      })
+                    )
+  }
+
   public logoutUser = ( ) : void => {
     const wasAuthenticated = this.userState.authStatus() === 'authenticated';
 

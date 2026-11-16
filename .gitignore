@@ -46,3 +46,4 @@ Thumbs.db
 
 # Comando personal de Claude (no compartir con el equipo)
 /.claude/commands/telegram-send.md
+.claude

@@ -179,12 +179,18 @@ export class AuthService {
   // Aplica la contraseña nueva a partir del token recibido por correo. Sin toast propio:
   // ResetPasswordPageComponent es el único consumidor y cubre el error con un estado
   // inline ("este enlace no es válido o expiró") en vez de un segundo mensaje.
-  public resetPassword = ( token : string, newPassword : string ) : Observable<boolean> => {
+  public resetPassword = ( token : string, password : string ) : Observable<boolean> => {
     return this.http
-                .post<ApiResponse<boolean>>( `${this.baseURL}/reset-password/${token}`, { newPassword } )
+                .post<ApiResponse<boolean>>( `${this.baseURL}/reset-password`, {  token , password } )
                 .pipe(
-                  map( ( response ) => response.ok ),
-                  catchError( ( ) => of(false) )
+                  map( ( response ) => {
+                    console.log(response)
+                    return response.ok
+                  }),
+                  catchError( ( error ) => {
+                    console.log(error);
+                    return of(false)
+                  })
                 );
   }
 

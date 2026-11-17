@@ -1,6 +1,6 @@
 import { FormGroup } from "@angular/forms";
 import { ApiResponse, LessonPopulatedResponseDto, LessonResponseDto } from "@shared/models/api.interfaces";
-import { Lesson, LessonPopulated, SaveLessonDto } from "@lesson/models/lesson.interfaces";
+import { Lesson, LessonPopulated, SaveLessonDto } from "@lesson/models/lesson.interface";
 
 export class LessonMapper {
 

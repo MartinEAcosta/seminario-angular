@@ -2,7 +2,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 import { TeacherRequestService } from '@teacher-request/services/teacher-request.service';
-import { TeacherRequestDTO } from '@teacher-request/models/teacher-request.interfaces';
+import { TeacherRequestDTO } from '@teacher-request/models/teacher-request.interface';
 
 @Injectable({
   providedIn: 'root',

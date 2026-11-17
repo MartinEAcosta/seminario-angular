@@ -1,4 +1,4 @@
-import { EnrollmentDetailed, EnrollmentStatus } from '@enrollment/models/enrollment.interfaces';
+import { EnrollmentDetailed, EnrollmentStatus } from '@enrollment/models/enrollment.interface';
 
 export interface LibraryItem {
   enrollment : EnrollmentDetailed;

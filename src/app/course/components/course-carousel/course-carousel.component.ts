@@ -1,6 +1,6 @@
 import { Component, ElementRef, afterNextRender, input, signal, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Course } from '@interfaces/course.interfaces';
+import { Course } from '@interfaces/course.interface';
 import { CourseCatalogCardComponent } from '../course-catalog-card/course-catalog-card.component';
 import { LoaderComponent } from '@shared/components/loader/loader.component';
 

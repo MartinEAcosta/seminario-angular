@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { LessonPopulated } from '../../models/lesson.interfaces';
+import { LessonPopulated } from '../../models/lesson.interface';
 
 @Injectable({
   providedIn: 'root'

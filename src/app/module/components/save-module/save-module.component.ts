@@ -1,7 +1,7 @@
 import { Component, computed, effect, inject, input, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ModuleMapper } from '@mappers/module.mapper';
-import { Module, ModulePopulated } from '@module/models/module.interfaces';
+import { Module, ModulePopulated } from '@module/models/module.interface';
 import { ModuleService } from '@module/services/module.service';
 
 @Component({

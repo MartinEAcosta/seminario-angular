@@ -1,6 +1,6 @@
 import { Component, inject, input, signal } from '@angular/core';
 
-import { ModulePopulated } from '@module/models/module.interfaces';
+import { ModulePopulated } from '@module/models/module.interface';
 import { Router } from '@angular/router';
 import { EnrollmentState } from '@enrollment/state/enrollment-state';
 import { formatDuration } from '@utils/module-stats';

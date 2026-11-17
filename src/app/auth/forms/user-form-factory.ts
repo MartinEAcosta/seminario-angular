@@ -1,5 +1,5 @@
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from "@angular/forms";
-import { User } from "@auth/models/auth.interfaces";
+import { User } from "@auth/models/auth.interface";
 import { FormUtils } from "@utils/form-utils";
 
 export const userFieldsValidators = {

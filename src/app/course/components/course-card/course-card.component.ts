@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { UserState } from '@user/state/user-state';
 import { BtnPrimaryComponent } from '@shared/components/btns/btn-primary/btn-primary.component';
 import { BtnBorderThinComponent } from '@shared/components/btns/btn-border-thin/btn-border-thin.component';
-import { Course } from '@course/models/course.interfaces';
+import { Course } from '@course/models/course.interface';
 import { CartService } from '@cart/state/cart.service';
 
 @Component({

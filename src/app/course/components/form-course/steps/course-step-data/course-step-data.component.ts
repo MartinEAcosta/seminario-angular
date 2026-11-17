@@ -12,7 +12,7 @@ import { CategorySelectComponent } from '@category/components/category-select/ca
 import { ThumbnailSelectorComponent } from '@course/components/thumbnail-selector/thumbnail-selector.component';
 import { CourseFormState } from '@course/state/course-form/course-form-state';
 import { CourseService } from '@course/services/course.service';
-import { Course } from '@course/models/course.interfaces';
+import { Course } from '@course/models/course.interface';
 import { CourseMapper } from '@mappers/course.mapper';
 
 @Component({

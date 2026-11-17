@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { Course } from '@course/models/course.interfaces';
+import { Course } from '@course/models/course.interface';
 import { map, throwError } from 'rxjs';
 import { CartItem, ItemQuantity } from '../models/cart.interface';
 import { Cart } from '../models/cart.model';

@@ -4,7 +4,7 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 import { ApiResponse, EnrollmentPopulatedResponseDto, EnrollmentResponseDto } from '@shared/models/api.interfaces';
-import { Enrollment, EnrollmentDetailed } from '@enrollment/models/enrollment.interfaces';
+import { Enrollment, EnrollmentDetailed } from '@enrollment/models/enrollment.interface';
 import { EnrollmentMapper } from '@mappers/enrollment.mapper';
 
 @Injectable({

@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { Course, CourseDTO, CoursePopulated } from '@course/models/course.interfaces';
+import { Course, CourseDTO, CoursePopulated } from '@course/models/course.interface';
 import { CourseMapper } from '@mappers/course.mapper';
 import { ApiResponse, CoursePopulatedResponseDto, CourseResponseDto, PaginationResponse, PaginationResponseDto } from '@shared/models/api.interfaces';
 import { FileService } from '@file/services/file.service';

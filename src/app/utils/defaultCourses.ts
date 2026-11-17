@@ -1,4 +1,4 @@
-import { Course } from "@course/models/course.interfaces";
+import { Course } from "@course/models/course.interface";
 
 // Catálogo de respaldo para cuando el backend no está levantado (ver PRODUCT.md).
 // Las miniaturas son ilustraciones propias en `public/assets/course-thumb-*.svg`:

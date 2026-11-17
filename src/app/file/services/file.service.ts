@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
 import { UIService } from '@shared/services/ui/ui.service';
 import { FileMapper } from '@mappers/file.mapper';
 import { ApiResponse, FileResponseDto } from '@shared/models/api.interfaces';
-import { SelectedFile, UploadedFile, UploadFolder } from '@file/models/file.interfaces';
+import { SelectedFile, UploadedFile, UploadFolder } from '@file/models/file.interface';
 
 @Injectable({
   providedIn: 'root'

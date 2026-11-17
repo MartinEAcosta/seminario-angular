@@ -10,7 +10,7 @@ import { LoaderComponent } from '@shared/components/loader/loader.component';
 import { TeacherRequestState } from '@teacher-request/state/teacher-request-state';
 import { TeacherRequestFormComponent } from '@teacher-request/components/teacher-request-form/teacher-request-form.component';
 import { TeacherRequestStatusComponent } from '@teacher-request/components/teacher-request-status/teacher-request-status.component';
-import { TeacherRequestDTO } from '@teacher-request/models/teacher-request.interfaces';
+import { TeacherRequestDTO } from '@teacher-request/models/teacher-request.interface';
 
 @Component({
     selector: 'app-become-teacher-page',

@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
-import { Course } from '@interfaces/course.interfaces';
-import { LessonPopulated } from '@lesson/models/lesson.interfaces';
+import { Course } from '@interfaces/course.interface';
+import { LessonPopulated } from '@lesson/models/lesson.interface';
 
 @Component({
   selector: 'app-btn-remove',

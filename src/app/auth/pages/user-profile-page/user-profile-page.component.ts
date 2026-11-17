@@ -14,7 +14,7 @@ import { RoleLabelPipe } from '@auth/pipes/role-label.pipe';
 import { buildPasswordForm, buildProfileForm, getPasswordStrength, patchProfileForm } from '@auth/forms/user-form-factory';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FilePreviewControl } from '@file/models/file-preview-control';
-import { PasswordDTO } from '@auth/models/auth.interfaces';
+import { PasswordDTO } from '@auth/models/auth.interface';
 
 @Component({
   selector: 'app-user-profile-page',

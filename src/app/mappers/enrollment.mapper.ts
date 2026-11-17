@@ -1,4 +1,4 @@
-import { Enrollment, EnrollmentDetailed } from '@enrollment/models/enrollment.interfaces';
+import { Enrollment, EnrollmentDetailed } from '@enrollment/models/enrollment.interface';
 import { ApiResponse, EnrollmentPopulatedResponseDto, EnrollmentResponseDto } from '@shared/models/api.interfaces';
 
 

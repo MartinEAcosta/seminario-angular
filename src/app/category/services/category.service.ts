@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable, catchError, map, of } from 'rxjs';
-import { Category } from '../models/category.interfaces';
+import { Category } from '../models/category.interface';
 import { CategoryMapper } from '@mappers/category.mapper';
 
 @Injectable({

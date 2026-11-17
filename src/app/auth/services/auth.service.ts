@@ -8,7 +8,7 @@ import { environment } from '../../../environments/environment';
 import { UIService } from '@shared/services/ui/ui.service';
 import { CartService } from '@cart/state/cart.service';
 import { FileService } from '@file/services/file.service';
-import { AuthResponse, PasswordDTO, User, UserDTO } from '@auth/models/auth.interfaces';
+import { AuthResponse, PasswordDTO, User, UserDTO } from '@auth/models/auth.interface';
 import { ApiResponse, ErrorResponse } from '@shared/models/api.interfaces';
 import { AuthMapper } from '@mappers/auth.mapper';
 import { UserState } from '@user/state/user-state';

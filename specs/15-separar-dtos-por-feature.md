@@ -145,9 +145,13 @@ archivos, elimina dos declaraciones duplicadas (`TeacherRequestStatus` repetida 
 - [ ] `src/app/shared/models/api.interfaces.ts` exporta exactamente cuatro símbolos: `ApiResponse`,
       `ErrorResponse`, `PaginationResponseDto` y `PaginationResponse`.
 - [ ] Existen los nueve `*.response.ts` listados en Scope, y ningún símbolo quedó declarado en dos lugares.
-- [ ] `grep -rn "ResponseDto" src/app --include=*.ts | grep "api.interfaces"` no devuelve nada.
-- [ ] Ningún archivo de `models/` se llama `*.interfaces.ts`: los once archivos de tipos del repo están en
-      singular.
+- [ ] `grep -rn "ResponseDto" src/app --include=*.ts | grep "api.interfaces" | grep -v PaginationResponseDto`
+      no devuelve nada. El filtro final es necesario: `PaginationResponseDto` es uno de los cuatro símbolos
+      que el archivo central conserva, y su propia declaración matchea los dos patrones anteriores.
+- [ ] Ningún archivo de `models/` se llama `*.interfaces.ts` **salvo el central**, que conserva el nombre
+      (`shared/models/api.interfaces.ts`, ver Scope): los archivos de tipos por feature — ocho `*.interface.ts`
+      renombrados, los tres que ya estaban en singular y los nueve `*.response.ts` nuevos — quedan todos en
+      singular. `utils/filters/filter.interfaces.ts` no está bajo un `models/` y queda fuera.
 - [ ] `grep -rn "TeacherExperienceLevelResponse" src/` no devuelve nada, y `TeacherRequestStatus` está
       declarada una sola vez en todo el repo.
 - [ ] No queda ningún import relativo que cruce de una feature a otra para traer un tipo

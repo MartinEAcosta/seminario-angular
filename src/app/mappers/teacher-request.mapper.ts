@@ -1,4 +1,5 @@
-import { ApiResponse, TeacherRequestResponseDto } from "@shared/models/api.interfaces";
+import { ApiResponse } from "@shared/models/api.interfaces";
+import { TeacherRequestResponseDto } from "@teacher-request/models/teacher-request.response";
 import { TeacherRequest } from "@teacher-request/models/teacher-request.interface";
 
 export class TeacherRequestMapper {

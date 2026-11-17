@@ -5,7 +5,8 @@ import { environment } from '../../../environments/environment';
 
 import { LessonMapper } from '@mappers/lesson.mapper';
 import { Lesson, LessonPopulated, SaveLessonDto } from '@lesson/models/lesson.interface';
-import { ApiResponse, LessonPopulatedResponseDto, LessonResponseDto } from '@shared/models/api.interfaces';
+import { ApiResponse } from '@shared/models/api.interfaces';
+import { LessonPopulatedResponseDto, LessonResponseDto } from '@lesson/models/lesson.response';
 import { FileService } from '@file/services/file.service';
 
 @Injectable({

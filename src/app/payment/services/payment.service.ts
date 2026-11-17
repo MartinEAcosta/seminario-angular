@@ -5,7 +5,9 @@ import { OrderMapper } from '@mappers/order.mapper';
 import { catchError, map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
-import { ApiResponse, IdentificationTypeResponseDto, IssuerResponseDto, OrderResponseDto } from '@shared/models/api.interfaces';
+import { ApiResponse } from '@shared/models/api.interfaces';
+import { IdentificationTypeResponseDto, IssuerResponseDto } from '@payment/models/payment.response';
+import { OrderResponseDto } from '@payment/models/order.response';
 import { IdentificationType, Issuer, CreateOrderRequestDTO } from '../models/payment.interface';
 import { Order } from '../models/order.interface';
 import { ItemQuantity } from '@cart/models/cart.interface';

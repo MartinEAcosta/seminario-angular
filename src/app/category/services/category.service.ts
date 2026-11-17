@@ -1,4 +1,5 @@
-import { ApiResponse, CategoryResponseDto } from '@shared/models/api.interfaces';
+import { ApiResponse } from '@shared/models/api.interfaces';
+import { CategoryResponseDto } from '@category/models/category.response';
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';

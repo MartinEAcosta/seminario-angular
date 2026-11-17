@@ -1,5 +1,6 @@
 import { Issuer , IdentificationType } from "@payment/models/payment.interface";
-import { ApiResponse, IdentificationTypeResponseDto, IssuerResponseDto } from "@shared/models/api.interfaces";
+import { ApiResponse } from "@shared/models/api.interfaces";
+import { IdentificationTypeResponseDto, IssuerResponseDto } from "@payment/models/payment.response";
 
 export class PaymentMapper {
 

@@ -3,7 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
-import { ApiResponse, EnrollmentPopulatedResponseDto, EnrollmentResponseDto } from '@shared/models/api.interfaces';
+import { ApiResponse } from '@shared/models/api.interfaces';
+import { EnrollmentPopulatedResponseDto, EnrollmentResponseDto } from '@enrollment/models/enrollment.response';
 import { Enrollment, EnrollmentDetailed } from '@enrollment/models/enrollment.interface';
 import { EnrollmentMapper } from '@mappers/enrollment.mapper';
 

@@ -4,7 +4,8 @@ import { catchError, map, Observable, of } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 import { UIService } from '@shared/services/ui/ui.service';
-import { ApiResponse, ErrorResponse, TeacherRequestResponseDto } from '@shared/models/api.interfaces';
+import { ApiResponse, ErrorResponse } from '@shared/models/api.interfaces';
+import { TeacherRequestResponseDto } from '@teacher-request/models/teacher-request.response';
 import { TeacherRequestMapper } from '@mappers/teacher-request.mapper';
 import { TeacherRequest, TeacherRequestDTO } from '@teacher-request/models/teacher-request.interface';
 

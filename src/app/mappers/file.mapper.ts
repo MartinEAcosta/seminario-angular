@@ -1,4 +1,4 @@
-import { FileResponseDto } from "@shared/models/api.interfaces";
+import { FileResponseDto } from "@file/models/file.response";
 import { UploadedFile } from "@file/models/file.interface";
 
 

@@ -1,8 +1,11 @@
 import { Component, computed, inject, input, OnDestroy, signal } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { AuthService } from '@auth/services/auth.service';
 import { UserState } from '@user/state/user-state';
 import { UIService } from '@shared/services/ui/ui.service';
+import { getAuthErrorMessage, isServerError } from '@auth/utils/auth-error-message';
 
 const RESEND_COOLDOWN_SECONDS = 60;
 
@@ -17,6 +20,7 @@ export class EmailVerificationBannerComponent implements OnDestroy {
   public authService = inject(AuthService);
   public userState = inject(UserState);
   private uiService = inject(UIService);
+  private router = inject(Router);
 
   // true cuando el banner vive embebido en otra card (user-profile-page) y debe
   // perder su propio borde/radio/margen para fundirse con el contenedor padre.
@@ -33,12 +37,20 @@ export class EmailVerificationBannerComponent implements OnDestroy {
 
     this.isSending.set(true);
     this.authService.sendVerificationEmail()
-                      .subscribe( ( ok ) => {
-                        this.isSending.set(false);
-                        if( ok ){
+                      .subscribe({
+                        next : () => {
+                          this.isSending.set(false);
                           this.uiService.showToastMessage('Te enviamos un email para validar tu cuenta. Revisá tu bandeja de entrada.');
                           this.startCooldown();
-                        }
+                        },
+                        error : ( error : HttpErrorResponse ) => {
+                          this.isSending.set(false);
+                          if( isServerError( error ) ){
+                            this.router.navigateByUrl('/error');
+                            return;
+                          }
+                          this.uiService.showToastMessage( getAuthErrorMessage( error , 'No pudimos enviar el email de validación.' ) );
+                        },
                       });
   }
 

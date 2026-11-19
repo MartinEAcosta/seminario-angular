@@ -3,11 +3,10 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, forkJoin, map, Observable, of, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
-import { UIService } from '@shared/services/ui/ui.service';
 import { FileMapper } from '@mappers/file.mapper';
 import { ApiResponse } from '@shared/models/api.interfaces';
 import { FileResponseDto } from '@file/models/file.response';
-import { SelectedFile, UploadedFile, UploadFolder } from '@file/models/file.interface';
+import { ResourceValidTypes, SelectedFile, UploadedFile, UploadFolder } from '@file/models/file.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +15,7 @@ export class FileService {
 
   private http = inject(HttpClient);
   private baseURL : string = `${environment.apiURL}file`;
-  private uiService = inject(UIService);
-  
+
   constructor ( ) { }
 
   uploadFiles = ( folder : UploadFolder , id_entity : string , files : FileList  ) : Observable<UploadedFile[]> => {
@@ -44,9 +42,7 @@ export class FileService {
                                       console.log(fileResponse)
                                       return FileMapper.mapResponseToFile( fileResponse.data );
                                     }),
-                                    catchError( ({ error }) => {
-                                      return throwError(() => new Error(`${error}`));
-                                    }),
+                                    catchError( ( error ) => throwError( () => error ) ),
                                   );
   }
 
@@ -61,11 +57,7 @@ export class FileService {
                                         console.log(fileResponse);
                                         return fileResponse;
                                       }),
-                                      catchError( ({error}) => {
-                                        console.log(error)
-                                        this.uiService.showToastMessage('Error al eliminar el archivo. Por favor, inténtalo de nuevo.');
-                                        return throwError(() => new Error(`${error}`));
-                                      }),
+                                      catchError( ( error ) => throwError( () => error ) ),
                                     );
   }
   
@@ -79,9 +71,7 @@ export class FileService {
                                         console.log(fileResponse);
                                         return fileResponse;
                                       }),
-                                      catchError( ({error}) => {
-                                        return throwError(() => new Error(`${error}`));
-                                      }),
+                                      catchError( ( error ) => throwError( () => error ) ),
                                     );
   }
 
@@ -95,7 +85,7 @@ export class FileService {
                                       console.log(res);
                                       return res;
                                     }),
-                                    catchError( error => error),
+                                    catchError( ( error ) => throwError( () => error ) ),
                                   )
   }
 
@@ -103,16 +93,16 @@ export class FileService {
     const fileChanged = ( event.target as HTMLInputElement ).files?.[0];
     if( !fileChanged ) return null;
 
-    const kind = fileChanged.type.split('/')[0];
-    if( kind !== 'image' && kind !== 'video' ) {
-      this.uiService.showToastMessage('Tipo de archivo no válido. Por favor, selecciona una imagen o un video.');
-      return null;
-    };
-
-    return { 
-      file : fileChanged, 
-      previewURL : URL.createObjectURL(fileChanged), 
-      mediaType : kind 
+    // Ya no valida el tipo: la regla vive en `isAllowedMediaType`
+    // (@file/utils/allowed-media-type) y el componente decide si muestra el
+    // rechazo y por qué canal (ver SPEC 16). Por eso `mediaType` se castea —
+    // acá todavía puede ser cualquier cosa que el usuario haya elegido, y el
+    // object URL ya está creado antes de que nadie valide: el llamador que
+    // rechaza el archivo tiene que liberarlo con `URL.revokeObjectURL`.
+    return {
+      file : fileChanged,
+      previewURL : URL.createObjectURL(fileChanged),
+      mediaType : fileChanged.type.split('/')[0] as ResourceValidTypes,
     };
   }
 

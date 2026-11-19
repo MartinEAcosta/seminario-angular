@@ -17,10 +17,15 @@ export interface ApiResponse<T> {
   data : T;
 }
 
+// El backend serializa los errores en dos formas distintas
+// (`HandlerResponses.handleError`): un `CustomError` manda `ok`/`status`/`error`,
+// y la rama de excepción no prevista manda solo `{ error : 'Internal Server Error' }`.
+// De ahí que `ok` y `status` sean opcionales: el único campo que mandan las dos
+// ramas es `error`. El status real se lee del `HttpErrorResponse`, nunca de acá.
 export interface ErrorResponse {
-  ok     : boolean;
-  status : number;
-  error  : string;
+  ok     ?: boolean;
+  status ?: number;
+  error   : string;
 }
 
 // `T` es el tipo de UN item de la página; `items` ya es la lista.

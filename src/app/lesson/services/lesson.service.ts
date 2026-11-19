@@ -36,10 +36,10 @@ export class LessonService {
   }
 
   public getLessonById = ( id_lesson : string ) : Observable<Lesson> => {
-    return this.http.get<any>(`${this.baseURL}/${id_lesson}`)
+    return this.http.get<ApiResponse<LessonResponseDto>>(`${this.baseURL}/${id_lesson}`)
                     .pipe(
                       map( (lessonResponse) => {
-                        return LessonMapper.mapResponseToLesson( lessonResponse );
+                        return LessonMapper.mapResponseToLesson( lessonResponse.data );
                       }),
                       catchError( ({ error }) => {
                         console.log(error)

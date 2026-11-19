@@ -1,11 +1,14 @@
 <div class="container-thumbnail">
-    <input 
-        type="file" 
-        id="file" 
-        name="file" 
+    <!-- Inerte: el (change) que llamaba a onFileChanged descartaba el resultado, así
+         que elegir una portada nunca hizo nada (nadie llama setThumbnailFile). Queda
+         deshabilitado para no aparentar lo contrario (ver SPEC 16, deuda 1.1). -->
+    <input
+        type="file"
+        id="course-thumbnail-file"
+        name="file"
         class="input-file"
         accept="image/*"
-        (change)="this.fileService.onFileChanged( $event )"
+        disabled
     />
     <div class="figure thumbnail-figure">
         @if( folder() === 'course' ){

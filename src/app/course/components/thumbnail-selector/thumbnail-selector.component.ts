@@ -1,7 +1,6 @@
 import { Component, inject, input } from '@angular/core';
 
 import { CourseFormState } from '@course/state/course-form/course-form-state';
-import { FileService } from '@file/services/file.service';
 import { UploadFolder } from '@file/models/file.interface';
 import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
 
@@ -13,7 +12,6 @@ import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
 })
 export class ThumbnailSelectorComponent {
 
-  fileService = inject(FileService);
   courseFormState = inject(CourseFormState);
   lessonFormState = inject(LessonFormState);
 

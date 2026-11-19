@@ -17,12 +17,16 @@ export class UIService {
 
     this._errorMessage.set( message );
 
-    setTimeout(() => {
+    // El timer se guarda y se cancela al limpiar: si no, el temporizador del
+    // mensaje anterior borraría el siguiente antes de que cumpla su duración.
+    clearTimeout( this.timer );
+    this.timer = setTimeout(() => {
       this.clearErrorMessage();
     }, duration );
   }
 
   clearErrorMessage = () : void => {
+    clearTimeout( this.timer );
     this._errorMessage.set( null );
   }
 

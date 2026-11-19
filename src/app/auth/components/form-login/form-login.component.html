@@ -23,7 +23,9 @@
                     autocomplete="off"
                     formControlName="email"
                     required
-                    [ngClass]="{'hasError': ( loginForm.get('email')?.errors && loginForm.get('email')?.touched ) ?? false }">
+                    [attr.aria-invalid]="formError() !== null ? 'true' : null"
+                    [attr.aria-describedby]="formError() ? 'login-form-error' : null"
+                    [ngClass]="{'hasError': ( ( loginForm.get('email')?.errors && loginForm.get('email')?.touched ) ?? false ) || formError() !== null }">
             </div>
             <form-error-label class="error error-email" [control]="loginForm.get('email')!" />
         </div>
@@ -42,7 +44,9 @@
                     required
                     name="password"
                     formControlName="password"
-                    [ngClass]="{'hasError': ( loginForm.get('password')?.errors  && loginForm.get('password')?.touched ) ?? false }">
+                    [attr.aria-invalid]="formError() !== null ? 'true' : null"
+                    [attr.aria-describedby]="formError() ? 'login-form-error' : null"
+                    [ngClass]="{'hasError': ( ( loginForm.get('password')?.errors  && loginForm.get('password')?.touched ) ?? false ) || formError() !== null }">
                 <button
                     type="button"
                     class="btn-toggle-password"
@@ -65,8 +69,19 @@
             <form-error-label class="error error-password" [control]="loginForm.get('password')!" />
         </div>
 
-        <button class="btn-sumbit" type="submit">
-            Ingresar
+        @if( formError() ){
+            <p class="form-error-banner" id="login-form-error" role="alert">
+                <svg class="banner-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M12 7.8v4.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M12 15.8h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                {{ formError() }}
+            </p>
+        }
+
+        <button class="btn-sumbit" type="submit" [disabled]="isSubmitting()">
+            {{ isSubmitting() ? 'Ingresando...' : 'Ingresar' }}
         </button>
 
         <p class="text-register">

@@ -2,12 +2,16 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 import { User } from "@auth/models/auth.interface";
 import { FormUtils } from "@utils/form-utils";
 
+// Exportada para que el validador del form y el mensaje que muestra el componente
+// salgan del mismo número: si cambia el límite, cambia en un solo lugar.
+export const MAX_AVATAR_BYTES = 2_000_000;
+
 export const userFieldsValidators = {
     first_name : [ Validators.required, Validators.minLength(3), Validators.pattern(FormUtils.notOnlySpacesPattern) ],
     last_name  : [ Validators.required, Validators.minLength(2), Validators.pattern(FormUtils.notOnlySpacesPattern) ],
     email      : [ Validators.required, Validators.pattern(FormUtils.emailPattern) ],
     password   : [ Validators.required, Validators.pattern(FormUtils.strongPasswordPattern) ],
-    avatar     : [ FormUtils.fileMaxSizeValidator(2_000_000) ],
+    avatar     : [ FormUtils.fileMaxSizeValidator(MAX_AVATAR_BYTES) ],
 }
 
 export function buildProfileForm ( fb : FormBuilder ) : FormGroup {

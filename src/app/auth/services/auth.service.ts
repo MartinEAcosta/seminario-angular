@@ -1,15 +1,13 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, from, map, Observable, of, switchMap } from 'rxjs';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 import { environment } from '../../../environments/environment';
-import { UIService } from '@shared/services/ui/ui.service';
 import { CartService } from '@cart/state/cart.service';
-import { FileService } from '@file/services/file.service';
 import { AuthResponse, PasswordDTO, User, UserDTO } from '@auth/models/auth.interface';
-import { ApiResponse, ErrorResponse } from '@shared/models/api.interfaces';
+import { ApiResponse } from '@shared/models/api.interfaces';
 import { AuthMapper } from '@mappers/auth.mapper';
 import { UserState } from '@user/state/user-state';
 import { AUTH_PROVIDER } from '@auth/auth.provider';
@@ -25,9 +23,7 @@ export class AuthService {
   private provider = inject(AUTH_PROVIDER);
   
   readonly googleReady = this.provider.ready;
-  private uiService = inject(UIService);
   private cartService = inject(CartService);
-  private fileService = inject(FileService);
   private userState = inject(UserState);
 
   // Se dispara ni bien el servicio es inyectado por primera vez.
@@ -37,19 +33,21 @@ export class AuthService {
 
   constructor() {
     this.provider.onCode(
-      code => this.exchangeCode(code).subscribe(),
+      code => this.exchangeCode(code).subscribe({
+        error : err => console.warn('Login con Google fallido', err),
+      }),
       err => console.warn('Login cancelado o fallido', err),
     );
   }
-  
-  private exchangeCode = ( code : string ) : Observable<User | false> => {
+
+  private exchangeCode = ( code : string ) : Observable<User> => {
     return this.http
             .post<AuthResponse>(`${this.baseURL}/login/google`, { code })
               .pipe(
                 map( ( authResponse : AuthResponse ) => {
                   this.router.navigateByUrl('');
                   return this.handleAuthSuccess( authResponse ) }),
-                catchError( (error : any ) => { console.log(error); return this.handleAuthError( error.error )} )
+                catchError( ( error : HttpErrorResponse ) => this.handleAuthError( error ) )
               );
   }
 
@@ -59,138 +57,96 @@ export class AuthService {
     this.provider.signIn();
   }
 
-  public registerUser = ( userRequest : UserDTO ) : Observable<User | false> => {
+  public registerUser = ( userRequest : UserDTO ) : Observable<User> => {
     return this.http
                   .post<AuthResponse>(`${this.baseURL}/register` , { ...userRequest } )
-                    .pipe( 
+                    .pipe(
                       map( ( authResponse ) =>  this.handleAuthSuccess( authResponse )),
-                      // En caso de tener un error se captura y se toman las acciones de "limpieza"
-                      catchError( (error : any ) => this.handleAuthError( error ) )
+                      catchError( ( error : HttpErrorResponse ) => this.handleAuthError( error ) )
             );
   }
 
-  public loginUser = ( userRequest : UserDTO ) : Observable<User | false> => {
+  public loginUser = ( userRequest : UserDTO ) : Observable<User> => {
     return this.http.post<AuthResponse>(`${this.baseURL}/login` , { ...userRequest } )
                       .pipe(
-                        map( ( authResponse ) => {
-                          console.log(authResponse);
-                          return this.handleAuthSuccess( authResponse );
-                        } ),
-                        catchError( ( { error } ) => {
-                          return this.handleAuthError( error )
-                        } )
+                        map( ( authResponse ) => this.handleAuthSuccess( authResponse ) ),
+                        catchError( ( error : HttpErrorResponse ) => this.handleAuthError( error ) )
               );
   }
 
-  public updateUser = ( userRequest :  Partial<UserDTO> , file : File | null ) : Observable<User | false> => {
+  public updateUser = ( userRequest :  Partial<UserDTO> ) : Observable<User> => {
     return this.http.put<AuthResponse>(`${this.baseURL}/update/user/${this.userState.user()?.id}` , { ...userRequest } )
                       .pipe(
                         map( ( authResponse ) => this.handleAuthSuccess( authResponse ) ),
-                        switchMap( ( user ) => {
-                          if( !file ) return of( user );
-
-                          return this.fileService.uploadFile( 'user' , user.id , file )
-                                                    .pipe(
-                                                      map( ( uploadedFile ) => {
-                                                        const updatedUser : User = {
-                                                          ...user,
-                                                          avatar_url : uploadedFile.url ?? user.avatar_url,
-                                                          id_file : uploadedFile.id,
-                                                        };
-                                                        this.userState.setUser( updatedUser );
-                                                        return updatedUser;
-                                                      }),
-                                                      // Los datos de texto ya se guardaron (map anterior); si falla
-                                                      // solo la foto, no propagamos el error como fallo total.
-                                                      catchError( () => {
-                                                        this.uiService.showToastMessage('Perfil actualizado, pero no pudimos subir la foto.');
-                                                        return of( user );
-                                                      }),
-                                                    );
-                        }),
-                        catchError( ( { error } ) => {
-                          return this.handleAuthError( error )
-                        })
+                        catchError( ( error : HttpErrorResponse ) => this.handleAuthError( error ) )
                       );
   }
 
-  public updatePassword = ( passwordDto : PasswordDTO ) : Observable<boolean> => {
+  // Los cinco métodos de abajo emiten `void` y propagan: el fallo real llega
+  // siempre como status HTTP. El `ok` del body NO se chequea a propósito — el
+  // backend contesta 200 neutro ("En caso de que el usuario exista, enviamos un
+  // email") justamente para que el cliente no pueda deducir si la cuenta o el
+  // token existen. Convertir ese 200 en error acá reintroduciría la fuga que la
+  // respuesta neutra está tapando.
+
+  public updatePassword = ( passwordDto : PasswordDTO ) : Observable<void> => {
     return this.http.put<AuthResponse>(`${this.baseURL}/password/` , { ...passwordDto } )
                       .pipe(
                         map( ( authResponse ) => {
-                          this.handleAuthSuccess( authResponse );
-                          this.uiService.showToastMessage('Contraseña actualizada.');
-                          return true;
+                          // Solo refresca la sesión si la respuesta realmente trae una.
+                          // `AuthResponse` tipa `user` y `token` como requeridos, pero este
+                          // endpoint puede contestar sin ellos; sin la guarda, un cambio de
+                          // contraseña exitoso borraría 'x-token' y desloguearía al usuario.
+                          if( authResponse.user && authResponse.token ){
+                            this.handleAuthSuccess( authResponse );
+                          }
                         }),
-                        catchError( ( { error } ) => {
-                          this.uiService.showToastMessage('No pudimos actualizar la contraseña.');
-                          return of(false);
-                        }     
-                      )
+                        catchError( ( error ) => throwError( () => error ) ),
                      );
   }
 
   // Envia (o reenvia) el email con el enlace de validación a la cuenta del usuario logueado.
-  public sendVerificationEmail = ( ) : Observable<boolean> => {
+  public sendVerificationEmail = ( ) : Observable<void> => {
     return this.http
                   .post<ApiResponse<boolean>>(`${this.baseURL}/send-validation-email`, {} )
                     .pipe(
-                      map( ( response ) => response.ok ),
-                      catchError( ( { error } : { error : ErrorResponse } ) => {
-                        this.uiService.showToastMessage( error?.error ?? 'No pudimos enviar el email de validación.' );
-                        return of(false);
-                      })
+                      map( () => undefined ),
+                      catchError( ( error ) => throwError( () => error ) ),
                     );
   }
 
   // Confirma la validación del email a partir del token recibido por correo.
-  public confirmEmailVerification = ( token : string ) : Observable<boolean> => {
+  public confirmEmailVerification = ( token : string ) : Observable<void> => {
     return this.http
                   .post<AuthResponse>(`${this.baseURL}/validate-email/${ token }`, {} )
                     .pipe(
                       map( ( authResponse ) => {
-                        if( authResponse.ok ){
-                          // Actualiza el flag en la señal de usuario sin necesidad de re-loguear.
-                          this.userState.setEmailVerified( true );
+                        if( !authResponse.ok ){
+                          throw new HttpErrorResponse({ status : 200 , statusText : 'OK' });
                         }
-                        return authResponse.ok;
+                        this.userState.setEmailVerified( true );
                       }),
-                      catchError( ( { error } : { error : ErrorResponse } ) => {
-                        this.uiService.showToastMessage( error?.error ?? 'El enlace de validación no es válido o expiró.' );
-                        return of(false);
-                      })
+                      catchError( ( error ) => throwError( () => error ) ),
                     );
   }
 
-  public sendForgotPasswordEmail = ( email : string ) : Observable<boolean> => {
+  public sendForgotPasswordEmail = ( email : string ) : Observable<void> => {
     return this.http
                 .post<ApiResponse<boolean>>( `${this.baseURL}/forgot-password` , { email } )
                 .pipe(
-                  map( (response) => {
-                    return response.ok;
-                  }),
-                  catchError( ( { error } : { error : ErrorResponse } ) => {
-                    this.uiService.showToastMessage( error?.error ?? 'No pudimos enviar el enlace. Probá de nuevo.' );
-                    return of(false);
-                  })
+                  map( () => undefined ),
+                  catchError( ( error ) => throwError( () => error ) ),
                 );
   }
 
-  // Aplica la contraseña nueva a partir del token recibido por correo. Sin toast propio:
   // ResetPasswordPageComponent es el único consumidor y cubre el error con un estado
-  // inline ("este enlace no es válido o expiró") en vez de un segundo mensaje.
-  public resetPassword = ( token : string, password : string ) : Observable<boolean> => {
+  // inline ("este enlace no es válido o expiró") en vez de un toast.
+  public resetPassword = ( token : string, password : string ) : Observable<void> => {
     return this.http
                 .post<ApiResponse<boolean>>( `${this.baseURL}/reset-password`, {  token , password } )
                 .pipe(
-                  map( ( response ) => {
-                    console.log(response)
-                    return response.ok
-                  }),
-                  catchError( ( error ) => {
-                    console.log(error);
-                    return of(false)
-                  })
+                  map( () => undefined ),
+                  catchError( ( error ) => throwError( () => error ) ),
                 );
   }
 
@@ -213,12 +169,6 @@ export class AuthService {
 
     this.userState.logout();
     this.cartService.clearCart();
-
-    localStorage.clear();
-
-    // Solo redirige si había una sesión activa (logout manual o pérdida de sesión).
-    // Evita mandar a "/" cuando login/register/updateUser fallan sin haber estado
-    // nunca autenticado (logoutUser() también se invoca desde handleAuthError()).
     if( wasAuthenticated ){
       this.router.navigateByUrl('/');
     }
@@ -226,18 +176,28 @@ export class AuthService {
   
   public checkStatus = ( ) : Observable<boolean> => {
     const token = localStorage.getItem('x-token');
-    // console.log(token);
     if( !token ){
       this.logoutUser();
       return of(false);
     }
     return this.http.get<AuthResponse>(`${this.baseURL}/renew`)
-                      .pipe( 
+                      .pipe(
                         map( ( authResponse ) => {
-                            if( authResponse.ok ) this.handleAuthSuccess( authResponse );
-                            return authResponse.ok;
+                            if( authResponse.ok ){
+                              this.handleAuthSuccess( authResponse );
+                              return true;
+                            }
+                            // 200 con `ok : false`: no es un error HTTP, así que nadie
+                            // destrabaría authStatus y los guards quedarían colgados.
+                            this.settleCheckingStatus();
+                            return false;
                         } ),
-                        catchError( (error : any ) => { console.log(error); return this.handleAuthError( error.error )} )
+                        // Absorbe el error en vez de propagarlo, pero corre igual las dos
+                        // responsabilidades estructurales que `handleAuthError` haría.
+                        catchError( ( error : HttpErrorResponse ) => {
+                          this.settleAuthState( error );
+                          return of(false);
+                        }),
     );
   }
   
@@ -249,24 +209,38 @@ export class AuthService {
     return AuthMapper.mapResponseToUser( authResponse );
   }
   
-  private handleAuthError = ( error : any | ErrorResponse ) : Observable<false>  => {
-    // Solo cierra sesión ante un error real de autenticación (token inválido/expirado).
-    // Un 400 de validación (ej: email duplicado al actualizar perfil) no debe desloguear.
-    if( error?.status === 401 || error?.status === 403 ) {
+  // Destraba `authStatus` sin tocar el token. Los guards esperan una transición
+  // fuera de 'checking' con `firstValueFrom`, así que si nadie la emite se cuelgan
+  // para siempre (ver SPEC 06). Tiene que correr en TODOS los finales del chequeo
+  // inicial, no solo en los errores.
+  private settleCheckingStatus = ( ) : void => {
+    if( this.userState.authStatus() === 'checking' ) {
+      this.userState.setAuthStatus('not-authenticated');
+    }
+  }
+
+  // Las dos responsabilidades estructurales que corren pase lo que pase con el
+  // error, lo propague quien lo propague. `checkStatus` las necesita sin el throw.
+  private settleAuthState = ( error : HttpErrorResponse ) : void => {
+    // Solo cierra sesión ante un error real de autenticación (token inválido o
+    // expirado) y solo si había algo que invalidar: un 401 de login de alguien que
+    // no estaba logueado no tiene sesión, y `logoutUser()` le vaciaría el carrito
+    // de invitado. Un 400 de validación y un 404 tampoco deslogean.
+    const hadSession = this.userState.token() !== null || this.userState.user() !== null;
+    if( ( error.status === 401 || error.status === 403 ) && hadSession ) {
       this.logoutUser();
     }
 
-    if( error?.status === 400 ) {
-      this.uiService.showToastMessage( error.error );
-    }
+    this.settleCheckingStatus();
+  }
 
-    // Error no identificado (ej. backend inalcanzable) durante el chequeo inicial:
-    // destraba authStatus sin tocar el token, para no dejar la app colgada en 'checking'.
-    else if( this.userState.authStatus() === 'checking' ) {
-      this.userState.setAuthStatus('not-authenticated');
-    }
-
-    return of(false);
+  // Re-lanza el HttpErrorResponse crudo en vez de un Error con el mensaje: el
+  // status es lo que decide el canal (banda inline, toast o navegación a
+  // /error), así que envolverlo tiraría el único dato con el que el componente
+  // puede ramificar (ver SPEC 16).
+  private handleAuthError = ( error : HttpErrorResponse ) : Observable<never>  => {
+    this.settleAuthState( error );
+    return throwError( () => error );
   }
 
 }

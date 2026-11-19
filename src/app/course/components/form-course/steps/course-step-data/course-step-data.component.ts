@@ -48,12 +48,13 @@ export class CourseStepDataComponent {
       const createDto = CourseMapper.mapToCourseDto( this.courseFormState.courseForm , true );
 
       this.courseService.saveCourse( createDto , this.courseFormState.thumbnailFile() )
-                          .subscribe(
-                            ( created ) => {
+                          .subscribe({
+                            next : ( created ) => {
                               this.courseFormState.setSavedCourse( created );
                               this.router.navigate( ['../content'] , { relativeTo : this.activatedRoute } );
                             },
-                          );
+                            error : () => this.uiService.showToastMessage('No pudimos crear el curso. Probá de nuevo.'),
+                          });
     }
     else{
       const updateDto = CourseMapper.mapToCourseDto( this.courseFormState.courseForm , true );
@@ -65,25 +66,28 @@ export class CourseStepDataComponent {
       }
 
       this.courseService.saveCourse( updateDto , this.courseFormState.thumbnailFile() )
-                          .subscribe(
-                            ( updated ) => {
+                          .subscribe({
+                            next : ( updated ) => {
                               this.courseFormState.setSavedCourse( updated );
                               this.uiService.showToastMessage('Cambios guardados.');
                             },
-                          );
+                            error : () => this.uiService.showToastMessage('No pudimos guardar los cambios. Probá de nuevo.'),
+                          });
     }
   }
 
   onRemoveCourse = ( course : Course ) : void  => {
     if( course.id_owner === this.userState.id() ){
       this.courseService.deleteCourse( course.id )
-                            .subscribe( ( isCourseDeleted ) => {
-                                if( isCourseDeleted ) {
-                                  this.courseFormState.reset();
-                                  this.router.navigateByUrl('/');
-                                  return;
-                                }
-                            } );
+                            .subscribe({
+                                next : ( isCourseDeleted ) => {
+                                  if( isCourseDeleted ) {
+                                    this.courseFormState.reset();
+                                    this.router.navigateByUrl('/');
+                                  }
+                                },
+                                error : () => this.uiService.showToastMessage('No pudimos eliminar el curso. Probá de nuevo.'),
+                            });
     }
   }
 

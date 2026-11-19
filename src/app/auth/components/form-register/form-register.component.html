@@ -120,8 +120,19 @@
             }
         </div>
 
-        <button class="btn-sumbit" type="submit">
-            Crear mi cuenta
+        @if( formError() ){
+            <p class="form-error-banner" id="register-form-error" role="alert">
+                <svg class="banner-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M12 7.8v4.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M12 15.8h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                {{ formError() }}
+            </p>
+        }
+
+        <button class="btn-sumbit" type="submit" [disabled]="isSubmitting()">
+            {{ isSubmitting() ? 'Creando tu cuenta...' : 'Crear mi cuenta' }}
         </button>
 
         <p class="text-login">

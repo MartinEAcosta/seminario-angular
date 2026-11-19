@@ -1,5 +1,9 @@
 @use '@variables' as v;
 
+/* La card de contraseña vive en ./user-profile-password.component.scss, cargada
+   después de esta hoja: el budget `anyComponentStyle` es por stylesheet y las dos
+   secciones juntas lo superaban. */
+
 /* ---------- Page shell ---------- */
 
 .settings-page{
@@ -65,18 +69,6 @@
     font-size: 0.95rem;
     line-height: 1.6;
     color: rgba(40, 40, 40, 0.7);
-}
-
-@media (max-width: 48rem){
-    .settings-page{
-        padding: 2.5rem 5% 4rem;
-    }
-}
-
-@media (max-width: 37.5rem){
-    .settings-card{
-        padding: 1.5rem 1.25rem 1.75rem;
-    }
 }
 
 /* ---------- Hero: avatar + identity + actions, single light card ---------- */
@@ -189,24 +181,6 @@
     display: none;
 }
 
-@media (max-width: 37.5rem){
-    .profile-hero-top{
-        flex-direction: column;
-        align-items: stretch;
-        padding: 1.5rem;
-    }
-
-    .avatar-block{
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-    }
-
-    .avatar-actions{
-        align-items: flex-start;
-    }
-}
-
 .btn-outline{
     padding: 0.65rem 1.4rem;
     border: 1px solid v.$brand-color;
@@ -243,34 +217,27 @@
     color: v.$red-warning;
 }
 
-.btn-outline:focus-visible,
-.btn-quiet:focus-visible{
-    outline: 2px solid v.$brand-color;
-    outline-offset: 2px;
-}
-
-@media (prefers-reduced-motion: reduce){
-    .btn-outline,
-    .btn-quiet{
-        transition: none;
-    }
-}
-
 /* ---------- Forms ----------
-   form-global.scss paints pill inputs for the dark AuthLayout. This page is light and
-   its visual idea is the hairline that lights up where your attention is (see the nav
-   rail), so the fields are rules, not boxes. Everything is scoped under .settings-panel:
-   it outranks form-global by one class and never leaks into form-login/form-register.
-   The floating-label mechanics, .hasError and .btn-sumbit are still reused. */
+   form-global.scss pinta inputs pill para el AuthLayout oscuro. Esta página es
+   clara y su idea visual es el hairline que se enciende donde está tu atención
+   (ver el nav rail), así que los campos son reglas, no cajas. Todo está scopeado
+   bajo .settings-panel: le gana a form-global por una clase y no se filtra a
+   form-login/form-register. La mecánica del label flotado, .hasError y .btn-sumbit
+   se siguen reusando.
+
+   Los grupos de selectores usan :is() en vez de repetir `.settings-panel` campo
+   por campo: los argumentos son todos clases, así que la especificidad es la
+   misma que antes. */
 
 .settings-form{
     align-items: stretch;
     padding-top: 0;
 }
 
-/* Each field owns a positioning context so the label can float without taking up
-   flow space. form-global keeps the label `relative`, which reserves a line box whose
-   height changes with the font-size on focus and shoves the error message around. */
+/* Cada field es su propio contexto de posicionamiento para que el label pueda
+   flotar sin ocupar flow. form-global deja el label `relative`, que reserva una
+   line box cuya altura cambia con el font-size al enfocar y corre el mensaje de
+   error de lugar. */
 .settings-panel .field{
     display: flex;
     position: relative;
@@ -284,9 +251,7 @@
     margin-top: 1.75rem;
 }
 
-.settings-panel .input-username,
-.settings-panel .input-email,
-.settings-panel .input-password{
+.settings-panel :is(.input-username, .input-email){
     width: 100%;
     height: 3rem;
     padding: 0;
@@ -297,14 +262,13 @@
     font-family: v.$font-primary;
     font-size: 1.05rem;
     color: v.$black-custom;
-    /* The rule under the field. Inset shadow so lighting it up costs no layout shift. */
+    /* La regla debajo del campo. Inset shadow para que encenderla no cueste
+       ningún layout shift. */
     box-shadow: inset 0 -1px 0 rgba(40, 40, 40, 0.25);
     transition: box-shadow 0.25s ease-in-out;
 }
 
-.settings-panel .input-username:focus,
-.settings-panel .input-email:focus,
-.settings-panel .input-password:focus{
+.settings-panel :is(.input-username, .input-email):focus{
     outline: none;
     transform: none;
     background-color: transparent;
@@ -312,14 +276,13 @@
     box-shadow: inset 0 -2px 0 v.$brand-color;
 }
 
-.settings-panel .input-username:not(:placeholder-shown),
-.settings-panel .input-email:not(:placeholder-shown),
-.settings-panel .input-password:not(:placeholder-shown){
+.settings-panel :is(.input-username, .input-email):not(:placeholder-shown){
     transform: none;
     background-color: transparent;
 }
 
-/* Resting label: overlays the input, aligned to the same baseline as the typed value. */
+/* Label en reposo: se superpone al input, alineado a la misma baseline que el
+   valor tipeado. */
 .settings-panel .label-text{
     display: flex;
     position: absolute;
@@ -334,17 +297,17 @@
     background-color: transparent;
     font-size: 1.05rem;
     color: rgba(40, 40, 40, 0.45);
-    /* Hidden at rest: the native placeholder already occupies this spot, and
-       showing both here doubles the text. Only the floated (filled/focused)
-       state below makes the label visible again, as a small caption. */
+    /* Oculto en reposo: el placeholder nativo ya ocupa ese lugar y mostrar los
+       dos duplica el texto. Sólo el estado flotado (lleno o enfocado) de más
+       abajo lo vuelve visible, como caption chico. */
     opacity: 0;
     transition: all 0.25s ease-in-out;
 }
 
-/* Row of two fields (Nombre/Apellido). margin-top lives here, not on the
-   children, so both inputs share one baseline — a per-field margin-top would
-   let .field:first-child's 1.75rem outrank the sibling's 2.25rem and knock
-   the row out of alignment. */
+/* Fila de dos campos (Nombre/Apellido). El margin-top vive acá y no en los
+   hijos, para que los dos inputs compartan una baseline — un margin-top por
+   field dejaría que el 1.75rem de .field:first-child le gane al 2.25rem del
+   hermano y desalinee la fila. */
 .settings-panel .container-me{
     display: flex;
     width: 100%;
@@ -364,11 +327,10 @@
     width: 100%;
 }
 
-/* Floated label: shrinks into the same eyebrow voice used across the page. */
+/* Label flotado: se encoge hasta la misma voz de eyebrow que usa el resto de la
+   página. */
 .settings-panel input:not(:placeholder-shown) + label,
-.settings-panel .input-username:focus + .label-text,
-.settings-panel .input-email:focus + .label-text,
-.settings-panel .input-password:focus + .label-text{
+.settings-panel :is(.input-username, .input-email):focus + .label-text{
     transform: translateY(-1.55rem);
     background-color: transparent;
     border-radius: 0;
@@ -380,20 +342,19 @@
     opacity: 1;
 }
 
-.settings-panel .input-username:focus + .label-text,
-.settings-panel .input-email:focus + .label-text,
-.settings-panel .input-password:focus + .label-text{
+.settings-panel :is(.input-username, .input-email):focus + .label-text{
     color: v.$brand-color;
 }
 
-/* No border to tint, so the error state lights the rule red instead. */
+/* No hay border que teñir, así que el estado de error enciende la regla en rojo. */
 .settings-panel .hasError,
 .settings-panel .hasError:focus{
     border-color: transparent;
     box-shadow: inset 0 -2px 0 v.$red-warning;
 }
 
-/* Sits in normal flow right under the rule — no negative margins to compensate. */
+/* Va en flow normal justo debajo de la regla — sin márgenes negativos que
+   compensar. */
 .settings-panel form-error-label{
     display: block;
     margin-top: 0.5rem;
@@ -416,29 +377,23 @@
     transform: none;
 }
 
+/* Un solo bloque de foco para los tres controles de esta hoja: el par
+   outline/outline-offset es idéntico en los tres, y es el mismo que emite
+   v.focus-ring con el color de marca. */
+.btn-outline:focus-visible,
+.btn-quiet:focus-visible,
 .settings-panel .btn-sumbit:focus-visible{
     outline: 2px solid v.$brand-color;
     outline-offset: 2px;
 }
 
-@media (max-width: 37.5rem){
-    .settings-panel .btn-sumbit{
-        width: 100%;
-        align-self: stretch;
-    }
-
-    .settings-panel .container-me{
-        flex-direction: column;
-    }
-}
-
-@media (prefers-reduced-motion: reduce){
-    .settings-panel .input-username,
-    .settings-panel .input-email,
-    .settings-panel .input-password,
-    .settings-panel .label-text{
-        transition: none;
-    }
+/* Error de grupo. form-error-label sólo lee los errores de un control, así que el
+   mensaje de passwordsMismatch se renderiza directo y se matchea su tipografía. */
+.settings-panel .field-error{
+    margin-top: 0.5rem;
+    font-family: v.$font-primary;
+    font-size: 80%;
+    color: v.$red-warning;
 }
 
 /* ---------- Email verification ---------- */
@@ -464,7 +419,8 @@
     text-transform: uppercase;
 }
 
-/* The dot carries the state colour; the text stays dark so it keeps its contrast. */
+/* El punto lleva el color de estado; el texto queda oscuro para conservar su
+   contraste. */
 .status-badge::before{
     content: "";
     display: block;
@@ -491,225 +447,53 @@
     background-color: v.$yellow-caution;
 }
 
-/* ---------- Security: collapsible password card ----------
-   Deliberately boxed inputs (border + radius), not the hairline floating-label
-   style above: this card toggles open/closed instead of always sitting in flow,
-   so there's no adjacent element for a floated label to collide with, and the
-   boxed look reads as a distinct, self-contained action instead of a form field
-   you fill in passively. Classes are prefixed password- to avoid colliding with
-   form-global.scss's .field/.input-password (pill/hairline inputs, loaded by
-   .settings-panel .input-username/.input-email/.input-password above) and with
-   the floating-label .field used in "Datos de la cuenta". */
+/* ---------- Responsive y motion: un bloque por media query ----------
+   Antes eran cuatro @media (max-width: 37.5rem) y tres de reduced-motion
+   repartidos por el archivo. Ninguna de esas reglas compite con otra de la misma
+   especificidad, así que juntarlas no cambia la cascada. */
 
-.password-card-header{
-    display: flex;
-    width: 100%;
-    align-items: center;
-    gap: 1rem;
-    padding: 0;
-    border: none;
-    background: none;
-    cursor: pointer;
-    text-align: left;
-    font-family: v.$font-primary;
-
-    @include v.focus-ring(v.$brand-color);
-}
-
-.password-icon{
-    display: flex;
-    width: 2.75rem;
-    height: 2.75rem;
-    flex: 0 0 auto;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    background-color: rgba(0, 120, 140, 0.1);
-    color: v.$brand-color-deep;
-}
-
-.password-header-text{
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    min-width: 0;
-}
-
-.password-card-title{
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: v.$black-custom;
-}
-
-.password-card-subtitle{
-    font-size: 0.88rem;
-    color: rgba(40, 40, 40, 0.6);
-}
-
-.password-chevron{
-    display: flex;
-    width: 2.5rem;
-    height: 2.5rem;
-    flex: 0 0 auto;
-    align-items: center;
-    justify-content: center;
-    margin-left: auto;
-    border: 1px solid rgba(40, 40, 40, 0.15);
-    border-radius: 50%;
-    color: v.$black-custom;
-    transition: transform 0.25s ease-in-out;
-
-    svg{
-        transform: translateY(1px);
+@media (max-width: 48rem){
+    .settings-page{
+        padding: 2.5rem 5% 4rem;
     }
-}
-
-.password-chevron.is-open{
-    transform: rotate(180deg);
-}
-
-@media (prefers-reduced-motion: reduce){
-    .password-chevron{
-        transition: none;
-    }
-}
-
-.password-form-boxed{
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(40, 40, 40, 0.15);
-}
-
-.password-grid{
-    display: grid;
-    margin-top: 1.25rem;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.25rem 1.5rem;
-}
-
-.password-field{
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-/* Only the lone field above the grid ("Contraseña actual") needs zeroing —
-   a plain :first-child would also hit the grid's first cell and misalign it
-   against its row partner. */
-.password-form-boxed > .password-field{
-    margin-top: 0;
-}
-
-.password-field-label{
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: v.$black-custom;
-}
-
-.password-field-input{
-    box-sizing: border-box;
-    width: 100%;
-    height: 3.25rem;
-    padding: 0 1rem;
-    border: 1px solid rgba(40, 40, 40, 0.18);
-    border-radius: 12px;
-    background-color: #fff;
-    font-family: v.$font-primary;
-    font-size: 1rem;
-    color: v.$black-custom;
-    transition: border-color 0.25s ease-in-out;
-
-    @include v.focus-ring(v.$brand-color);
-}
-
-/* No border-color tint on :focus: the focus-ring mixin already draws the
-   system's one focus indicator (outline, offset 2px). Adding a border tint
-   on top of it doubled up into two concentric rings. */
-
-/* `.hasError` alone is also defined generically above, scoped to
-   .settings-panel, for the hairline fields (transparent border + red
-   underline box-shadow) — same specificity as a bare `.password-field-input.hasError`,
-   so source order would decide and is fragile. Scope through the form
-   wrapper so this unambiguously wins and explicitly clear that box-shadow. */
-.password-form-boxed .password-field-input.hasError{
-    border-color: v.$red-warning;
-    box-shadow: none;
-}
-
-/* Focused + errored: the system's teal focus-ring would otherwise outrank the
-   red border and read as "fine, just focused". Swap the ring to red so the
-   error stays the dominant signal while the field is active. */
-.password-form-boxed .password-field-input.hasError:focus-visible{
-    outline-color: v.$red-warning;
 }
 
 @media (max-width: 37.5rem){
-    .password-grid{
-        grid-template-columns: 1fr;
+    .settings-card{
+        padding: 1.5rem 1.25rem 1.75rem;
     }
-}
 
-.password-actions{
-    display: flex;
-    margin-top: 1.75rem;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 1.5rem;
-}
+    .profile-hero-top{
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1.5rem;
+    }
 
-.btn-cancel-password{
-    padding: 0;
-    border: none;
-    background: none;
-    cursor: pointer;
-    font-family: v.$font-primary;
-    font-weight: 700;
-    font-size: 0.95rem;
-    color: v.$black-custom;
+    .avatar-block{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
 
-    @include v.focus-ring(v.$brand-color);
-}
+    .avatar-actions{
+        align-items: flex-start;
+    }
 
-.btn-cancel-password:hover{
-    color: rgba(40, 40, 40, 0.7);
-}
+    .settings-panel .btn-sumbit{
+        width: 100%;
+        align-self: stretch;
+    }
 
-.btn-update-password{
-    padding: 0.85rem 2rem;
-    border: none;
-    border-radius: 999px;
-    background-color: v.$brand-color;
-    color: #fff;
-    cursor: pointer;
-    font-family: v.$font-primary;
-    font-weight: bold;
-    font-size: 0.95rem;
-    transition: all 0.25s ease-in-out;
-
-    @include v.focus-ring(v.$white-custom);
-}
-
-.btn-update-password:hover:not(.btn-disabled){
-    background-color: rgba(0, 120, 140, 0.8);
-    transform: translateY(v.$lift-control);
-}
-
-.btn-update-password.btn-disabled{
-    background-color: rgba(0, 120, 140, 0.3);
-    cursor: not-allowed;
+    .settings-panel .container-me{
+        flex-direction: column;
+    }
 }
 
 @media (prefers-reduced-motion: reduce){
-    .btn-update-password:hover:not(.btn-disabled){
-        transform: none;
+    .btn-outline,
+    .btn-quiet,
+    .settings-panel :is(.input-username, .input-email),
+    .settings-panel .label-text{
+        transition: none;
     }
-}
-
-/* Group-level error. form-error-label only reads a single control's errors, so the
-   passwordsMismatch message is rendered directly and matched to its typography. */
-.settings-panel .field-error{
-    margin-top: 0.5rem;
-    font-family: v.$font-primary;
-    font-size: 80%;
-    color: v.$red-warning;
 }

@@ -24,7 +24,11 @@ import { getAuthErrorMessage, isServerError } from '@auth/utils/auth-error-messa
   selector: 'app-user-profile-page',
   imports: [ ReactiveFormsModule, FormErrorLabelComponent, NgClass, EmailVerificationBannerComponent, RoleLabelPipe ],
   templateUrl: './user-profile-page.component.html',
-  styleUrls: ['../../form-global.scss', './user-profile-page.component.scss'],
+  styleUrls: [
+    '../../form-global.scss',
+    './user-profile-page.component.scss',
+    './user-profile-password.component.scss',
+  ],
 })
 export class UserProfilePageComponent implements OnDestroy {
 

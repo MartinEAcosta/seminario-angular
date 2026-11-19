@@ -22,7 +22,6 @@ export class CategoryService {
                   .get<ApiResponse<CategoryResponseDto[]>>(`${this.baseURL}`)
                     .pipe(
                       map( ( categoryResponse ) => {
-                          // console.log(categoryResponse);
                           return CategoryMapper.mapResponseToCategoriesArray( categoryResponse );
                       }),
                       catchError( (error) => {

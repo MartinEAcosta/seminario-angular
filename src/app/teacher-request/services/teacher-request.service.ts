@@ -6,7 +6,8 @@ import { environment } from '../../../environments/environment';
 import { ApiResponse } from '@shared/models/api.interfaces';
 import { TeacherRequestResponseDto } from '@teacher-request/models/teacher-request.response';
 import { TeacherRequestMapper } from '@mappers/teacher-request.mapper';
-import { TeacherRequest, TeacherRequestDTO } from '@teacher-request/models/teacher-request.interface';
+import { TeacherRequest } from '@teacher-request/models/teacher-request.interface';
+import { TeacherRequestDTO } from '@teacher-request/models/teacher-request.request';
 
 @Injectable({
   providedIn: 'root'

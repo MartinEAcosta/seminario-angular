@@ -1,6 +1,7 @@
 import { ApiResponse } from "@shared/models/api.interfaces";
 import { ModulePopulatedResponseDto, ModuleResponseDto } from "@module/models/module.response";
-import { Module, ModuleDTO, ModulePopulated } from "@module/models/module.interface";
+import { Module, ModulePopulated } from '@module/models/module.interface';
+import { ModuleDTO } from '@module/models/module.request';
 
 export class ModuleMapper {
 
@@ -22,10 +23,6 @@ export class ModuleMapper {
             title : formValues.title,
             unit : formValues.unit,
         }
-    }
-
-    static mapResponseToModuleArray = ( response : ApiResponse<ModuleResponseDto[]> ) : Module[] => {
-        return response.data.map( this.mapResponseToModule );
     }
 
     static mapResponseToModulePopulated = ( response : ModulePopulatedResponseDto ) : ModulePopulated  => {

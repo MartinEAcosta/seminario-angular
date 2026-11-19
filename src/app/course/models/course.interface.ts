@@ -23,15 +23,3 @@ export interface CoursePopulated extends Course {
     };
 };
 
-export interface CourseDTO {
-    id?           : string;
-    title         : string;
-    description   : string;
-    id_category   : string;
-    thumbnail_url ?: string;
-    id_file       ?: string;
-    id_owner     ?: string;
-    price?        : number;
-    capacity?     : number | null;
-}
-

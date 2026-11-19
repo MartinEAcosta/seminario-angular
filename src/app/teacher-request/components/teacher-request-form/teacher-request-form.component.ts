@@ -7,7 +7,9 @@ import { CategoryService } from '@category/services/category.service';
 import { Category } from '@category/models/category.interface';
 import { FormErrorLabelComponent } from '@shared/components/form-error-label/form-error-label.component';
 import { FormUtils } from '@utils/form-utils';
-import { TeacherExperienceLevel, TeacherRequestDTO } from '@teacher-request/models/teacher-request.interface';
+import { TeacherExperienceLevel } from '@teacher-request/models/teacher-request.interface';
+import { TeacherRequestDTO } from '@teacher-request/models/teacher-request.request';
+import { TeacherRequestMapper } from '@mappers/teacher-request.mapper';
 import { CategoryMultiselectDropdownComponent } from '../category-multiselect-dropdown/category-multiselect-dropdown.component';
 
 @Component({
@@ -79,15 +81,7 @@ export class TeacherRequestFormComponent {
     if( this.isSubmitting() ) return;
     this.teacherRequestForm.markAllAsTouched();
     if( this.teacherRequestForm.valid ){
-      const { portfolioUrl , experienceLevel , ...rest } = this.teacherRequestForm.getRawValue();
-      const teacherRequestDTO : TeacherRequestDTO = {
-        ...rest,
-        // La validación de `valid` ya garantiza que experienceLevel no sea null.
-        experienceLevel : experienceLevel!,
-        // Se omite si quedó vacío para no mandar un string vacío al backend.
-        ...( portfolioUrl ? { portfolioUrl } : {} ),
-      };
-      this.submitRequest.emit( teacherRequestDTO );
+      this.submitRequest.emit( TeacherRequestMapper.mapFormToTeacherRequestDTO( this.teacherRequestForm ) );
     }
   }
 

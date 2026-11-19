@@ -12,8 +12,6 @@ import { ResetPasswordPageComponent } from "./pages/reset-password-page/reset-pa
 import { SingleUseTokenGuard } from "./guards/single-use-token.guard";
 
 export const authRoutes : Routes = [
-
-   
     {
         path : '',
         component : PasswordRecoveryLayoutComponent,

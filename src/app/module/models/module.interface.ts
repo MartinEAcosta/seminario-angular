@@ -1,3 +1,4 @@
+import { LessonContentType } from '@lesson/models/lesson.interface';
 
 export interface Module {
   id : string;
@@ -5,13 +6,6 @@ export interface Module {
   title : string;
   unit : number;
   lessons : string[],
-}
-
-export interface ModuleDTO {
-  id ?: string,
-  id_course : string,
-  title ?: string,
-  unit ?: number,
 }
 
 export interface ModulePopulated {
@@ -22,7 +16,7 @@ export interface ModulePopulated {
   lessons : {
     id               : string;
     title            : string;
-    content_type     : 'video' | 'document' | null;
+    content_type     : LessonContentType | null;
     duration_minutes : number | null;
   }[];
 }

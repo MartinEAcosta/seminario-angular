@@ -1,8 +1,10 @@
 # SPEC 17 — Los DTOs de salida y la limpieza del contrato que la SPEC 15 dejó a la vista
 
-> **Status:** Borrador
+> **Status:** Aprobado
 > **Depends on:** SPEC 15 (separar los DTOs por feature), SPEC 16 (toast decidido por el componente — toca `auth`, `file` y `teacher-request` service, que esta spec también abre)
 > **Date:** 2026-11-18
+> **Re-auditada:** 2026-11-19 contra `main` post-`b271a52` (merge del PR #29: SPEC 16 + los restos de la
+> 15). Todas las citas `archivo:línea` de este doc apuntan a ese estado.
 > **Objective:** Terminar el corte entre modelo interno y contrato del backend que la SPEC 15 hizo sólo del lado entrante, separando los DTOs de salida en un `*.request.ts` por feature, devolviéndole al mapper la construcción del body, y resolviendo el código muerto y las incoherencias de tipo que el movimiento dejó a la vista.
 
 ## Por qué existe esta spec
@@ -19,7 +21,7 @@ en vez de a cien líneas de distancia:
 
 - **Defensas que contradicen al tipo.** `course.mapper.ts:36` hace `response.spots_remaining ?? null` sobre
   un campo que `CourseResponseDto` declara `number` requerido. `module.mapper.ts:12` hace `?? []` sobre
-  `lessons: string[]`. `lesson.mapper.ts:44-47` hace `?? null` cuatro veces y un `?? 'image'` sobre campos
+  `lessons: string[]`. `lesson.mapper.ts:41-46` hace `?? null` tres veces y un `?? 'image'` sobre campos
   que `LessonPopulatedResponseDto.file` declara requeridos y no-null. En cada caso **o el tipo miente o la
   defensa sobra**, y nada en el repo decide cuál. El `?? 'image'` es el peor: inventa un `resource_type` que
   el backend nunca mandó.
@@ -27,8 +29,15 @@ en vez de a cien líneas de distancia:
   contratos que nadie consume. La cadena completa de issuers (`IssuerResponseDto`, la entidad `Issuer`, dos
   métodos de `PaymentMapper` y dos imports muertos en `payment.service.ts`) no tiene un solo llamador: los
   medios de pago se resuelven client-side desde el BIN. Dentro de esa cadena muerta vive el único bug real
-  de los mappers (`payment.mapper.ts:16` copia `thumbnail` en `secure_thumbnail`), así que el borrado lo
+  de los mappers (`payment.mapper.ts:17` copia `thumbnail` en `secure_thumbnail`), así que el borrado lo
   resuelve sin que haya nada que arreglar.
+
+- **Una defensa nueva, nacida después de escribirse esta spec.** La SPEC 16 agregó en `auth.service.ts:100`
+  la guarda `if( authResponse.user && authResponse.token )`, con un comentario que lo dice explícito:
+  «`AuthResponse` tipa `user` y `token` como requeridos, pero este endpoint puede contestar sin ellos; sin la
+  guarda, un cambio de contraseña exitoso borraría `x-token` y desloguearía al usuario». Es el mismo patrón,
+  en el tipo que el punto B viene a reemplazar, y con evidencia de un fallo observado — así que entra a la
+  tabla del punto D en vez de quedar afuera por haber llegado tarde.
 
 Y la SPEC 15 dejó explícitamente sin escribir las reglas que su propio diff tuvo que improvisar: cuándo una
 feature necesita más de un archivo de contrato, qué orden llevan los imports, `import type` o `import`,
@@ -58,8 +67,10 @@ de `@cart/*`): a partir de acá `cart/state/cart.service.ts` importa de `@paymen
 
 **B. `AuthResponse` se convierte en un DTO de verdad.** Nace `src/app/auth/models/auth.response.ts` con:
 
-- `AuthResponseDto` (`{ ok: boolean; user: UserResponseDto; token: string }`), renombrado desde
-  `AuthResponse`.
+- `AuthResponseDto` (`{ ok: boolean; user ?: UserResponseDto; token ?: string }`), renombrado desde
+  `AuthResponse`. `user` y `token` van **opcionales**: `PUT auth/password/` y
+  `POST auth/validate-email/:token` contestan sin ellos y la guarda de `auth.service.ts:100` ya depende de
+  eso. Queda igual como fila de la tabla del punto D, para confirmarlo contra el backend en el paso 6.
 - `UserResponseDto` nuevo: la forma cruda que manda el backend para el usuario (`id`, `first_name`,
   `last_name`, `email`, `isEmailVerified`, `role`, `avatar_url`, `id_file`), hoy inexistente.
 
@@ -74,7 +85,10 @@ dos símbolos: `AuthStatus` y `User` (`UserDTO` y `PasswordDTO` se van a `auth.r
 
 - `ResourceValidTypes` (ya en `file/models/file.interface.ts`) pasa a tipar también
   `LessonPopulatedResponseDto.file.resource_type` y `LessonPopulated.file.resource_type` (ésta con `| null`,
-  según cómo cierre el punto D). Mueren la tercera y cuarta copia anónima del concepto.
+  según cómo cierre el punto D). Tipa además las dos anotaciones de
+  `lesson/state/lesson-form/lesson-form-state.ts:23,74` (`signal<'image' | 'video' | null>` y el parámetro de
+  `setTypeMedia`). Son cuatro copias anónimas, no dos, y con esto no queda ninguna — que es lo que el criterio
+  de aceptación exige.
 - Nace `LessonContentType = 'video' | 'document'` en `lesson/models/lesson.interface.ts`, importada por
   `module/models/module.interface.ts` y `module/models/module.response.ts`. Vive en `lesson` aunque hoy el
   campo sólo aparezca anidado en los dos tipos de `module`: tipa una propiedad de una lección, y `module`
@@ -88,20 +102,47 @@ tocar el tipo:
 | --- | --- | --- |
 | `spots_remaining` | `number` requerido en `CourseResponseDto`, `?: number \| null` en `CoursePopulatedResponseDto`, `?? null` en el mapper | `course.response.ts:17,41`, `course.mapper.ts:36,62` |
 | `lessons` | `string[]` / array requerido en los dos DTO, `?? []` en el mapper | `module.response.ts`, `module.mapper.ts:12,36` |
-| `file.id`, `file.url`, `file.extension` | requeridos y no-null, `?? null` en el mapper | `lesson.response.ts`, `lesson.mapper.ts:44-47` |
-| `file.resource_type` | requerido, `?? 'image'` en el mapper | `lesson.response.ts`, `lesson.mapper.ts:46` |
+| `file.id`, `file.url`, `file.extension` | requeridos y no-null, `?? null` en el mapper | `lesson.response.ts`, `lesson.mapper.ts:42,43,45` |
+| `file.resource_type` | requerido, `?? 'image'` en el mapper | `lesson.response.ts`, `lesson.mapper.ts:44` |
 | `resource_type` de `FileResponseDto` | `ResourceValidTypes` (`'image' \| 'video' \| 'raw' \| 'auto'`), más ancho que lo único que `FileService` produce | `file.response.ts`, `file.interface.ts:1` |
+| `AuthResponse.user`, `AuthResponse.token` | **RESUELTO** (ver abajo): requeridos en el DTO, guarda conservada a propósito | `auth.response.ts`, `auth.service.ts` |
 
 Las dos variantes de `spots_remaining` quedan iguales entre sí, sea cual sea el resultado: hoy el mismo
 campo del mismo recurso se declara distinto según el endpoint, y eso no se sostiene. Si la verificación
 confirma que el backend sólo manda `image` y `video`, `ResourceValidTypes` se angosta a esos dos.
+
+#### Verificación de `auth` contra el backend (parte del paso 6, ya hecha)
+
+Hecha el 2026-11-19 leyendo `MartinEAcosta/udemix-backend@main` (push 2026-11-16), no una respuesta en vivo:
+
+- `HandlerResponses.handleAuthSuccess` emite **`{ ok, user, token }` plano** (no `ApiResponse<T>`) en
+  `POST /register`, `POST /login`, `POST /login/google`, `PUT /update/user/:id`, `GET /renew`,
+  `PUT /password` y `PUT /password/set`. `AuthResponseDto` declara los tres campos **requeridos**.
+- `PUT /auth/password` pasa por ese mismo helper y su use case (`UpdatePassword`) devuelve `{ user, token }`
+  o lanza `CustomError`: **no existe rama que conteste sin ellos**. La guarda que agregó la SPEC 16 en
+  `auth.service.ts` es por lo tanto redundante hoy, y **se conserva igual por decisión explícita**: el costo
+  de que un backend futuro conteste sin esos campos es borrar `x-token` y desloguear al usuario en medio de un
+  cambio de contraseña exitoso. Es la única excepción consciente al criterio "ningún `??`/guarda sobre un
+  campo requerido" de esta spec.
+- `POST /auth/validate-email/:token` **no es una respuesta de auth**: va por `handleSuccess` y devuelve
+  `ApiResponse<{ verified : boolean }>`. El front la tipaba `AuthResponse` y sólo leía `.ok`, así que
+  funcionaba por accidente. Retipada.
+- El `user` del backend (`UserMapper.fromUserResponseDto`) **no es** el `User` interno: `role` viaja como
+  `string`, `avatar_url` e `id_file` llegan `null` cuando el usuario no tiene File, y viaja un `balance`
+  que esta app no usa. `UserResponseDto` espeja esas tres primeras diferencias y **omite `balance` a
+  propósito**; `AuthMapper.mapResponseToUser` las cierra (`role as User['role']`, `?? ''`, `?? ''`). Eso
+  invalida la frase original del punto B ("los campos son por ahora idénticos").
+- Fuera de la letra del punto B, tres anotaciones más no describían lo que manda el backend y se corrigieron
+  en el mismo paso: `POST /send-validation-email` es `ApiResponse<{ send : boolean }>`, y
+  `POST /forgot-password` y `POST /reset-password` son `ApiResponse<string>` (devuelven el mensaje neutro),
+  no `ApiResponse<boolean>`. Ninguno de los tres lee `data`, así que no cambia comportamiento.
 
 **E. Se borra el código muerto.**
 
 - Cadena issuer completa: `IssuerResponseDto` (`payment.response.ts:4`), la entidad `Issuer`
   (`payment.interface.ts:3`), `PaymentMapper.mapIssuerListResponseToEntityArray`,
   `PaymentMapper.mapIssuerResponseToEntity` y los dos imports muertos de `payment.service.ts:9,11`. El bug
-  `secure_thumbnail: response.thumbnail` (`payment.mapper.ts:16`) desaparece con ella.
+  `secure_thumbnail: response.thumbnail` (`payment.mapper.ts:17`) desaparece con ella.
 - `CourseMapper.mapResponseToCourseArray`, `LessonMapper.mapResponseToLessonArray` y
   `ModuleMapper.mapResponseToModuleArray` — cero llamadores. Las variantes `*PopulatedArray` **sí** se usan
   (`module.service.ts:55`, `lesson.service.ts:29`) y no se tocan.
@@ -110,9 +151,12 @@ confirma que el backend sólo manda `image` y `video`, `ResourceValidTypes` se a
 
 **F. `file.service.getFileByPublicId` pasa por `FileMapper`** y devuelve `UploadedFile` en vez del
 `ApiResponse<FileResponseDto>` crudo. Es el último lugar que viola el invariante que las nueve cabeceras
-declaran. El otro (`lesson.service.getLessonById` con `http.get<any>` y sin `.data`) **ya fue arreglado a
-mano fuera de spec**, en la rama `spec-15-separar-dtos-por-feature` y sin commitear al momento de escribir
-esto: hoy es `http.get<ApiResponse<LessonResponseDto>>` + `lessonResponse.data`. Esta spec no lo incluye.
+declaran. El `map` de hoy (`file.service.ts:84-87`) es `res => { console.log(res); return res; }`: ese
+`console.log` se va en el mismo paso, reemplazado por la llamada al mapper.
+
+El otro caso (`lesson.service.getLessonById` con `http.get<any>` y sin `.data`) **ya está arreglado y
+commiteado** en `main` desde `b271a52`: hoy es `http.get<ApiResponse<LessonResponseDto>>` +
+`lessonResponse.data` (`lesson.service.ts:38-49`). Esta spec no lo incluye.
 
 **G. Convenciones, como sección normativa.** Se escriben acá y se aplican **sólo a los archivos que esta
 spec abre** — sin pasada global por el repo:
@@ -128,7 +172,8 @@ spec abre** — sin pasada global por el repo:
 5. **Un tipo, una ruta: se borra el alias `@interfaces/*`.** Sale de `tsconfig.json` y sus siete imports
    pasan al alias de la feature dueña del tipo: `cart/models/cart.model.ts`,
    `course/components/course-carousel`, `course/components/course-featured`, `course/resolver/course-resolver`,
-   `course/state/course-form/course-form-state`, `shared/components/btns/btn-remove` (los seis a
+   `course/state/course-form/course-form-state` y
+   `shared/components/btns/btn-remove/btn-remove.component.ts` (los seis a
    `@course/models/course.interface`) y `user/state/user-state.ts` (a `@auth/models/auth.interface`).
 6. **Un `*.request.ts` se importa para anotar un borde, nunca para construir el body.** Ver el punto H: la
    construcción es del mapper. Las cabeceras de los seis `*.request.ts` dicen eso en vez de copiar la frase
@@ -147,16 +192,21 @@ tercero:
   `TeacherRequestMapper.mapFormToTeacherRequestDTO( form : FormGroup ) : TeacherRequestDTO`** con esa lógica
   movida tal cual, y el componente queda con `this.submitRequest.emit( TeacherRequestMapper.mapFormToTeacherRequestDTO( this.teacherRequestForm ) )`.
   El `output<TeacherRequestDTO>()` y el handler `onSubmitRequest( dto : TeacherRequestDTO )` de
-  `become-teacher-page.component.ts:58` se quedan: son el borde, no la construcción.
+  `become-teacher-page.component.ts:66` se quedan: son el borde, no la construcción.
 - `payment/state/checkout-form-state.ts:238-253` arma `CreateOrderRequestDTO` a mano. **Nace
   `OrderMapper.mapCheckoutToCreateOrderRequest( items, token, paymentMethod, installments, cardholder )`**
   y el state pasa a juntar los insumos y delegar la forma. No recibe un `FormGroup` porque el payload
   compone tres fuentes (los items del carrito, el token que devuelve `createCardToken` y el form del
   titular); la firma es explícita por eso. Beneficio extra: el payload que lleva el token de la tarjeta, el
   mail y el documento queda escrito en **un** solo lugar, que es más fácil de mantener fuera de un `console.log`.
-- `auth/components/form-login/form-login.component.ts:50` **ya** pasa por `AuthMapper.mapFormToUserDTO`; su
-  import de `UserDTO` sólo anota una variable local cuyo tipo el mapper ya devuelve. Se borra la anotación
-  redundante y con ella el import: ese componente deja de tocar el DTO.
+- `auth/components/form-login/form-login.component.ts:67` **ya** pasa por `AuthMapper.mapFormToUserDTO`; su
+  import de `UserDTO` (línea 10) sólo anota una variable local cuyo tipo el mapper ya devuelve. Se borra la
+  anotación redundante y con ella el import: ese componente deja de tocar el DTO.
+- Lo mismo en `auth/pages/user-profile-page/user-profile-page.component.ts:211`
+  (`const passwordDto : PasswordDTO = AuthMapper.mapFormToPasswordDTO( this.passwordForm )`, import en la
+  línea 20): es su único uso del símbolo — la línea 137 ya llama a `mapFormToUserDTO` sin anotar nada. Se borra
+  la anotación y `PasswordDTO` sale del import, que queda sólo con `User`. Este caso apareció con el rediseño
+  de esa página en la SPEC 16, así que no estaba en la lista original.
 
 ### Out of scope
 
@@ -226,8 +276,9 @@ diferencia de la SPEC 15:
    `TeacherRequestMapper.mapFormToTeacherRequestDTO` moviendo las líneas 82-89 del componente tal cual, y
    dejar el `submit()` del formulario en una sola llamada. Crear
    `OrderMapper.mapCheckoutToCreateOrderRequest` moviendo el literal de `checkout-form-state.ts:238-253`,
-   con el comentario de "este payload no se loguea nunca" pegado al método. Borrar la anotación redundante
-   y el import de `UserDTO` en `form-login.component.ts`. El `/become-teacher` y el `/payment/buy/pay`
+   con el comentario de "este payload no se loguea nunca" pegado al método. Borrar las dos anotaciones
+   redundantes y sus imports: `UserDTO` en `form-login.component.ts` y `PasswordDTO` en
+   `user-profile-page.component.ts`. El `/become-teacher` y el `/payment/buy/pay`
    tienen que seguir enviando exactamente el mismo body: el payload es idéntico campo por campo, incluido
    el `portfolioUrl` que se omite cuando viene vacío.
 
@@ -235,12 +286,7 @@ diferencia de la SPEC 15:
    solo si aparece un consumidor): cadena issuer, los tres `map*Array` sin llamadores, `LessonDto`.
    `npm run build` después de este paso: es el único con riesgo de comportamiento.
 
-6. **Verificar las incoherencias contra el backend corriendo y resolverlas.** Levantar
-   `seminario-angular-backend`, loguear las respuestas crudas de `GET courses/`, `GET courses/detailed/:id`,
-   `GET modules/course/:id`, `GET lessons/populated/course/:id` y `GET files/:public_id`, y comprobar campo
-   por campo de la tabla del punto D qué llega realmente. Después, por cada campo: o el DTO pasa a opcional
-   y la defensa se queda, o la defensa se borra. Igualar las dos declaraciones de `spots_remaining`. Si el
-   backend sólo manda `image`/`video`, angostar `ResourceValidTypes`.
+6. **Verificar las incoherencias contra el backend corriendo y resolverlas.** verificar en el repositorio `MartinEAcosta/udemix-backend` las entidades para chequear los atributos requeridos.
 
 7. **Pasar `getFileByPublicId` por `FileMapper`** y actualizar su firma a `Observable<UploadedFile>`. No
    tiene llamadores, así que no hay nada más que reapuntar.
@@ -268,7 +314,8 @@ diferencia de la SPEC 15:
 - [ ] `auth/models/auth.interface.ts` exporta exactamente dos símbolos: `AuthStatus` y `User`.
 - [ ] No queda ninguna copia inline de las dos uniones: las únicas apariciones de `'image' | 'video'` y
       `'video' | 'document'` en `src/app` son las declaraciones de `ResourceValidTypes` y
-      `LessonContentType`.
+      `LessonContentType` — incluidas las dos anotaciones de `lesson-form-state.ts`, que el punto C también
+      reapunta.
 - [ ] `grep -rn "Issuer" src/app --include=*.ts` no devuelve nada salvo el comentario de
       `mercadopago-fields.interface.ts:2`, que menciona `mp.getIssuers` como parte de la API del SDK.
 - [ ] `grep -rn "mapResponseToCourseArray\|mapResponseToLessonArray\|mapResponseToModuleArray\|LessonDto" src/`
@@ -282,7 +329,8 @@ diferencia de la SPEC 15:
 - [ ] Ningún componente construye un DTO de salida: `TeacherRequestMapper.mapFormToTeacherRequestDTO` y
       `OrderMapper.mapCheckoutToCreateOrderRequest` existen, y ni `teacher-request-form.component.ts` ni
       `checkout-form-state.ts` contienen un literal de objeto anotado con un tipo de request.
-- [ ] `form-login.component.ts` no importa `UserDTO`.
+- [ ] `form-login.component.ts` no importa `UserDTO` ni `user-profile-page.component.ts` importa
+      `PasswordDTO`.
 - [ ] Los únicos componentes que importan un `*.request.ts` lo hacen para anotar un borde — un `output<>()`
       o un parámetro de handler — no para armar el objeto.
 - [ ] Las cabeceras de los seis `*.request.ts` **no** repiten la frase "nada de este archivo se usa en un
@@ -369,15 +417,14 @@ diferencia de la SPEC 15:
 
 | Riesgo | Mitigación |
 | --- | --- |
-| El paso 5 no se puede completar porque el backend no está disponible o un endpoint no devuelve el caso borde | Es el único paso que depende de algo externo. Si un campo no se puede verificar, queda sin tocar y anotado en la deuda — nunca se resuelve "por intuición". Los pasos 1 a 4, 6 y 7 no dependen de él y se entregan igual. |
+| El paso 6 no se puede completar porque el backend no está disponible o un endpoint no devuelve el caso borde | Es el único paso que depende de algo externo. Si un campo no se puede verificar, queda sin tocar y anotado en la deuda — nunca se resuelve "por intuición". Los pasos 1 a 5 y 7 a 9 no dependen de él y se entregan igual. |
 | Borrar la cadena issuer rompe algo que no aparece en un `grep` (uso dinámico, string en un template) | `IssuerResponseDto` e `Issuer` son tipos: no existen en runtime y no pueden referenciarse desde un `.html`. Los dos métodos de `PaymentMapper` son estáticos y se llaman por nombre. El commit va aislado para revertirlo sin arrastrar el resto. |
 | Mover `ItemQuantity` a `payment` crea un ciclo `cart` ↔ `payment` | La dependencia queda en una sola dirección: `cart` importa de `payment` y `payment` deja de importar de `cart`. Se verifica con `npm run build`, que falla ante un ciclo de módulos. |
-| Cambiar la opcionalidad de un campo del DTO propaga `undefined` a los modelos internos y rompe templates con `strictTemplates` | Es el comportamiento buscado: si el campo puede faltar, el template tiene que decidir qué muestra. Los errores aparecen en compilación, no en runtime, y el paso 5 se cierra sólo cuando `npm run build` está limpio. |
-| La SPEC 16 y esta tocan `auth.service.ts`, `file.service.ts` y `teacher-request.service.ts` | El orden es 15 → 16 → 17, y el merge de la 16 tiene que entrar antes de empezar esta. Si se invierte, los conflictos caen sobre los `catchError` de esos tres servicios, que es donde las dos specs escriben. |
-| La SPEC 16 también toca `shared/models/api.interfaces.ts` — pasa `ok` y `status` de `ErrorResponse` a opcionales, porque la rama de excepción no prevista del backend manda solo `error` | Es un archivo que esta spec abre (punto A declara que ese archivo se queda **solo** con el sobre genérico). El cambio de la 16 es compatible: `ErrorResponse` es parte del sobre genérico y se queda ahí. Con el orden 16 → 17 respetado no hay conflicto; al revés, el diff de la 16 cae sobre líneas que esta spec ya movió. |
-| Mover la construcción del payload de checkout al mapper cambia el body sin que nadie lo note, y el pago falla en MercadoPago | El literal se mueve **tal cual**, sin reordenar ni renombrar campos, y el criterio de aceptación exige comparar el `POST orders/` en Network contra el anterior. El paso va después del borrado de muerto y antes de tocar opcionalidades, así que si el pago se rompe hay un solo commit sospechoso. |
+| Cambiar la opcionalidad de un campo del DTO propaga `undefined` a los modelos internos y rompe templates con `strictTemplates` | Es el comportamiento buscado: si el campo puede faltar, el template tiene que decidir qué muestra. Los errores aparecen en compilación, no en runtime, y el paso 6 se cierra sólo cuando `npm run build` está limpio. |
+| La SPEC 16 y esta tocan `auth.service.ts`, `file.service.ts` y `teacher-request.service.ts` | **Resuelto.** El orden 15 → 16 → 17 se cumplió: el merge de la 16 (`b271a52`) entró en `main` el 2026-11-19, antes de abrir esta spec. Los tres servicios cambiaron ahí (`auth.service.ts` ±208 líneas, `file.service.ts` ±45, `teacher-request.service.ts` ±27) y las citas de este doc ya apuntan al código post-merge. |
+| La SPEC 16 también toca `shared/models/api.interfaces.ts` — pasa `ok` y `status` de `ErrorResponse` a opcionales, porque la rama de excepción no prevista del backend manda solo `error` | **Resuelto.** Ya está aplicado y mergeado (`api.interfaces.ts:25-29`, con el comentario de las dos ramas de `HandlerResponses.handleError`). `ErrorResponse` es parte del sobre genérico y se queda donde está: el punto A no lo mueve. |
+| Mover la construcción del payload de checkout al mapper cambia el body sin que nadie lo note, y el pago falla en MercadoPago | El literal se mueve **tal cual**, sin reordenar ni renombrar campos, y el criterio de aceptación exige comparar el `POST orders/` en Network contra el anterior. El paso va antes del borrado de muerto y de tocar opcionalidades, así que si el pago se rompe hay un solo commit sospechoso. |
 | Borrar `@interfaces/*` de `tsconfig.json` deja un import sin resolver que el IDE autocompleta igual | Los siete imports se reapuntan **antes** de sacar la entrada, no después: en ese orden el `npm run build` del paso 8 falla ante cualquiera que haya quedado. El alias no tiene consumidores fuera de `src/app`. |
-| El arreglo manual de `getLessonById` sigue sin commitear en la rama de la SPEC 15 y se pierde | Hay que commitearlo con la 15 (o aparte) antes de abrir la rama de esta spec. Está anotado en Scope F justamente para que no desaparezca. |
 
 ## Lo que esta spec **no** hace
 

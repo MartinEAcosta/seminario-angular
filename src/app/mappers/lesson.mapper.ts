@@ -1,7 +1,8 @@
 import { FormGroup } from "@angular/forms";
 import { ApiResponse } from "@shared/models/api.interfaces";
 import { LessonPopulatedResponseDto, LessonResponseDto } from "@lesson/models/lesson.response";
-import { Lesson, LessonPopulated, SaveLessonDto } from "@lesson/models/lesson.interface";
+import { Lesson, LessonPopulated } from '@lesson/models/lesson.interface';
+import { SaveLessonDto } from '@lesson/models/lesson.request';
 
 export class LessonMapper {
 
@@ -25,10 +26,6 @@ export class LessonMapper {
             lesson_number :  response.lesson_number,
             uploaded_at : new Date(response.uploaded_at),
         };
-    }
-
-    static mapResponseToLessonArray( response : ApiResponse<LessonResponseDto[]> ) : Lesson[] {
-        return response.data.map( this.mapResponseToLesson );
     }
 
     static mapResponseToLessonPopulated = ( response : LessonPopulatedResponseDto ) : LessonPopulated => {

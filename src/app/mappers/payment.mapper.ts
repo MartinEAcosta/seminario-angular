@@ -1,22 +1,8 @@
-import { Issuer , IdentificationType } from "@payment/models/payment.interface";
-import { ApiResponse } from "@shared/models/api.interfaces";
-import { IdentificationTypeResponseDto, IssuerResponseDto } from "@payment/models/payment.response";
+import { ApiResponse } from '@shared/models/api.interfaces';
+import { IdentificationType } from '@payment/models/payment.interface';
+import { IdentificationTypeResponseDto } from '@payment/models/payment.response';
 
 export class PaymentMapper {
-
-    static mapIssuerListResponseToEntityArray = ( response : ApiResponse<IssuerResponseDto[]> ) : Issuer[] => {
-        return response.data.map(PaymentMapper.mapIssuerResponseToEntity);
-    };
-
-    static mapIssuerResponseToEntity = ( response : IssuerResponseDto ) : Issuer => {
-        return {
-            id : response.id,
-            name: response.name,
-            payment_type_id: response.payment_type_id,
-            thumbnail: response.thumbnail,
-            secure_thumbnail: response.thumbnail,
-        };
-    };
 
     static mapIdentificationTypeResponseToEntity = ( response : IdentificationTypeResponseDto ) : IdentificationType => {
         return {

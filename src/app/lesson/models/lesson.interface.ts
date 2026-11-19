@@ -1,3 +1,10 @@
+import { ResourceValidTypes } from '@file/models/file.interface';
+
+// Tipo de contenido de una lección tal como lo lista un módulo. Vive en `lesson`
+// aunque hoy el campo sólo aparezca anidado en los dos tipos de `module`: tipa una
+// propiedad de una lección, y `module` ya depende de `lesson` de hecho al embutir
+// su forma.
+export type LessonContentType = 'video' | 'document';
 
 export interface Lesson {
     id           ?: string;
@@ -19,30 +26,9 @@ export interface LessonPopulated {
     file          : {
         id_file : string | null;
         url     : string | null;
-        resource_type : 'image' | 'video' | null;
+        resource_type : ResourceValidTypes | null;
         extension : string | null;
     };
     lesson_number : number;
     uploaded_at   : Date;
-}
-
-export interface SaveLessonDto{
-    id            ?: string;
-    id_file       ?: string;
-    lesson_number ?: number;
-    id_module      : string;
-    title          : string;
-    description    : string;
-}
-
-export interface LessonDto{
-    id            : string;
-    id_course     : string;
-    title         : string;
-    description   : string;
-    id_file      ?: string;
-    unit         ?: number;
-    chapter      ?: number;
-    lesson_number ?: number;
-    uploaded_at   ?: Date;
 }

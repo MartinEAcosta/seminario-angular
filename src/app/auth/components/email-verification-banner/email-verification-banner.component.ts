@@ -32,6 +32,12 @@ export class EmailVerificationBannerComponent implements OnDestroy {
 
   public isVerified = computed<boolean>( () => this.userState.user()?.isEmailVerified ?? false );
 
+  constructor() {}
+  
+  ngOnDestroy(): void {
+    clearInterval( this.cooldownIntervalId );
+  }
+
   public onSendVerificationEmail = ( ) : void => {
     if( this.isSending() || this.cooldown() > 0 ) return;
 
@@ -67,10 +73,6 @@ export class EmailVerificationBannerComponent implements OnDestroy {
         return seconds - 1;
       });
     }, 1000 );
-  }
-
-  ngOnDestroy(): void {
-    clearInterval( this.cooldownIntervalId );
   }
 
 }

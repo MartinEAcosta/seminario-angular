@@ -6,7 +6,9 @@ import { rxResource } from '@angular/core/rxjs-interop';
 
 import { environment } from '../../../environments/environment';
 import { CartService } from '@cart/state/cart.service';
-import { AuthResponse, PasswordDTO, User, UserDTO } from '@auth/models/auth.interface';
+import { User } from '@auth/models/auth.interface';
+import { AuthResponseDto } from '@auth/models/auth.response';
+import { PasswordDTO, UserDTO } from '@auth/models/auth.request';
 import { ApiResponse } from '@shared/models/api.interfaces';
 import { AuthMapper } from '@mappers/auth.mapper';
 import { UserState } from '@user/state/user-state';
@@ -42,9 +44,9 @@ export class AuthService {
 
   private exchangeCode = ( code : string ) : Observable<User> => {
     return this.http
-            .post<AuthResponse>(`${this.baseURL}/login/google`, { code })
+            .post<AuthResponseDto>(`${this.baseURL}/login/google`, { code })
               .pipe(
-                map( ( authResponse : AuthResponse ) => {
+                map( ( authResponse : AuthResponseDto ) => {
                   this.router.navigateByUrl('');
                   return this.handleAuthSuccess( authResponse ) }),
                 catchError( ( error : HttpErrorResponse ) => this.handleAuthError( error ) )
@@ -59,7 +61,7 @@ export class AuthService {
 
   public registerUser = ( userRequest : UserDTO ) : Observable<User> => {
     return this.http
-                  .post<AuthResponse>(`${this.baseURL}/register` , { ...userRequest } )
+                  .post<AuthResponseDto>(`${this.baseURL}/register` , { ...userRequest } )
                     .pipe(
                       map( ( authResponse ) =>  this.handleAuthSuccess( authResponse )),
                       catchError( ( error : HttpErrorResponse ) => this.handleAuthError( error ) )
@@ -67,7 +69,7 @@ export class AuthService {
   }
 
   public loginUser = ( userRequest : UserDTO ) : Observable<User> => {
-    return this.http.post<AuthResponse>(`${this.baseURL}/login` , { ...userRequest } )
+    return this.http.post<AuthResponseDto>(`${this.baseURL}/login` , { ...userRequest } )
                       .pipe(
                         map( ( authResponse ) => this.handleAuthSuccess( authResponse ) ),
                         catchError( ( error : HttpErrorResponse ) => this.handleAuthError( error ) )
@@ -75,7 +77,7 @@ export class AuthService {
   }
 
   public updateUser = ( userRequest :  Partial<UserDTO> ) : Observable<User> => {
-    return this.http.put<AuthResponse>(`${this.baseURL}/update/user/${this.userState.user()?.id}` , { ...userRequest } )
+    return this.http.put<AuthResponseDto>(`${this.baseURL}/update/user/${this.userState.user()?.id}` , { ...userRequest } )
                       .pipe(
                         map( ( authResponse ) => this.handleAuthSuccess( authResponse ) ),
                         catchError( ( error : HttpErrorResponse ) => this.handleAuthError( error ) )
@@ -90,13 +92,9 @@ export class AuthService {
   // respuesta neutra está tapando.
 
   public updatePassword = ( passwordDto : PasswordDTO ) : Observable<void> => {
-    return this.http.put<AuthResponse>(`${this.baseURL}/password/` , { ...passwordDto } )
+    return this.http.put<AuthResponseDto>(`${this.baseURL}/password/` , { ...passwordDto } )
                       .pipe(
                         map( ( authResponse ) => {
-                          // Solo refresca la sesión si la respuesta realmente trae una.
-                          // `AuthResponse` tipa `user` y `token` como requeridos, pero este
-                          // endpoint puede contestar sin ellos; sin la guarda, un cambio de
-                          // contraseña exitoso borraría 'x-token' y desloguearía al usuario.
                           if( authResponse.user && authResponse.token ){
                             this.handleAuthSuccess( authResponse );
                           }
@@ -108,7 +106,7 @@ export class AuthService {
   // Envia (o reenvia) el email con el enlace de validación a la cuenta del usuario logueado.
   public sendVerificationEmail = ( ) : Observable<void> => {
     return this.http
-                  .post<ApiResponse<boolean>>(`${this.baseURL}/send-validation-email`, {} )
+                  .post<ApiResponse<{ send : boolean }>>(`${this.baseURL}/send-validation-email`, {} )
                     .pipe(
                       map( () => undefined ),
                       catchError( ( error ) => throwError( () => error ) ),
@@ -118,7 +116,7 @@ export class AuthService {
   // Confirma la validación del email a partir del token recibido por correo.
   public confirmEmailVerification = ( token : string ) : Observable<void> => {
     return this.http
-                  .post<AuthResponse>(`${this.baseURL}/validate-email/${ token }`, {} )
+                  .post<ApiResponse<{ verified : boolean }>>(`${this.baseURL}/validate-email/${ token }`, {} )
                     .pipe(
                       map( ( authResponse ) => {
                         if( !authResponse.ok ){
@@ -132,7 +130,7 @@ export class AuthService {
 
   public sendForgotPasswordEmail = ( email : string ) : Observable<void> => {
     return this.http
-                .post<ApiResponse<boolean>>( `${this.baseURL}/forgot-password` , { email } )
+                .post<ApiResponse<string>>( `${this.baseURL}/forgot-password` , { email } )
                 .pipe(
                   map( () => undefined ),
                   catchError( ( error ) => throwError( () => error ) ),
@@ -143,7 +141,7 @@ export class AuthService {
   // inline ("este enlace no es válido o expiró") en vez de un toast.
   public resetPassword = ( token : string, password : string ) : Observable<void> => {
     return this.http
-                .post<ApiResponse<boolean>>( `${this.baseURL}/reset-password`, {  token , password } )
+                .post<ApiResponse<string>>( `${this.baseURL}/reset-password`, {  token , password } )
                 .pipe(
                   map( () => undefined ),
                   catchError( ( error ) => throwError( () => error ) ),
@@ -180,7 +178,7 @@ export class AuthService {
       this.logoutUser();
       return of(false);
     }
-    return this.http.get<AuthResponse>(`${this.baseURL}/renew`)
+    return this.http.get<AuthResponseDto>(`${this.baseURL}/renew`)
                       .pipe(
                         map( ( authResponse ) => {
                             if( authResponse.ok ){
@@ -201,12 +199,15 @@ export class AuthService {
     );
   }
   
-  private handleAuthSuccess = ( authResponse : AuthResponse ) : User  => {
-    this.userState.setUser( authResponse.user );
+  private handleAuthSuccess = ( authResponse : AuthResponseDto ) : User  => {
+    // El mapeo va primero: `UserState` guarda el modelo interno, no el DTO.
+    const user = AuthMapper.mapResponseToUser( authResponse );
+
+    this.userState.setUser( user );
     this.userState.setToken( authResponse.token );
     this.userState.setAuthStatus( 'authenticated' );
 
-    return AuthMapper.mapResponseToUser( authResponse );
+    return user;
   }
   
   // Destraba `authStatus` sin tocar el token. Los guards esperan una transición

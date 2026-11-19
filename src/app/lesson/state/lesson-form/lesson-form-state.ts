@@ -1,6 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LessonPopulated } from '../../models/lesson.interface';
+import { ResourceValidTypes } from '@file/models/file.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class LessonFormState {
 
   public mediaFile = signal<File | null>(null);
   public tempMedia = signal<string | null>(null);
-  public typeMedia = signal<'image' | 'video' | null>(null);
+  public typeMedia = signal<ResourceValidTypes | null>(null);
   public isLessonFormVisible = signal<boolean>( false );
   public isModulePopUpVisible = signal<boolean>( false );
   public hiddenLessonIds = signal<Set<string>>(new Set());
@@ -71,7 +72,7 @@ export class LessonFormState {
     this.mediaFile.set( file );
   }
 
-  public setTypeMedia( type : 'image' | 'video' | null ) : void {
+  public setTypeMedia( type : ResourceValidTypes | null ) : void {
     this.typeMedia.set( type );
   }
   

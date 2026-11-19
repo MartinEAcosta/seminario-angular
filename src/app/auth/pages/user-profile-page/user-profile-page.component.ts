@@ -17,7 +17,7 @@ import { RoleLabelPipe } from '@auth/pipes/role-label.pipe';
 import { buildPasswordForm, buildProfileForm, getPasswordStrength, MAX_AVATAR_BYTES, patchProfileForm } from '@auth/forms/user-form-factory';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FilePreviewControl } from '@file/models/file-preview-control';
-import { PasswordDTO, User } from '@auth/models/auth.interface';
+import { User } from '@auth/models/auth.interface';
 import { getAuthErrorMessage, isServerError } from '@auth/utils/auth-error-message';
 
 @Component({
@@ -208,7 +208,7 @@ export class UserProfilePageComponent implements OnDestroy {
     this.passwordForm.markAllAsTouched();
     if( !this.passwordForm.valid ) return;
 
-    const passwordDto : PasswordDTO = AuthMapper.mapFormToPasswordDTO( this.passwordForm );
+    const passwordDto = AuthMapper.mapFormToPasswordDTO( this.passwordForm );
     this.authService.updatePassword( passwordDto ).subscribe({
       // El reset y el colapso de la card van en el éxito: si la contraseña actual
       // estaba mal, el usuario conserva lo que escribió y el formulario sigue abierto.

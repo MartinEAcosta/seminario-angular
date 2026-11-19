@@ -2,6 +2,11 @@
 // en un componente: todo pasa antes por `LessonMapper`.
 //
 // Las fechas se tipan `string`: `JSON.parse` no construye `Date`.
+//
+// `resource_type` es la misma unión que tipa a `file`: se importa de
+// `@file/models/file.interface` para que exista una sola fuente.
+
+import { ResourceValidTypes } from '@file/models/file.interface';
 
 export interface LessonResponseDto {
   // TODO: un `id` opcional en una respuesta es señal de que este tipo se usa
@@ -26,7 +31,7 @@ export interface LessonPopulatedResponseDto {
   file        : {
     id            : string;
     url           : string;
-    resource_type : 'image' | 'video';
+    resource_type : ResourceValidTypes;
     extension     : string;
   };
   lesson_number : number;

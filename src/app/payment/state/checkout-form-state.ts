@@ -6,7 +6,8 @@ import { environment } from '../../../environments/environment';
 
 import { PaymentService } from '../services/payment.service';
 import { CartService } from '@cart/state/cart.service';
-import { CreateOrderRequestDTO } from '../models/payment.interface';
+import { OrderMapper } from '@mappers/order.mapper';
+import { CardholderFormValue } from '../models/payment.interface';
 import { Order } from '../models/order.interface';
 import {
   MPFieldInstance,
@@ -19,14 +20,6 @@ interface FieldContainerIds {
   cardNumber: string;
   expirationDate: string;
   securityCode: string;
-}
-
-interface CardholderFormValue {
-  firstName: string;
-  lastName: string;
-  identificationType: string;
-  identificationNumber: string;
-  email: string;
 }
 
 type SubmitResult = { ok: true; order: Order } | { ok: false; error: string };
@@ -234,23 +227,13 @@ export class CheckoutFormState {
         identificationNumber: formValue.identificationNumber,
       });
 
-      // Este payload no se loguea nunca: lleva el token de la tarjeta, el mail y el documento.
-      const payload: CreateOrderRequestDTO = {
+      const payload = OrderMapper.mapCheckoutToCreateOrderRequest(
         items,
-        token: tokenResponse.id,
-        payment_method_id: paymentMethod.id,
-        payment_method_type: paymentMethod.payment_type_id,
+        tokenResponse.id,
+        paymentMethod,
         installments,
-        payer: {
-          email: formValue.email,
-          first_name: formValue.firstName,
-          last_name: formValue.lastName,
-          identification: {
-            type: formValue.identificationType,
-            number: formValue.identificationNumber,
-          },
-        },
-      };
+        formValue,
+      );
 
       const order = await firstValueFrom(
         this.paymentService.createOrder( payload ),

@@ -1,12 +1,6 @@
 <section class="bg-section">
         <div class="container">
 
-            <app-collapsible-page-title
-                [title]="courseFormState.savedCourse()?.id ? 'Editar curso' : 'Crear curso'"
-                [collapsed]="courseFormState.isFormCollapsed()"
-                (toggle)="onToggleCollapse()"
-            />
-
             <div
                 class="collapse-wrapper"
                 [class.collapsed]="courseFormState.isFormCollapsed()"

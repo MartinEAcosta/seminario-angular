@@ -14,13 +14,3 @@ export interface TeacherRequest {
     createdAt       : Date;
     reviewedAt      : Date | null;
 }
-
-// Lo que se envía al crear una solicitud.
-export interface TeacherRequestDTO {
-    categoryIds     : string[];
-    aboutYou        : string;
-    experienceLevel : TeacherExperienceLevel;
-    courseTitle     : string;
-    courseSummary   : string;
-    portfolioUrl   ?: string;
-}

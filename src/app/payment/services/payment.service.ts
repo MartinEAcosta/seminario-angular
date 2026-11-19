@@ -6,11 +6,11 @@ import { catchError, map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 import { ApiResponse } from '@shared/models/api.interfaces';
-import { IdentificationTypeResponseDto, IssuerResponseDto } from '@payment/models/payment.response';
+import { IdentificationTypeResponseDto } from '@payment/models/payment.response';
 import { OrderResponseDto } from '@payment/models/order.response';
-import { IdentificationType, Issuer, CreateOrderRequestDTO } from '../models/payment.interface';
+import { IdentificationType } from '../models/payment.interface';
+import { CreateOrderRequestDTO, ItemQuantity } from '../models/payment.request';
 import { Order } from '../models/order.interface';
-import { ItemQuantity } from '@cart/models/cart.interface';
 
 @Injectable({
   providedIn: 'root'

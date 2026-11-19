@@ -1,4 +1,4 @@
-import { ResourceValidTypes } from "../../shared/models/api.interfaces";
+export type ResourceValidTypes = 'image' | 'video' | 'raw' | 'auto';
 
 export type UploadFolder = 'course' | 'lesson' | 'user';
 

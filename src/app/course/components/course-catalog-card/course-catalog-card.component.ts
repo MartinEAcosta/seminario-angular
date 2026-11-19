@@ -2,7 +2,7 @@ import { CurrencyPipe } from '@angular/common';
 import { Component, OnDestroy, computed, inject, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { Course } from '@course/models/course.interfaces';
+import { Course } from '@course/models/course.interface';
 import { CartService } from '@cart/state/cart.service';
 
 const ADDED_FEEDBACK_MS = 2200;

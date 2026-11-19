@@ -1,4 +1,5 @@
-import { ApiResponse, OrderResponseDto } from '@shared/models/api.interfaces';
+import { ApiResponse } from '@shared/models/api.interfaces';
+import { OrderResponseDto } from '@payment/models/order.response';
 import { Order, OrderStatus } from '@payment/models/order.interface';
 
 export class OrderMapper {

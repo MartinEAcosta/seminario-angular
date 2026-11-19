@@ -1,4 +1,4 @@
-import { Category } from "@category/models/category.interfaces";
+import { Category } from "@category/models/category.interface";
 
 export const defaultCategories : Category[] = [
   { id: "a", name: "Frontend", slug: "frontend" },

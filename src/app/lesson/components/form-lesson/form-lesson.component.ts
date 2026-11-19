@@ -7,7 +7,7 @@ import { FormErrorLabelComponent } from "@shared/components/form-error-label/for
 import { UserState } from '@user/state/user-state';
 import { LessonMapper } from '@mappers/lesson.mapper';
 import { CourseService } from '@course/services/course.service';
-import { FileService } from '@file/services/file.service';
+import { UIService } from '@shared/services/ui/ui.service';
 import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
 
 @Component({
@@ -24,7 +24,7 @@ export class FormLessonComponent {
   public courseService = inject(CourseService);
   public lessonService = inject(LessonService);
   public lessonFormState = inject(LessonFormState);
-  public fileService = inject(FileService);
+  private uiService = inject(UIService);
 
   idCourse = input.required<string>();
 
@@ -46,8 +46,9 @@ export class FormLessonComponent {
         id_course : this.idCourse(),
         id_file : this.lessonFormState.lessonSelected()?.file.id_file ?? undefined,
       };
-      return this.lessonService.saveLesson( lessonDto , this.lessonFormState.mediaFile() ).subscribe( () => {
-        this.saved.emit();
+      return this.lessonService.saveLesson( lessonDto , this.lessonFormState.mediaFile() ).subscribe({
+        next  : () => this.saved.emit(),
+        error : () => this.uiService.showToastMessage('No pudimos guardar la lección. Probá de nuevo.'),
       });
     }
     return;

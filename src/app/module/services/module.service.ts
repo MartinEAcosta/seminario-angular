@@ -4,8 +4,9 @@ import { ModuleMapper } from '@mappers/module.mapper';
 import { catchError, map, Observable, throwError } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { ApiResponse, ModulePopulatedResponseDto, ModuleResponseDto } from '@shared/models/api.interfaces';
-import { Module, ModuleDTO, ModulePopulated } from '../models/module.interfaces';
+import { ApiResponse } from '@shared/models/api.interfaces';
+import { ModulePopulatedResponseDto, ModuleResponseDto } from '@module/models/module.response';
+import { Module, ModuleDTO, ModulePopulated } from '../models/module.interface';
 
 @Injectable({
   providedIn: 'root'

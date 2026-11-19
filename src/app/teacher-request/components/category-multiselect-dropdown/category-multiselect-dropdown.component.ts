@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, inject, input, output, signal } from '@angular/core';
 
-import { Category } from '@category/models/category.interfaces';
+import { Category } from '@category/models/category.interface';
 
 interface CategoryCheckbox {
   category : Category;

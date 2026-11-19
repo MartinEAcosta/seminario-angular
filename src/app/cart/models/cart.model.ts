@@ -1,4 +1,4 @@
-import { Course } from "@interfaces/course.interfaces";
+import { Course } from "@interfaces/course.interface";
 import { CartItem } from "./cart.interface";
 
 

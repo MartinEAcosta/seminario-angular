@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
 
 import { FormCourseComponent } from "@course/components/form-course/form-course.component";
-import { Course } from '@course/models/course.interfaces';
+import { Course } from '@course/models/course.interface';
 
 @Component({
   selector: 'app-update-course-page',

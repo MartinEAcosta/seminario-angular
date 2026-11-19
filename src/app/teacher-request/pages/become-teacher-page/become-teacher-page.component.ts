@@ -1,16 +1,18 @@
 /*
     Path:PORT/become-teacher
 */
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 
 import { UserState } from '@user/state/user-state';
+import { UIService } from '@shared/services/ui/ui.service';
 import { EmailVerificationBannerComponent } from '@auth/components/email-verification-banner/email-verification-banner.component';
 import { LoaderComponent } from '@shared/components/loader/loader.component';
 import { TeacherRequestState } from '@teacher-request/state/teacher-request-state';
 import { TeacherRequestFormComponent } from '@teacher-request/components/teacher-request-form/teacher-request-form.component';
 import { TeacherRequestStatusComponent } from '@teacher-request/components/teacher-request-status/teacher-request-status.component';
-import { TeacherRequestDTO } from '@teacher-request/models/teacher-request.interfaces';
+import { TeacherRequestDTO } from '@teacher-request/models/teacher-request.interface';
 
 @Component({
     selector: 'app-become-teacher-page',
@@ -25,6 +27,9 @@ import { TeacherRequestDTO } from '@teacher-request/models/teacher-request.inter
     ]
 })
 export class BecomeTeacherPageComponent {
+
+  private uiService = inject(UIService);
+  private destroyRef = inject(DestroyRef);
 
   public userState = inject(UserState);
   public teacherRequestState = inject(TeacherRequestState);
@@ -55,8 +60,18 @@ export class BecomeTeacherPageComponent {
     this.retryForm.set(true);
   }
 
+  // TeacherRequestService no es auth: no ramifica por status y su error va al
+  // toast. El copy es fijo del front — leer el body del error es trabajo
+  // exclusivo de getAuthErrorMessage (ver SPEC 16).
   public onSubmitRequest = ( teacherRequestDTO : TeacherRequestDTO ) : void => {
-    this.teacherRequestState.submitRequest( teacherRequestDTO );
+    this.teacherRequestState.submitRequest( teacherRequestDTO )
+                              // Si el usuario navega con el POST en vuelo, el toast
+                              // aparecería en otra pantalla sin contexto.
+                              .pipe( takeUntilDestroyed( this.destroyRef ) )
+                              .subscribe({
+                                next  : () => this.uiService.showToastMessage('Recibimos tu solicitud. Te avisamos por correo.'),
+                                error : () => this.uiService.showToastMessage('No pudimos enviar tu solicitud, intentá nuevamente.'),
+                              });
   }
 
 }

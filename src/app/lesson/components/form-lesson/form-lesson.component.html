@@ -19,13 +19,15 @@
     <div class="lesson-fields">
         <div class="lesson-media-wrap">
             <div class="lesson-media">
+                <!-- Inerte: ver SPEC 16, deuda 1.1. El (change) descartaba el resultado,
+                     así que elegir un archivo nunca hizo nada. -->
                 <input
                     type="file"
-                    id="file"
+                    id="lesson-media-file"
                     name="file"
                     class="input-file"
                     accept="image/* , video/*"
-                    (change)="this.fileService.onFileChanged($event)"
+                    disabled
                 />
                 <figure class="figure-attach">
                     @if( lessonFormState.tempMedia() === null ){

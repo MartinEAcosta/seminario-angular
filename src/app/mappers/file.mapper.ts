@@ -1,5 +1,5 @@
-import { FileResponseDto } from "@shared/models/api.interfaces";
-import { UploadedFile } from "@file/models/file.interfaces";
+import { FileResponseDto } from "@file/models/file.response";
+import { UploadedFile } from "@file/models/file.interface";
 
 
 export class FileMapper {

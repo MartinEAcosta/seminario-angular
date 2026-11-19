@@ -1,5 +1,6 @@
 import { Component, inject, OnDestroy, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
 
@@ -7,6 +8,7 @@ import { AuthService } from '@auth/services/auth.service';
 import { UIService } from '@shared/services/ui/ui.service';
 import { FormErrorLabelComponent } from '@shared/components/form-error-label/form-error-label.component';
 import { userFieldsValidators } from '@auth/forms/user-form-factory';
+import { getAuthErrorMessage, isServerError } from '@auth/utils/auth-error-message';
 
 const RESEND_COOLDOWN_SECONDS = 60;
 
@@ -19,6 +21,7 @@ const RESEND_COOLDOWN_SECONDS = 60;
 export class ForgotPasswordPageComponent implements OnDestroy {
 
   private fb = inject(FormBuilder);
+  private router = inject(Router);
   private authService = inject(AuthService);
   private uiService = inject(UIService);
 
@@ -40,12 +43,20 @@ export class ForgotPasswordPageComponent implements OnDestroy {
     const email = this.forgotForm.value.email;
 
     this.authService.sendForgotPasswordEmail( email )
-                      .subscribe( ( ok ) => {
-                        this.isSending.set(false);
-                        if( ok ){
+                      .subscribe({
+                        next : () => {
+                          this.isSending.set(false);
                           this.uiService.showToastMessage('Te enviamos un enlace para recuperar tu contraseña. Revisá tu bandeja de entrada.');
                           this.startCooldown();
-                        }
+                        },
+                        error : ( error : HttpErrorResponse ) => {
+                          this.isSending.set(false);
+                          if( isServerError( error ) ){
+                            this.router.navigateByUrl('/error');
+                            return;
+                          }
+                          this.uiService.showToastMessage( getAuthErrorMessage( error , 'No pudimos enviar el enlace. Probá de nuevo.' ) );
+                        },
                       });
   }
 

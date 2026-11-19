@@ -1,7 +1,7 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Course } from '@interfaces/course.interfaces';
+import { Course } from '@interfaces/course.interface';
 
 @Injectable({
   providedIn: 'root'

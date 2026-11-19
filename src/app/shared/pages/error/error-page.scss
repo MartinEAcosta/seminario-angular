@@ -13,7 +13,7 @@ $panel-ink: #0e1a1a;
     padding-top: calc(80px + #{$extra-padding-top});
 }
 
-.shell-404{
+.shell-error{
     display: flex;
     align-items: stretch;
     min-height: 100vh;
@@ -48,7 +48,7 @@ $panel-ink: #0e1a1a;
     color: v.$brand-color-bright;
 }
 
-.code-404{
+.code-error{
     margin: 0;
     font-weight: 900;
     // Clamp propio: el de la escala global asume hero a ancho completo, acá
@@ -59,7 +59,7 @@ $panel-ink: #0e1a1a;
     color: v.$white-custom;
 }
 
-.code-404 .digit.accent{
+.code-error .digit.accent{
     color: v.$brand-color-bright;
 }
 
@@ -230,7 +230,7 @@ $panel-ink: #0e1a1a;
 }
 
 @include v.bp-down('md'){
-    .shell-404{
+    .shell-error{
         flex-direction: column;
         min-height: 0;
     }
@@ -252,7 +252,7 @@ $panel-ink: #0e1a1a;
         padding-top: v.$space-lg;
     }
 
-    .code-404{
+    .code-error{
         font-size: clamp(4rem, 22vw, 6rem);
     }
 }

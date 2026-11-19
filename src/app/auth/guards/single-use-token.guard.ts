@@ -16,11 +16,11 @@ export const SingleUseTokenGuard: CanActivateFn = (
     const router = inject(Router);
     const token = route.paramMap.get('token')!;
 
-    console.log(token)
+    const askForNewLink = () => router.createUrlTree(['/auth/forgot-password']);
 
     return authService.singleUseTokenIsValid( token )
                                 .pipe(
-                                    map( (res) => res ? true : router.createUrlTree(['/reset-password/expired']) ),
-                                    catchError( (res) => of(router.createUrlTree(['/reset-password/expired'])),
-                                ));
+                                    map( ( isValid ) => isValid ? true : askForNewLink() ),
+                                    catchError( () => of( askForNewLink() ) ),
+                                );
 };

@@ -1,5 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterLink } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { NgClass } from '@angular/common';
 import { Validators, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 
@@ -7,6 +9,7 @@ import { FormUtils } from '@utils/form-utils';
 import { AuthMapper } from '@mappers/auth.mapper';
 import { AuthService } from '@auth/services/auth.service';
 import { UserState } from '@user/state/user-state';
+import { getAuthErrorMessage, isServerError, REGISTRATION_ERROR_MESSAGE } from '@auth/utils/auth-error-message';
 import { FormErrorLabelComponent } from "../../../shared/components/form-error-label/form-error-label.component";
 import { GoogleAuthButtonComponent } from '@auth/components/google-auth-button/google-auth-button.component';
 
@@ -41,6 +44,12 @@ export class FormRegisterComponent {
 
   public showPassword = signal(false);
 
+  // Error del formulario entero (email duplicado, conexión, validación del
+  // backend). Banda inline arriba del submit, no toast: el error pertenece al
+  // formulario que el usuario está mirando (ver SPEC 16).
+  public formError = signal<string | null>(null);
+  public isSubmitting = signal<boolean>(false);
+
   public registerForm : FormGroup = this.fb.group({
     first_name : [
                 '',
@@ -52,7 +61,6 @@ export class FormRegisterComponent {
               ],
     email : [
               '',
-              // Validacion sincrona
               [Validators.required, Validators.pattern( FormUtils.emailPattern ) ],
               // Validaciones asincronas
               // [FormUtils.checkingServerResponse]
@@ -63,7 +71,13 @@ export class FormRegisterComponent {
               ],
   });
 
-  constructor( ) { }
+  constructor( ) {
+    // Cualquier edición limpia la banda, para no dejar un mensaje viejo
+    // contradiciendo lo que el usuario está escribiendo.
+    this.registerForm.valueChanges
+                      .pipe( takeUntilDestroyed() )
+                      .subscribe( () => this.formError.set(null) );
+  }
 
   toggleShowPassword = () => {
     this.showPassword.update((shown) => !shown);
@@ -71,16 +85,26 @@ export class FormRegisterComponent {
 
   onRegister = () : void => {
     this.registerForm.markAllAsTouched();
-    if( this.registerForm.valid ){
-      const registerUserDTO = AuthMapper.mapFormToUserDTO(this.registerForm);
-      this.authService.registerUser( registerUserDTO )
-                        .subscribe( (isAuthenticated) => {
-                          if( isAuthenticated ){
-                            this.router.navigateByUrl('/');
+    if( !this.registerForm.valid || this.isSubmitting() ) return;
+
+    this.isSubmitting.set(true);
+    const registerUserDTO = AuthMapper.mapFormToUserDTO(this.registerForm);
+    this.authService.registerUser( registerUserDTO )
+                      .subscribe({
+                        next  : () => {
+                          this.isSubmitting.set(false);
+                          this.router.navigateByUrl('/');
+                        },
+                        error : ( error : HttpErrorResponse ) => {
+                          this.isSubmitting.set(false);
+                          // Un 5xx no se arregla desde el formulario.
+                          if( isServerError( error ) ){
+                            this.router.navigateByUrl('/error');
                             return;
                           }
-                        } );
-    };
+                          this.formError.set( getAuthErrorMessage( error , REGISTRATION_ERROR_MESSAGE ) );
+                        },
+                      });
   }
-    
+
 }

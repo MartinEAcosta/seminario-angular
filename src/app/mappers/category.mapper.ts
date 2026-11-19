@@ -1,4 +1,5 @@
-import { ApiResponse, CategoryResponseDto } from "@shared/models/api.interfaces";
+import { ApiResponse } from "@shared/models/api.interfaces";
+import { CategoryResponseDto } from "@category/models/category.response";
 
 
 export class CategoryMapper {

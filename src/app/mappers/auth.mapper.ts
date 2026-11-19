@@ -1,5 +1,5 @@
 import { FormGroup } from "@angular/forms";
-import type { User , AuthResponse, UserDTO, PasswordDTO } from "@auth/models/auth.interfaces";
+import type { User , AuthResponse, UserDTO, PasswordDTO } from "@auth/models/auth.interface";
 
 export class AuthMapper {
 

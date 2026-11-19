@@ -4,11 +4,10 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { catchError, of, tap } from 'rxjs';
 
 import { LessonService } from '../../services/lesson.service';
-import { LessonPopulated } from '../../models/lesson.interfaces';
+import { LessonPopulated } from '../../models/lesson.interface';
 import { ThumbnailSelectorComponent } from '@course/components/thumbnail-selector/thumbnail-selector.component';
 import { FormLessonComponent } from "../form-lesson/form-lesson.component";
-import { FileService } from '@file/services/file.service';
-import { Course } from '@course/models/course.interfaces';
+import { Course } from '@course/models/course.interface';
 import { ModuleService } from '@module/services/module.service';
 import { CardActionComponent } from "@shared/components/card-action/card-action.component";
 import { SaveModuleComponent } from "@module/components/save-module/save-module.component";
@@ -34,7 +33,6 @@ export class SliderContentManagerComponent implements OnDestroy {
   uiService = inject(UIService);
   lessonService = inject(LessonService);
   moduleService = inject(ModuleService);
-  fileService = inject(FileService);
   lessonFormState = inject(LessonFormState);
 
   course = input.required<Course | null>();
@@ -45,8 +43,11 @@ export class SliderContentManagerComponent implements OnDestroy {
       if (params) {
         return this.lessonService.getAllLessonPopulatedFromCourse(params).pipe(
           tap((res) => this.lessonFormState.lessons.set(res)),
-          catchError((error) => {
-            // * No se han podido cargar...
+          catchError(() => {
+            // Se degrada a lista vacía para no romper la pantalla, pero avisa:
+            // antes fallaba en silencio y el usuario leía "sin lecciones" cuando
+            // lo que pasó es que no se pudieron cargar (ver SPEC 16).
+            this.uiService.showToastMessage('No pudimos cargar las lecciones del curso.');
             return of([]);
           })
         );

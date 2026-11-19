@@ -2,7 +2,7 @@ import { Component, inject, input, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 import { CourseFormState } from '../../state/course-form/course-form-state';
-import { Course } from '@course/models/course.interfaces';
+import { Course } from '@course/models/course.interface';
 import { CollapsiblePageTitleComponent } from "../collapsible-page-title/collapsible-page-title.component";
 
 @Component({

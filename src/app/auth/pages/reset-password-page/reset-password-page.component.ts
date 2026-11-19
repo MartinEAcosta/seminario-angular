@@ -3,6 +3,7 @@
 */
 import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -11,6 +12,7 @@ import { AuthService } from '@auth/services/auth.service';
 import { UIService } from '@shared/services/ui/ui.service';
 import { FormErrorLabelComponent } from '@shared/components/form-error-label/form-error-label.component';
 import { buildResetPasswordForm, getPasswordStrength } from '@auth/forms/user-form-factory';
+import { CONNECTION_ERROR_MESSAGE, isConnectionError, isServerError } from '@auth/utils/auth-error-message';
 
 type ResetPanelState = 'form' | 'invalid';
 
@@ -60,14 +62,24 @@ export class ResetPasswordPageComponent {
     const newPassword = this.resetForm.value.newPassword;
 
     this.authService.resetPassword( this.token, newPassword )
-                      .subscribe( ( ok ) => {
-                        this.isSaving.set(false);
-                        if( ok ){
+                      .subscribe({
+                        next : () => {
+                          this.isSaving.set(false);
                           this.uiService.showToastMessage('Contraseña actualizada. Ingresá con tu nueva contraseña.');
                           this.router.navigateByUrl('/auth/login');
-                        } else {
+                        },
+                        error : ( error : HttpErrorResponse ) => {
+                          this.isSaving.set(false);
+                          if( isServerError( error ) ){
+                            this.router.navigateByUrl('/error');
+                            return;
+                          }
+                          if( isConnectionError( error ) ){
+                            this.uiService.showToastMessage( CONNECTION_ERROR_MESSAGE );
+                            return;
+                          }
                           this.panelState.set('invalid');
-                        }
+                        },
                       });
   }
 

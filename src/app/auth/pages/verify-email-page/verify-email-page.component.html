@@ -22,6 +22,15 @@
                 </div>
             }
 
+            @case ( 'offline' ) {
+                <div class="state-block">
+                    <span class="icon icon-error" aria-hidden="true">!</span>
+                    <span class="eyebrow">Sin conexión</span>
+                    <h1 class="title">No pudimos conectar con el servidor</h1>
+                    <p class="text">Revisá tu conexión y volvé a abrir el enlace. No sabemos todavía si sigue siendo válido.</p>
+                </div>
+            }
+
             @case ( 'error' ) {
                 <div class="state-block">
                     <span class="icon icon-error" aria-hidden="true">!</span>

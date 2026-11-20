@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '@auth/services/auth.service';
 import { UserState } from '@user/state/user-state';
-import { UIService } from '@shared/services/ui/ui.service';
+import { ToastService } from '@shared/services/toast/toast.service';
 import { getAuthErrorMessage, isServerError } from '@auth/utils/auth-error-message';
 
 const RESEND_COOLDOWN_SECONDS = 60;
@@ -19,7 +19,7 @@ export class EmailVerificationBannerComponent implements OnDestroy {
 
   public authService = inject(AuthService);
   public userState = inject(UserState);
-  private uiService = inject(UIService);
+  private toastService = inject(ToastService);
   private router = inject(Router);
 
   // true cuando el banner vive embebido en otra card (user-profile-page) y debe
@@ -40,7 +40,7 @@ export class EmailVerificationBannerComponent implements OnDestroy {
                       .subscribe({
                         next : () => {
                           this.isSending.set(false);
-                          this.uiService.showToastMessage('Te enviamos un email para validar tu cuenta. Revisá tu bandeja de entrada.');
+                          this.toastService.showSuccess('Te enviamos un email para validar tu cuenta. Revisá tu bandeja de entrada.');
                           this.startCooldown();
                         },
                         error : ( error : HttpErrorResponse ) => {
@@ -49,7 +49,7 @@ export class EmailVerificationBannerComponent implements OnDestroy {
                             this.router.navigateByUrl('/error');
                             return;
                           }
-                          this.uiService.showToastMessage( getAuthErrorMessage( error , 'No pudimos enviar el email de validación.' ) );
+                          this.toastService.showError( getAuthErrorMessage( error , 'No pudimos enviar el email de validación.' ) );
                         },
                       });
   }

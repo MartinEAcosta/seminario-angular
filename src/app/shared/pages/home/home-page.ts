@@ -7,7 +7,6 @@ import { CategoryService } from '@category/services/category.service';
 import { CourseCarouselComponent } from "@course/components/course-carousel/course-carousel.component";
 import { CourseFeaturedComponent } from '@course/components/course-featured/course-featured.component';
 import { CategoryMarqueeComponent } from "@category/components/category-marquee/category-marquee.component";
-import { ModalErrorMessageComponent } from '../../components/modal-error-message/modal-error-message.component';
 import { CartComponent } from '@cart/components/cart/cart.component';
 import { defaultCourses } from '@utils/defaultCourses';
 import { defaultCategories } from '@utils/defaultCategories';
@@ -17,7 +16,7 @@ import { HeroCanvasBackgroundDirective } from './hero-canvas-background.directiv
     selector: 'app-home',
     templateUrl: './home-page.html',
     styleUrl: './home-page.scss',
-    imports: [CourseCarouselComponent, CourseFeaturedComponent, CategoryMarqueeComponent, ModalErrorMessageComponent, CartComponent, RouterLink, HeroCanvasBackgroundDirective]
+    imports: [CourseCarouselComponent, CourseFeaturedComponent, CategoryMarqueeComponent, CartComponent, RouterLink, HeroCanvasBackgroundDirective]
 })
 export class HomeComponent implements OnDestroy {
 

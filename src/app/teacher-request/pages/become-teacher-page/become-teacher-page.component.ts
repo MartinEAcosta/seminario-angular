@@ -6,7 +6,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 
 import { UserState } from '@user/state/user-state';
-import { UIService } from '@shared/services/ui/ui.service';
+import { ToastService } from '@shared/services/toast/toast.service';
 import { EmailVerificationBannerComponent } from '@auth/components/email-verification-banner/email-verification-banner.component';
 import { LoaderComponent } from '@shared/components/loader/loader.component';
 import { TeacherRequestState } from '@teacher-request/state/teacher-request-state';
@@ -28,7 +28,7 @@ import { TeacherRequestDTO } from '@teacher-request/models/teacher-request.inter
 })
 export class BecomeTeacherPageComponent {
 
-  private uiService = inject(UIService);
+  private toastService = inject(ToastService);
   private destroyRef = inject(DestroyRef);
 
   public userState = inject(UserState);
@@ -69,8 +69,8 @@ export class BecomeTeacherPageComponent {
                               // aparecería en otra pantalla sin contexto.
                               .pipe( takeUntilDestroyed( this.destroyRef ) )
                               .subscribe({
-                                next  : () => this.uiService.showToastMessage('Recibimos tu solicitud. Te avisamos por correo.'),
-                                error : () => this.uiService.showToastMessage('No pudimos enviar tu solicitud, intentá nuevamente.'),
+                                next  : () => this.toastService.showSuccess('Recibimos tu solicitud. Te avisamos por correo.'),
+                                error : () => this.toastService.showError('No pudimos enviar tu solicitud, intentá nuevamente.'),
                               });
   }
 

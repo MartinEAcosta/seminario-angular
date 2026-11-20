@@ -1,0 +1,92 @@
+@use '@variables' as v;
+
+:host{
+    display: contents;
+}
+
+// Superficie única para las tres severidades, elevada con borde + sombra porque
+// es un overlay flotante sobre papel claro. Lo que cambia es el acento, no el
+// peso visual: un bloque verde a pantalla ancha para decir "Cambios guardados."
+// sería más agresivo que el error.
+.toast{
+    display: flex;
+    gap: v.$space-xs;
+    align-items: flex-start;
+    position: fixed;
+    bottom: 10px;
+    left: 20px;
+    // Por encima de todo lo que flota: el header está en 1000
+    // (header.component.scss) y el carrito en 1001/1002 (cart.component.scss,
+    // velo, panel y botón de cerrar). Un toast tapado no es feedback, y como
+    // es pointer-events:none estar arriba no le roba ningún click al carrito.
+    z-index: 1003;
+    // Alto por contenido y ancho acotado: el `height: 9%` anterior recortaba
+    // cualquier mensaje de dos líneas. El `border-box` es obligatorio: el repo
+    // no tiene reset global, así que sin él el max-width gobierna sólo la caja
+    // de contenido y el padding + el borde se suman encima — en un viewport de
+    // 360px eso desbordaba 16px.
+    box-sizing: border-box;
+    max-width: min(28rem, calc(100vw - 2 * #{v.$space-sm}));
+    padding: v.$space-xs;
+    border: 1px solid v.$veil-border;
+    border-left: 4px solid currentColor;
+    border-radius: 14px;
+    background-color: #161616;
+    box-shadow: v.$shadow-panel;
+    // Nunca intercepta un click: no hay botón de cerrar, así que el toast no
+    // tiene por qué robarle la esquina al contenido.
+    pointer-events: none;
+    text-align: left;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.toast.show{
+    opacity: 1;
+    transform: translateY(0px);
+}
+
+// El acento llega por la clase que el componente pone en el host. `currentColor`
+// lo reparte al borde izquierdo y al icono; el texto queda siempre en blanco.
+:host(.error) .toast{
+    color: v.$red-warning;
+}
+
+:host(.success) .toast{
+    color: v.$green-success;
+}
+
+:host(.warning) .toast{
+    color: v.$yellow-caution;
+}
+
+.toast-icon{
+    display: flex;
+    flex-shrink: 0;
+    width: 1.5rem;
+}
+
+.toast-icon svg{
+    width: 100%;
+    height: auto;
+}
+
+.toast-message{
+    margin: 0;
+    color: v.$white-custom;
+    font-family: v.$font-primary;
+    font-size: v.$text-base;
+    line-height: 1.4;
+}
+
+@media (prefers-reduced-motion: reduce){
+    .toast{
+        transform: none;
+        transition: opacity 0.2s ease;
+    }
+
+    .toast.show{
+        transform: none;
+    }
+}

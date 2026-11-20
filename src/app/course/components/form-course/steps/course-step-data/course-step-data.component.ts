@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { UserState } from '@user/state/user-state';
 import { FileService } from '@file/services/file.service';
-import { UIService } from '@shared/services/ui/ui.service';
+import { ToastService } from '@shared/services/toast/toast.service';
 import { FormErrorLabelComponent } from '@shared/components/form-error-label/form-error-label.component';
 import { BtnRemoveComponent } from '@shared/components/btns/btn-remove/btn-remove.component';
 import { CategorySelectComponent } from '@category/components/category-select/category-select.component';
@@ -30,7 +30,7 @@ export class CourseStepDataComponent {
   private activatedRoute = inject(ActivatedRoute);
   private userState = inject(UserState);
   private courseService = inject(CourseService);
-  private uiService = inject(UIService);
+  private toastService = inject(ToastService);
 
   public fileService = inject(FileService);
   public courseFormState = inject(CourseFormState);
@@ -53,7 +53,7 @@ export class CourseStepDataComponent {
                               this.courseFormState.setSavedCourse( created );
                               this.router.navigate( ['../content'] , { relativeTo : this.activatedRoute } );
                             },
-                            error : () => this.uiService.showToastMessage('No pudimos crear el curso. Probá de nuevo.'),
+                            error : () => this.toastService.showError('No pudimos crear el curso. Probá de nuevo.'),
                           });
     }
     else{
@@ -69,9 +69,9 @@ export class CourseStepDataComponent {
                           .subscribe({
                             next : ( updated ) => {
                               this.courseFormState.setSavedCourse( updated );
-                              this.uiService.showToastMessage('Cambios guardados.');
+                              this.toastService.showSuccess('Cambios guardados.');
                             },
-                            error : () => this.uiService.showToastMessage('No pudimos guardar los cambios. Probá de nuevo.'),
+                            error : () => this.toastService.showError('No pudimos guardar los cambios. Probá de nuevo.'),
                           });
     }
   }
@@ -86,7 +86,7 @@ export class CourseStepDataComponent {
                                     this.router.navigateByUrl('/');
                                   }
                                 },
-                                error : () => this.uiService.showToastMessage('No pudimos eliminar el curso. Probá de nuevo.'),
+                                error : () => this.toastService.showError('No pudimos eliminar el curso. Probá de nuevo.'),
                             });
     }
   }

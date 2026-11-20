@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { AuthService } from '@auth/services/auth.service';
-import { UIService } from '@shared/services/ui/ui.service';
+import { ToastService } from '@shared/services/toast/toast.service';
 import { FileService } from '@file/services/file.service';
 import { UserState } from '@user/state/user-state';
 import { AuthMapper } from '@mappers/auth.mapper';
@@ -31,7 +31,7 @@ export class UserProfilePageComponent implements OnDestroy {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private fileService = inject(FileService);
-  private uiService = inject(UIService);
+  private toastService = inject(ToastService);
   private userState = inject(UserState);
   private authService = inject(AuthService);
 
@@ -82,7 +82,9 @@ export class UserProfilePageComponent implements OnDestroy {
     const reject = ( message : string ) : void => {
       URL.revokeObjectURL( selected.previewURL );
       input.value = '';
-      this.uiService.showToastMessage( message );
+      // Advertencia y no error: el archivo que el usuario eligió no sirve, pero
+      // nada falló del lado del sistema y el camino para corregirlo es obvio.
+      this.toastService.showWarning( message );
     };
 
     if( !isAllowedMediaType( selected.file ) ){
@@ -124,7 +126,7 @@ export class UserProfilePageComponent implements OnDestroy {
         next  : () => this.saveProfileData( file , true ),
         error : () => {
           this.isSavingProfile.set(false);
-          this.uiService.showToastMessage('No pudimos eliminar la foto. No guardamos los cambios.');
+          this.toastService.showError('No pudimos eliminar la foto. No guardamos los cambios.');
         },
       });
       return;
@@ -147,7 +149,7 @@ export class UserProfilePageComponent implements OnDestroy {
           : user;
 
         if( !file ){
-          this.finishProfileSave( saved , 'Perfil actualizado.' );
+          this.finishProfileSave( saved , 'Perfil actualizado.' , 'success' );
           return;
         }
 
@@ -159,8 +161,9 @@ export class UserProfilePageComponent implements OnDestroy {
               id_file : uploadedFile.id,
             },
             'Perfil actualizado.',
+            'success',
           ),
-          error : () => this.finishProfileSave( saved , 'Perfil actualizado, pero no pudimos subir la foto.' ),
+          error : () => this.finishProfileSave( saved , 'Perfil actualizado, pero no pudimos subir la foto.' , 'warning' ),
         });
       },
       error : ( error : HttpErrorResponse ) => {
@@ -172,22 +175,28 @@ export class UserProfilePageComponent implements OnDestroy {
         }
 
         if( error.status === 401 || error.status === 403 ){
-          this.uiService.showToastMessage('Tu sesión expiró. Ingresá de nuevo para guardar los cambios.');
+          this.toastService.showError('Tu sesión expiró. Ingresá de nuevo para guardar los cambios.');
           return;
         }
 
-        this.uiService.showToastMessage( getAuthErrorMessage( error , 'No pudimos actualizar tu perfil.' ) );
+        this.toastService.showError( getAuthErrorMessage( error , 'No pudimos actualizar tu perfil.' ) );
       },
     });
   }
 
-  private finishProfileSave( user : User , message : string ) : void {
+  private finishProfileSave( user : User , message : string , severity : 'success' | 'warning' ) : void {
     this.isSavingProfile.set(false);
     this.userState.setUser(user);
     this.avatarPreview.reset();
     this.avatarRemoved.set(false);
     patchProfileForm(this.profileForm, user);
-    this.uiService.showToastMessage(message);
+
+    if( severity === 'warning' ){
+      this.toastService.showWarning(message);
+      return;
+    }
+
+    this.toastService.showSuccess(message);
   }
 
   // True once the group-level check fails and the user has reached the confirm field.
@@ -213,7 +222,7 @@ export class UserProfilePageComponent implements OnDestroy {
       // El reset y el colapso de la card van en el éxito: si la contraseña actual
       // estaba mal, el usuario conserva lo que escribió y el formulario sigue abierto.
       next  : () => {
-        this.uiService.showToastMessage('Contraseña actualizada.');
+        this.toastService.showSuccess('Contraseña actualizada.');
         this.passwordForm.reset();
         this.isChangingPassword.set(false);
       },
@@ -225,7 +234,7 @@ export class UserProfilePageComponent implements OnDestroy {
         // `trustBackendMessage`: el usuario ya está autenticado, así que no hay
         // cuentas que enumerar, y el 401 de "contraseña actual incorrecta" es
         // justamente lo que hay que poder distinguir de cualquier otro fallo.
-        this.uiService.showToastMessage(
+        this.toastService.showError(
           getAuthErrorMessage( error , 'No pudimos actualizar la contraseña.' , { trustBackendMessage : true } )
         );
       },

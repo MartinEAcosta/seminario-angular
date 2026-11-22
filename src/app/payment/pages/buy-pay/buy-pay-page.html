@@ -8,11 +8,11 @@
 @if (!isEmpty()) {
     <div class="checkout-layout">
         <aside class="order-column" aria-label="Resumen del pedido">
-            <app-purchase-summary [cart]="cartService.cart()" [total]="cartService.total()" />
+            <app-purchase-summary [cart]="cartState.cart()" [total]="cartState.total()" />
         </aside>
 
         <section class="pay-column">
-            <app-form-card-checkout [amount]="cartService.total()" />
+            <app-form-card-checkout [amount]="cartState.total()" />
         </section>
     </div>
 } @else {

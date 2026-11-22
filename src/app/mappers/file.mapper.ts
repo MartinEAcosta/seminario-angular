@@ -1,5 +1,5 @@
 import { FileResponseDto } from "@file/models/file.response";
-import { UploadedFile } from "@file/models/file.interface";
+import { UploadedFile } from "@file/models/file.model";
 
 
 export class FileMapper {

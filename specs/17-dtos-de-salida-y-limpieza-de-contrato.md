@@ -1,15 +1,15 @@
 # SPEC 17 — Los DTOs de salida y la limpieza del contrato que la SPEC 15 dejó a la vista
 
 > **Status:** Borrador
-> **Depends on:** SPEC 15 (separar los DTOs por feature), SPEC 16 (toast decidido por el componente — toca `auth`, `file` y `teacher-request` service, que esta spec también abre)
+> **Depends on:** SPEC 15 (separar los DTOs por feature), SPEC 16 (toast decidido por el componente — toca `auth`, `file` y `teacher-request` service, que esta spec también abre), SPEC 19 (estandarizar el sufijo `*.model.ts` — renombró los catorce archivos que esta spec cita y ya borró el alias `@interfaces/*` del Scope G.5 / paso 8)
 > **Date:** 2026-11-18
 > **Objective:** Terminar el corte entre modelo interno y contrato del backend que la SPEC 15 hizo sólo del lado entrante, separando los DTOs de salida en un `*.request.ts` por feature, devolviéndole al mapper la construcción del body, y resolviendo el código muerto y las incoherencias de tipo que el movimiento dejó a la vista.
 
 ## Por qué existe esta spec
 
 La SPEC 15 movió la mitad **entrante** del contrato: nueve `*.response.ts`, uno por feature. La mitad
-**saliente** quedó donde estaba, mezclada con el modelo interno: `CourseDTO` vive en `course.interface.ts`,
-`UserDTO` en `auth.interface.ts`, `ModuleDTO` en `module.interface.ts`. El resultado es un archivo de modelo
+**saliente** quedó donde estaba, mezclada con el modelo interno: `CourseDTO` vive en `course.model.ts`,
+`UserDTO` en `auth.model.ts`, `ModuleDTO` en `module.model.ts`. El resultado es un archivo de modelo
 que declara dos cosas de naturaleza distinta — lo que la app usa internamente y lo que le manda al backend —
 y un `*.response.ts` al lado que declara la tercera. El triángulo que la SPEC 15 describió (modelo ≠ DTO ≠
 mapper) está dibujado a medias.
@@ -43,18 +43,18 @@ comillas. Esta spec las fija — sólo para los archivos que abre, no con una pa
 
 | Archivo nuevo | Símbolos que recibe | De dónde salen |
 | --- | --- | --- |
-| `src/app/course/models/course.request.ts` | `CourseDTO` | `course.interface.ts` |
-| `src/app/lesson/models/lesson.request.ts` | `SaveLessonDto` | `lesson.interface.ts` |
-| `src/app/module/models/module.request.ts` | `ModuleDTO` | `module.interface.ts` |
-| `src/app/teacher-request/models/teacher-request.request.ts` | `TeacherRequestDTO` | `teacher-request.interface.ts` |
-| `src/app/payment/models/payment.request.ts` | `CreateOrderRequestDTO`, `OrderPayerDTO`, `ItemQuantity` | `payment.interface.ts`, `cart/models/cart.interface.ts` |
-| `src/app/auth/models/auth.request.ts` | `UserDTO`, `PasswordDTO` | `auth.interface.ts` |
+| `src/app/course/models/course.request.ts` | `CourseDTO` | `course.model.ts` |
+| `src/app/lesson/models/lesson.request.ts` | `SaveLessonDto` | `lesson.model.ts` |
+| `src/app/module/models/module.request.ts` | `ModuleDTO` | `module.model.ts` |
+| `src/app/teacher-request/models/teacher-request.request.ts` | `TeacherRequestDTO` | `teacher-request.model.ts` |
+| `src/app/payment/models/payment.request.ts` | `CreateOrderRequestDTO`, `OrderPayerDTO`, `ItemQuantity` | `payment.model.ts`, `cart/models/cart-item.model.ts` |
+| `src/app/auth/models/auth.request.ts` | `UserDTO`, `PasswordDTO` | `auth.model.ts` |
 
 `category`, `enrollment` y `file` no reciben archivo: `Category`, `Enrollment` y `EnrollmentDetailed` no
 tienen DTO de salida, y `FileService` manda `FormData`, no un tipo. `ItemQuantity` se va de `cart` a
 `payment` porque es parte del body de `POST /orders/` — la feature dueña del endpoint es dueña del contrato,
-que es la regla que fijó la SPEC 15. Eso invierte el import que hoy existe (`payment.interface.ts` importa
-de `@cart/*`): a partir de acá `cart/state/cart.service.ts` importa de `@payment/models/payment.request`.
+que es la regla que fijó la SPEC 15. Eso invierte el import que hoy existe (`payment.model.ts` importa
+de `@cart/*`): a partir de acá `cart/state/cart-state.ts` importa de `@payment/models/payment.request`.
 
 **B. `AuthResponse` se convierte en un DTO de verdad.** Nace `src/app/auth/models/auth.response.ts` con:
 
@@ -66,17 +66,17 @@ de `@cart/*`): a partir de acá `cart/state/cart.service.ts` importa de `@paymen
 Hoy `AuthResponse` embute el modelo interno `User`, de modo que `AuthMapper.mapResponseToUser` mapea modelo
 → modelo: es el único mapper del repo que no mapea nada. Con `UserResponseDto` pasa a mapear DTO → `User`.
 Los campos son por ahora idénticos; el punto es que dejen de ser el **mismo tipo**, para que un cambio del
-backend se pueda absorber en el mapper sin tocar `User`. `auth/models/auth.interface.ts` queda con exactamente
+backend se pueda absorber en el mapper sin tocar `User`. `auth/models/auth.model.ts` queda con exactamente
 dos símbolos: `AuthStatus` y `User` (`UserDTO` y `PasswordDTO` se van a `auth.request.ts`, `AuthResponse` a
 `auth.response.ts`).
 
 **C. Las uniones inline duplicadas se nombran, reusando el tipo de `file`.**
 
-- `ResourceValidTypes` (ya en `file/models/file.interface.ts`) pasa a tipar también
+- `ResourceValidTypes` (ya en `file/models/file.model.ts`) pasa a tipar también
   `LessonPopulatedResponseDto.file.resource_type` y `LessonPopulated.file.resource_type` (ésta con `| null`,
   según cómo cierre el punto D). Mueren la tercera y cuarta copia anónima del concepto.
-- Nace `LessonContentType = 'video' | 'document'` en `lesson/models/lesson.interface.ts`, importada por
-  `module/models/module.interface.ts` y `module/models/module.response.ts`. Vive en `lesson` aunque hoy el
+- Nace `LessonContentType = 'video' | 'document'` en `lesson/models/lesson.model.ts`, importada por
+  `module/models/module.model.ts` y `module/models/module.response.ts`. Vive en `lesson` aunque hoy el
   campo sólo aparezca anidado en los dos tipos de `module`: tipa una propiedad de una lección, y `module`
   ya depende de `lesson` de hecho al embutir su forma.
 
@@ -90,7 +90,7 @@ tocar el tipo:
 | `lessons` | `string[]` / array requerido en los dos DTO, `?? []` en el mapper | `module.response.ts`, `module.mapper.ts:12,36` |
 | `file.id`, `file.url`, `file.extension` | requeridos y no-null, `?? null` en el mapper | `lesson.response.ts`, `lesson.mapper.ts:44-47` |
 | `file.resource_type` | requerido, `?? 'image'` en el mapper | `lesson.response.ts`, `lesson.mapper.ts:46` |
-| `resource_type` de `FileResponseDto` | `ResourceValidTypes` (`'image' \| 'video' \| 'raw' \| 'auto'`), más ancho que lo único que `FileService` produce | `file.response.ts`, `file.interface.ts:1` |
+| `resource_type` de `FileResponseDto` | `ResourceValidTypes` (`'image' \| 'video' \| 'raw' \| 'auto'`), más ancho que lo único que `FileService` produce | `file.response.ts`, `file.model.ts:1` |
 
 Las dos variantes de `spots_remaining` quedan iguales entre sí, sea cual sea el resultado: hoy el mismo
 campo del mismo recurso se declara distinto según el endpoint, y eso no se sostiene. Si la verificación
@@ -99,13 +99,13 @@ confirma que el backend sólo manda `image` y `video`, `ResourceValidTypes` se a
 **E. Se borra el código muerto.**
 
 - Cadena issuer completa: `IssuerResponseDto` (`payment.response.ts:4`), la entidad `Issuer`
-  (`payment.interface.ts:3`), `PaymentMapper.mapIssuerListResponseToEntityArray`,
+  (`payment.model.ts:3`), `PaymentMapper.mapIssuerListResponseToEntityArray`,
   `PaymentMapper.mapIssuerResponseToEntity` y los dos imports muertos de `payment.service.ts:9,11`. El bug
   `secure_thumbnail: response.thumbnail` (`payment.mapper.ts:16`) desaparece con ella.
 - `CourseMapper.mapResponseToCourseArray`, `LessonMapper.mapResponseToLessonArray` y
   `ModuleMapper.mapResponseToModuleArray` — cero llamadores. Las variantes `*PopulatedArray` **sí** se usan
   (`module.service.ts:55`, `lesson.service.ts:29`) y no se tocan.
-- `LessonDto` (`lesson/models/lesson.interface.ts`): cero consumidores en todo el repo, ni siquiera su
+- `LessonDto` (`lesson/models/lesson.model.ts`): cero consumidores en todo el repo, ni siquiera su
   propio archivo lo usa. **Hallazgo de esta spec**, no estaba en la deuda de la 15.
 
 **F. `file.service.getFileByPublicId` pasa por `FileMapper`** y devuelve `UploadedFile` en vez del
@@ -119,17 +119,19 @@ spec abre** — sin pasada global por el repo:
 
 1. **Archivos de contrato por feature:** un `*.response.ts` y un `*.request.ts`. Se parte en más de uno sólo
    cuando la feature ya tiene dos modelos internos separados — el único caso es `payment` / `order`, que
-   espeja el split preexistente entre `payment.interface.ts` y `order.interface.ts`. **Nunca** por cantidad
+   espeja el split preexistente entre `payment.model.ts` y `order.model.ts`. **Nunca** por cantidad
    de endpoints.
 2. **Orden de imports:** Angular → `rxjs` → aliases de feature → relativos; dentro de los aliases, el modelo
    antes que su `.response` / `.request`.
 3. **`import type`** para todo lo que se importa solamente como tipo.
 4. **Comillas simples** en todo archivo que la spec toque, en vez de seguir el estilo del archivo huésped.
-5. **Un tipo, una ruta: se borra el alias `@interfaces/*`.** Sale de `tsconfig.json` y sus siete imports
+5. **Un tipo, una ruta: se borra el alias `@interfaces/*`.** *(Ya ejecutado por la SPEC 19, que tuvo que
+   tocar los mismos imports para el rename de sufijo. Queda acá como registro del criterio.)* Sale de
+   `tsconfig.json` y sus siete imports
    pasan al alias de la feature dueña del tipo: `cart/models/cart.model.ts`,
    `course/components/course-carousel`, `course/components/course-featured`, `course/resolver/course-resolver`,
    `course/state/course-form/course-form-state`, `shared/components/btns/btn-remove` (los seis a
-   `@course/models/course.interface`) y `user/state/user-state.ts` (a `@auth/models/auth.interface`).
+   `@course/models/course.model`) y `user/state/user-state.ts` (a `@auth/models/auth.model`).
 6. **Un `*.request.ts` se importa para anotar un borde, nunca para construir el body.** Ver el punto H: la
    construcción es del mapper. Las cabeceras de los seis `*.request.ts` dicen eso en vez de copiar la frase
    del `*.response.ts` ("nada de este archivo llega a un componente"), que sería un invariante falso — un
@@ -174,7 +176,7 @@ tercero:
   del backend obliga a editar el archivo que tipa la UI.
 - **Validación en runtime de los DTOs** (zod, valibot, guards a mano). El repo no tiene librería de
   validación y agregar una es una decisión de stack, no de tipado.
-- **Renombrar `shared/models/api.interfaces.ts` a singular** (deuda 15.4). Sigue siendo 18 imports por cero
+- **Renombrar `shared/models/api.response.ts` a singular** (deuda 15.4). Sigue siendo 18 imports por cero
   ganancia.
 - **Revisar los otros dos aliases torcidos.** `@guards/*` resuelve a `auth/guards/*` y no a un directorio
   top-level, y `@mappers/*` queda sin destino si algún día los mappers se van a su feature. Los dos son
@@ -192,7 +194,7 @@ diferencia de la SPEC 15:
 
 - **Nuevo:** `UserResponseDto` (`auth/models/auth.response.ts`) — la forma cruda del usuario, que hoy no
   existe como tipo propio.
-- **Nuevo:** `LessonContentType` (`lesson/models/lesson.interface.ts`) — `'video' | 'document'`, hoy inline
+- **Nuevo:** `LessonContentType` (`lesson/models/lesson.model.ts`) — `'video' | 'document'`, hoy inline
   en dos archivos de `module`.
 - **Nuevos métodos de mapper (punto H):** `TeacherRequestMapper.mapFormToTeacherRequestDTO` y
   `OrderMapper.mapCheckoutToCreateOrderRequest`. No agregan tipos: mueven código que hoy vive en un
@@ -208,19 +210,19 @@ diferencia de la SPEC 15:
 ## Implementation plan
 
 1. **Crear los seis `*.request.ts` y reapuntar sus importadores.** Un commit por feature o uno solo, pero el
-   símbolo se borra del `*.interface.ts` en el mismo paso en que nace en el `*.request.ts` — corte limpio,
+   símbolo se borra del `*.model.ts` en el mismo paso en que nace en el `*.request.ts` — corte limpio,
    sin re-export de compatibilidad, igual que la SPEC 15: el compilador es el checklist. `ItemQuantity` es
    el único que cambia de feature (cart → payment) y por lo tanto el único cuyo import se invierte.
    `npx tsc -p tsconfig.app.json --noEmit` limpio al cerrar el paso.
 
 2. **Crear `auth/models/auth.response.ts`.** Declarar `UserResponseDto` y `AuthResponseDto`, borrar
-   `AuthResponse` de `auth.interface.ts`, y reescribir `AuthMapper.mapResponseToUser` para que su parámetro
+   `AuthResponse` de `auth.model.ts`, y reescribir `AuthMapper.mapResponseToUser` para que su parámetro
    sea `AuthResponseDto` — el cuerpo del método no cambia, pero ahora cruza una frontera real. Reapuntar
    `auth/services/auth.service.ts` y `mappers/auth.mapper.ts`.
 
-3. **Nombrar las dos uniones inline.** Declarar `LessonContentType` en `lesson.interface.ts`; que
-   `module.interface.ts` y `module.response.ts` la importen. Reemplazar los dos `'image' | 'video'` de lesson
-   por `ResourceValidTypes` importado de `@file/models/file.interface`.
+3. **Nombrar las dos uniones inline.** Declarar `LessonContentType` en `lesson.model.ts`; que
+   `module.model.ts` y `module.response.ts` la importen. Reemplazar los dos `'image' | 'video'` de lesson
+   por `ResourceValidTypes` importado de `@file/models/file.model`.
 
 4. **Devolverle al mapper la construcción del body** (punto H). Crear
    `TeacherRequestMapper.mapFormToTeacherRequestDTO` moviendo las líneas 82-89 del componente tal cual, y
@@ -245,9 +247,8 @@ diferencia de la SPEC 15:
 7. **Pasar `getFileByPublicId` por `FileMapper`** y actualizar su firma a `Observable<UploadedFile>`. No
    tiene llamadores, así que no hay nada más que reapuntar.
 
-8. **Borrar el alias `@interfaces/*`.** Reapuntar los siete imports a su alias de feature **primero**, y
-   recién después sacar la entrada de `tsconfig.json` — en ese orden el build falla si quedó alguno, en vez
-   de resolver silencioso. `npm run build`, no el autocompletado del IDE.
+8. ~~**Borrar el alias `@interfaces/*`.**~~ **Hecho en la SPEC 19.** Los siete imports se reapuntaron a su
+   alias de feature y la entrada salió de `tsconfig.json`, en ese orden. Nada que hacer acá.
 
 9. **Aplicar las convenciones del punto G a los archivos tocados** y escribir las cabeceras de los seis
    `*.request.ts` con el invariante correcto (se importa para anotar un borde; construir es del mapper).
@@ -257,20 +258,20 @@ diferencia de la SPEC 15:
 
 ## Acceptance criteria
 
-- [ ] Existen los seis `*.request.ts` listados en Scope A, y ningún `*.interface.ts` declara un DTO de
-      salida: `grep -rn "DTO\|Dto" src/app/*/models/*.interface.ts` no devuelve ninguna declaración
+- [ ] Existen los seis `*.request.ts` listados en Scope A, y ningún `*.model.ts` declara un DTO de
+      salida: `grep -rn "DTO\|Dto" src/app/*/models/*.model.ts` no devuelve ninguna declaración
       `export interface` / `export type` de un tipo de request.
 - [ ] `grep -rn "ItemQuantity" src/app --include=*.ts` no muestra ninguna declaración en `cart/`, y
-      `cart/state/cart.service.ts` la importa de `@payment/models/payment.request`.
+      `cart/state/cart-state.ts` la importa de `@payment/models/payment.request`.
 - [ ] `auth/models/auth.response.ts` existe con `AuthResponseDto` y `UserResponseDto`;
       `grep -rn "\bAuthResponse\b" src/` no devuelve nada y `AuthMapper.mapResponseToUser` recibe
       `AuthResponseDto`, no un tipo que embuta `User`.
-- [ ] `auth/models/auth.interface.ts` exporta exactamente dos símbolos: `AuthStatus` y `User`.
+- [ ] `auth/models/auth.model.ts` exporta exactamente dos símbolos: `AuthStatus` y `User`.
 - [ ] No queda ninguna copia inline de las dos uniones: las únicas apariciones de `'image' | 'video'` y
       `'video' | 'document'` en `src/app` son las declaraciones de `ResourceValidTypes` y
       `LessonContentType`.
 - [ ] `grep -rn "Issuer" src/app --include=*.ts` no devuelve nada salvo el comentario de
-      `mercadopago-fields.interface.ts:2`, que menciona `mp.getIssuers` como parte de la API del SDK.
+      `mercadopago-fields.model.ts:2`, que menciona `mp.getIssuers` como parte de la API del SDK.
 - [ ] `grep -rn "mapResponseToCourseArray\|mapResponseToLessonArray\|mapResponseToModuleArray\|LessonDto" src/`
       no devuelve nada. Las tres variantes `*PopulatedArray` siguen existiendo y siguen teniendo su llamador.
 - [ ] Ningún mapper aplica `??` sobre un campo que su DTO declara requerido y no-null: para cada fila de la
@@ -287,8 +288,8 @@ diferencia de la SPEC 15:
       o un parámetro de handler — no para armar el objeto.
 - [ ] Las cabeceras de los seis `*.request.ts` **no** repiten la frase "nada de este archivo se usa en un
       componente": dicen que se importa para anotar un borde y que construir el body es del mapper.
-- [ ] `grep -rn "@interfaces/" src/` no devuelve nada y `tsconfig.json` ya no declara la entrada
-      `@interfaces/*`.
+- [x] `grep -rn "@interfaces/" src/` no devuelve nada y `tsconfig.json` ya no declara la entrada
+      `@interfaces/*`. **Cumplido por la SPEC 19.**
 - [ ] `npx tsc -p tsconfig.app.json --noEmit` limpio y `npm run build` sin errores ni warnings nuevos.
 - [ ] El paso 6 quedó registrado: la spec o su companion de deuda anota, por cada campo de la tabla D, qué
       manda el backend realmente. Si no se pudo verificar un campo, queda dicho cuál y por qué, y el campo
@@ -305,11 +306,11 @@ diferencia de la SPEC 15:
 
 - **Sí:** un `*.request.ts` por feature, simétrico al `*.response.ts`. Meter los DTOs de salida dentro del
   `*.response.ts` obligaría a renombrar los nueve archivos que la SPEC 15 acaba de crear (a `*.dto.ts` o
-  `*.api.ts`), que es otro diff mecánico sobre lo recién movido. Dejarlos en el `*.interface.ts` conserva la
+  `*.api.ts`), que es otro diff mecánico sobre lo recién movido. Dejarlos en el `*.model.ts` conserva la
   asimetría que esta spec existe para cerrar.
 - **Sí:** `ItemQuantity` se va a `payment`. Es parte del body de `POST /orders/`, y la regla que la SPEC 15
   fijó es que la feature dueña del endpoint es dueña del contrato. Que `cart` lo produzca no lo hace suyo:
-  `cart.service.getItemsArray()` es justamente el traductor.
+  `cart-state.getItemsArray()` es justamente el traductor.
 - **Sí:** `UserResponseDto` nuevo, aunque sus campos sean hoy idénticos a `User`. El punto no es que difieran
   ahora, es que puedan diferir sin que el cambio llegue al modelo interno. Mientras `AuthResponse` embuta
   `User`, el mapper es decorativo y el día que el backend renombre un campo hay que tocar `User` y con él
@@ -374,7 +375,7 @@ diferencia de la SPEC 15:
 | Mover `ItemQuantity` a `payment` crea un ciclo `cart` ↔ `payment` | La dependencia queda en una sola dirección: `cart` importa de `payment` y `payment` deja de importar de `cart`. Se verifica con `npm run build`, que falla ante un ciclo de módulos. |
 | Cambiar la opcionalidad de un campo del DTO propaga `undefined` a los modelos internos y rompe templates con `strictTemplates` | Es el comportamiento buscado: si el campo puede faltar, el template tiene que decidir qué muestra. Los errores aparecen en compilación, no en runtime, y el paso 5 se cierra sólo cuando `npm run build` está limpio. |
 | La SPEC 16 y esta tocan `auth.service.ts`, `file.service.ts` y `teacher-request.service.ts` | El orden es 15 → 16 → 17, y el merge de la 16 tiene que entrar antes de empezar esta. Si se invierte, los conflictos caen sobre los `catchError` de esos tres servicios, que es donde las dos specs escriben. |
-| La SPEC 16 también toca `shared/models/api.interfaces.ts` — pasa `ok` y `status` de `ErrorResponse` a opcionales, porque la rama de excepción no prevista del backend manda solo `error` | Es un archivo que esta spec abre (punto A declara que ese archivo se queda **solo** con el sobre genérico). El cambio de la 16 es compatible: `ErrorResponse` es parte del sobre genérico y se queda ahí. Con el orden 16 → 17 respetado no hay conflicto; al revés, el diff de la 16 cae sobre líneas que esta spec ya movió. |
+| La SPEC 16 también toca `shared/models/api.response.ts` — pasa `ok` y `status` de `ErrorResponse` a opcionales, porque la rama de excepción no prevista del backend manda solo `error` | Es un archivo que esta spec abre (punto A declara que ese archivo se queda **solo** con el sobre genérico). El cambio de la 16 es compatible: `ErrorResponse` es parte del sobre genérico y se queda ahí. Con el orden 16 → 17 respetado no hay conflicto; al revés, el diff de la 16 cae sobre líneas que esta spec ya movió. |
 | Mover la construcción del payload de checkout al mapper cambia el body sin que nadie lo note, y el pago falla en MercadoPago | El literal se mueve **tal cual**, sin reordenar ni renombrar campos, y el criterio de aceptación exige comparar el `POST orders/` en Network contra el anterior. El paso va después del borrado de muerto y antes de tocar opcionalidades, así que si el pago se rompe hay un solo commit sospechoso. |
 | Borrar `@interfaces/*` de `tsconfig.json` deja un import sin resolver que el IDE autocompleta igual | Los siete imports se reapuntan **antes** de sacar la entrada, no después: en ese orden el `npm run build` del paso 8 falla ante cualquiera que haya quedado. El alias no tiene consumidores fuera de `src/app`. |
 | El arreglo manual de `getLessonById` sigue sin commitear en la rama de la SPEC 15 y se pierde | Hay que commitearlo con la 15 (o aparte) antes de abrir la rama de esta spec. Está anotado en Scope F justamente para que no desaparezca. |
@@ -386,7 +387,7 @@ diferencia de la SPEC 15:
 - Verificar `min_length` / `max_length` contra MercadoPago.
 - Separar `TeacherExperienceLevel` en dos uniones.
 - Agregar validación en runtime de los DTOs.
-- Renombrar `shared/models/api.interfaces.ts`.
+- Renombrar `shared/models/api.response.ts`.
 - Revisar `@guards/*` ni `@mappers/*`. La única línea de `tsconfig.json` que se toca es el borrado de
   `@interfaces/*`.
 - Barrels `index.ts` en los `models/`.

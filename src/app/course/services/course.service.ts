@@ -3,9 +3,9 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { Course, CourseDTO, CoursePopulated } from '@course/models/course.interface';
+import { Course, CourseDTO, CoursePopulated } from '@course/models/course.model';
 import { CourseMapper } from '@mappers/course.mapper';
-import { ApiResponse, PaginationResponse, PaginationResponseDto } from '@shared/models/api.interfaces';
+import { ApiResponse, PaginationResponse, PaginationResponseDto } from '@shared/models/api.response';
 import { CoursePopulatedResponseDto, CourseResponseDto } from '@course/models/course.response';
 import { FileService } from '@file/services/file.service';
 import { PaginationMapper } from '@mappers/pagination.mapper';
@@ -68,20 +68,6 @@ export class CourseService {
         return throwError(() => new Error(`${error.errorMessage}`));
       })
     );
-  };
-
-  // Mismo curso que `getById` pero con el profesor resuelto por el backend.
-  // Devuelve `Course` igual que el resto: el owner anidado se aplana en el
-  // mapper, así los componentes siguen leyendo `owner_name`/`owner_bio`.
-  public getDetailedById = ( id : string ) : Observable<CoursePopulated> => {
-    return this.http.get<ApiResponse<CoursePopulatedResponseDto>>(`${this.baseURL}/detailed/${id}`)
-      .pipe(
-        map(( courseResponse ) => CourseMapper.mapPopulatedResponseToCourse( courseResponse.data )),
-        catchError(({ error }) => {
-          console.log(error);
-          return throwError(() => new Error(`${error?.errorMessage}`));
-        })
-      );
   }
 
   public saveCourse = ( courseRequest: CourseDTO, file: File | null = null ): Observable<Course> => {

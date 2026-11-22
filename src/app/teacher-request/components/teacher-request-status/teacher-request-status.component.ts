@@ -2,7 +2,7 @@ import { Component, inject, input, output } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import { AuthService } from '@auth/services/auth.service';
-import { TeacherRequest } from '@teacher-request/models/teacher-request.interface';
+import { TeacherRequest } from '@teacher-request/models/teacher-request.model';
 
 @Component({
     selector: 'app-teacher-request-status',

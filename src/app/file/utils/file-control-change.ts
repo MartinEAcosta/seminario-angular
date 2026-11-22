@@ -1,6 +1,6 @@
 import { FormControl } from '@angular/forms';
 import { FilePreviewControl } from '@file/models/file-preview-control';
-import { SelectedFile } from '@file/models/file.interface';
+import { SelectedFile } from '@file/models/file.model';
 
 // El <input type="file"> no está bindeado por formControlName (los navegadores
 // no permiten setear [value] en type="file"), así que dirty/touched del control

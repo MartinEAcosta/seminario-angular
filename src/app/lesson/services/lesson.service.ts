@@ -4,8 +4,8 @@ import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 import { LessonMapper } from '@mappers/lesson.mapper';
-import { Lesson, LessonPopulated, SaveLessonDto } from '@lesson/models/lesson.interface';
-import { ApiResponse } from '@shared/models/api.interfaces';
+import { Lesson, LessonPopulated, SaveLessonDto } from '@lesson/models/lesson.model';
+import { ApiResponse } from '@shared/models/api.response';
 import { LessonPopulatedResponseDto, LessonResponseDto } from '@lesson/models/lesson.response';
 import { FileService } from '@file/services/file.service';
 

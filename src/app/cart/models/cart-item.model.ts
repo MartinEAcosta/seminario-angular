@@ -1,4 +1,4 @@
-import { Course } from "@course/models/course.interface";
+import { Course } from "@course/models/course.model";
 
 export interface CartItem{
     course: Course,

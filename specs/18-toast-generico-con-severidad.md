@@ -214,8 +214,8 @@ Esta spec no introduce estructuras persistidas ni toca ningún DTO. Los símbolo
 viven en `shared/services/toast/toast.service.ts`:
 
 - `ToastSeverity` = `'error' | 'success' | 'warning'`. Vive en el propio servicio y no en un
-  `*.interface.ts`: no cruza la frontera del backend, así que no le corresponde la convención de la SPEC 15,
-  y `shared/models/api.interfaces.ts` está reservado al sobre genérico de API (la SPEC 15 lo dice explícito).
+  `*.model.ts`: no cruza la frontera del backend, así que no le corresponde la convención de la SPEC 15,
+  y `shared/models/api.response.ts` está reservado al sobre genérico de API (la SPEC 15 lo dice explícito).
 - `Toast` = `{ message : string; severity : ToastSeverity }`. El signal pasa de `string | null` a
   `Toast | null`, que es lo que vuelve imposible tener un mensaje sin severidad.
 - `DEFAULT_DURATION : Record<ToastSeverity, number>` — constante privada del módulo. `Record` sobre la unión
@@ -351,9 +351,9 @@ deprecado deja la puerta abierta a emitir un toast sin severidad, que es justo l
   precedente del repo es el mismo (SPEC 15 y 17: el símbolo se borra en el mismo paso en que nace el nuevo, y
   el compilador es el checklist).
 - **Sí:** `ToastSeverity` y `Toast` viven en el propio `toast.service.ts`. La convención de la SPEC 15
-  (`<feature>/models/<name>.interface.ts`) existe para los tipos que cruzan la frontera del backend —
+  (`<feature>/models/<name>.model.ts`) existe para los tipos que cruzan la frontera del backend —
   modelo, request y response. Un tipo de UI que solo leen el servicio y su componente no gana nada en un
-  archivo aparte, y `shared/models/api.interfaces.ts` está explícitamente reservado al sobre genérico.
+  archivo aparte, y `shared/models/api.response.ts` está explícitamente reservado al sobre genérico.
 - **Sí:** una sola instancia del componente, la de `app.component.html`. Las otras tres no agregan nada
   —el servicio es singleton y el root está fuera del `<router-outlet>`— y hoy producen dos bandas
   superpuestas en `/` y en `/auth/*`. El arreglo va primero y en su propio commit porque es verificable sin

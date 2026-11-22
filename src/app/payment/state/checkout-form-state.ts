@@ -5,15 +5,15 @@ import { loadMercadoPago } from '@mercadopago/sdk-js';
 import { environment } from '../../../environments/environment';
 
 import { PaymentService } from '../services/payment.service';
-import { CartService } from '@cart/state/cart.service';
-import { CreateOrderRequestDTO } from '../models/payment.interface';
-import { Order } from '../models/order.interface';
+import { CartState } from '@cart/state/cart-state';
+import { CreateOrderRequestDTO } from '../models/payment.model';
+import { Order } from '../models/order.model';
 import {
   MPFieldInstance,
   MPInstance,
   MPPayerCost,
   MPPaymentMethodResult,
-} from '../models/mercadopago-fields.interface';
+} from '../models/mercadopago-fields.model';
 
 interface FieldContainerIds {
   cardNumber: string;
@@ -46,7 +46,7 @@ const MP_FIELD_STYLE = {
 })
 export class CheckoutFormState {
   private paymentService = inject(PaymentService);
-  private cartService = inject(CartService);
+  private cartState = inject(CartState);
 
   private mp?: MPInstance;
   private cardNumberField?: MPFieldInstance;
@@ -226,7 +226,7 @@ export class CheckoutFormState {
     this._isSubmitting.set(true);
     this._submitError.set(null);
     try {
-      const items = this.cartService.getItemsArray();
+      const items = this.cartState.getItemsArray();
 
       const tokenResponse = await this.mp.fields.createCardToken({
         cardholderName: `${formValue.firstName} ${formValue.lastName}`.trim(),

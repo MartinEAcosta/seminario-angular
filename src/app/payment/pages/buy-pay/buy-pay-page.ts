@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { PageTitleComponent } from "@shared/components/page-title/page-title.component";
 import { PurchaseSummaryComponent } from "../../components/purchase-summary/purchase-summary.component";
 import { FormCardCheckoutComponent } from "../../components/form-card-checkout/form-card-checkout.component";
-import { CartService } from '@cart/state/cart.service';
+import { CartState } from '@cart/state/cart-state';
 
 @Component({
   selector: 'app-buy-pay-page',
@@ -14,8 +14,8 @@ import { CartService } from '@cart/state/cart.service';
 })
 export class BuyPayPage {
 
-  cartService = inject(CartService);
+  cartState = inject(CartState);
 
-  isEmpty = computed(() => this.cartService.cart().items.size === 0);
+  isEmpty = computed(() => this.cartState.cart().items.size === 0);
 
 }

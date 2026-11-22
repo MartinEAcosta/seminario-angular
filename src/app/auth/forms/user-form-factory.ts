@@ -1,5 +1,5 @@
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from "@angular/forms";
-import { User } from "@auth/models/auth.interface";
+import { User } from "@auth/models/auth.model";
 import { FormUtils } from "@utils/form-utils";
 
 // Exportada para que el validador del form y el mensaje que muestra el componente

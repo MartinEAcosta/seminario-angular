@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve, Router } from "@angular/router";
 import { catchError, map, Observable, of } from "rxjs";
 
-import { Course } from "@interfaces/course.interface";
+import { Course } from "@course/models/course.model";
 import { CourseService } from "../services/course.service";
 import { CourseFormState } from "@course/state/course-form/course-form-state";
 import { UserState } from "@user/state/user-state";

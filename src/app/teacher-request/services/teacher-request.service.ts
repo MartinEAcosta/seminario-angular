@@ -3,10 +3,10 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { ApiResponse } from '@shared/models/api.interfaces';
+import { ApiResponse } from '@shared/models/api.response';
 import { TeacherRequestResponseDto } from '@teacher-request/models/teacher-request.response';
 import { TeacherRequestMapper } from '@mappers/teacher-request.mapper';
-import { TeacherRequest, TeacherRequestDTO } from '@teacher-request/models/teacher-request.interface';
+import { TeacherRequest, TeacherRequestDTO } from '@teacher-request/models/teacher-request.model';
 
 @Injectable({
   providedIn: 'root'

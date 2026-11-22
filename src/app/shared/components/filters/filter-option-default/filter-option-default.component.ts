@@ -1,7 +1,7 @@
 import { Component, computed, inject, input } from '@angular/core';
 
 import { QueryParams, SearchService } from '@shared/services/search/search.service';
-import { FilterOptionDefault } from '@utils/filters/filter.interfaces';
+import { FilterOptionDefault } from '@utils/filters/filter.model';
 
 @Component({
   selector: 'app-filter-option-default',

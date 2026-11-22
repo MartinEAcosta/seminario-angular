@@ -1,7 +1,7 @@
 import { Component, computed, inject, input } from '@angular/core';
 
 import { QueryParams, SearchService } from '@shared/services/search/search.service';
-import { FilterOptionHover } from '@utils/filters/filter.interfaces';
+import { FilterOptionHover } from '@utils/filters/filter.model';
 import { FilterOptionDefaultComponent } from '../filter-option-default/filter-option-default.component';
 
 // Pasó de "hover revela lista anidada" a una fila de pills siempre visible

@@ -17,7 +17,7 @@ import { RoleLabelPipe } from '@auth/pipes/role-label.pipe';
 import { buildPasswordForm, buildProfileForm, getPasswordStrength, MAX_AVATAR_BYTES, patchProfileForm } from '@auth/forms/user-form-factory';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FilePreviewControl } from '@file/models/file-preview-control';
-import { PasswordDTO, User } from '@auth/models/auth.interface';
+import { PasswordDTO, User } from '@auth/models/auth.model';
 import { getAuthErrorMessage, isServerError } from '@auth/utils/auth-error-message';
 
 @Component({

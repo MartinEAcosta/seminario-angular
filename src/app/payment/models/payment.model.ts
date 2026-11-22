@@ -1,4 +1,4 @@
-import { ItemQuantity } from "@cart/models/cart.interface";
+import { ItemQuantity } from "@cart/models/cart-item.model";
 
 export interface Issuer {
     id : string,

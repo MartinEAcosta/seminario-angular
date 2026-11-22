@@ -1,4 +1,4 @@
-import { Category } from '@category/models/category.interface';
+import { Category } from '@category/models/category.model';
 
 // El backend manda un id en `id_category`; `defaultCourses` guarda ahí el
 // NOMBRE de la categoría. Se resuelve por id, después por nombre, y si no

@@ -30,10 +30,9 @@ export interface CoursePopulatedResponseDto {
   id_file       ?: string | null;
   owner          : {
     id          : string;
-    username    : string;
-    email       : string;
+    first_name  : string;
+    last_name   : string;
     avatar_url ?: string | null;
-    bio        ?: string | null;
   };
   price            : number;
   current_enrolled : number;

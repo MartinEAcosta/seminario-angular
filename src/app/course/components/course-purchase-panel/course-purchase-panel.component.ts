@@ -2,13 +2,13 @@ import { CurrencyPipe } from '@angular/common';
 import { Component, OnDestroy, computed, inject, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { Course } from '@course/models/course.interface';
-import { CartService } from '@cart/state/cart.service';
+import { Course } from '@course/models/course.model';
+import { CartState } from '@cart/state/cart-state';
 
 const ADDED_FEEDBACK_MS = 2200;
 
 // Panel de compra de /course/:id — mismo patrón de carrito que
-// course-catalog-card (CartService.onAddToCart + isInCart/justAdded), pero
+// course-catalog-card (CartState.onAddToCart + isInCart/justAdded), pero
 // agrega cupos y los bullets informativos del mock. Sticky en desktop, fijo
 // abajo de la pantalla en mobile (ver .scss).
 @Component({
@@ -19,7 +19,7 @@ const ADDED_FEEDBACK_MS = 2200;
 })
 export class CoursePurchasePanelComponent implements OnDestroy {
 
-  cartService = inject(CartService);
+  cartState = inject(CartState);
 
   course = input.required<Course>();
   // Id de la inscripción del usuario en este curso, si existe — no solo un
@@ -62,14 +62,14 @@ export class CoursePurchasePanelComponent implements OnDestroy {
   });
 
   // "En el carrito" es un estado persistente (igual que en course-catalog-card).
-  isInCart = computed( () => this.cartService.cart().items.has( this.id_course() ) );
+  isInCart = computed( () => this.cartState.cart().items.has( this.id_course() ) );
 
   // Feedback inmediato del click, solo para el aria-live.
   justAdded = signal(false);
   private feedbackTimeoutId?: ReturnType<typeof setTimeout>;
 
   onAddToCart(): void {
-    this.cartService.onAddToCart( this.course() );
+    this.cartState.onAddToCart( this.course() );
 
     this.justAdded.set(true);
     clearTimeout(this.feedbackTimeoutId);

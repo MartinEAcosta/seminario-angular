@@ -4,10 +4,10 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { catchError, of, tap } from 'rxjs';
 
 import { LessonService } from '../../services/lesson.service';
-import { LessonPopulated } from '../../models/lesson.interface';
+import { LessonPopulated } from '../../models/lesson.model';
 import { ThumbnailSelectorComponent } from '@course/components/thumbnail-selector/thumbnail-selector.component';
 import { FormLessonComponent } from "../form-lesson/form-lesson.component";
-import { Course } from '@course/models/course.interface';
+import { Course } from '@course/models/course.model';
 import { ModuleService } from '@module/services/module.service';
 import { CardActionComponent } from "@shared/components/card-action/card-action.component";
 import { SaveModuleComponent } from "@module/components/save-module/save-module.component";

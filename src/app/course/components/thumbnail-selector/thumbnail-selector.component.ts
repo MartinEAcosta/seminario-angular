@@ -1,7 +1,7 @@
 import { Component, inject, input } from '@angular/core';
 
 import { CourseFormState } from '@course/state/course-form/course-form-state';
-import { UploadFolder } from '@file/models/file.interface';
+import { UploadFolder } from '@file/models/file.model';
 import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
 
 @Component({

@@ -1,6 +1,6 @@
 import { Component, ElementRef, inject, input, viewChild } from '@angular/core';
-import { CartItem } from '../../models/cart.interface';
-import { CartService } from '../../state/cart.service';
+import { CartItem } from '../../models/cart-item.model';
+import { CartState } from '../../state/cart-state';
 
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
 
@@ -12,7 +12,7 @@ const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
 })
 export class CartItemCardComponent {
 
-  cartService = inject(CartService);
+  cartState = inject(CartState);
 
   item = input.required<CartItem>();
 
@@ -24,7 +24,7 @@ export class CartItemCardComponent {
     const card = this.cardRef()?.nativeElement;
 
     if( !card || window.matchMedia(REDUCED_MOTION_QUERY).matches ){
-      this.cartService.removeFromCart( this.item().course );
+      this.cartState.removeFromCart( this.item().course );
       return;
     }
 
@@ -52,8 +52,8 @@ export class CartItemCardComponent {
     );
 
     animation.finished
-      .then( () => this.cartService.removeFromCart( this.item().course ) )
-      .catch( () => this.cartService.removeFromCart( this.item().course ) );
+      .then( () => this.cartState.removeFromCart( this.item().course ) )
+      .catch( () => this.cartState.removeFromCart( this.item().course ) );
   }
 
 }

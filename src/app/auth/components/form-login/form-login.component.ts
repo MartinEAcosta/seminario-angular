@@ -7,7 +7,7 @@ import { NgClass } from '@angular/common';
 
 import { AuthService } from '@auth/services/auth.service';
 import { FormErrorLabelComponent } from '@shared/components/form-error-label/form-error-label.component';
-import { UserDTO } from '@auth/models/auth.interface';
+import { UserDTO } from '@auth/models/auth.model';
 import { FormUtils } from '@utils/form-utils';
 import { GoogleAuthButtonComponent } from '@auth/components/google-auth-button/google-auth-button.component';
 import { AuthMapper } from '@mappers/auth.mapper';

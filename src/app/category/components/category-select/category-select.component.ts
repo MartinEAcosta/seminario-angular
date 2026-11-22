@@ -1,9 +1,9 @@
 import { Component, effect, ElementRef, HostListener, inject, input, output, signal } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { Category } from '../../models/category.interface';
+import { Category } from '../../models/category.model';
 import { NgClass } from '@angular/common';
-import { Course } from '@course/models/course.interface';
+import { Course } from '@course/models/course.model';
 
 @Component({
   selector: 'app-category-select',

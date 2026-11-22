@@ -5,9 +5,9 @@ import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 import { environment } from '../../../environments/environment';
-import { CartService } from '@cart/state/cart.service';
-import { AuthResponse, PasswordDTO, User, UserDTO } from '@auth/models/auth.interface';
-import { ApiResponse } from '@shared/models/api.interfaces';
+import { CartState } from '@cart/state/cart-state';
+import { AuthResponse, PasswordDTO, User, UserDTO } from '@auth/models/auth.model';
+import { ApiResponse } from '@shared/models/api.response';
 import { AuthMapper } from '@mappers/auth.mapper';
 import { UserState } from '@user/state/user-state';
 import { AUTH_PROVIDER } from '@auth/auth.provider';
@@ -23,7 +23,7 @@ export class AuthService {
   private provider = inject(AUTH_PROVIDER);
   
   readonly googleReady = this.provider.ready;
-  private cartService = inject(CartService);
+  private cartState = inject(CartState);
   private userState = inject(UserState);
 
   // Se dispara ni bien el servicio es inyectado por primera vez.
@@ -168,7 +168,7 @@ export class AuthService {
     const wasAuthenticated = this.userState.authStatus() === 'authenticated';
 
     this.userState.logout();
-    this.cartService.clearCart();
+    this.cartState.clearCart();
     if( wasAuthenticated ){
       this.router.navigateByUrl('/');
     }

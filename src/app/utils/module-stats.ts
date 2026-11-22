@@ -1,4 +1,4 @@
-import { ModulePopulated } from '@module/models/module.interface';
+import { ModulePopulated } from '@module/models/module.model';
 
 export interface ModuleStats {
     moduleCount           : number;

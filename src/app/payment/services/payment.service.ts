@@ -5,12 +5,12 @@ import { OrderMapper } from '@mappers/order.mapper';
 import { catchError, map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
-import { ApiResponse } from '@shared/models/api.interfaces';
-import { IdentificationTypeResponseDto, IssuerResponseDto } from '@payment/models/payment.response';
+import { ApiResponse } from '@shared/models/api.response';
+import { IdentificationTypeResponseDto } from '@payment/models/payment.response';
 import { OrderResponseDto } from '@payment/models/order.response';
-import { IdentificationType, Issuer, CreateOrderRequestDTO } from '../models/payment.interface';
-import { Order } from '../models/order.interface';
-import { ItemQuantity } from '@cart/models/cart.interface';
+import { IdentificationType, CreateOrderRequestDTO } from '../models/payment.model';
+import { Order } from '@payment/models/order.model';
+import { ItemQuantity } from '@cart/models/cart-item.model';
 
 @Injectable({
   providedIn: 'root'

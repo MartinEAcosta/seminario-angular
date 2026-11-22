@@ -1,8 +1,8 @@
 import { Component, computed, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { CoursePopulated } from '@course/models/course.interface';
-import { ModulePopulated } from '@module/models/module.interface';
+import { CoursePopulated } from '@course/models/course.model';
+import { ModulePopulated } from '@module/models/module.model';
 import { CourseInstructorComponent } from '@course/components/course-instructor/course-instructor.component';
 import { computeModuleStats, formatDuration } from '@utils/module-stats';
 

@@ -2,7 +2,7 @@ import { Component, inject, input, output, signal } from '@angular/core';
 
 import { LessonService } from '@lesson/services/lesson.service';
 import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
-import { ModulePopulated, Module } from '@module/models/module.interface';
+import { ModulePopulated, Module } from '@module/models/module.model';
 import { SaveModuleComponent } from '@module/components/save-module/save-module.component';
 import { FormLessonComponent } from '@lesson/components/form-lesson/form-lesson.component';
 import { PublishStatusMenuComponent } from '@shared/components/publish-status-menu/publish-status-menu.component';

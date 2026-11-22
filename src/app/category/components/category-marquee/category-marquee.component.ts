@@ -1,7 +1,7 @@
 import { Component, computed, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { Category } from '@category/models/category.interface';
+import { Category } from '@category/models/category.model';
 
 @Component({
   selector: 'app-category-marquee',

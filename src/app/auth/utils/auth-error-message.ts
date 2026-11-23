@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { ErrorResponse } from '@shared/models/api.interfaces';
+import { ErrorResponse } from '@shared/models/api.response';
 
 // Concentra la regla de ruteo del error de los flujos de AuthService, para que
 // no quede copiada en cada `subscribe` (ver SPEC 16). Funciones puras, sin

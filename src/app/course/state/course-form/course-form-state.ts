@@ -1,7 +1,7 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Course } from '@interfaces/course.interface';
+import { Course } from '@course/models/course.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,6 @@ export class CourseFormState {
 
   thumbnailFile = signal<File | null>( null );
   tempThumbnail = signal<string | null>( null );
-  isFormCollapsed = signal<boolean>( false );
 
   // Última versión persistida del curso en esta sesión de wizard.
   // null hasta que create hace su primer POST, o hasta que update carga el resolver.
@@ -62,14 +61,6 @@ export class CourseFormState {
 
   public setSavedCourse ( course : Course | null ) : void {
     this.savedCourse.set( course );
-  }
-
-  public setFormCollapsed ( collapsed : boolean ) : void {
-    this.isFormCollapsed.set( collapsed );
-  }
-
-  public toggleFormCollapsed ( ) : void {
-    this.isFormCollapsed.set( !this.isFormCollapsed() );
   }
 
 }

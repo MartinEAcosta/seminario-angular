@@ -9,7 +9,7 @@ import { NgClass } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 import { AuthService } from '@auth/services/auth.service';
-import { UIService } from '@shared/services/ui/ui.service';
+import { ToastService } from '@shared/services/toast/toast.service';
 import { FormErrorLabelComponent } from '@shared/components/form-error-label/form-error-label.component';
 import { buildResetPasswordForm, getPasswordStrength } from '@auth/forms/user-form-factory';
 import { CONNECTION_ERROR_MESSAGE, isConnectionError, isServerError } from '@auth/utils/auth-error-message';
@@ -28,7 +28,7 @@ export class ResetPasswordPageComponent {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private authService = inject(AuthService);
-  private uiService = inject(UIService);
+  private toastService = inject(ToastService);
 
   private token = this.route.snapshot.paramMap.get('token')!;
 
@@ -65,7 +65,7 @@ export class ResetPasswordPageComponent {
                       .subscribe({
                         next : () => {
                           this.isSaving.set(false);
-                          this.uiService.showToastMessage('Contraseña actualizada. Ingresá con tu nueva contraseña.');
+                          this.toastService.showSuccess('Contraseña actualizada. Ingresá con tu nueva contraseña.');
                           this.router.navigateByUrl('/auth/login');
                         },
                         error : ( error : HttpErrorResponse ) => {
@@ -75,7 +75,7 @@ export class ResetPasswordPageComponent {
                             return;
                           }
                           if( isConnectionError( error ) ){
-                            this.uiService.showToastMessage( CONNECTION_ERROR_MESSAGE );
+                            this.toastService.showError( CONNECTION_ERROR_MESSAGE );
                             return;
                           }
                           this.panelState.set('invalid');

@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 
-import { FilterOption } from '@utils/filters/filter.interfaces';
+import { FilterOption } from '@utils/filters/filter.model';
 import { FilterOptionHoverComponent } from "../filter-option-hover/filter-option-hover.component";
 import { FilterOptionPriceComponent } from "../filter-option-price/filter-option-price.component";
 

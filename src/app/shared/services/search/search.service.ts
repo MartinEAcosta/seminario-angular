@@ -1,7 +1,7 @@
 import { computed, inject, Injectable, linkedSignal, Signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { filter, map } from 'rxjs';
-import { FilterOption } from '@utils/filters/filter.interfaces';
+import { map } from 'rxjs';
+import { FilterOption } from '@utils/filters/filter.model';
 import { FilterOptions } from '@utils/filters/filter-options';
 import { toSignal } from '@angular/core/rxjs-interop';
 

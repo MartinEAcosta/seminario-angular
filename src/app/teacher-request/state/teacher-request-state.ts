@@ -3,7 +3,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { defer, EMPTY, Observable, tap } from 'rxjs';
 
 import { TeacherRequestService } from '@teacher-request/services/teacher-request.service';
-import { TeacherRequest, TeacherRequestDTO } from '@teacher-request/models/teacher-request.interface';
+import { TeacherRequest, TeacherRequestDTO } from '@teacher-request/models/teacher-request.model';
 
 @Injectable({
   providedIn: 'root',

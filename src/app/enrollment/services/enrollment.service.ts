@@ -3,9 +3,9 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
-import { ApiResponse } from '@shared/models/api.interfaces';
+import { ApiResponse } from '@shared/models/api.response';
 import { EnrollmentPopulatedResponseDto, EnrollmentResponseDto } from '@enrollment/models/enrollment.response';
-import { Enrollment, EnrollmentDetailed } from '@enrollment/models/enrollment.interface';
+import { Enrollment, EnrollmentDetailed } from '@enrollment/models/enrollment.model';
 import { EnrollmentMapper } from '@mappers/enrollment.mapper';
 
 @Injectable({

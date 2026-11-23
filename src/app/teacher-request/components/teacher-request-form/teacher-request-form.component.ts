@@ -4,10 +4,10 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { NgClass } from '@angular/common';
 
 import { CategoryService } from '@category/services/category.service';
-import { Category } from '@category/models/category.interface';
+import { Category } from '@category/models/category.model';
 import { FormErrorLabelComponent } from '@shared/components/form-error-label/form-error-label.component';
 import { FormUtils } from '@utils/form-utils';
-import { TeacherExperienceLevel, TeacherRequestDTO } from '@teacher-request/models/teacher-request.interface';
+import { TeacherExperienceLevel, TeacherRequestDTO } from '@teacher-request/models/teacher-request.model';
 import { CategoryMultiselectDropdownComponent } from '../category-multiselect-dropdown/category-multiselect-dropdown.component';
 
 @Component({

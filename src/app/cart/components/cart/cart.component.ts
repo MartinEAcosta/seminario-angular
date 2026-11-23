@@ -2,7 +2,7 @@ import { Component, computed, effect, inject, signal, untracked } from '@angular
 import { RouterLink } from '@angular/router';
 import { CurrencyPipe, NgClass } from '@angular/common';
 
-import { CartService } from '../../state/cart.service';
+import { CartState } from '../../state/cart-state';
 import { CartPanelItemComponent } from '../cart-panel-item/cart-panel-item.component';
 import { animateNumber } from '@utils/animate-number';
 
@@ -14,8 +14,8 @@ import { animateNumber } from '@utils/animate-number';
 })
 export class CartComponent {
 
-  private cartService = inject(CartService);
-  cart = computed( () => this.cartService.cart());
+  private cartState = inject(CartState);
+  cart = computed( () => this.cartState.cart());
   isCartOpen = signal<boolean>(false);
 
   // Suma de precio*cantidad sin descuento, para la fila "Subtotal" del panel
@@ -24,11 +24,11 @@ export class CartComponent {
 
   // Muestra el total "contando" hacia el nuevo valor en vez de saltar, cada vez
   // que cambia la cantidad de un item o se aplica un cupón.
-  public animatedTotal = signal<number>( this.cartService.total() );
+  public animatedTotal = signal<number>( this.cartState.total() );
 
   constructor( ) {
     effect( () => {
-      const target = this.cartService.total();
+      const target = this.cartState.total();
       const from = untracked( this.animatedTotal );
       animateNumber( from , target , value => this.animatedTotal.set( value ) );
     });

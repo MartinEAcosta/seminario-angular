@@ -1,4 +1,4 @@
-import { FilterOption } from "./filter.interfaces";
+import { FilterOption } from "./filter.model";
 
 export class FilterOptions {
 

@@ -2,9 +2,9 @@ import { Component, computed, inject, OnInit } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
-import { CartService } from '@cart/state/cart.service';
+import { CartState } from '@cart/state/cart-state';
 import { EnrollmentState } from '@enrollment/state/enrollment-state';
-import { Order } from '@payment/models/order.interface';
+import { Order } from '@payment/models/order.model';
 
 @Component({
   selector: 'app-buy-confirmation-page',
@@ -14,7 +14,7 @@ import { Order } from '@payment/models/order.interface';
 })
 export class BuyConfirmationPage implements OnInit {
 
-  private cartService = inject(CartService);
+  private cartState = inject(CartState);
   private enrollmentState = inject(EnrollmentState);
 
   // La orden se pasa por navegación (router.navigate state), no por query params, para no
@@ -37,7 +37,7 @@ export class BuyConfirmationPage implements OnInit {
     // carrito no tiene más razón de existir. Si quedó pendiente o rechazado se conserva
     // para que el usuario pueda reintentar sin volver a armarlo.
     if( this.order?.status === 'approved' ) {
-      this.cartService.clearCart();
+      this.cartState.clearCart();
       this.enrollmentState.enrollmentListResource.reload();
     }
   }

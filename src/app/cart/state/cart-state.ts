@@ -1,8 +1,8 @@
 import { Router } from '@angular/router';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { Course } from '@course/models/course.interface';
+import { Course } from '@course/models/course.model';
 import { map, throwError } from 'rxjs';
-import { CartItem, ItemQuantity } from '../models/cart.interface';
+import { CartItem, ItemQuantity } from '../models/cart-item.model';
 import { Cart } from '../models/cart.model';
 import { PaymentService } from '@payment/services/payment.service';
 
@@ -36,7 +36,7 @@ const loadFromLocalStorage = ( ) : Cart => {
 @Injectable({
   providedIn: 'root',
 })
-export class CartService {
+export class CartState {
 
   // Pensado como un map en donde el Curso es la key y el number la quantity reservada por el usuario
   public cart = signal<Cart>( loadFromLocalStorage() );

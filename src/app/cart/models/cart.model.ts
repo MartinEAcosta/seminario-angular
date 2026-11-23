@@ -1,5 +1,5 @@
-import { Course } from "@interfaces/course.interface";
-import { CartItem } from "./cart.interface";
+import { Course } from "@course/models/course.model";
+import { CartItem } from "./cart-item.model";
 
 
 export class Cart {
@@ -11,7 +11,6 @@ export class Cart {
     }
 
     public addToCart = ( course : Course ) : Map<string,CartItem> => {
-
         if( course.capacity != undefined && course.capacity <= 0 ) return this.items;
 
         if( !this.items.has( course.id ) ){

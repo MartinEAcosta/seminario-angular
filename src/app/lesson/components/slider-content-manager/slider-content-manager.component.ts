@@ -4,14 +4,14 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { catchError, of, tap } from 'rxjs';
 
 import { LessonService } from '../../services/lesson.service';
-import { LessonPopulated } from '../../models/lesson.interface';
+import { LessonPopulated } from '../../models/lesson.model';
 import { ThumbnailSelectorComponent } from '@course/components/thumbnail-selector/thumbnail-selector.component';
 import { FormLessonComponent } from "../form-lesson/form-lesson.component";
-import { Course } from '@course/models/course.interface';
+import { Course } from '@course/models/course.model';
 import { ModuleService } from '@module/services/module.service';
 import { CardActionComponent } from "@shared/components/card-action/card-action.component";
 import { SaveModuleComponent } from "@module/components/save-module/save-module.component";
-import { UIService } from '@shared/services/ui/ui.service';
+import { ToastService } from '@shared/services/toast/toast.service';
 import { LoaderComponent } from "@shared/components/loader/loader.component";
 import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
 
@@ -30,7 +30,7 @@ import { LessonFormState } from '@lesson/state/lesson-form/lesson-form-state';
 })
 export class SliderContentManagerComponent implements OnDestroy {
 
-  uiService = inject(UIService);
+  toastService = inject(ToastService);
   lessonService = inject(LessonService);
   moduleService = inject(ModuleService);
   lessonFormState = inject(LessonFormState);
@@ -47,7 +47,7 @@ export class SliderContentManagerComponent implements OnDestroy {
             // Se degrada a lista vacía para no romper la pantalla, pero avisa:
             // antes fallaba en silencio y el usuario leía "sin lecciones" cuando
             // lo que pasó es que no se pudieron cargar (ver SPEC 16).
-            this.uiService.showToastMessage('No pudimos cargar las lecciones del curso.');
+            this.toastService.showError('No pudimos cargar las lecciones del curso.');
             return of([]);
           })
         );
@@ -90,7 +90,7 @@ export class SliderContentManagerComponent implements OnDestroy {
     }
     else{
       this.lessonFormState.setIsModulePopUpVisible(true);
-      this.uiService.showToastMessage('Debes crear un modulo antes de crear una lección')
+      this.toastService.showWarning('Debes crear un modulo antes de crear una lección')
       return false;
     }
   }
@@ -136,7 +136,7 @@ export class SliderContentManagerComponent implements OnDestroy {
 
   onAddModule = () => {
     if( !this.course()?.id ){
-      this.uiService.showToastMessage('Debes crear el curso antes de agregar un módulo');
+      this.toastService.showWarning('Debes crear el curso antes de agregar un módulo');
       return;
     }
     this.lessonFormState.toggleVisibilityOfModulePopUp();

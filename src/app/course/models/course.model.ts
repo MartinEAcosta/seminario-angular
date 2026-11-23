@@ -16,10 +16,9 @@ export interface Course {
 export interface CoursePopulated extends Course {
     owner           : {
         id : string;
-        username : string;
-        email : string;
+        first_name : string;
+        last_name : string;
         avatar_url : string | null;
-        bio ?: string | null;
     };
 };
 

@@ -2,8 +2,8 @@ import { CurrencyPipe } from '@angular/common';
 import { Component, OnDestroy, computed, inject, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { Course } from '@course/models/course.interface';
-import { CartService } from '@cart/state/cart.service';
+import { Course } from '@course/models/course.model';
+import { CartState } from '@cart/state/cart-state';
 
 const ADDED_FEEDBACK_MS = 2200;
 
@@ -20,7 +20,7 @@ const ADDED_FEEDBACK_MS = 2200;
 })
 export class CourseCatalogCardComponent implements OnDestroy {
 
-  cartService = inject(CartService);
+  cartState = inject(CartState);
 
   course = input.required<Course>();
   // Id de la inscripción del usuario en este curso, si existe — no solo un
@@ -36,7 +36,7 @@ export class CourseCatalogCardComponent implements OnDestroy {
   // "En el carrito" es un estado persistente (el curso sigue en el carrito
   // hasta que se saque), no el feedback de 2.2s de haber tocado el botón
   // recién — por eso se deriva directo del carrito, no de `justAdded`.
-  isInCart = computed( () => this.cartService.cart().items.has( this.id_course() ) );
+  isInCart = computed( () => this.cartState.cart().items.has( this.id_course() ) );
 
   // Feedback inmediato del click, solo para el aria-live — el label/estado
   // visible del botón ya lo decide `isInCart()`.
@@ -44,7 +44,7 @@ export class CourseCatalogCardComponent implements OnDestroy {
   private feedbackTimeoutId?: ReturnType<typeof setTimeout>;
 
   onAddToCart(): void {
-    this.cartService.onAddToCart( this.course() );
+    this.cartState.onAddToCart( this.course() );
 
     this.justAdded.set(true);
     clearTimeout(this.feedbackTimeoutId);

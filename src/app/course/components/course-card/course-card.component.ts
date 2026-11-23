@@ -5,8 +5,8 @@ import { RouterModule } from '@angular/router';
 import { UserState } from '@user/state/user-state';
 import { BtnPrimaryComponent } from '@shared/components/btns/btn-primary/btn-primary.component';
 import { BtnBorderThinComponent } from '@shared/components/btns/btn-border-thin/btn-border-thin.component';
-import { Course } from '@course/models/course.interface';
-import { CartService } from '@cart/state/cart.service';
+import { Course } from '@course/models/course.model';
+import { CartState } from '@cart/state/cart-state';
 
 @Component({
     selector: 'course-card',
@@ -18,7 +18,7 @@ export class CourseCardComponent {
 
   readonly course = input.required<Course>();
 
-  cartService = inject(CartService);
+  cartState = inject(CartState);
   userState = inject(UserState);
 
   constructor () { }

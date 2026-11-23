@@ -1,7 +1,7 @@
 // Forma cruda que llega del backend para file. Nada de este archivo se usa en un
 // componente: todo pasa antes por `FileMapper`.
 
-import { ResourceValidTypes } from './file.interface';
+import { ResourceValidTypes } from './file.model';
 
 export interface FileResponseDto {
   id            : string;

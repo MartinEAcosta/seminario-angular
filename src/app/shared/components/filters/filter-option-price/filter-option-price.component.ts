@@ -1,7 +1,7 @@
 import { Component, computed, inject, input } from '@angular/core';
 
 import { SearchService } from '@shared/services/search/search.service';
-import { FilterOptionCompound } from '@utils/filters/filter.interfaces';
+import { FilterOptionCompound } from '@utils/filters/filter.model';
 
 type PriceMode = 'all' | 'free' | 'paid';
 

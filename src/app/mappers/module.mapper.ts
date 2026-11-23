@@ -1,6 +1,6 @@
-import { ApiResponse } from "@shared/models/api.interfaces";
+import { ApiResponse } from "@shared/models/api.response";
 import { ModulePopulatedResponseDto, ModuleResponseDto } from "@module/models/module.response";
-import { Module, ModuleDTO, ModulePopulated } from "@module/models/module.interface";
+import { Module, ModuleDTO, ModulePopulated } from "@module/models/module.model";
 
 export class ModuleMapper {
 

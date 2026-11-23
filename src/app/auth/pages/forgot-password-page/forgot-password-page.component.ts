@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
 
 import { AuthService } from '@auth/services/auth.service';
-import { UIService } from '@shared/services/ui/ui.service';
+import { ToastService } from '@shared/services/toast/toast.service';
 import { FormErrorLabelComponent } from '@shared/components/form-error-label/form-error-label.component';
 import { userFieldsValidators } from '@auth/forms/user-form-factory';
 import { getAuthErrorMessage, isServerError } from '@auth/utils/auth-error-message';
@@ -23,7 +23,7 @@ export class ForgotPasswordPageComponent implements OnDestroy {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private authService = inject(AuthService);
-  private uiService = inject(UIService);
+  private toastService = inject(ToastService);
 
   // Bloquean el botón mientras hay una request en vuelo o un reenvío en cooldown,
   // mismo patrón que email-verification-banner.component.ts.
@@ -46,7 +46,7 @@ export class ForgotPasswordPageComponent implements OnDestroy {
                       .subscribe({
                         next : () => {
                           this.isSending.set(false);
-                          this.uiService.showToastMessage('Te enviamos un enlace para recuperar tu contraseña. Revisá tu bandeja de entrada.');
+                          this.toastService.showSuccess('Te enviamos un enlace para recuperar tu contraseña. Revisá tu bandeja de entrada.');
                           this.startCooldown();
                         },
                         error : ( error : HttpErrorResponse ) => {
@@ -55,7 +55,7 @@ export class ForgotPasswordPageComponent implements OnDestroy {
                             this.router.navigateByUrl('/error');
                             return;
                           }
-                          this.uiService.showToastMessage( getAuthErrorMessage( error , 'No pudimos enviar el enlace. Probá de nuevo.' ) );
+                          this.toastService.showError( getAuthErrorMessage( error , 'No pudimos enviar el enlace. Probá de nuevo.' ) );
                         },
                       });
   }

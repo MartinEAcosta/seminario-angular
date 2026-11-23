@@ -1,4 +1,4 @@
-import { ApiResponse } from "@shared/models/api.interfaces";
+import { ApiResponse } from "@shared/models/api.response";
 import { CategoryResponseDto } from "@category/models/category.response";
 
 

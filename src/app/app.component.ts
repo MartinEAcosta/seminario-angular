@@ -2,14 +2,14 @@ import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './shared/components/layout/header/header.component';
 import { FooterComponent } from './shared/components/layout/footer/footer.component';
-import { ModalErrorMessageComponent } from "./shared/components/modal-error-message/modal-error-message.component";
+import { ToastComponent } from "./shared/components/toast/toast.component";
 import { AuthService } from '@auth/services/auth.service';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
-    imports: [RouterOutlet, HeaderComponent, FooterComponent, ModalErrorMessageComponent]
+    imports: [RouterOutlet, HeaderComponent, FooterComponent, ToastComponent]
 })
 export class AppComponent {
 

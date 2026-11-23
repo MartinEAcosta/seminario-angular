@@ -1,47 +1,34 @@
 <section class="bg-section">
         <div class="container">
+            <div class="collapse-inner">
+                <div class="wizard-layout">
 
-            <app-collapsible-page-title
-                [title]="courseFormState.savedCourse()?.id ? 'Editar curso' : 'Crear curso'"
-                [collapsed]="courseFormState.isFormCollapsed()"
-                (toggle)="onToggleCollapse()"
-            />
+                    <nav class="stepper">
+                        <a
+                            routerLink="data"
+                            routerLinkActive="active"
+                            class="stepper-step"
+                            [class.done]="courseFormState.courseId()"
+                        >
+                            <span class="stepper-num">01</span>
+                            <span class="stepper-title">Datos</span>
+                        </a>
 
-            <div
-                class="collapse-wrapper"
-                [class.collapsed]="courseFormState.isFormCollapsed()"
-                (transitionend)="onCollapseTransitionEnd($event)"
-            >
-                <div class="collapse-inner" [class.overflow-visible]="settled()">
-                    <div class="wizard-layout">
+                        <a
+                            [routerLink]="courseFormState.courseId() ? 'content' : null"
+                            routerLinkActive="active"
+                            class="stepper-step"
+                            [class.disabled]="!courseFormState.courseId()"
+                        >
+                            <span class="stepper-num">02</span>
+                            <span class="stepper-title">Contenido</span>
+                        </a>
+                    </nav>
 
-                        <nav class="stepper">
-                            <a
-                                routerLink="data"
-                                routerLinkActive="active"
-                                class="stepper-step"
-                                [class.done]="courseFormState.courseId()"
-                            >
-                                <span class="stepper-num">01</span>
-                                <span class="stepper-title">Datos</span>
-                            </a>
-
-                            <a
-                                [routerLink]="courseFormState.courseId() ? 'content' : null"
-                                routerLinkActive="active"
-                                class="stepper-step"
-                                [class.disabled]="!courseFormState.courseId()"
-                            >
-                                <span class="stepper-num">02</span>
-                                <span class="stepper-title">Contenido</span>
-                            </a>
-                        </nav>
-
-                        <div class="wizard-content">
-                            <router-outlet />
-                        </div>
-
+                    <div class="wizard-content">
+                        <router-outlet />
                     </div>
+
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
-import { Enrollment, EnrollmentDetailed } from '@enrollment/models/enrollment.interface';
-import { ApiResponse } from '@shared/models/api.interfaces';
+import { Enrollment, EnrollmentDetailed } from '@enrollment/models/enrollment.model';
+import { ApiResponse } from '@shared/models/api.response';
 import { EnrollmentPopulatedResponseDto, EnrollmentResponseDto } from '@enrollment/models/enrollment.response';
 
 

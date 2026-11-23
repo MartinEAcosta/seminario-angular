@@ -4,9 +4,9 @@
 // Las fechas se tipan `string`: `JSON.parse` no construye `Date`.
 //
 // `status` y `experience_level` son las mismas uniones que el modelo interno:
-// se importan de `teacher-request.interface` para que exista una sola fuente.
+// se importan de `teacher-request.model` para que exista una sola fuente.
 
-import { TeacherExperienceLevel, TeacherRequestStatus } from './teacher-request.interface';
+import { TeacherExperienceLevel, TeacherRequestStatus } from './teacher-request.model';
 
 export interface TeacherRequestResponseDto {
   id                : string;

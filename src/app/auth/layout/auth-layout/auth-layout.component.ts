@@ -2,11 +2,9 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 
-import { ModalErrorMessageComponent } from "@shared/components/modal-error-message/modal-error-message.component";
-
 @Component({
   selector: 'app-auth-layout',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, ModalErrorMessageComponent],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './auth-layout.component.html',
   styleUrl: './auth-layout.component.scss'
 })

@@ -13,7 +13,7 @@ import { PaginationComponent } from "../../pagination/pagination.component";
 import { SearchBarComponent } from "../../components/search-bar/search-bar.component";
 import { FilterSelectComponent } from "@shared/components/filters/filter-select/filter-select.component";
 import { FilterExplorePage } from '@utils/filters/filter-options';
-import { FilterOptionDefault } from '@utils/filters/filter.interfaces';
+import { FilterOptionDefault } from '@utils/filters/filter.model';
 import { EnrollmentState } from '@enrollment/state/enrollment-state';
 import { PageTitleComponent } from "@shared/components/page-title/page-title.component";
 

@@ -2,7 +2,7 @@ import { Component, computed, inject, input } from '@angular/core';
 import { ModulesAccordionComponent } from "../modules-accordion/modules-accordion.component";
 import { UserState } from '@user/state/user-state';
 import { LoaderComponent } from "@shared/components/loader/loader.component";
-import { ModulePopulated } from '@module/models/module.interface';
+import { ModulePopulated } from '@module/models/module.model';
 import { computeModuleStats, formatDuration } from '@utils/module-stats';
 
 @Component({

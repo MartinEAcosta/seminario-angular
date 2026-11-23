@@ -1,0 +1,40 @@
+<!-- role="alert" interrumpe al lector de pantalla y role="status" no: un fallo
+     hay que saberlo antes de seguir, un 'Cambios guardados.' no debería cortar
+     lo que el usuario esté escuchando. -->
+<section class="toast"
+         [ngClass]="{ 'show' : fadeAnimation() }"
+         [attr.role]="severity() === 'success' ? 'status' : 'alert'">
+
+    <!-- Los iconos van inline y con currentColor para heredar el acento de la
+         severidad: un .svg servido como <img> no lo hereda y habría que
+         duplicar cada archivo por color. Las tres formas además se distinguen
+         entre sí sin depender del color. -->
+    <span class="toast-icon" aria-hidden="true">
+        @switch ( severity() ) {
+            @case ('success') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="m8 12.5 2.5 2.5L16 9.5" />
+                </svg>
+            }
+            @case ('warning') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 4 2.5 20.5h19L12 4Z" />
+                    <path d="M12 10v4.5" />
+                    <path d="M12 17.5h.01" />
+                </svg>
+            }
+            @default {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="m9 9 6 6" />
+                    <path d="m15 9-6 6" />
+                </svg>
+            }
+        }
+    </span>
+
+    <p class="toast-message">
+        {{ toast()?.message }}
+    </p>
+</section>

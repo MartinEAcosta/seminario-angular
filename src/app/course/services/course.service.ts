@@ -9,18 +9,9 @@ import { ApiResponse, PaginationResponse, PaginationResponseDto } from '@shared/
 import { CoursePopulatedResponseDto, CourseResponseDto } from '@course/models/course.response';
 import { FileService } from '@file/services/file.service';
 import { PaginationMapper } from '@mappers/pagination.mapper';
-import { buildExploreQueryParams } from '@course/utils/obtainOptionsParams';
+import { CourseSearchQuery } from '@shared/search/models/course-search.model';
+import { CourseQueryMapper } from '@mappers/course-query.mapper';
 
-export type Options = {
-  page ?: number,
-  limit ?: number,
-  title ?: string;
-  id_category?: string;
-  category_name?: string;
-  priceMin?: string;
-  priceMax?: string;
-  notFullyEnrolled?: string;
-}
 
 @Injectable({
   providedIn: 'root',
@@ -31,9 +22,10 @@ export class CourseService {
   private http = inject(HttpClient);
   private baseURL: string = `${environment.apiURL}courses`;
 
-  public getAll = ( options ?: Options ): Observable<PaginationResponseDto<CoursePopulated>> => {
-    const params = options ? buildExploreQueryParams( options ) : { };
+  public getAll = ( options ?: CourseSearchQuery ): Observable<PaginationResponseDto<CoursePopulated>> => {
     console.log(options)
+    const params = options ? CourseQueryMapper.toRequestParams( options ) : {};
+    console.log(params);
     return this.http.get<PaginationResponse<CoursePopulatedResponseDto>>(`${this.baseURL}`, {
       params,
     })

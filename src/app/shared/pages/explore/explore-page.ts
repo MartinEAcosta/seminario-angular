@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 
 import { CourseService } from '@course/services/course.service';
-import { SearchService } from '../../services/search/search.service';
 import { PaginationService } from '../../pagination/services/pagination.service';
 import { CategoryService } from '@category/services/category.service';
 import { CourseCatalogCardComponent } from "@course/components/course-catalog-card/course-catalog-card.component";
@@ -13,23 +12,23 @@ import { PaginationComponent } from "../../pagination/pagination.component";
 import { SearchBarComponent } from "../../components/search-bar/search-bar.component";
 import { FilterSelectComponent } from "@shared/components/filters/filter-select/filter-select.component";
 import { FilterExplorePage } from '@utils/filters/filter-options';
-import { FilterOptionDefault } from '@utils/filters/filter.model';
+import { FilterOptionDefault } from '@shared/search/models/filter.model';
 import { EnrollmentState } from '@enrollment/state/enrollment-state';
 import { PageTitleComponent } from "@shared/components/page-title/page-title.component";
+import { CourseSearchState } from '@course/state/course-search-state';
 
 @Component({
   selector: 'app-explore-page',
   imports: [SearchBarComponent, CourseCatalogCardComponent, CourseCatalogCardSkeletonComponent,
     CartComponent, PaginationComponent, FilterSelectComponent, PageTitleComponent],
   templateUrl: './explore-page.html',
+  providers : [CourseSearchState],
   styleUrl: './explore-page.scss'
 })
 export class ExplorePage {
 
-  private router = inject(Router);
   private courseService = inject(CourseService);
-  paginationService = inject(PaginationService);
-  searchService = inject(SearchService)
+  search = inject(CourseSearchState);
   categoryService = inject(CategoryService);
   enrollmentState = inject(EnrollmentState);
 
@@ -45,25 +44,9 @@ export class ExplorePage {
 
   courses = linkedSignal(() => this.coursesResource.value());
   coursesResource = rxResource({
-    params : () => ({
-      textSearch : this.searchService.textSearch(), 
-      filters : this.searchService.queryParams() ,
-      page : this.paginationService.currentPage(),
-    }),
-    stream : ({params}) => { 
-      this.router.navigate(['/explore'] , {
-          queryParams : {
-            ...params.filters,
-            title : params.textSearch || undefined,
-            page : params.page,
-          },
-          replaceUrl : true,
-      });
-      return this.courseService.getAll( { 
-        ...params.filters,
-        title: params.textSearch || undefined,
-        page : params.page
-      } );
+    params : () => ( this.search.query() ),
+    stream : ({ params }) => { 
+      return this.courseService.getAll(params);
     }
   });
 

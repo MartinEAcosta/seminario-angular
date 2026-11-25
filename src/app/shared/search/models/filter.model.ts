@@ -22,3 +22,9 @@ export interface FilterOptionCompound extends FilterOptionBasic {
     value: FilterOptionDefault[];
     type: 'compound';
 }
+
+export interface SearchState<T>  {
+    page ?: number,
+    limit ?: number,
+    filter ?: T,
+}

@@ -8,8 +8,8 @@
 
         <app-search-bar
             [showSort]="true"
-            [initialValue]="this.searchService.textSearch()"
-            (value)="this.searchService.textSearch.set($event)">
+            [initialValue]="search.query().title ?? ''"
+            (value)="search.patch({ title: $event || undefined })">
 
             <app-filter-select filter-selector [filters]="filterOptions()" />
 
@@ -39,10 +39,10 @@
                 }
             }
         </div>
-        <app-pagination 
-            [pages]="coursesResource.value()?.pages ?? 0" 
-            [currentPage]="this.paginationService.currentPage()"
-        />
+        <app-pagination
+            [pages]="coursesResource.value()?.pages ?? 0"
+            [currentPage]="search.query().page"
+            (pageChange)="search.patch({ page: $event })" />
     </div>
     <app-cart />
 </div>

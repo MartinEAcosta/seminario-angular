@@ -1,4 +1,4 @@
-import { FilterOption } from "./filter.model";
+import { FilterOption } from "../../shared/search/models/filter.model";
 
 export class FilterOptions {
 

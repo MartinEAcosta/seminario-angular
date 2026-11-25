@@ -9,6 +9,7 @@ export class PaginationMapper {
         response : PaginationResponse<TDto>,
         mapItem  : ( item : TDto ) => TModel,
     ) : PaginationResponseDto<TModel> => {
+
         return {
             pages        : response.data.pages,
             current_page : response.data.current_page,

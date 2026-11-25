@@ -20,7 +20,7 @@
 
     <app-course-instructor
         variant="inline"
-        [name]="course().owner.username"
+        [name]="course().owner.first_name + ' ' + course().owner.last_name"
         [avatarUrl]="course().owner.avatar_url" />
 
     <!-- Mismo dato en dos formas: píldoras en desktop, franja de tres columnas

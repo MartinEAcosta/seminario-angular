@@ -3,8 +3,8 @@ import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter } from 'rxjs';
 
 import { UserState } from '@user/state/user-state';
-import { SearchService } from '@shared/services/search/search.service';
 import { UserProfileDropdownComponent } from '../../../../user/components/user-profile-dropdown/user-profile-dropdown.component';
+import { CourseSearchState } from '@course/state/course-search-state';
 
 const DARK_HERO_ROUTES = ['/', '/about' ];
 const SCROLL_THRESHOLD = 48;
@@ -13,13 +13,14 @@ const SCROLL_THRESHOLD = 48;
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss',
-    imports: [RouterLink, UserProfileDropdownComponent]
+    imports: [RouterLink, UserProfileDropdownComponent],
+    providers: [CourseSearchState]
 })
 export class HeaderComponent {
 
   userState = inject(UserState);
-  searchService = inject(SearchService);
-
+  courseSearchState = inject(CourseSearchState);
+  
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
   private ngZone = inject(NgZone);
@@ -61,7 +62,7 @@ export class HeaderComponent {
   }
 
   onExploreClick(): void {
-    this.searchService.reset();
+    this.courseSearchState.reset();
     this.closeMenu();
   }
 
@@ -69,7 +70,7 @@ export class HeaderComponent {
     event.preventDefault();
 
     const query = value.trim();
-    this.searchService.textSearch.set(query);
+    this.courseSearchState.textSearch.set(query);
     this.closeMenu();
 
     this.router.navigate(['/explore'], {

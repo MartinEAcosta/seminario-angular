@@ -37,7 +37,7 @@ export class CourseMapper {
         };
     }
 
-    static mapPopulatedResponseToCourse ( response : CoursePopulatedResponseDto ) : CoursePopulated {
+    static mapResponseToCoursePopulated ( response : CoursePopulatedResponseDto ) : CoursePopulated {
         return {
             id: response.id,
             title: response.title,

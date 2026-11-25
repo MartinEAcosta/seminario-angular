@@ -9,18 +9,9 @@ import { ApiResponse, PaginationResponse, PaginationResponseDto } from '@shared/
 import { CoursePopulatedResponseDto, CourseResponseDto } from '@course/models/course.response';
 import { FileService } from '@file/services/file.service';
 import { PaginationMapper } from '@mappers/pagination.mapper';
-import { buildExploreQueryParams } from '@course/utils/obtainOptionsParams';
+import { CourseSearchQuery } from '@shared/search/models/course-search.model';
+import { CourseQueryMapper } from '@mappers/course-query.mapper';
 
-export type Options = {
-  page ?: number,
-  limit ?: number,
-  title ?: string;
-  id_category?: string;
-  category_name?: string;
-  minPrice?: string;
-  maxPrice?: string;
-  notFullyEnrolled?: string;
-}
 
 @Injectable({
   providedIn: 'root',
@@ -31,15 +22,17 @@ export class CourseService {
   private http = inject(HttpClient);
   private baseURL: string = `${environment.apiURL}courses`;
 
-  public getAll = ( options ?: Options ): Observable<PaginationResponseDto<Course>> => {
-    const params = options ? buildExploreQueryParams( options ) : { };
-
-    return this.http.get<PaginationResponse<CourseResponseDto>>(`${this.baseURL}`, {
+  public getAll = ( options ?: CourseSearchQuery ): Observable<PaginationResponseDto<CoursePopulated>> => {
+    console.log(options)
+    const params = options ? CourseQueryMapper.toRequestParams( options ) : {};
+    console.log(params);
+    return this.http.get<PaginationResponse<CoursePopulatedResponseDto>>(`${this.baseURL}`, {
       params,
     })
     .pipe(
       map((courseResponse) => {
-        return PaginationMapper.mapToPaginationDto( courseResponse, CourseMapper.mapResponseToCourse );
+        console.log(courseResponse)
+        return PaginationMapper.mapToPaginationDto( courseResponse, CourseMapper.mapResponseToCoursePopulated );
       }),
       catchError((error) => {
         console.log(error);
@@ -57,17 +50,30 @@ export class CourseService {
   };
 
   public getById = (id: string): Observable<Course> => {
-    return this.http.get<ApiResponse<CourseResponseDto>>(`${this.baseURL}/${id}`).pipe(
-      map((courseResponse) => {
+    return this.http.get<ApiResponse<CourseResponseDto>>(`${this.baseURL}/${id}`)
+                      .pipe(
+                        map((courseResponse) => {
 
-        return CourseMapper.mapResponseToCourse(courseResponse.data);
-      }
-      ),
-      catchError(({ error }) => {
-        console.log(error);
-        return throwError(() => new Error(`${error.errorMessage}`));
-      })
-    );
+                          return CourseMapper.mapResponseToCourse(courseResponse.data);
+                        }
+                        ),
+                        catchError(({ error }) => {
+                          console.log(error);
+                          return throwError(() => new Error(`${error.errorMessage}`));
+                        })
+                      );
+  }
+
+  public getCoursePopulatedById = ( id : string ) : Observable<CoursePopulated> => {
+    return this.http.get<ApiResponse<CoursePopulatedResponseDto>>(`${this.baseURL}/${id}`)
+                      .pipe(
+                        map((courseResponsePopulated) => {
+                          return CourseMapper.mapResponseToCoursePopulated( courseResponsePopulated.data );
+                        }),
+                        catchError( ({ error }) => {
+                          return throwError(() => new Error(`${error.errorMessage}`));
+                        })
+                      )
   }
 
   public saveCourse = ( courseRequest: CourseDTO, file: File | null = null ): Observable<Course> => {

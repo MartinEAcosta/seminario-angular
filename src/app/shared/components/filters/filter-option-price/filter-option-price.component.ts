@@ -19,13 +19,13 @@ export class FilterOptionPriceComponent {
 
   filter = input.required<FilterOptionCompound>();
 
-  private minKey = computed( () => this.filter().value.find( v => v.key.toLowerCase().includes('min') )?.key ?? 'minPrice' );
-  private maxKey = computed( () => this.filter().value.find( v => v.key.toLowerCase().includes('max') )?.key ?? 'maxPrice' );
+  private minKey = computed( () => this.filter().value.find( v => v.key.toLowerCase().includes('min') )?.key ?? 'priceMin' );
+  private maxKey = computed( () => this.filter().value.find( v => v.key.toLowerCase().includes('max') )?.key ?? 'priceMax' );
 
   mode = computed<PriceMode>( () => {
     const query = this.searchService.queryParams();
-    if ( query?.maxPrice === '0' ) return 'free';
-    if ( query?.minPrice ) return 'paid';
+    if ( query?.priceMin === '0' ) return 'free';
+    if ( query?.priceMax ) return 'paid';
     return 'all';
   });
 

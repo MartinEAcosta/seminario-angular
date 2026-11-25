@@ -4,14 +4,8 @@ import { map } from 'rxjs';
 import { FilterOption } from '@utils/filters/filter.model';
 import { FilterOptions } from '@utils/filters/filter-options';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { Options } from '@course/services/course.service';
 
-// Los nombres de los parametros los saco del contrato con el back.
-export type QueryParams = {
-  id_category?: string;
-  minPrice?: string;
-  maxPrice?: string;
-  notFullyEnrolled?: string;
-};
 
 @Injectable({
   providedIn: 'root',
@@ -25,14 +19,16 @@ export class SearchService {
   // En vez de pasar un valor por default se toma el mismo de una función computada.
   textSearch = linkedSignal(() => this.textParam);
 
-  queryParams: Signal<QueryParams | undefined> = toSignal(
+  queryParams: Signal<Options | undefined> = toSignal(
     this.activatedRoute.queryParamMap.pipe(
       map(
         (params) => {
           return {
             id_category: params.get('id_category') ?? undefined,
-            minPrice: params.get('minPrice') ?? undefined,
-            maxPrice: params.get('maxPrice') ?? undefined,
+            category_name: params.get('category_name') ?? undefined,
+            title : params.get('title') ?? undefined,
+            priceMin: params.get('priceMin') ?? undefined,
+            priceMax: params.get('priceMax') ?? undefined,
             notFullyEnrolled: params.get('notFullyEnrolled') ?? undefined,
           };
         },

@@ -1,8 +1,9 @@
 import { Component, computed, inject, input } from '@angular/core';
 
-import { QueryParams, SearchService } from '@shared/services/search/search.service';
+import { SearchService } from '@shared/services/search/search.service';
 import { FilterOptionHover } from '@utils/filters/filter.model';
 import { FilterOptionDefaultComponent } from '../filter-option-default/filter-option-default.component';
+import { Options } from '@course/services/course.service';
 
 // Pasó de "hover revela lista anidada" a una fila de pills siempre visible
 // (el mockup no tiene desplegables) — mismo wiring a SearchService, solo
@@ -26,7 +27,7 @@ export class FilterOptionHoverComponent {
   private groupKey = computed( () => this.filter().value?.[0]?.key );
 
   isAllActive = computed( () => {
-    const key = this.groupKey() as keyof QueryParams | undefined;
+    const key = this.groupKey() as keyof Options | undefined;
     return !key || !this.searchService.queryParams()?.[key];
   });
 

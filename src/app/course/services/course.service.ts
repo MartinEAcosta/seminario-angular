@@ -17,8 +17,8 @@ export type Options = {
   title ?: string;
   id_category?: string;
   category_name?: string;
-  minPrice?: string;
-  maxPrice?: string;
+  priceMin?: string;
+  priceMax?: string;
   notFullyEnrolled?: string;
 }
 
@@ -31,15 +31,16 @@ export class CourseService {
   private http = inject(HttpClient);
   private baseURL: string = `${environment.apiURL}courses`;
 
-  public getAll = ( options ?: Options ): Observable<PaginationResponseDto<Course>> => {
+  public getAll = ( options ?: Options ): Observable<PaginationResponseDto<CoursePopulated>> => {
     const params = options ? buildExploreQueryParams( options ) : { };
-
-    return this.http.get<PaginationResponse<CourseResponseDto>>(`${this.baseURL}`, {
+    console.log(options)
+    return this.http.get<PaginationResponse<CoursePopulatedResponseDto>>(`${this.baseURL}`, {
       params,
     })
     .pipe(
       map((courseResponse) => {
-        return PaginationMapper.mapToPaginationDto( courseResponse, CourseMapper.mapResponseToCourse );
+        console.log(courseResponse)
+        return PaginationMapper.mapToPaginationDto( courseResponse, CourseMapper.mapResponseToCoursePopulated );
       }),
       catchError((error) => {
         console.log(error);
@@ -57,17 +58,30 @@ export class CourseService {
   };
 
   public getById = (id: string): Observable<Course> => {
-    return this.http.get<ApiResponse<CourseResponseDto>>(`${this.baseURL}/${id}`).pipe(
-      map((courseResponse) => {
+    return this.http.get<ApiResponse<CourseResponseDto>>(`${this.baseURL}/${id}`)
+                      .pipe(
+                        map((courseResponse) => {
 
-        return CourseMapper.mapResponseToCourse(courseResponse.data);
-      }
-      ),
-      catchError(({ error }) => {
-        console.log(error);
-        return throwError(() => new Error(`${error.errorMessage}`));
-      })
-    );
+                          return CourseMapper.mapResponseToCourse(courseResponse.data);
+                        }
+                        ),
+                        catchError(({ error }) => {
+                          console.log(error);
+                          return throwError(() => new Error(`${error.errorMessage}`));
+                        })
+                      );
+  }
+
+  public getCoursePopulatedById = ( id : string ) : Observable<CoursePopulated> => {
+    return this.http.get<ApiResponse<CoursePopulatedResponseDto>>(`${this.baseURL}/${id}`)
+                      .pipe(
+                        map((courseResponsePopulated) => {
+                          return CourseMapper.mapResponseToCoursePopulated( courseResponsePopulated.data );
+                        }),
+                        catchError( ({ error }) => {
+                          return throwError(() => new Error(`${error.errorMessage}`));
+                        })
+                      )
   }
 
   public saveCourse = ( courseRequest: CourseDTO, file: File | null = null ): Observable<Course> => {

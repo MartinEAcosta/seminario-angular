@@ -28,9 +28,9 @@
                     @if( courseResource.value().owner ) {
                         <app-course-instructor
                             variant="card"
-                            [name]="courseResource.value().owner.username"
+                            [name]="courseResource.value().owner.first_name + ' ' +courseResource.value().owner.last_name"
                             [avatarUrl]="courseResource.value().owner.avatar_url"
-                            [bio]="courseResource.value().owner.bio ?? null" />
+                        />
                     }
                 </div>
 

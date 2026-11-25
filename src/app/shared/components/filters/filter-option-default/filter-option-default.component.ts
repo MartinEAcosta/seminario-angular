@@ -1,6 +1,7 @@
 import { Component, computed, inject, input } from '@angular/core';
 
-import { QueryParams, SearchService } from '@shared/services/search/search.service';
+import { SearchService } from '@shared/services/search/search.service';
+import { Options } from '@course/services/course.service';
 import { FilterOptionDefault } from '@utils/filters/filter.model';
 
 @Component({
@@ -15,7 +16,7 @@ export class FilterOptionDefaultComponent {
   filter = input.required<FilterOptionDefault>();
 
   isActive = computed( () => {
-    const key = this.filter().key as keyof QueryParams;
+    const key = this.filter().key as keyof Options;
     return this.searchService.queryParams()?.[key] === this.filter().value;
   });
 
